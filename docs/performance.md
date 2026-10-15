@@ -1,3 +1,33 @@
+# 当前提交：仅修改kernel.asc
+
+提交工程以用户最初上传的ZIP为基准，只允许kernel.asc内容不同。CMakeLists.txt、main.asc、run.sh、data_utils.h和三个Python脚本均逐字节保持原样；包内无manifest、测试工具或其他新增文件。
+
+本次将内核自写的if constexpr类型分派改为函数重载。频率计算、角度缩减、FMA、DMA与分块策略保持一致。
+
+## 当前版本验收
+
+- 使用原始run.sh原样编译并执行；原始校验PASS，最大绝对误差2.6226043701171875e-6。
+- 原始main.asc固定选择设备0，因此本次由task-submit独占申请单卡0，任务执行后已释放。
+- 29/29代表用例与1010/1010维度扫描通过；位置0逐位恒等及输出哨兵检查通过。
+- 原始CMakeLists.txt保持CMAKE_CXX_STANDARD 14，不添加额外编译参数；ASC使用CANN工具链默认语言模式。
+
+| 用例 | 当前原生event us |
+|---|---:|
+| deepseek_half | 30.896 |
+| deepseek_float | 34.556 |
+| sequence8192 | 15.390 |
+| large_half | 99.122 |
+
+典型FP16 profiling Task Duration=30.701 us。原始PMU CSV保存在benchmarks/profiles/kernel_only。
+
+当前kernel SHA256：`a8aa639279363162549fa46c0640d5b30fb641a2942dd3f0fca9a2ead5df7781`。
+
+打包时以固定原模板SHA256清单校验，verify_submission.py同时检查ZIP、解压目录和独立kernel；要求修改文件列表恰为["kernel.asc"]，新增和缺失文件列表为空。
+
+---
+
+# 以下为先前版本的历史优化记录
+
 # 最终验收与性能报告
 
 硬件：Ascend910_9392，48个AIV，1850 MHz；CANN 9.0.0，dav-2201。所有设备任务使用task-submit单卡短任务。

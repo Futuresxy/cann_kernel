@@ -1,0 +1,14 @@
+{
+  "source_sha256": "a8aa639279363162549fa46c0640d5b30fb641a2942dd3f0fca9a2ead5df7781",
+  "task_id": "task_20261015_043923_18268328922",
+  "device": 0,
+  "original_run_sh_passed": true,
+  "original_verifier_max_abs_error": 2.6226043701171875e-06,
+  "original_template_other_files_unchanged": true,
+  "representative_cases": 29,
+  "sweep_cases": 1010,
+  "extra_compile_options": [],
+  "submission_changed_files": [
+    "kernel.asc"
+  ]
+}

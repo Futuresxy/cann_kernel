@@ -15,7 +15,8 @@ benchmarks/results/                原生 event/host 时间与精度结果
 benchmarks/profiles/               profiling 原始 CSV、摘要和元数据
 docs/problem_statement.md          赛题说明
 docs/tuning_workflow.md             指标驱动的实验记录
-dist/                              自动生成的单文件与完整工程提交包
+dist/rotaryposemb_1743_submission/  严格原模板工程，仅kernel.asc不同
+dist/                              独立内核、提交ZIP、包外校验元数据
 build/                             二进制、临时输入输出、原始采集目录
 ```
 
@@ -28,13 +29,13 @@ bash tools/build.sh
 # 不占 NPU，预生成数据
 python3 tools/suite.py --generate-only
 # 一次仅申请一张卡，任务执行上限120秒
-task-submit --device auto --max-time 120 --run 'bash tools/device_suite.sh --label final'
+task-submit --device auto --max-time 120 --run 'bash tools/device_suite.sh --label kernel_only'
 # profiling：一次kernel、三个PMU组，90秒执行上限
-task-submit --device auto --max-time 90 --run 'bash tools/profile.sh --label final --case deepseek_half'
+task-submit --device auto --max-time 90 --run 'bash tools/profile.sh --label kernel_only --case deepseek_half'
 # 在CPU上重新汇总已有采集数据
-python3 tools/profile.py --label final --analyze-only
-python3 tools/report.py baseline_fixed final
-python3 tools/package.py --result final
+python3 tools/profile.py --label kernel_only --analyze-only
+python3 tools/report.py baseline_fixed kernel_only
+python3 tools/package.py --result kernel_only
 ```
 
 设备任务始终经过服务器 task-submit 队列。编译和报告在 CPU 上完成。不要将 profiler replay 内的 event 时间当作原生 kernel 性能；小算子 event 时间还会包含 host 下发空洞。
@@ -60,3 +61,20 @@ task-submit --device auto --max-time 90 --run 'bash tools/paired.sh --candidate 
 # 全部505个偶数维度 × 两种dtype：1010个精度用例
 task-submit --device auto --max-time 90 --run 'bash tools/device_suite.sh --label sweep --sweep --warmup 1 --repeat 1 --batches 1'
 ```
+
+## 仅允许修改kernel.asc的提交要求
+
+提交ZIP和`dist/rotaryposemb_1743_submission/`解压目录均只包含原始模板的8个文件：仅`kernel.asc`替换为优化实现，其余7个文件逐字节保持一致。不修改`CMakeLists.txt`、`main.asc`、`run.sh`，不新增包内manifest或其他文件。版本元数据只保存在提交目录外的`dist/manifest.json`。
+
+源码中的类型转换分派已改用函数重载，移除了自写的`if constexpr`。实际编译严格采用原模板配置和工具链默认的ASC模式，不需要修改模板中的C++标准设置或添加编译参数。
+
+```bash
+# 检查ZIP、解压目录与原始模板：必须只有kernel.asc不同
+python3 tools/verify_submission.py
+# 使用包内原始CMakeLists.txt构建，未添加编译参数
+bash tools/check_submission_build.sh
+# 原始main.asc固定选择设备0，因此只申请该单卡
+task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.sh'
+```
+
+仓库根目录的开发构建工程、tools、tests及benchmarks仅用于本地测试和profiling，不进入比赛提交包。`templates/rotaryposemb_1743.sha256.json`记录用户原始ZIP中各文件的SHA256，打包和检查均使用这一固定基准。
