@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "sequence8192",
+    "shape": [
+      1,
+      8192,
+      1,
+      64
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/v1_h1",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/rope_runner --device 1 --shape 1 8192 1 64 --dtype float32 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/sequence8192 --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "d58b82b02dfc0536853af8f2a9f8e2c777b38a565d3671ae35ecce68f80b4af8",
+  "binary_sha256": "9b5ce3a15ad5ddfbdec89b4905bd7270190151f8964d28b8d7b132c441c85335"
+}

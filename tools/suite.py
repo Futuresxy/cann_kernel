@@ -5,7 +5,8 @@ import numpy as np
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 def generate(case, dest, seed):
     rng=np.random.default_rng(seed)
-    x=rng.uniform(-10,10,case['shape']).astype(case['dtype'])
+    scale=case.get('scale',10)
+    x=rng.uniform(-scale,scale,case['shape']).astype(case['dtype'])
     p=rng.integers(0,case['pmax'],case['shape'][:2],dtype=np.int32)
     if case.get('extreme'): p.flat[:min(4,p.size)]=[131072,131071,65536,0][:min(4,p.size)]
     if case.get('special'): x.flat[:4]=[np.nan,np.inf,-np.inf,-0.0]
@@ -15,7 +16,7 @@ def generate(case, dest, seed):
     angle=p.astype(np.float32)[...,None]*freq
     c=np.cos(angle)[...,None,:]; s=np.sin(angle)[...,None,:]
     a=x[...,:d//2].astype(np.float32);b=x[...,d//2:].astype(np.float32)
-    with np.errstate(invalid='ignore'):
+    with np.errstate(invalid='ignore',over='ignore'):
         y=np.concatenate((a*c-b*s,b*c+a*s),axis=-1).astype(x.dtype)
     y[p==0]=x[p==0] # Explicit position-zero identity required by the specification.
     dest.mkdir(parents=True,exist_ok=True)
@@ -39,26 +40,52 @@ def main():
     ap.add_argument('--label',default='current');ap.add_argument('--cases',default='all')
     ap.add_argument('--binary',default='build/rope_runner');ap.add_argument('--generate-only',action='store_true')
     ap.add_argument('--repeat',type=int,default=30);ap.add_argument('--batches',type=int,default=3)
-    args=ap.parse_args();cases=json.loads((ROOT/'tests/cases.json').read_text())
-    if args.cases!='all':cases=[c for c in cases if c['name'] in args.cases.split(',')]
+    ap.add_argument('--sweep',action='store_true');ap.add_argument('--warmup',type=int,default=5)
+    args=ap.parse_args();all_cases=json.loads((ROOT/'tests/cases.json').read_text())
+    if args.sweep:
+        all_cases=[dict(name=f'sweep_{d}_{dt}',shape=[1,4,3,d],dtype=dt,pmax=131073,extreme=True)
+                   for d in range(16,1025,2) for dt in ['float16','float32']]
+    cases=all_cases
+    if args.cases!='all':
+        requested=set(args.cases.split(','));known={c['name'] for c in cases}
+        if requested-known:ap.error('Unknown cases: '+','.join(sorted(requested-known)))
+        cases=[c for c in cases if c['name'] in requested]
     results=[];start=time.time()
-    source_sha=hashlib.sha256((ROOT/'operators/rotary_pos_emb/kernel.asc').read_bytes()).hexdigest()
+    meta_path=pathlib.Path(str(ROOT/args.binary)+'.meta.json')
+    meta=json.loads(meta_path.read_text()) if meta_path.exists() else {}
+    source_sha=meta.get('source_sha256',hashlib.sha256((ROOT/'operators/rotary_pos_emb/kernel.asc').read_bytes()).hexdigest())
     binary_sha=None if args.generate_only else hashlib.sha256((ROOT/args.binary).read_bytes()).hexdigest()
-    for i,case in enumerate(cases):
+    prepared=[];commands=[]
+    for case in cases:
         dest=ROOT/'build/data'/case['name']
-        seed=42+json.loads((ROOT/'tests/cases.json').read_text()).index(case)
-        x,p,y=generate(case,dest,seed)
+        x,p,y=generate(case,dest,42+all_cases.index(case))
         if args.generate_only:continue
-        cmd=[str(ROOT/args.binary),'--device',str(args.device),'--shape',*map(str,case['shape']),
-             '--dtype',case['dtype'],'--theta',str(case.get('theta',10000)),'--input',str(dest),
-             '--output',str(dest/'actual.bin'),'--repeat',str(args.repeat),'--batches',str(args.batches)]
-        proc=subprocess.run(cmd,text=True,capture_output=True,timeout=45)
+        prepared.append((case,dest,y))
+        cmd=['--shape',*map(str,case['shape']),'--dtype',case['dtype'],
+             '--theta',str(case.get('theta',10000)),'--input',str(dest),
+             '--output',str(dest/'actual.bin'),'--repeat',str(args.repeat),
+             '--batches',str(args.batches),'--warmup',str(args.warmup)]
+        commands.append(' '.join(cmd))
+    if not args.generate_only:
+        manifest=ROOT/'build'/f'batch_{args.label}.txt'
+        manifest.write_text('\n'.join(commands)+'\n')
+        cmd=[str(ROOT/args.binary),'--device',str(args.device),'--batch',str(manifest)]
+        proc=subprocess.run(cmd,text=True,capture_output=True,timeout=85)
         if proc.returncode:
-            print(proc.stdout,proc.stderr,flush=True);raise RuntimeError(case['name'])
-        actual=np.fromfile(dest/'actual.bin',dtype=case['dtype']).reshape(y.shape)
-        timing=json.loads(proc.stdout.strip().splitlines()[-1]);metrics=compare(actual,y)
-        result={**case,**timing,**metrics};results.append(result)
-        print(json.dumps(result),flush=True)
+            print(proc.stdout[-6000:],proc.stderr[-6000:],flush=True);raise RuntimeError('batch runner failed')
+        timings=[json.loads(line) for line in proc.stdout.splitlines() if line.startswith('{')]
+        if len(timings)!=len(prepared):raise RuntimeError('runner result count mismatch')
+        for (case,dest,y),timing in zip(prepared,timings):
+            actual=np.fromfile(dest/'actual.bin',dtype=case['dtype']).reshape(y.shape)
+            result={**case,**timing,**compare(actual,y)}
+            zero=np.fromfile(dest/'positions.bin',dtype=np.int32).reshape(case['shape'][:2])==0
+            x=np.fromfile(dest/'x.bin',dtype=case['dtype']).reshape(y.shape)
+            bits=np.uint32 if x.dtype==np.float32 else np.uint16
+            result['zero_identity_ok']=bool(np.array_equal(actual[zero].view(bits),x[zero].view(bits)))
+            result['passed'] &= result['zero_identity_ok']
+            results.append(result)
+            if not args.sweep or not result['passed']:print(json.dumps(result),flush=True)
+        if args.sweep:print(f"Sweep: {sum(c['passed'] for c in results)}/{len(results)} passed",flush=True)
     if not args.generate_only:
         path=ROOT/'benchmarks/results'/f'{args.label}.json'
         path.parent.mkdir(parents=True,exist_ok=True)

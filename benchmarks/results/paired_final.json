@@ -1,0 +1,237 @@
+{
+  "seconds": 40.13998508453369,
+  "binary_sha256": {
+    "baseline": "d449d03e25f552d9b4a4bbe636398ccdcdea5199f9c976e42b6bcc4243277a4d",
+    "candidate": "50a68d5b15d1b5f573d8e45906163a86b88cb014d03006128dbb4bf836a1dda1"
+  },
+  "cases": [
+    {
+      "case": {
+        "name": "deepseek_half",
+        "shape": [
+          2,
+          512,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "pmax": 8192
+      },
+      "device": 0,
+      "baseline_us": 159.3852005,
+      "candidate_us": 30.525201000000003,
+      "speedup": 5.221430007946548,
+      "samples": {
+        "baseline": [
+          {
+            "event_us": 159.509399,
+            "min_event_us": 159.341003,
+            "host_us": 160.331066,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "guard_ok": true
+          },
+          {
+            "event_us": 159.261002,
+            "min_event_us": 159.186203,
+            "host_us": 160.207444,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "guard_ok": true
+          }
+        ],
+        "candidate": [
+          {
+            "event_us": 30.610001,
+            "min_event_us": 30.4604,
+            "host_us": 31.2517,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "device": 0,
+            "guard_ok": true
+          },
+          {
+            "event_us": 30.440401,
+            "min_event_us": 30.428801,
+            "host_us": 31.100238,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "device": 0,
+            "guard_ok": true
+          }
+        ]
+      }
+    },
+    {
+      "case": {
+        "name": "deepseek_float",
+        "shape": [
+          2,
+          512,
+          128,
+          64
+        ],
+        "dtype": "float32",
+        "pmax": 8192
+      },
+      "device": 0,
+      "baseline_us": 135.158699,
+      "candidate_us": 34.219599,
+      "speedup": 3.9497452614801243,
+      "samples": {
+        "baseline": [
+          {
+            "event_us": 135.285004,
+            "min_event_us": 135.144394,
+            "host_us": 136.05807,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "guard_ok": true
+          },
+          {
+            "event_us": 135.032394,
+            "min_event_us": 134.906204,
+            "host_us": 136.06693,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "guard_ok": true
+          }
+        ],
+        "candidate": [
+          {
+            "event_us": 34.232399,
+            "min_event_us": 34.144199,
+            "host_us": 35.075178,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "device": 0,
+            "guard_ok": true
+          },
+          {
+            "event_us": 34.206799,
+            "min_event_us": 34.1236,
+            "host_us": 34.980898,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "device": 0,
+            "guard_ok": true
+          }
+        ]
+      }
+    },
+    {
+      "case": {
+        "name": "sequence8192",
+        "shape": [
+          1,
+          8192,
+          1,
+          64
+        ],
+        "dtype": "float32",
+        "pmax": 131073
+      },
+      "device": 0,
+      "baseline_us": 250.518494,
+      "candidate_us": 15.1150005,
+      "speedup": 16.57416379179081,
+      "samples": {
+        "baseline": [
+          {
+            "event_us": 250.431992,
+            "min_event_us": 250.381607,
+            "host_us": 251.642286,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "guard_ok": true
+          },
+          {
+            "event_us": 250.604996,
+            "min_event_us": 250.443985,
+            "host_us": 251.381602,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "guard_ok": true
+          }
+        ],
+        "candidate": [
+          {
+            "event_us": 15.066,
+            "min_event_us": 15.0112,
+            "host_us": 15.637352,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "device": 0,
+            "guard_ok": true
+          },
+          {
+            "event_us": 15.164001,
+            "min_event_us": 15.0274,
+            "host_us": 16.028974,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "device": 0,
+            "guard_ok": true
+          }
+        ]
+      }
+    },
+    {
+      "case": {
+        "name": "large_half",
+        "shape": [
+          4,
+          1024,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "pmax": 8192
+      },
+      "device": 0,
+      "baseline_us": 613.191498,
+      "candidate_us": 97.75410099999999,
+      "speedup": 6.272795634425609,
+      "samples": {
+        "baseline": [
+          {
+            "event_us": 612.867798,
+            "min_event_us": 612.7146,
+            "host_us": 613.824316,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "guard_ok": true
+          },
+          {
+            "event_us": 613.515198,
+            "min_event_us": 613.095398,
+            "host_us": 614.507582,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "guard_ok": true
+          }
+        ],
+        "candidate": [
+          {
+            "event_us": 97.682999,
+            "min_event_us": 97.6604,
+            "host_us": 98.447748,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "device": 0,
+            "guard_ok": true
+          },
+          {
+            "event_us": 97.825203,
+            "min_event_us": 97.782005,
+            "host_us": 98.647852,
+            "cores": 48,
+            "soc": "Ascend910_9392",
+            "device": 0,
+            "guard_ok": true
+          }
+        ]
+      }
+    }
+  ]
+}

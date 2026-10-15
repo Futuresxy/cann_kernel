@@ -1,7 +1,7 @@
 {
   "label": "baseline_fixed",
   "seconds": 47.857969522476196,
-  "source_sha256": "d58b82b02dfc0536853af8f2a9f8e2c777b38a565d3671ae35ecce68f80b4af8",
+  "source_sha256": "e258805e67b48ab6d953a97cfae0c994df4b465d51a465fb6c1d9a0aea63b9c7",
   "cases": [
     {
       "name": "template",
@@ -430,5 +430,6 @@
       "matched_ratio": 1.0,
       "max_abs_error": 0.0078125
     }
-  ]
+  ],
+  "binary_sha256": "d449d03e25f552d9b4a4bbe636398ccdcdea5199f9c976e42b6bcc4243277a4d"
 }
