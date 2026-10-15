@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "deepseek_half",
+    "shape": [
+      2,
+      512,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 8192
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/v2",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/rope_runner_v2 --device 8 --shape 2 512 128 64 --dtype float16 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/deepseek_half --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "8138618670d48ea3323c9bfcd1f35f048ff5e00be10c54f4bc8a940c8d814231",
+  "binary_sha256": "64abd80a6ef6ead7541428e2a796441be98e56894c57c56e9fe3efbc0d5301c4"
+}

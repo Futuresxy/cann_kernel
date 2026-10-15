@@ -1,0 +1,129 @@
+{
+  "label": "v2_smoke",
+  "seconds": 15.05994701385498,
+  "source_sha256": "8138618670d48ea3323c9bfcd1f35f048ff5e00be10c54f4bc8a940c8d814231",
+  "binary_sha256": "64abd80a6ef6ead7541428e2a796441be98e56894c57c56e9fe3efbc0d5301c4",
+  "cases": [
+    {
+      "name": "template",
+      "shape": [
+        1,
+        7,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "pmax": 50,
+      "event_us": 4.747333,
+      "min_event_us": 2.899333,
+      "host_us": 6.686178,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 1.9073486328125e-06
+    },
+    {
+      "name": "deepseek_half",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "event_us": 36.108665,
+      "min_event_us": 36.083332,
+      "host_us": 38.700933,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 0.0078125
+    },
+    {
+      "name": "deepseek_float",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float32",
+      "pmax": 8192,
+      "event_us": 39.817333,
+      "min_event_us": 39.299332,
+      "host_us": 43.587633,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 7.62939453125e-06
+    },
+    {
+      "name": "extreme_d1024",
+      "shape": [
+        1,
+        4,
+        2,
+        1024
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "extreme": true,
+      "event_us": 16.345999,
+      "min_event_us": 12.169333,
+      "host_us": 17.583056,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 5.7220458984375e-06
+    },
+    {
+      "name": "dim30",
+      "shape": [
+        2,
+        31,
+        7,
+        30
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "event_us": 8.532,
+      "min_event_us": 8.054,
+      "host_us": 10.778889,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 5.7220458984375e-06
+    },
+    {
+      "name": "large_half",
+      "shape": [
+        4,
+        1024,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "event_us": 122.770668,
+      "min_event_us": 122.512665,
+      "host_us": 125.725656,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 0.0078125
+    }
+  ]
+}
