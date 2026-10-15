@@ -42,6 +42,8 @@ def main():
     args=ap.parse_args();cases=json.loads((ROOT/'tests/cases.json').read_text())
     if args.cases!='all':cases=[c for c in cases if c['name'] in args.cases.split(',')]
     results=[];start=time.time()
+    source_sha=hashlib.sha256((ROOT/'operators/rotary_pos_emb/kernel.asc').read_bytes()).hexdigest()
+    binary_sha=None if args.generate_only else hashlib.sha256((ROOT/args.binary).read_bytes()).hexdigest()
     for i,case in enumerate(cases):
         dest=ROOT/'build/data'/case['name']
         seed=42+json.loads((ROOT/'tests/cases.json').read_text()).index(case)
@@ -61,7 +63,7 @@ def main():
         path=ROOT/'benchmarks/results'/f'{args.label}.json'
         path.parent.mkdir(parents=True,exist_ok=True)
         path.write_text(json.dumps(dict(label=args.label,seconds=time.time()-start,
-            source_sha256=hashlib.sha256((ROOT/'operators/rotary_pos_emb/kernel.asc').read_bytes()).hexdigest(),
+            source_sha256=source_sha,binary_sha256=binary_sha,
             cases=results),indent=2)+'\n')
         if not all(c['passed'] for c in results):raise SystemExit(1)
 if __name__=='__main__':main()
