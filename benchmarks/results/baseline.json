@@ -1,0 +1,108 @@
+{
+  "label": "baseline",
+  "seconds": 12.596412181854248,
+  "source_sha256": "945e1ccec95131510ad5aeddcdace384f77bad14a9b9e8694cf9d1c3c8f43ffd",
+  "cases": [
+    {
+      "name": "template",
+      "shape": [
+        1,
+        7,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "pmax": 50,
+      "event_us": 5.714667,
+      "min_event_us": 3.582667,
+      "host_us": 7.225622,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 1.9073486328125e-06
+    },
+    {
+      "name": "tiny",
+      "shape": [
+        1,
+        8,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "pmax": 8,
+      "event_us": 5.01,
+      "min_event_us": 3.266667,
+      "host_us": 6.721833,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 9.5367431640625e-07
+    },
+    {
+      "name": "unaligned_half",
+      "shape": [
+        2,
+        16,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "event_us": 6.194,
+      "min_event_us": 5.782667,
+      "host_us": 10.396878,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 2.384185791015625e-07
+    },
+    {
+      "name": "deepseek_half",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "event_us": 159.629333,
+      "min_event_us": 159.50267,
+      "host_us": 163.044567,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 0.0078125
+    },
+    {
+      "name": "extreme_d1024",
+      "shape": [
+        1,
+        4,
+        2,
+        1024
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "extreme": true,
+      "event_us": 15.674666,
+      "min_event_us": 13.322666,
+      "host_us": 17.616956,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 2.384185791015625e-06
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+[
+ {"name":"template","shape":[1,7,1,16],"dtype":"float32","pmax":50},
+ {"name":"tiny","shape":[1,8,1,16],"dtype":"float32","pmax":8},
+ {"name":"odd_stride_fp32","shape":[1,3,2,20],"dtype":"float32","pmax":3},
+ {"name":"unaligned_half","shape":[2,16,3,24],"dtype":"float16","pmax":8192},
+ {"name":"deepseek_half","shape":[2,512,128,64],"dtype":"float16","pmax":8192},
+ {"name":"deepseek_float","shape":[2,512,128,64],"dtype":"float32","pmax":8192},
+ {"name":"extreme_d1024","shape":[1,4,2,1024],"dtype":"float32","pmax":131073,"extreme":true},
+ {"name":"extreme_d64","shape":[2,16,3,64],"dtype":"float32","pmax":131073,"extreme":true},
+ {"name":"dim18","shape":[3,17,5,18],"dtype":"float16","pmax":131073},
+ {"name":"dim30","shape":[2,31,7,30],"dtype":"float32","pmax":131073},
+ {"name":"dim514","shape":[1,7,3,514],"dtype":"float32","pmax":131073},
+ {"name":"dim1022","shape":[1,3,1,1022],"dtype":"float16","pmax":131073},
+ {"name":"batch128","shape":[128,32,1,16],"dtype":"float16","pmax":8192},
+ {"name":"sequence8192","shape":[1,8192,1,64],"dtype":"float32","pmax":131073},
+ {"name":"heads256","shape":[1,32,256,128],"dtype":"float16","pmax":131073},
+ {"name":"theta1000","shape":[2,19,5,80],"dtype":"float32","pmax":131073,"theta":1000},
+ {"name":"theta500000","shape":[2,19,5,96],"dtype":"float16","pmax":131073,"theta":500000},
+ {"name":"theta1","shape":[1,5,2,34],"dtype":"float32","pmax":131073,"theta":1},
+ {"name":"zero","shape":[1,5,3,24],"dtype":"float32","pmax":1,"special":true},
+ {"name":"nonfinite","shape":[1,5,3,24],"dtype":"float32","pmax":8192,"special":true},
+ {"name":"large_half","shape":[4,1024,128,64],"dtype":"float16","pmax":8192}
+]
