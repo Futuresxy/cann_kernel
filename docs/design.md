@@ -6,7 +6,9 @@
 
 - 对齐、多 head：dim 为16倍数且不大于512，整行连续 DMA。按 token/head 切块，输入输出双队列分别复用两个 UB 缓冲。向量指令 `src1RepStride=0` 广播同 token 的 cos/sin；两次 Mul 和两次 MulAddDst 完成前后半维旋转。
 - 单 head：满足对齐条件、token数至少16时，最多64个 token 合批。角度按 token 生成，三角函数对整个批次连续向量化，旋转时使用不同的 repeat stride 访问 x 与紧凑 cos/sin。
-- 通用：其他偶数维度用 DataCopyPad 分别装载前后两半，每行填充到16个元素的倍数。GM stride 使用字节，UB stride 使用32字节块，输出只写有效元素。dim 大于512时拆成两个频率分区，避免超过编译器默认1536字节参数上限。
+- 通用：其他偶数维度用 DataCopyPad 分别装载前后两半，每行填充到16个元素的倍数。GM stride 使用字节，UB stride 使用32字节块，输出只写有效元素。dim 大于512也在一次kernel启动中处理完整前后半维，不再在host按列分区启动两次。
+
+宽维度的512个FP32频率不能直接放入默认1536字节的kernel参数区。`WideFrequencies`保存128个FP32种子、3个FP32比例和384个int16 ULP修正值，总计1292字节。host先独立计算每个频率，再记录它与种子乘比例所得FP32值的位模式差；设备端乘法后应用整数修正，恢复对应FP32频率。修正值用于无损编码，不把频率降为FP16。全部角度、cos/sin与旋转仍在同一个kernel中完成。
 
 ## 精度路径
 
@@ -17,6 +19,8 @@
 5. 缩减后的角度除以4，在[-π/4,π/4]使用9阶sin多项式。由正平方根恢复cos，再使用两次二倍角公式恢复原角度的sin/cos。所有步骤均为FP32。
 6. 旋转乘加保持FP32，FP16仅最终一次转换。FMA与分离乘加的舍入差异通过赛题误差规则验收。
 7. position=0直接复制输入。通用路径补充MTE2→MTE3同步；对齐和合批路径经过VEC输出队列，保证跨流水线依赖。
+
+`run_kernel`每条分支只调用一个kernel，宽维度分支启动后立即返回。测试runner用链接器包装实际`aclrtLaunchKernelWithHostArgs`接口，逐次检查启动数；另用非replay的msprof设备任务记录校验75次调用恰有75个AI_VECTOR_CORE任务。测试包装器不进入提交文件。
 
 官方高阶 Sin 的输入范围和临时空间约束见[华为 Sin API](https://www.hiascend.com/document/detail/en/canncommercial/850/API/ascendcopapi/atlasascendc_api_07_0500.html)。本实现使用融合三角函数路径，并以实际设备误差与PMU指标验收。
 

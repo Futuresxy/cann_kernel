@@ -1,0 +1,21 @@
+{
+  "version": "ROPE1743_SINGLE_LAUNCH_V3",
+  "source_sha256": "ee0613601ab08a72d401203035bf2ab7b9c4b08fa04f332eb39a7518ddd77130",
+  "original_template_compile": true,
+  "original_template_device_run": false,
+  "original_template_device_run_note": "Device 0 was occupied; the public template case passed through the ABI-compatible runner on device 12",
+  "device_task": "task_20261015_053910_35829271829",
+  "device": 12,
+  "max_device_task_seconds": 60,
+  "device_task_exit": 0,
+  "device_released": true,
+  "representative_passed": 37,
+  "sweep_passed": 1010,
+  "per_invocation_audit_count": 2242,
+  "each_audited_invocation_launched_exactly_one_kernel": true,
+  "msprof_run_kernel_calls": 75,
+  "old_device_kernel_tasks": 85,
+  "new_device_kernel_tasks": 75,
+  "profile_task_us": 30.860617,
+  "platform_hidden_cases_tested": false
+}

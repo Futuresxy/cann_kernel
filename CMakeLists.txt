@@ -8,3 +8,8 @@ set(ROPE_KERNEL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/operators/rotary_pos_emb" CACHE
 target_include_directories(rope_runner PRIVATE ${ROPE_KERNEL_DIR} templates/rotaryposemb_1743)
 target_link_libraries(rope_runner PRIVATE tiling_api register platform unified_dlog dl m graph_base)
 target_compile_options(rope_runner PRIVATE $<$<COMPILE_LANGUAGE:ASC>:--npu-arch=${NPU_ARCH}>)
+option(ROPE_LAUNCH_AUDIT "Count real runtime kernel launches for every run_kernel invocation" OFF)
+if(ROPE_LAUNCH_AUDIT)
+    target_compile_definitions(rope_runner PRIVATE ROPE_LAUNCH_AUDIT=1)
+    target_link_options(rope_runner PRIVATE -Wl,--wrap=aclrtLaunchKernelWithHostArgs)
+endif()

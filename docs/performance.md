@@ -1,4 +1,38 @@
-# 当前上传版：ROPE1743_COMPLETE_V2
+# 当前上传版：ROPE1743_SINGLE_LAUNCH_V3
+
+源码471行、23153字节，SHA256 `ee0613601ab08a72d401203035bf2ab7b9c4b08fa04f332eb39a7518ddd77130`。恢复可读排版；原模板仅kernel.asc不同，其余7个文件原样保留。
+
+## 修复的规则违规
+
+旧版dim>512会按列分区启动两个kernel。以本地15例、每例5次构造回归，设备msprof记录旧版75次run_kernel调用产生85个AI_VECTOR_CORE任务；新版本为75/75。这里的15例为自建回归，未声称取得平台隐藏输入。
+
+新版本在单个kernel内处理完整半维；频率采用1292字节的FP32种子、比例与整数ULP修正编码，满足kernel参数限制，同时保留独立FP32 pow/倒数计算的频率。
+
+## 本次设备验收
+
+- 原始模板8文件干净构建通过，仅替换kernel.asc；未改变原CMake编译配置。
+- task-submit任务`task_20261015_053910_35829271829`，只申请物理卡12，60秒限时，exit=0且设备已释放。
+- 原始main.asc固定设备0，而设备0当时被其他任务占用；本次未在卡12强行运行该main。模板公开样例由相同run_kernel ABI的通用runner验证通过。
+- 原生精度集37/37通过；包含新增宽维度theta=0.5/1/1.0001/1000/500000、FP16、全零位置及NaN/Inf。
+- 对37例的222次调用逐次拦截真实CANN启动API，全部恰好一次启动。
+- 1010/1010项全部偶数维度×两种dtype扫描通过；2020次调用逐次启动检查通过。
+- 独立设备msprof：75次调用、75个kernel任务。旧版对照为75次调用、85个任务。
+- 位置0逐位恒等与输出边界哨兵均通过。
+
+| 用例 | 原生event us |
+|---|---:|
+| deepseek_half | 30.518 |
+| deepseek_float | 34.169 |
+| sequence8192 | 15.072 |
+| large_half | 98.871 |
+
+典型FP16 PMU Task Duration=30.861 us，VEC ratio=72.70%。本次测量在卡12完成，未作新版与历史卡0数据的配对加速比比较。结果见`benchmarks/results/single_launch_v3*.json`，启动次数证据见`benchmarks/profiles/launch_count_v3`和`launch_count_v2_repro`，PMU见`benchmarks/profiles/single_launch_v3`。
+
+打包新增硬性门槛：精度结果、逐次启动检查、设备启动计数必须全部对应当前源码，且设备计数对应相同原生runner二进制。只采样一次的msprof op用于性能优化；它不能代替完整迭代启动数检查。
+
+---
+
+# 历史上传版：ROPE1743_COMPLETE_V2
 
 当前提交内核为80行、16363字节，SHA256 `ce88361cb0128edf5b0a049f37095feeb93c0564b81c0c7b975e97b0c951d7f3`。只合并空白和移除注释，运算代码与先前版本相同。原模板的其他7个文件逐字节保留。
 

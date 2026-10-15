@@ -328,5 +328,106 @@
     "dtype": "float16",
     "pmax": 131073,
     "scale": 60000
+  },
+  {
+    "name": "wide_theta1000",
+    "shape": [
+      1,
+      17,
+      3,
+      600
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "theta": 1000,
+    "extreme": true
+  },
+  {
+    "name": "wide_theta500000",
+    "shape": [
+      1,
+      13,
+      5,
+      768
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "theta": 500000,
+    "extreme": true
+  },
+  {
+    "name": "wide_theta1",
+    "shape": [
+      1,
+      11,
+      3,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "theta": 1,
+    "extreme": true
+  },
+  {
+    "name": "wide_theta_near1",
+    "shape": [
+      1,
+      7,
+      2,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "theta": 1.0001,
+    "extreme": true
+  },
+  {
+    "name": "wide_theta_half",
+    "shape": [
+      1,
+      5,
+      3,
+      514
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "theta": 0.5,
+    "extreme": true
+  },
+  {
+    "name": "wide_half",
+    "shape": [
+      1,
+      7,
+      17,
+      1024
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true
+  },
+  {
+    "name": "wide_zero",
+    "shape": [
+      1,
+      7,
+      3,
+      770
+    ],
+    "dtype": "float16",
+    "pmax": 1,
+    "special": true
+  },
+  {
+    "name": "wide_nonfinite",
+    "shape": [
+      1,
+      7,
+      3,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "special": true
   }
 ]

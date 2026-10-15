@@ -1,0 +1,39 @@
+{
+  "label": "launch_count_v3",
+  "source_sha256": "ee0613601ab08a72d401203035bf2ab7b9c4b08fa04f332eb39a7518ddd77130",
+  "binary_sha256": "9f8cbb5c26b2fc1bc657536bf75aebb4c41261425adc21eb420980fa7b17b35c",
+  "local_cases": [
+    "template",
+    "tiny",
+    "odd_stride_fp32",
+    "unaligned_half",
+    "deepseek_half",
+    "deepseek_float",
+    "extreme_d1024",
+    "extreme_d64",
+    "dim18",
+    "dim30",
+    "dim514",
+    "batch128",
+    "sequence8192",
+    "heads256",
+    "aligned_d512_fp32"
+  ],
+  "case_count": 15,
+  "calls_per_case": 5,
+  "run_kernel_calls": 75,
+  "actual_device_kernel_tasks": 75,
+  "expected_device_kernel_tasks": 75,
+  "single_kernel_rule_passed": true,
+  "command": [
+    "msprof",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/launch_profiles/launch_count_v3",
+    "--runtime-api=on",
+    "--task-time=on",
+    "--ai-core=off",
+    "--aicpu=off",
+    "--type=text",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/rope_runner_single_launch_v3 --device 12 --batch /data/pyptouser/songxiaoyou/cann_kernel/project/build/launch_profiles/launch_count_v3/cases.txt"
+  ],
+  "platform_hidden_cases_tested": false
+}

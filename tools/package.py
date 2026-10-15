@@ -12,6 +12,8 @@ from verify_submission import ROOT, original_template, sha256, verify
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--result', default='kernel_only')
+    ap.add_argument('--launch-profile', required=True,
+                    help='msprof launch-count regression result for this source')
     args = ap.parse_args()
     source = (ROOT/'operators/rotary_pos_emb/kernel.asc').read_bytes()
     digest = sha256(source)
@@ -24,6 +26,18 @@ def main():
         raise SystemExit('Correctness gate failed')
     if result['source_sha256'] != digest:
         raise SystemExit('Results do not belong to current source; rebuild and retest')
+    audit = json.loads((ROOT/'benchmarks/results'/f'{args.result}_audit.json').read_text())
+    if audit['source_sha256'] != digest or {c['name'] for c in audit['cases']} != names:
+        raise SystemExit('Per-invocation launch audit does not cover the current source/cases')
+    if not all(c['passed'] and c.get('launch_audit') and c.get('one_kernel_per_iteration')
+               and c['iterations'] == c['kernel_launches'] for c in audit['cases']):
+        raise SystemExit('Each run_kernel invocation must launch exactly one kernel')
+    launches = json.loads((ROOT/'benchmarks/profiles'/args.launch_profile/'launch_count.json').read_text())
+    if (launches['source_sha256'] != digest
+            or launches['binary_sha256'] != result['binary_sha256']
+            or not launches['single_kernel_rule_passed']
+            or launches['actual_device_kernel_tasks'] != launches['run_kernel_calls']):
+        raise SystemExit('Device profiling must confirm one kernel task per invocation')
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     committed = subprocess.check_output(
         ['git', 'show', revision+':operators/rotary_pos_emb/kernel.asc'], cwd=ROOT)
@@ -55,6 +69,8 @@ def main():
             z.writestr(name, data)
     metadata = dict(problem=1743, git_commit=revision, kernel_sha256=digest,
                     result=args.result, validated_case_count=len(result['cases']),
+                    launch_audit=args.result+'_audit', launch_profile=args.launch_profile,
+                    single_kernel_per_iteration=True,
                     template_diff=diff, platform_hidden_cases_tested=False)
     (dest/'manifest.json').write_text(json.dumps(metadata, indent=2)+'\n')
     print(json.dumps(dict(kernel=str(dest/'kernel.asc'), archive=str(archive),
