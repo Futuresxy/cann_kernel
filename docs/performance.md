@@ -1,3 +1,17 @@
+# 当前上传版：ROPE1743_COMPLETE_V2
+
+当前提交内核为80行、16363字节，SHA256 `ce88361cb0128edf5b0a049f37095feeb93c0564b81c0c7b975e97b0c951d7f3`。只合并空白和移除注释，运算代码与先前版本相同。原模板的其他7个文件逐字节保留。
+
+- 原模板干净构建PASS。
+- 29/29代表用例、1010/1010维度扫描PASS。
+- 典型FP16原生event：30.731 us。
+- profiling Task Duration：30.641 us。
+- 完整性首行标记：`// ROPE1743_COMPLETE_V2`。
+
+以下保留旧版验证与调优记录，旧版源码SHA256仅用于其对应历史测量。
+
+---
+
 # 当前提交：仅修改kernel.asc
 
 提交工程以用户最初上传的ZIP为基准，只允许kernel.asc内容不同。CMakeLists.txt、main.asc、run.sh、data_utils.h和三个Python脚本均逐字节保持原样；包内无manifest、测试工具或其他新增文件。

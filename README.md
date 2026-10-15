@@ -29,13 +29,13 @@ bash tools/build.sh
 # 不占 NPU，预生成数据
 python3 tools/suite.py --generate-only
 # 一次仅申请一张卡，任务执行上限120秒
-task-submit --device auto --max-time 120 --run 'bash tools/device_suite.sh --label kernel_only'
+task-submit --device auto --max-time 120 --run 'bash tools/device_suite.sh --label compact_v2'
 # profiling：一次kernel、三个PMU组，90秒执行上限
-task-submit --device auto --max-time 90 --run 'bash tools/profile.sh --label kernel_only --case deepseek_half'
+task-submit --device auto --max-time 90 --run 'bash tools/profile.sh --label compact_v2 --case deepseek_half'
 # 在CPU上重新汇总已有采集数据
-python3 tools/profile.py --label kernel_only --analyze-only
-python3 tools/report.py baseline_fixed kernel_only
-python3 tools/package.py --result kernel_only
+python3 tools/profile.py --label compact_v2 --analyze-only
+python3 tools/report.py baseline_fixed compact_v2
+python3 tools/package.py --result compact_v2
 ```
 
 设备任务始终经过服务器 task-submit 队列。编译和报告在 CPU 上完成。不要将 profiler replay 内的 event 时间当作原生 kernel 性能；小算子 event 时间还会包含 host 下发空洞。
@@ -78,3 +78,11 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 ```
 
 仓库根目录的开发构建工程、tools、tests及benchmarks仅用于本地测试和profiling，不进入比赛提交包。`templates/rotaryposemb_1743.sha256.json`记录用户原始ZIP中各文件的SHA256，打包和检查均使用这一固定基准。
+
+## 当前上传版完整性标记
+
+当前kernel.asc为80行、16363字节，第一行`// ROPE1743_COMPLETE_V2`，末行为`// END_ROPE1743_V2`。它只合并空白并删除旧注释，非注释代码与5e5d63e版本归一化后相同，已重新通过原模板构建、29例精度和1010项维度扫描。
+
+连续两份平台报错文本完全相同，都将旧完整版第289行当作kernel.asc第1行；本地截取末尾128行可以复现同样报错，但无法仅凭日志确认截断发生在预览、粘贴、上传或平台处理哪一步。80行版本用于排除按末尾128行复制导致丢失前缀的可能，并使实际提交版本可核对；这并不证明平台存在128行限制。
+
+下载完整文件或解压仅含kernel.asc的传输ZIP后覆盖提交。平台保存的第一行应当包含上述版本标记。原始模板的其余7个文件保持不变。
