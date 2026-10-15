@@ -44,7 +44,8 @@ def main():
     results=[];start=time.time()
     for i,case in enumerate(cases):
         dest=ROOT/'build/data'/case['name']
-        x,p,y=generate(case,dest,42+i)
+        seed=42+json.loads((ROOT/'tests/cases.json').read_text()).index(case)
+        x,p,y=generate(case,dest,seed)
         if args.generate_only:continue
         cmd=[str(ROOT/args.binary),'--device',str(args.device),'--shape',*map(str,case['shape']),
              '--dtype',case['dtype'],'--theta',str(case.get('theta',10000)),'--input',str(dest),
