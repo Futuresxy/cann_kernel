@@ -31,12 +31,12 @@ bash tools/build_launch_audit.sh
 python3 tools/suite.py --generate-only
 # 单卡、60秒上限：精度、逐次启动检查、设备任务数与一次PMU
 # 15个本地回归形状×5次调用，设备kernel任务数必须为75
-task-submit --device auto --max-time 60 --run 'bash tools/validate_single_launch.sh'
+task-submit --device auto --max-time 60 --run 'bash tools/validate_single_launch.sh --label restored_full_v3 --launch-label restored_full_v3_launches'
 # CPU汇总已有采集数据
-python3 tools/profile.py --label single_launch_v3 --analyze-only
-python3 tools/report.py baseline_fixed single_launch_v3
+python3 tools/profile.py --label restored_full_v3 --analyze-only
+python3 tools/report.py baseline_fixed restored_full_v3
 # 当前kernel先提交Git；打包要求精度与两类启动检查对应同一源码
-python3 tools/package.py --result single_launch_v3 --launch-profile launch_count_v3
+python3 tools/package.py --result restored_full_v3 --launch-profile restored_full_v3_launches
 ```
 
 设备任务始终经过服务器 task-submit 队列。编译和报告在 CPU 上完成。不要将 profiler replay 内的 event 时间当作原生 kernel 性能；小算子 event 时间还会包含 host 下发空洞。
@@ -87,3 +87,9 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 本地设备Profiling复现旧版75次调用产生85个kernel任务，新版为75/75。37例精度、1010项维度扫描，以及222+2020次逐次启动检查均通过。详细证据与提交源码哈希见`docs/performance.md`。
 
 `tests/launch_audit.h`与根目录CMake新增选项只用于本地runner。提交模板中的CMakeLists.txt、main.asc、run.sh等7个文件原样保留。
+
+## 完整源码的下载与复制
+
+`dist/kernel_full_source.txt`为完整471行源码，与`dist/kernel.asc`字节一致；`dist/kernel_upload.zip`只含完整kernel.asc。解压后替换平台整个源码，纯文本可用于编辑器的全选复制。打包后的manifest同时给出首行、末行、行数、字节数及SHA256，校验器会比对两种下载与正式工程。
+
+如果平台源码第一行是`auto input=in_.DeQue<T>()`，它对应完整版第353行，缺少必要的前文定义；详情和复现记录见`docs/compile_error_analysis.md`。

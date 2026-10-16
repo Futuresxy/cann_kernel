@@ -1,0 +1,23 @@
+{
+  "version": "ROPE1743_SINGLE_LAUNCH_V3",
+  "kernel_sha256": "ee0613601ab08a72d401203035bf2ab7b9c4b08fa04f332eb39a7518ddd77130",
+  "kernel_bytes": 23153,
+  "kernel_lines": 471,
+  "platform_fragment_first_line_in_complete_source": 353,
+  "missing_prefix_lines": 352,
+  "incomplete_fragment_reproduced_first_line_errors": true,
+  "original_template_build_passed": true,
+  "original_template_device_run_passed": true,
+  "template_max_abs_error": 2.6226043701171875e-06,
+  "representative_passed": 37,
+  "sweep_passed": 1010,
+  "audited_invocations": 2242,
+  "profile_kernel_calls": 75,
+  "profile_kernel_launches": 75,
+  "device_task": "task_20261015_175641_154005811813",
+  "device": 0,
+  "max_task_seconds": 60,
+  "task_exit": 0,
+  "device_released": true,
+  "platform_hidden_cases_tested": false
+}

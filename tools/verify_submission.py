@@ -60,6 +60,11 @@ def main():
         raise ValueError('Archive/directory differ')
     if (ROOT/'dist/kernel.asc').read_bytes() != source:
         raise ValueError('Standalone kernel differs')
+    if (ROOT/'dist/kernel_full_source.txt').read_bytes() != source:
+        raise ValueError('Full-text download differs from the validated source')
+    with ZipFile(ROOT/'dist/kernel_upload.zip') as z:
+        if z.namelist() != ['kernel.asc'] or z.read('kernel.asc') != source:
+            raise ValueError('Kernel-only upload archive differs from the validated source')
     print(json.dumps(result, indent=2))
 
 

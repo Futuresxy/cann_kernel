@@ -62,18 +62,29 @@ def main():
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
     (dest/'kernel.asc').write_bytes(source)
+    # A plain-text copy is convenient for editors whose .asc preview opens a
+    # fragment. Both downloads contain the entire, byte-identical source.
+    (dest/'kernel_full_source.txt').write_bytes(source)
+    upload_archive = dest/'kernel_upload.zip'
+    with ZipFile(upload_archive, 'w', ZIP_DEFLATED) as z:
+        z.writestr('kernel.asc', source)
     archive = dest/'rotaryposemb_1743_submission.zip'
     with ZipFile(archive, 'w', ZIP_DEFLATED) as z:
         z.writestr('scripts/', b'')
         for name, data in sorted(payload.items()):
             z.writestr(name, data)
     metadata = dict(problem=1743, git_commit=revision, kernel_sha256=digest,
+                    kernel_bytes=len(source), kernel_lines=len(source.splitlines()),
+                    kernel_first_line=source.splitlines()[0].decode(),
+                    kernel_last_line=source.splitlines()[-1].decode(),
                     result=args.result, validated_case_count=len(result['cases']),
                     launch_audit=args.result+'_audit', launch_profile=args.launch_profile,
                     single_kernel_per_iteration=True,
                     template_diff=diff, platform_hidden_cases_tested=False)
     (dest/'manifest.json').write_text(json.dumps(metadata, indent=2)+'\n')
     print(json.dumps(dict(kernel=str(dest/'kernel.asc'), archive=str(archive),
+                          full_text=str(dest/'kernel_full_source.txt'),
+                          kernel_only_archive=str(upload_archive),
                           directory=str(directory), **metadata), indent=2))
 
 
