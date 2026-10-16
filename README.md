@@ -28,18 +28,22 @@ build/                             二进制、临时输入输出、原始采集
 要求 CANN 9.0（当前验证版本）、支持 `find_package(ASC)` 的 bisheng，Python 3 + NumPy。默认 Ascend A2/A3 的 `dav-2201`；本机已验证 SoC 为 Ascend910_9392。
 
 ```bash
+bash tools/build_revision.sh 0a4281f platform_v4
 bash tools/build.sh
 bash tools/build_launch_audit.sh
-# 不占NPU，预生成数据
-python3 tools/suite.py --generate-only
-# 单卡、60秒上限：精度、逐次启动检查、设备任务数与一次PMU
-# 15个本地回归形状×5次调用，设备kernel任务数必须为75
-task-submit --device auto --max-time 60 --run 'bash tools/validate_single_launch.sh --label restored_full_v3 --launch-label restored_full_v3_launches'
-# CPU汇总已有采集数据
-python3 tools/profile.py --label restored_full_v3 --analyze-only
-python3 tools/report.py baseline_fixed restored_full_v3
-# 当前kernel先提交Git；打包要求精度与两类启动检查对应同一源码
-python3 tools/package.py --result restored_full_v3 --launch-profile restored_full_v3_launches
+# CPU准备输入，不申请NPU
+bash tools/validate_profiled_v6.sh --phase prepare
+# 各阶段串行申请单卡，等待完成释放后执行下一条
+# correctness包含52项回归、逐次API审计和75/75设备任务检查
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v6.sh --phase correctness'
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v6.sh --phase precision'
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v6.sh --phase sweeps'
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v6.sh --phase aligned_audit'
+# 当前kernel先提交Git；打包同时要求参考精度、V4逐位比较和两类启动检查
+python3 tools/package.py --result profiled_v6 --launch-profile profiled_v6_launches \
+  --extra-result profiled_v6_sweep --extra-result profiled_v6_packed_sweep \
+  --extra-result profiled_v6_path_sweep --extra-result profiled_v6_aligned_audit \
+  --bitwise-result profiled_v6_bits --bitwise-result profiled_v6_extended_bits
 ```
 
 设备任务始终经过服务器 task-submit 队列。编译和报告在 CPU 上完成。不要将 profiler replay 内的 event 时间当作原生 kernel 性能；小算子 event 时间还会包含 host 下发空洞。
@@ -61,9 +65,9 @@ python3 tools/package.py --result restored_full_v3 --launch-profile restored_ful
 bash tools/build_revision.sh e35b0cc baseline
 # 同一卡上按 baseline/candidate/candidate/baseline 交替采样
 # candidate 参数可指定当前已保存的候选二进制
-task-submit --device auto --max-time 90 --run 'bash tools/paired.sh --candidate build/rope_runner'
+task-submit --device auto --max-time 60 --run 'bash tools/paired.sh --candidate build/rope_runner'
 # 全部505个偶数维度 × 两种dtype：1010个精度用例
-task-submit --device auto --max-time 90 --run 'bash tools/device_suite.sh --label sweep --sweep --warmup 1 --repeat 1 --batches 1'
+task-submit --device auto --max-time 60 --run 'bash tools/device_suite.sh --label sweep --sweep --warmup 1 --repeat 1 --batches 1'
 ```
 
 ## 仅允许修改kernel.asc的提交要求
@@ -83,15 +87,13 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 
 仓库根目录的开发构建工程、tools、tests及benchmarks仅用于本地测试和profiling，不进入比赛提交包。`templates/rotaryposemb_1743.sha256.json`记录用户原始ZIP中各文件的SHA256，打包和检查均使用这一固定基准。
 
-## 当前稳定版与实验状态
+## 当前提交候选V6与平台基线V4
 
-当前正式源码恢复为平台15点精度通过的 V4（`ROPE1743_PROFILED_V4`），与提交 `0a4281f` 的 kernel.asc 逐字节一致。V5 被平台反馈为两个用例出现2.36%数值错误，且测试13、14退化，已撤回；其历史报告和实验数据保留用于分析，不作为可提交版本。
+当前源码为 `ROPE1743_PROFILED_V6`，基于平台15点通过的V4继续优化。三角函数、旋转和中间结果均保留FP32。保留FP32直接在队列上计算、非对齐连续DMA、宽维单head合批，以及保持V4乘加顺序的positions向量化。平台隐藏点得分待提交验证，本地结果不能冒充平台成绩。
 
-本轮回退验证、逐位精度门槛、候选收益与未晋级原因见 [回退与第四轮实验报告](docs/rollback_v4_round4.md)。
+本地2190项回归通过，414项直接V4输出比较覆盖约2.42亿元素，新增差异为0；逐次API审计和75/75设备任务检查通过。对照、负收益候选、硬件流水数据与完整复现见 [V6报告](docs/profiled_v6.md)。同进程共享分配的ABBA/BAAB工具用 `tools/build_paired.sh` 构建、`tools/profile_balanced.py` 采集。
 
-稳定版的所有旋转算术保持FP32，撤回FP16原精度旋转和输出L2绕过策略。后续候选在独立实验目录中验证，正式提交包继续使用V4。精度门槛不放宽，并增加与V4直接逐位比较，避免局部通过率掩盖新增误差。
-
-本地runner保持输出512字节对齐，基线和候选必须由同一runner重建。恢复验证使用 `tools/validate_profiled_v5.sh --phase correctness --label rollback_v4`（脚本名为历史名称，实际验证当前构建的源码）。打包结果和源码哈希由 `dist/manifest.json` 记录；原模板的7个非kernel文件保持不变。
+完整提交包仍只替换kernel.asc，其余7文件保持附件模板原样。V4源码和提交包备份位于 `dist/history/profiled_v4/`；也可从Git 0a4281f重建。V5的FP16原精度旋转及缓存策略已因平台反馈撤回，历史记录见 [回退报告](docs/rollback_v4_round4.md)，不作为可提交版本。
 
 ## 完整源码的下载与复制
 

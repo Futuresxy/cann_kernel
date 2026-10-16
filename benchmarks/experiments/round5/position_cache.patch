@@ -1,0 +1,137 @@
+--- baseline.asc
++++ kernel.asc
+@@ -261,6 +261,8 @@
+         if (batch_ < 1) batch_ = 1;
+         cacheSize_ = batch_ * freqSize_;
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
++        pipe_.InitBuffer(positionCache_,((batch_+7)/8*8)*sizeof(int32_t));
++        positionEvent_=static_cast<event_t>(pipe_.FetchEventID(HardEvent::MTE2_S));
+         auto freq=trig_.Get<float>();
+         FillFrequencies(freq,f,half_,freqSize_,work_.Get<float>());
+         PipeBarrier<PIPE_ALL>();
+@@ -283,7 +285,7 @@
+         auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=c[cacheSize_];
+         auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[size_];
+         for (uint32_t row=0;row<count;++row)
+-            Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
++            Muls(angle[row*freqSize_],freq,static_cast<float>(positionCache_.Get<int32_t>().GetValue(row)),freqSize_);
+         
+         SinCosFp32(angle,c,s,q,temp,count*freqSize_);
+         Muls(angle,s,-1.0f,count*freqSize_);
+@@ -297,6 +299,7 @@
+         Prefetch(begin);
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
++        bool trigReady=false;
+         auto z=work_.Get<float>();auto r=z[size_];auto t=z[2*size_];
+         auto cosCache=trig_.Get<float>()[freqSize_];auto sinCache=cosCache[cacheSize_];
+         auto negCache=sinCache[cacheSize_];
+@@ -307,15 +310,26 @@
+             auto input=in_.DeQue<T>();
+             if(job+1<end)Prefetch(job+1);
+             uint64_t token=job/groups_;
+-            int32_t position=pos_.GetValue(token);
++            if(cached==static_cast<uint64_t>(-1) || token>=cached+cachedCount) {
++                cached=token;
++                uint64_t left=(end-1)/groups_+1-token;
++                cachedCount=left<batch_?left:batch_;
++                DataCopyPad(positionCache_.Get<int32_t>(),pos_[token],
++                    {1,cachedCount*uint32_t(sizeof(int32_t)),0,0,0},
++                    DataCopyPadExtParams<int32_t>{false,0,0,0});
++                SetFlag<HardEvent::MTE2_S>(positionEvent_);
++                WaitFlag<HardEvent::MTE2_S>(positionEvent_);
++                trigReady=false;
++            }
++            int32_t position=positionCache_.Get<int32_t>().GetValue(token-cached);
+             uint32_t rows=Rows(job), count=rows*dim_;
+             auto output=out_.AllocTensor<T>();
+             if(position==0) {
+                 DataCopy(output,input,count);
+             } else {
+-                if(cached==static_cast<uint64_t>(-1) || token>=cached+cachedCount) {
+-                    cachedCount=TrigBatch(token,(end-1)/groups_+1);
+-                    cached=token;
++                if(!trigReady) {
++                    TrigBatch(cached,cached+cachedCount);
++                    trigReady=true;
+                 }
+                 uint32_t trigOffset=(token-cached)*freqSize_;
+                 auto c=cosCache[trigOffset];auto s=sinCache[trigOffset];auto negs=negCache[trigOffset];
+@@ -345,7 +359,8 @@
+     TPipe pipe_;
+     TQue<QuePosition::VECIN,2> in_;
+     TQue<QuePosition::VECOUT,2> out_;
+-    TBuf<TPosition::VECCALC> work_,trig_;
++    TBuf<TPosition::VECCALC> work_,trig_,positionCache_;
++    event_t positionEvent_;
+     GlobalTensor<T> x_,y_;
+     GlobalTensor<int32_t> pos_;
+     uint64_t tokens_;
+@@ -471,6 +486,8 @@
+         if (batch_ < 1) batch_ = 1;
+         cacheSize_ = batch_ * freqSize_;
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
++        pipe_.InitBuffer(positionCache_,((batch_+7)/8*8)*sizeof(int32_t));
++        positionEvent_=static_cast<event_t>(pipe_.FetchEventID(HardEvent::MTE2_S));
+         auto freq=trig_.Get<float>();
+         FillFrequencies(freq,f,half_,freqSize_,work_.Get<float>());
+         PipeBarrier<PIPE_ALL>();
+@@ -493,7 +510,7 @@
+         auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=c[cacheSize_];
+         auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[workStride_];
+         for (uint32_t row=0;row<count;++row)
+-            Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
++            Muls(angle[row*freqSize_],freq,static_cast<float>(positionCache_.Get<int32_t>().GetValue(row)),freqSize_);
+         
+         SinCosFp32(angle,c,s,q,temp,count*freqSize_);
+         Muls(angle,s,-1.0f,count*freqSize_);
+@@ -507,6 +524,7 @@
+         Prefetch(begin);
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
++        bool trigReady=false;
+         auto z=work_.Get<float>();auto r=z[workStride_];
+         auto cosCache=trig_.Get<float>()[freqSize_];auto sinCache=cosCache[cacheSize_];
+         auto negCache=sinCache[cacheSize_];
+@@ -517,16 +535,27 @@
+             auto input=in_.DeQue<T>();
+             if(job+1<end)Prefetch(job+1);
+             uint64_t token=job/groups_;
+-            int32_t position=pos_.GetValue(token);
++            if(cached==static_cast<uint64_t>(-1) || token>=cached+cachedCount) {
++                cached=token;
++                uint64_t left=(end-1)/groups_+1-token;
++                cachedCount=left<batch_?left:batch_;
++                DataCopyPad(positionCache_.Get<int32_t>(),pos_[token],
++                    {1,cachedCount*uint32_t(sizeof(int32_t)),0,0,0},
++                    DataCopyPadExtParams<int32_t>{false,0,0,0});
++                SetFlag<HardEvent::MTE2_S>(positionEvent_);
++                WaitFlag<HardEvent::MTE2_S>(positionEvent_);
++                trigReady=false;
++            }
++            int32_t position=positionCache_.Get<int32_t>().GetValue(token-cached);
+             uint32_t rows=Rows(job), count=rows*dim_;
+             LocalTensor<T> output;
+             if(position==0) {
+                 output=out_.AllocTensor<T>();
+                 DataCopy(output,input,count);
+             } else {
+-                if(cached==static_cast<uint64_t>(-1) || token>=cached+cachedCount) {
+-                    cachedCount=TrigBatch(token,(end-1)/groups_+1);
+-                    cached=token;
++                if(!trigReady) {
++                    TrigBatch(cached,cached+cachedCount);
++                    trigReady=true;
+                 }
+                 uint32_t trigOffset=(token-cached)*freqSize_;
+                 auto c=cosCache[trigOffset];auto s=sinCache[trigOffset];auto negs=negCache[trigOffset];
+@@ -557,7 +586,8 @@
+     TPipe pipe_;
+     TQue<QuePosition::VECIN,2> in_;
+     TQue<QuePosition::VECOUT,2> out_;
+-    TBuf<TPosition::VECCALC> work_,trig_;
++    TBuf<TPosition::VECCALC> work_,trig_,positionCache_;
++    event_t positionEvent_;
+     GlobalTensor<T> x_,y_;
+     GlobalTensor<int32_t> pos_;
+     uint64_t tokens_;

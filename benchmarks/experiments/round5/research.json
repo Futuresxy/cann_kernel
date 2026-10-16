@@ -1,0 +1,12 @@
+{
+  "primary_sources": [
+    {
+      "url": "https://www.hiascend.com/document/detail/zh/CANNCommunityEdition/82RC1alpha001/opdevg/ascendcbestP/atlas_ascendc_best_practices_10_0027.html",
+      "use": "Motivated removing redundant UB copies and testing 32-byte buffer offsets; the offset experiment regressed and was rejected"
+    },
+    {
+      "url": "https://www.hiascend.com/doc_center/source/zh/CANNCommunityEdition/83RC1alpha003/API/ascendcopapi/atlasascendc_api_07_0004.html",
+      "use": "VECIN/VECOUT/VECCALC are logical positions; actual queue lifetimes remain enforced"
+    }
+  ]
+}

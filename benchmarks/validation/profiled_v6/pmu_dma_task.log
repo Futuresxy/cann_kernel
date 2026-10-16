@@ -1,0 +1,163 @@
+任务已提交: task_20261015_220341_389525118958 (断开后可用 task-submit --wait task_20261015_220341_389525118958 重连)
+等待任务执行: task_20261015_220341_389525118958 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=3895580)
+2026-10-15 22:03:42 [WARN]  The option "--application" will be deprecated in future version. It is recommended to specify <app> [arguments] instead.
+2026-10-15 22:03:42 [INFO]  Op profiling analysis start.
+2026-10-15 22:03:42 [INFO]  Running device task: DeviceProf
+soc=Ascend910_9392 device=0 vector_cores=48
+[INFO] <ProfData> Start profiling on device 0, kernel: _ZN8rope174313rotary_kernelIDhEEvPhS1_S1_mjjjjjNS_11FrequenciesE
+[INFO] <WarmUp> Warm Up enabled. times:2
+{"event_us":920.239990,"min_event_us":920.239990,"host_us":1006.769500,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+2026-10-15 22:03:46 [INFO]  Profiling running finished. All task success.
+2026-10-15 22:03:46 [INFO]  Start analyze kernel on device: device0, kernel: _ZN8rope174313rotary_kernelIDhEEvPhS1_S1_mjjjjjNS_11FrequenciesE, name is: 0
+2026-10-15 22:03:46 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-10-15 22:03:46 [INFO]  Save profiling data with metric [Memory] success.
+2026-10-15 22:03:46 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-10-15 22:03:46 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+	3) aivector compute usage lower than 20%.
+
+2026-10-15 22:03:46 [INFO]  Operator Basic Information:
+
+	Op Name: _ZN8rope174313rotary_kernelIDhEEvPhS1_S1_mjjjjjNS_11FrequenciesE
+	Op Type: vector
+	Task Duration(us): 697.753967
+	Block Dim: 48
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 3895972
+	Current Freq: 1850
+	Rated Freq: 1850
+
+2026-10-15 22:03:46 [INFO]  Profiling results saved in /data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/profiled_v6_baseline_unaligned_h128_d30_half/OPPROF_20261015220342_FBDDVUTINGDSABZQ
+2026-10-15 22:03:46 [INFO]  Profiling data parse finished.
+2026-10-15 22:03:46 [INFO]  Op profiling finish. Welcome to next use.
+{
+  "label": "profiled_v6_baseline_unaligned_h128_d30_half",
+  "task_us": 697.753967,
+  "vec_ratio": 0.09896435416666667,
+  "mte2_active_gbs": 4.3593610625,
+  "mte3_active_gbs": 5.4428197916666665
+}
+2026-10-15 22:03:47 [WARN]  The option "--application" will be deprecated in future version. It is recommended to specify <app> [arguments] instead.
+2026-10-15 22:03:47 [INFO]  Op profiling analysis start.
+2026-10-15 22:03:47 [INFO]  Running device task: DeviceProf
+soc=Ascend910_9392 device=0 vector_cores=48
+[INFO] <ProfData> Start profiling on device 0, kernel: _ZN8rope174317large_wide_kernelIfEEvPhS1_S1_mjjjNS_15WideFrequenciesE
+[INFO] <WarmUp> Warm Up enabled. times:2
+{"event_us":330.630005,"min_event_us":330.630005,"host_us":394.489000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+2026-10-15 22:03:52 [INFO]  Profiling running finished. All task success.
+2026-10-15 22:03:52 [INFO]  Start analyze kernel on device: device0, kernel: _ZN8rope174317large_wide_kernelIfEEvPhS1_S1_mjjjNS_15WideFrequenciesE, name is: 0
+2026-10-15 22:03:53 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-10-15 22:03:53 [INFO]  Save profiling data with metric [Memory] success.
+2026-10-15 22:03:53 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-10-15 22:03:53 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+
+2026-10-15 22:03:53 [INFO]  Operator Basic Information:
+
+	Op Name: _ZN8rope174317large_wide_kernelIfEEvPhS1_S1_mjjjNS_15WideFrequenciesE
+	Op Type: vector
+	Task Duration(us): 203.944077
+	Block Dim: 48
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 3902786
+	Current Freq: 1850
+	Rated Freq: 1850
+
+2026-10-15 22:03:53 [INFO]  Profiling results saved in /data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/profiled_v6_baseline_sequence_d1024_float/OPPROF_20261015220347_JDPKGFRUGYBOGIUP
+2026-10-15 22:03:53 [INFO]  Profiling data parse finished.
+2026-10-15 22:03:53 [INFO]  Op profiling finish. Welcome to next use.
+{
+  "label": "profiled_v6_baseline_sequence_d1024_float",
+  "task_us": 203.944077,
+  "vec_ratio": 0.7500751666666666,
+  "mte2_active_gbs": 12.503251645833334,
+  "mte3_active_gbs": 25.7423868125
+}
+2026-10-15 22:03:53 [WARN]  The option "--application" will be deprecated in future version. It is recommended to specify <app> [arguments] instead.
+2026-10-15 22:03:53 [INFO]  Op profiling analysis start.
+2026-10-15 22:03:53 [INFO]  Running device task: DeviceProf
+soc=Ascend910_9392 device=0 vector_cores=48
+[INFO] <ProfData> Start profiling on device 0, kernel: _ZN8rope174316head_tile_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE
+[INFO] <WarmUp> Warm Up enabled. times:2
+{"event_us":288.639984,"min_event_us":288.639984,"host_us":363.478500,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+2026-10-15 22:03:59 [INFO]  Profiling running finished. All task success.
+2026-10-15 22:03:59 [INFO]  Start analyze kernel on device: device0, kernel: _ZN8rope174316head_tile_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE, name is: 0
+2026-10-15 22:03:59 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-10-15 22:03:59 [INFO]  Save profiling data with metric [Memory] success.
+2026-10-15 22:03:59 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-10-15 22:03:59 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+
+2026-10-15 22:03:59 [INFO]  Operator Basic Information:
+
+	Op Name: _ZN8rope174316head_tile_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE
+	Op Type: vector
+	Task Duration(us): 100.262009
+	Block Dim: 48
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 3905527
+	Current Freq: 1850
+	Rated Freq: 1850
+
+2026-10-15 22:03:59 [INFO]  Profiling results saved in /data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/profiled_v6_candidate_unaligned_h128_d30_half/OPPROF_20261015220353_FYFBZZYTGZZYSBOS
+2026-10-15 22:03:59 [INFO]  Profiling data parse finished.
+2026-10-15 22:03:59 [INFO]  Op profiling finish. Welcome to next use.
+{
+  "label": "profiled_v6_candidate_unaligned_h128_d30_half",
+  "task_us": 100.262009,
+  "vec_ratio": 0.9090852083333333,
+  "mte2_active_gbs": 22.384392479166667,
+  "mte3_active_gbs": 46.15837314583333
+}
+2026-10-15 22:04:00 [WARN]  The option "--application" will be deprecated in future version. It is recommended to specify <app> [arguments] instead.
+2026-10-15 22:04:00 [INFO]  Op profiling analysis start.
+2026-10-15 22:04:00 [INFO]  Running device task: DeviceProf
+soc=Ascend910_9392 device=0 vector_cores=48
+[INFO] <ProfData> Start profiling on device 0, kernel: _ZN8rope174319wide_batched_kernelIfEEvPhS1_S1_mjjNS_15WideFrequenciesE
+[INFO] <WarmUp> Warm Up enabled. times:2
+{"event_us":442.500000,"min_event_us":442.500000,"host_us":520.745000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+2026-10-15 22:04:05 [INFO]  Profiling running finished. All task success.
+2026-10-15 22:04:05 [INFO]  Start analyze kernel on device: device0, kernel: _ZN8rope174319wide_batched_kernelIfEEvPhS1_S1_mjjNS_15WideFrequenciesE, name is: 0
+2026-10-15 22:04:05 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-10-15 22:04:05 [INFO]  Save profiling data with metric [Memory] success.
+2026-10-15 22:04:05 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-10-15 22:04:05 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+
+2026-10-15 22:04:05 [INFO]  Operator Basic Information:
+
+	Op Name: _ZN8rope174319wide_batched_kernelIfEEvPhS1_S1_mjjNS_15WideFrequenciesE
+	Op Type: vector
+	Task Duration(us): 121.902435
+	Block Dim: 48
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 3908415
+	Current Freq: 1850
+	Rated Freq: 1850
+
+2026-10-15 22:04:05 [INFO]  Profiling results saved in /data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/profiled_v6_candidate_sequence_d1024_float/OPPROF_20261015220400_KNXMJOQWHVZPFSCW
+2026-10-15 22:04:05 [INFO]  Profiling data parse finished.
+2026-10-15 22:04:05 [INFO]  Op profiling finish. Welcome to next use.
+{
+  "label": "profiled_v6_candidate_sequence_d1024_float",
+  "task_us": 121.902435,
+  "vec_ratio": 0.6750977083333334,
+  "mte2_active_gbs": 44.20351266666667,
+  "mte3_active_gbs": 74.05121416666667
+}
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

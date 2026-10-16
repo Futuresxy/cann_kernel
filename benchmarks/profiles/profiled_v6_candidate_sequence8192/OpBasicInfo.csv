@@ -1,0 +1,2 @@
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+_ZN8rope174320bulk_position_kernelIfEEvPhS1_S1_mjjNS_11FrequenciesE,vector,13.640273,48,NA,0,3879389,1850,1850,

@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "deepseek_float",
+    "shape": [
+      2,
+      512,
+      128,
+      64
+    ],
+    "dtype": "float32",
+    "pmax": 8192
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/profiled_v6_candidate_deepseek_float",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/rope_runner --device 0 --shape 2 512 128 64 --dtype float32 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/deepseek_float --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "d04a5eedfadf0293736adbf6dd7d6573f03c8425cdeab12085bdf785f975d321",
+  "binary_sha256": "426d559454634a579bbc7eb5b8086332f4aba475eb3a237b7b67717cee73a5c5"
+}

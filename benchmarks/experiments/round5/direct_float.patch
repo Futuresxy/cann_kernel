@@ -1,0 +1,159 @@
+--- baseline.asc
++++ kernel.asc
+@@ -237,6 +237,125 @@
+ 
+ // Aligned path: whole-row transfers and repeat-stride broadcasting. Double
+ // queues overlap the next MTE2 with current vector work and the previous MTE3.
++class DirectFloatRotary {
++public:
++    template <typename F>
++    __aicore__ inline void Init(GM_ADDR x, GM_ADDR p, GM_ADDR y, uint64_t tokens,
++                               uint32_t heads, uint32_t dim, uint32_t tileHeads,
++                               const F& f) {
++        x_.SetGlobalBuffer((__gm__ float*)x); y_.SetGlobalBuffer((__gm__ float*)y);
++        pos_.SetGlobalBuffer((__gm__ int32_t*)p);
++        tokens_=tokens; heads_=heads; dim_=dim; half_=dim/2;
++        tileHeads_=tileHeads; groups_=(heads+tileHeads-1)/tileHeads;
++        freqSize_=(half_+7)/8*8;
++        size_=tileHeads*dim > freqSize_ ? tileHeads*dim : freqSize_;
++        pipe_.InitBuffer(in_,2,(size_+8)*sizeof(float));
++        pipe_.InitBuffer(out_,2,(size_+8)*sizeof(float));
++        batch_ = size_ / (2*freqSize_);
++        if (batch_ > 16) batch_ = 16;
++        uint32_t baseBytes = 4*(size_+8)*sizeof(float);
++        uint32_t cacheCap = (188*1024 - baseBytes - freqSize_*sizeof(float)) /
++                            (3*freqSize_*sizeof(float));
++        if (batch_ > cacheCap) batch_ = cacheCap;
++        if (batch_ < 1) batch_ = 1;
++        cacheSize_ = batch_ * freqSize_;
++        pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
++        auto freq=trig_.Get<float>();
++        auto scratch=out_.AllocTensor<float>();
++        FillFrequencies(freq,f,half_,freqSize_,scratch);
++        PipeBarrier<PIPE_ALL>();
++        out_.FreeTensor(scratch);
++    }
++    __aicore__ inline uint32_t Rows(uint64_t job) {
++        uint32_t n=heads_-(job%groups_)*tileHeads_;
++        return n<tileHeads_?n:tileHeads_;
++    }
++    __aicore__ inline uint64_t Offset(uint64_t job) {
++        return (job/groups_*heads_+(job%groups_)*tileHeads_)*dim_;
++    }
++    __aicore__ inline void Prefetch(uint64_t job) {
++        auto in=in_.AllocTensor<float>();
++        DataCopyPad(in,x_[Offset(job)],{1,Rows(job)*dim_*uint32_t(sizeof(float)),0,0,0},
++                    DataCopyPadExtParams<float>{false,0,0,0});
++        in_.EnQue(in);
++    }
++    __aicore__ inline uint32_t TrigBatch(uint64_t token,uint64_t tokenLimit,const LocalTensor<float>& output) {
++        uint32_t count = tokenLimit-token < batch_ ? tokenLimit-token : batch_;
++        auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=c[cacheSize_];
++        auto angle=s[cacheSize_];auto q=output;auto temp=output[cacheSize_];
++        for (uint32_t row=0;row<count;++row)
++            Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
++        
++        SinCosFp32(angle,c,s,q,temp,count*freqSize_);
++        Muls(angle,s,-1.0f,count*freqSize_);
++        return count;
++    }
++    __aicore__ inline void Process() {
++        uint64_t jobs=tokens_*groups_;
++        uint64_t begin=jobs*GetBlockIdx()/GetBlockNum();
++        uint64_t end=jobs*(GetBlockIdx()+1)/GetBlockNum();
++        if(begin==end)return;
++        Prefetch(begin);
++        uint64_t cached=static_cast<uint64_t>(-1);
++        uint32_t cachedCount=0;
++        auto cosCache=trig_.Get<float>()[freqSize_];auto sinCache=cosCache[cacheSize_];
++        auto negCache=sinCache[cacheSize_];
++        uint8_t stride=dim_/8;
++        BinaryRepeatParams broadcast{1,1,1,stride,stride,0};
++        BinaryRepeatParams paired{1,1,1,stride,stride,stride};
++        for(uint64_t job=begin;job<end;++job) {
++            auto input=in_.DeQue<float>();
++            if(job+1<end)Prefetch(job+1);
++            uint64_t token=job/groups_;
++            int32_t position=pos_.GetValue(token);
++            uint32_t rows=Rows(job), count=rows*dim_;
++            auto output=out_.AllocTensor<float>();
++            if(position==0) {
++                DataCopy(output,input,count);
++            } else {
++                if(cached==static_cast<uint64_t>(-1) || token>=cached+cachedCount) {
++                    cachedCount=TrigBatch(token,(end-1)/groups_+1,output);
++                    cached=token;
++                }
++                uint32_t trigOffset=(token-cached)*freqSize_;
++                auto c=cosCache[trigOffset];auto s=sinCache[trigOffset];auto negs=negCache[trigOffset];
++                auto z=input;auto r=output;
++                
++                for(uint32_t col=0;col<half_;col+=64) {
++                    uint64_t mask=half_-col<64?half_-col:64;
++                    Mul(r[col],z[col],c[col],mask,rows,broadcast);
++                    Mul(r[half_+col],z[half_+col],c[col],mask,rows,broadcast);
++                }
++                
++                for(uint32_t col=0;col<half_;col+=64) {
++                    uint64_t mask=half_-col<64?half_-col:64;
++                    MulAddDst(r[col],z[half_+col],negs[col],mask,rows,broadcast);
++                    MulAddDst(r[half_+col],z[col],s[col],mask,rows,broadcast);
++                }
++                
++            }
++            out_.EnQue(output);output=out_.DeQue<float>();
++            DataCopyPad(y_[Offset(job)],output,{1,count*uint32_t(sizeof(float)),0,0,0});
++            in_.FreeTensor(input);out_.FreeTensor(output);
++        }
++        PipeBarrier<PIPE_ALL>();
++    }
++private:
++    TPipe pipe_;
++    TQue<QuePosition::VECIN,2> in_;
++    TQue<QuePosition::VECOUT,2> out_;
++    TBuf<TPosition::VECCALC> trig_;
++    GlobalTensor<float> x_,y_;
++    GlobalTensor<int32_t> pos_;
++    uint64_t tokens_;
++    uint32_t heads_,dim_,half_,tileHeads_,groups_,size_,freqSize_,batch_,cacheSize_;
++};
++template <typename F>
++__global__ __vector__ void direct_float_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,
++    uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,F frequencies) {
++    DirectFloatRotary op;op.Init(x,p,y,tokens,heads,dim,tileHeads,frequencies);op.Process();
++}
++
+ template <typename T> class AlignedRotary {
+ public:
+     template <typename F>
+@@ -728,6 +847,8 @@
+     bool aligned = (dim % 16 == 0);
+     uint32_t tileElements = dim>=512 ? (info_x.tensors[0].dtype==0?8192:12288) :
+         (info_x.tensors[0].dtype==0?4096:8192);
++    bool directFloat = aligned && heads>1 && tokens>=128 && info_x.tensors[0].dtype==0;
++    if(directFloat)tileElements=8192;
+     uint32_t tileHeads = aligned ? tileElements / dim : 4096 / pitch;
+     if (tileHeads > (aligned ? 128u : 32u)) tileHeads = aligned ? 128 : 32;
+     if (tileHeads > heads) tileHeads = heads;
+@@ -768,7 +889,10 @@
+             frequencies.correction[i - 128] = static_cast<int16_t>(
+                 static_cast<int32_t>(exact.bits) - static_cast<int32_t>(predicted.bits));
+         }
+-        if(aligned) {
++        if(directFloat) {
++            rope1743::direct_float_kernel<rope1743::WideFrequencies><<<cores,nullptr,stream>>>(
++                x,positions,y,tokens,heads,dim,tileHeads,frequencies);
++        } else if(aligned) {
+             if(info_x.tensors[0].dtype==0)
+                 rope1743::large_wide_kernel<float><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
+             else
+@@ -790,6 +914,9 @@
+         else
+             rope1743::batched_kernel<half><<<cores, nullptr, stream>>>(
+                 x, positions, y, tokens, dim, tileTokens, frequencies);
++    } else if (directFloat) {
++        rope1743::direct_float_kernel<rope1743::Frequencies><<<cores,nullptr,stream>>>(
++            x,positions,y,tokens,heads,dim,tileHeads,frequencies);
+     } else if (aligned && dim>=512) {
+         if (info_x.tensors[0].dtype == 0)
+             rope1743::large_aligned_kernel<float><<<cores, nullptr, stream>>>(

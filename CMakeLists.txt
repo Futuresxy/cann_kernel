@@ -13,3 +13,19 @@ if(ROPE_LAUNCH_AUDIT)
     target_compile_definitions(rope_runner PRIVATE ROPE_LAUNCH_AUDIT=1)
     target_link_options(rope_runner PRIVATE -Wl,--wrap=aclrtLaunchKernelWithHostArgs)
 endif()
+
+# Development-only comparison harness; never part of the original submission.
+option(ROPE_PAIRED_PROFILE "Build an ABBA runner sharing allocations between revisions" OFF)
+if(ROPE_PAIRED_PROFILE)
+    set(ROPE_BASELINE_DIR "" CACHE PATH "Directory containing the baseline kernel.asc")
+    if(NOT EXISTS "${ROPE_BASELINE_DIR}/kernel.asc")
+        message(FATAL_ERROR "ROPE_BASELINE_DIR must contain kernel.asc")
+    endif()
+    add_executable(rope_paired_runner tests/paired_runner.asc)
+    target_compile_definitions(rope_paired_runner PRIVATE
+        ROPE_BASELINE_FILE="${ROPE_BASELINE_DIR}/kernel.asc"
+        ROPE_CANDIDATE_FILE="${ROPE_KERNEL_DIR}/kernel.asc")
+    target_include_directories(rope_paired_runner PRIVATE templates/rotaryposemb_1743)
+    target_link_libraries(rope_paired_runner PRIVATE tiling_api register platform unified_dlog dl m graph_base)
+    target_compile_options(rope_paired_runner PRIVATE $<$<COMPILE_LANGUAGE:ASC>:--npu-arch=${NPU_ARCH}>)
+endif()

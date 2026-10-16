@@ -13,6 +13,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--result', default='kernel_only')
     ap.add_argument('--extra-result',action='append',default=[],help='Additional audited source-matched sweep results required for this package')
+    ap.add_argument('--bitwise-result',action='append',default=[],help='Require a source/binary-matched direct V4 output comparison')
     ap.add_argument('--launch-profile', required=True,
                     help='msprof launch-count regression result for this source')
     args = ap.parse_args()
@@ -57,6 +58,18 @@ def main():
             raise SystemExit('Additional correctness/launch gate failed: '+label)
         extra_validation[label] = dict(case_count=len(extra['cases']),
             audited_launches=sum(c['kernel_launches'] for c in extra['cases']))
+    bitwise_validation = {}
+    for label in args.bitwise_result:
+        comparison = json.loads((ROOT/'benchmarks/results'/f'{label}.json').read_text())
+        if (comparison['source_sha256']['candidate'] != digest
+                or comparison['binary_sha256']['candidate'] != result['binary_sha256']
+                or comparison['source_sha256']['baseline'] != '2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58'
+                or not comparison['cases']
+                or not all(c['passed'] and c['output_bits_equal'] and c['changed_elements']==0
+                           for c in comparison['cases'])):
+            raise SystemExit('Direct V4 output comparison failed: '+label)
+        bitwise_validation[label] = dict(case_count=len(comparison['cases']),
+            elements=sum(c['elements'] for c in comparison['cases']),changed_elements=0)
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     committed = subprocess.check_output(
         ['git', 'show', revision+':operators/rotary_pos_emb/kernel.asc'], cwd=ROOT)
@@ -96,7 +109,8 @@ def main():
                     kernel_bytes=len(source), kernel_lines=len(source.splitlines()),
                     kernel_first_line=source.splitlines()[0].decode(),
                     kernel_last_line=source.splitlines()[-1].decode(),
-                    result=args.result, extra_validation=extra_validation, validated_case_count=len(result['cases']),
+                    result=args.result, extra_validation=extra_validation, bitwise_validation=bitwise_validation,
+                    validated_case_count=len(result['cases']),
                     launch_audit=args.result+'_audit', launch_profile=args.launch_profile,
                     single_kernel_per_iteration=True,
                     template_diff=diff, platform_hidden_cases_tested=False)

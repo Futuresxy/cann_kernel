@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "unaligned_h128_d30_half",
+    "shape": [
+      2,
+      1024,
+      128,
+      30
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/profiled_v6_baseline_unaligned_h128_d30_half",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/rope_runner_platform_v4 --device 0 --shape 2 1024 128 30 --dtype float16 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/unaligned_h128_d30_half --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58",
+  "binary_sha256": "46c1ec8ad3dc5b95bd57fa14d736ee0f1056b562c9c83befad4dadcb78097c03"
+}

@@ -1,0 +1,47 @@
+--- baseline.asc
++++ kernel.asc
+@@ -261,6 +261,8 @@
+         if (batch_ < 1) batch_ = 1;
+         cacheSize_ = batch_ * freqSize_;
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
++        pipe_.InitBuffer(positionCache_,((batch_+7)/8*8)*sizeof(int32_t));
++        positionEvent_=static_cast<event_t>(pipe_.FetchEventID(HardEvent::MTE2_V));
+         auto freq=trig_.Get<float>();
+         FillFrequencies(freq,f,half_,freqSize_,work_.Get<float>());
+         PipeBarrier<PIPE_ALL>();
+@@ -282,8 +284,23 @@
+         uint32_t count = tokenLimit-token < batch_ ? tokenLimit-token : batch_;
+         auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=c[cacheSize_];
+         auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[size_];
+-        for (uint32_t row=0;row<count;++row)
+-            Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
++        if(tokens_>=128 && heads_>1 && size_>=64) {
++            DataCopyPad(positionCache_.Get<int32_t>(),pos_[token],
++                {1,count*uint32_t(sizeof(int32_t)),0,0,0},
++                DataCopyPadExtParams<int32_t>{false,0,0,0});
++            SetFlag<HardEvent::MTE2_V>(positionEvent_);
++            WaitFlag<HardEvent::MTE2_V>(positionEvent_);
++            Cast(temp,positionCache_.Get<int32_t>(),RoundMode::CAST_NONE,(count+7)/8*8);
++            Brcb(q,temp,(count+7)/8,BrcbRepeatParams{1,8});
++            for(uint32_t col=0;col<freqSize_;col+=64) {
++                uint64_t mask=freqSize_-col<64?freqSize_-col:64;
++                Mul(angle[col],q,freq[col],mask,count,
++                    BinaryRepeatParams{1,0,1,uint8_t(freqSize_/8),1,0});
++            }
++        } else {
++            for (uint32_t row=0;row<count;++row)
++                Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
++        }
+         
+         SinCosFp32(angle,c,s,q,temp,count*freqSize_);
+         Muls(angle,s,-1.0f,count*freqSize_);
+@@ -345,7 +362,8 @@
+     TPipe pipe_;
+     TQue<QuePosition::VECIN,2> in_;
+     TQue<QuePosition::VECOUT,2> out_;
+-    TBuf<TPosition::VECCALC> work_,trig_;
++    TBuf<TPosition::VECCALC> work_,trig_,positionCache_;
++    event_t positionEvent_;
+     GlobalTensor<T> x_,y_;
+     GlobalTensor<int32_t> pos_;
+     uint64_t tokens_;

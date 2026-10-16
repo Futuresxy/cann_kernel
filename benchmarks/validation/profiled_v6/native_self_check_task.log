@@ -1,0 +1,46 @@
+任务已提交: task_20261015_220954_416371920302 (断开后可用 task-submit --wait task_20261015_220954_416371920302 重连)
+等待任务执行: task_20261015_220954_416371920302 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=4164066)
+deepseek_half: 19.900 us, IO >= 1686.2 GB/s
+deepseek_float: 23.280 us, IO >= 2882.7 GB/s
+large_half: 59.861 us, IO >= 2242.2 GB/s
+prefill_h32_d128_half: 18.400 us, IO >= 911.8 GB/s
+prefill_h32_d256_half: 33.640 us, IO >= 997.5 GB/s
+prefill_h32_d96_half: 16.161 us, IO >= 778.6 GB/s
+stream_h128_d64_half: 216.064 us, IO >= 1242.4 GB/s
+stream_h32_d128_float: 218.344 us, IO >= 1229.4 GB/s
+deepseek_half: 20.561 us, IO >= 1631.9 GB/s
+deepseek_float: 23.701 us, IO >= 2831.5 GB/s
+large_half: 60.421 us, IO >= 2221.4 GB/s
+prefill_h32_d128_half: 19.241 us, IO >= 872.0 GB/s
+prefill_h32_d256_half: 34.861 us, IO >= 962.5 GB/s
+prefill_h32_d96_half: 16.741 us, IO >= 751.6 GB/s
+stream_h128_d64_half: 216.684 us, IO >= 1238.8 GB/s
+stream_h32_d128_float: 218.565 us, IO >= 1228.2 GB/s
+deepseek_half: 20.680 us, IO >= 1622.6 GB/s
+deepseek_float: 24.060 us, IO >= 2789.2 GB/s
+large_half: 60.642 us, IO >= 2213.3 GB/s
+prefill_h32_d128_half: 19.621 us, IO >= 855.1 GB/s
+prefill_h32_d256_half: 35.701 us, IO >= 939.9 GB/s
+prefill_h32_d96_half: 17.180 us, IO >= 732.4 GB/s
+stream_h128_d64_half: 216.644 us, IO >= 1239.1 GB/s
+stream_h32_d128_float: 219.824 us, IO >= 1221.1 GB/s
+deepseek_half: 19.760 us, IO >= 1698.1 GB/s
+deepseek_float: 23.441 us, IO >= 2862.9 GB/s
+large_half: 59.821 us, IO >= 2243.7 GB/s
+prefill_h32_d128_half: 18.360 us, IO >= 913.8 GB/s
+prefill_h32_d256_half: 33.540 us, IO >= 1000.4 GB/s
+prefill_h32_d96_half: 16.120 us, IO >= 780.6 GB/s
+stream_h128_d64_half: 217.224 us, IO >= 1235.8 GB/s
+stream_h32_d128_float: 218.224 us, IO >= 1230.1 GB/s
+deepseek_half: 19.830 -> 20.620 us (0.96x)
+deepseek_float: 23.361 -> 23.880 us (0.98x)
+large_half: 59.841 -> 60.532 us (0.99x)
+prefill_h32_d128_half: 18.380 -> 19.431 us (0.95x)
+prefill_h32_d256_half: 33.590 -> 35.281 us (0.95x)
+prefill_h32_d96_half: 16.141 -> 16.960 us (0.95x)
+stream_h128_d64_half: 216.644 -> 216.664 us (1.00x)
+stream_h32_d128_float: 218.284 -> 219.195 us (1.00x)
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

@@ -16,6 +16,14 @@ def generate(case, dest, seed):
     freq=np.float32(1)/np.power(np.float32(case.get('theta',10000)),exponent)
     angle=p.astype(np.float32)[...,None]*freq
     c=np.cos(angle)[...,None,:]; s=np.sin(angle)[...,None,:]
+    if case.get('distribution')=='cancellation':
+        # Make the first rotated half nearly cancel, after input-dtype rounding.
+        # Keep small-sine and position-zero inputs unchanged.
+        with np.errstate(invalid='ignore',over='ignore'):
+            ratio=np.divide(c,s,out=np.zeros_like(c),where=np.abs(s)>.25)
+            second=np.where(np.abs(s)>.25,x[...,:d//2].astype(np.float32)*ratio,
+                            x[...,d//2:].astype(np.float32))
+            x[...,d//2:]=second.astype(x.dtype)
     a=x[...,:d//2].astype(np.float32);b=x[...,d//2:].astype(np.float32)
     with np.errstate(invalid='ignore',over='ignore'):
         y=np.concatenate((a*c-b*s,b*c+a*s),axis=-1).astype(x.dtype)

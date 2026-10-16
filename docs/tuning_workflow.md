@@ -85,3 +85,8 @@ VEC时间从v2的26.770 us降到20.612 us，典型FP16 profile=31.321 us。完�
 ## 第四轮：平台反馈驱动回退
 
 V5平台出现两个用例2.36%数值错误及测试13、14延迟回退，正式源码与提交包恢复为0a4281f的V4。新增与V4直接逐位比较的248项精度门槛；仅在独立实验中探索FP32连续DMA/Gather、宽维单head合批及UB预算选tile。保留有效局部收益与对照退化的原始数据，不将实验版替换正式包。报告见 [rollback_v4_round4.md](rollback_v4_round4.md)，复现入口为tools/validate_round4.sh。
+
+
+## 第五轮：V6与平衡的同地址计时
+
+保留V4的FP32数值路径，增加FP32队列直接计算、非对齐连续DMA、宽维单head合批，以及保持四乘两加减的单head positions向量化。增加同上下文、同GM地址的ABBA与交换源码后的BAAB，做A/A校准，并以普通runner的独立进程ABBA和PMU交叉验证。拒绝工作区偏移、标量UB positions缓存和无收益的角度向量化；手动positions缓冲复用错误由长流式测试检出并记录。2190项回归、414项逐位比较和两类单kernel启动检查通过。详见 [profiled_v6.md](profiled_v6.md)。

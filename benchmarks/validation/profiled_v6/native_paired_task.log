@@ -1,0 +1,121 @@
+任务已提交: task_20261015_220614_399911915664 (断开后可用 task-submit --wait task_20261015_220614_399911915664 重连)
+等待任务执行: task_20261015_220614_399911915664 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=3999468)
+tiny: 2.320 us, IO >= 0.4 GB/s
+unaligned_half: 4.740 us, IO >= 1.9 GB/s
+deepseek_half: 19.941 us, IO >= 1682.7 GB/s
+deepseek_float: 23.241 us, IO >= 2887.5 GB/s
+sequence8192: 13.800 us, IO >= 303.9 GB/s
+large_half: 59.841 us, IO >= 2242.9 GB/s
+heads256: 11.280 us, IO >= 371.8 GB/s
+aligned_d512_half: 8.100 us, IO >= 30.1 GB/s
+wide_half: 13.760 us, IO >= 35.4 GB/s
+prefill_h32_d128_half: 18.480 us, IO >= 907.9 GB/s
+prefill_h32_d128_float: 18.620 us, IO >= 1802.1 GB/s
+prefill_h32_d256_half: 33.641 us, IO >= 997.4 GB/s
+prefill_h8_d64_half: 11.081 us, IO >= 189.3 GB/s
+prefill_h3_d24_half: 6.660 us, IO >= 44.3 GB/s
+prefill_h32_d30_float: 19.560 us, IO >= 402.1 GB/s
+prefill_h32_d96_half: 16.101 us, IO >= 781.5 GB/s
+prefill_h32_d1024_half: 52.341 us, IO >= 641.1 GB/s
+prefill_h32_d1024_float: 55.961 us, IO >= 1199.2 GB/s
+stream_h128_d64_half: 215.525 us, IO >= 1245.5 GB/s
+stream_h32_d128_float: 218.504 us, IO >= 1228.5 GB/s
+single_token_many_heads: 7.460 us, IO >= 17.6 GB/s
+short_s16_h32: 6.860 us, IO >= 76.4 GB/s
+narrow_head_long: 21.501 us, IO >= 97.5 GB/s
+tiny: 2.420 us, IO >= 0.4 GB/s
+unaligned_half: 5.180 us, IO >= 1.8 GB/s
+deepseek_half: 21.041 us, IO >= 1594.7 GB/s
+deepseek_float: 20.400 us, IO >= 3289.7 GB/s
+sequence8192: 13.440 us, IO >= 312.1 GB/s
+large_half: 60.981 us, IO >= 2201.0 GB/s
+heads256: 13.200 us, IO >= 317.8 GB/s
+aligned_d512_half: 8.880 us, IO >= 27.4 GB/s
+wide_half: 14.981 us, IO >= 32.5 GB/s
+prefill_h32_d128_half: 20.461 us, IO >= 820.0 GB/s
+prefill_h32_d128_float: 18.661 us, IO >= 1798.1 GB/s
+prefill_h32_d256_half: 36.700 us, IO >= 914.3 GB/s
+prefill_h8_d64_half: 12.261 us, IO >= 171.0 GB/s
+prefill_h3_d24_half: 7.020 us, IO >= 42.0 GB/s
+prefill_h32_d30_float: 20.420 us, IO >= 385.1 GB/s
+prefill_h32_d96_half: 17.701 us, IO >= 710.9 GB/s
+prefill_h32_d1024_half: 58.702 us, IO >= 571.6 GB/s
+prefill_h32_d1024_float: 57.162 us, IO >= 1174.0 GB/s
+stream_h128_d64_half: 217.424 us, IO >= 1234.6 GB/s
+stream_h32_d128_float: 220.865 us, IO >= 1215.4 GB/s
+single_token_many_heads: 7.020 us, IO >= 18.7 GB/s
+short_s16_h32: 7.260 us, IO >= 72.2 GB/s
+narrow_head_long: 22.141 us, IO >= 94.7 GB/s
+tiny: 2.340 us, IO >= 0.4 GB/s
+unaligned_half: 5.180 us, IO >= 1.8 GB/s
+deepseek_half: 21.081 us, IO >= 1591.7 GB/s
+deepseek_float: 20.400 us, IO >= 3289.7 GB/s
+sequence8192: 13.340 us, IO >= 314.4 GB/s
+large_half: 61.141 us, IO >= 2195.2 GB/s
+heads256: 13.141 us, IO >= 319.2 GB/s
+aligned_d512_half: 9.200 us, IO >= 26.5 GB/s
+wide_half: 15.741 us, IO >= 31.0 GB/s
+prefill_h32_d128_half: 20.341 us, IO >= 824.8 GB/s
+prefill_h32_d128_float: 18.800 us, IO >= 1784.8 GB/s
+prefill_h32_d256_half: 36.781 us, IO >= 912.3 GB/s
+prefill_h8_d64_half: 12.320 us, IO >= 170.2 GB/s
+prefill_h3_d24_half: 7.080 us, IO >= 41.7 GB/s
+prefill_h32_d30_float: 20.360 us, IO >= 386.3 GB/s
+prefill_h32_d96_half: 17.860 us, IO >= 704.5 GB/s
+prefill_h32_d1024_half: 59.341 us, IO >= 565.5 GB/s
+prefill_h32_d1024_float: 57.022 us, IO >= 1176.9 GB/s
+stream_h128_d64_half: 216.524 us, IO >= 1239.7 GB/s
+stream_h32_d128_float: 220.104 us, IO >= 1219.6 GB/s
+single_token_many_heads: 7.241 us, IO >= 18.1 GB/s
+short_s16_h32: 7.360 us, IO >= 71.2 GB/s
+narrow_head_long: 22.340 us, IO >= 93.9 GB/s
+tiny: 2.380 us, IO >= 0.4 GB/s
+unaligned_half: 5.260 us, IO >= 1.8 GB/s
+deepseek_half: 21.120 us, IO >= 1588.8 GB/s
+deepseek_float: 24.600 us, IO >= 2728.0 GB/s
+sequence8192: 15.360 us, IO >= 273.1 GB/s
+large_half: 61.381 us, IO >= 2186.6 GB/s
+heads256: 13.180 us, IO >= 318.2 GB/s
+aligned_d512_half: 9.060 us, IO >= 26.9 GB/s
+wide_half: 15.580 us, IO >= 31.3 GB/s
+prefill_h32_d128_half: 20.381 us, IO >= 823.2 GB/s
+prefill_h32_d128_float: 20.480 us, IO >= 1638.4 GB/s
+prefill_h32_d256_half: 36.661 us, IO >= 915.3 GB/s
+prefill_h8_d64_half: 12.521 us, IO >= 167.5 GB/s
+prefill_h3_d24_half: 6.940 us, IO >= 42.5 GB/s
+prefill_h32_d30_float: 20.421 us, IO >= 385.1 GB/s
+prefill_h32_d96_half: 17.661 us, IO >= 712.5 GB/s
+prefill_h32_d1024_half: 59.281 us, IO >= 566.0 GB/s
+prefill_h32_d1024_float: 62.382 us, IO >= 1075.8 GB/s
+stream_h128_d64_half: 217.165 us, IO >= 1236.1 GB/s
+stream_h32_d128_float: 219.424 us, IO >= 1223.4 GB/s
+single_token_many_heads: 7.161 us, IO >= 18.3 GB/s
+short_s16_h32: 7.140 us, IO >= 73.4 GB/s
+narrow_head_long: 22.200 us, IO >= 94.5 GB/s
+tiny: 2.350 -> 2.380 us (0.99x)
+unaligned_half: 5.000 -> 5.180 us (0.97x)
+deepseek_half: 20.530 -> 21.061 us (0.97x)
+deepseek_float: 23.921 -> 20.400 us (1.17x)
+sequence8192: 14.580 -> 13.390 us (1.09x)
+large_half: 60.611 -> 61.061 us (0.99x)
+heads256: 12.230 -> 13.171 us (0.93x)
+aligned_d512_half: 8.580 -> 9.040 us (0.95x)
+wide_half: 14.670 -> 15.361 us (0.96x)
+prefill_h32_d128_half: 19.431 -> 20.401 us (0.95x)
+prefill_h32_d128_float: 19.550 -> 18.730 us (1.04x)
+prefill_h32_d256_half: 35.151 -> 36.740 us (0.96x)
+prefill_h8_d64_half: 11.801 -> 12.290 us (0.96x)
+prefill_h3_d24_half: 6.800 -> 7.050 us (0.96x)
+prefill_h32_d30_float: 19.990 -> 20.390 us (0.98x)
+prefill_h32_d96_half: 16.881 -> 17.780 us (0.95x)
+prefill_h32_d1024_half: 55.811 -> 59.022 us (0.95x)
+prefill_h32_d1024_float: 59.171 -> 57.092 us (1.04x)
+stream_h128_d64_half: 216.345 -> 216.974 us (1.00x)
+stream_h32_d128_float: 218.964 -> 220.485 us (0.99x)
+single_token_many_heads: 7.310 -> 7.130 us (1.03x)
+short_s16_h32: 7.000 -> 7.310 us (0.96x)
+narrow_head_long: 21.851 -> 22.240 us (0.98x)
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

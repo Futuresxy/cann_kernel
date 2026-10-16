@@ -1,0 +1,33 @@
+--- baseline.asc
++++ kernel.asc
+@@ -251,10 +251,10 @@
+         size_=tileHeads*dim > freqSize_ ? tileHeads*dim : freqSize_;
+         pipe_.InitBuffer(in_,2,size_*sizeof(T));
+         pipe_.InitBuffer(out_,2,size_*sizeof(T));
+-        pipe_.InitBuffer(work_,3*size_*sizeof(float));
++        pipe_.InitBuffer(work_,2*(size_+8)*sizeof(float));
+         batch_ = size_ / freqSize_;
+         if (batch_ > 16) batch_ = 16;
+-        uint32_t baseBytes = 4*size_*sizeof(T) + 3*size_*sizeof(float);
++        uint32_t baseBytes = 4*size_*sizeof(T) + 2*(size_+8)*sizeof(float);
+         uint32_t cacheCap = (188*1024 - baseBytes - freqSize_*sizeof(float)) /
+                             (3*freqSize_*sizeof(float));
+         if (batch_ > cacheCap) batch_ = cacheCap;
+@@ -281,7 +281,7 @@
+     __aicore__ inline uint32_t TrigBatch(uint64_t token,uint64_t tokenLimit) {
+         uint32_t count = tokenLimit-token < batch_ ? tokenLimit-token : batch_;
+         auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=c[cacheSize_];
+-        auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[size_];
++        auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[size_+8];
+         for (uint32_t row=0;row<count;++row)
+             Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
+         
+@@ -297,7 +297,7 @@
+         Prefetch(begin);
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
+-        auto z=work_.Get<float>();auto r=z[size_];auto t=z[2*size_];
++        auto z=work_.Get<float>();auto r=z[size_+8];
+         auto cosCache=trig_.Get<float>()[freqSize_];auto sinCache=cosCache[cacheSize_];
+         auto negCache=sinCache[cacheSize_];
+         uint8_t stride=dim_/8;

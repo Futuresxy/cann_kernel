@@ -1,0 +1,110 @@
+{
+  "baseline_revision": "0a4281f1a3789d78f15c76750f2dc76c85526329",
+  "baseline_sha256": "2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58",
+  "normal_runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939",
+  "paired_runner_sha256": "72741ac2786665a151362961838a3fd8782f76950a5ef378c7e70d1347d08ea0",
+  "candidates": [
+    {
+      "name": "direct_float",
+      "patch": "direct_float.patch",
+      "source_sha256": "2f06ce668213922684143dd6142fb001b381820694e49be5df6055cbb899eb2e",
+      "result_labels": [
+        "round5_direct_float",
+        "round5_direct_float_shared"
+      ],
+      "status": "retained"
+    },
+    {
+      "name": "bank_pad",
+      "patch": "bank_pad.patch",
+      "source_sha256": "aa1871e2a8a2f62c3a11edf99b19fea74e1c002e20871c6b30151112ca7d0c94",
+      "result_labels": [
+        "round5_bank_pad",
+        "round5_bank_pad_shared"
+      ],
+      "status": "rejected"
+    },
+    {
+      "name": "position_cache",
+      "patch": "position_cache.patch",
+      "source_sha256": "09e50e54d42fd9d09a4a710dfd25d158ecffa139fe4a867c4d12dd6962a5c461",
+      "result_labels": [
+        "round5_position_cache",
+        "round5_position_cache_shared"
+      ],
+      "status": "rejected"
+    },
+    {
+      "name": "trig_vector",
+      "patch": "trig_vector.patch",
+      "source_sha256": "ec57439e1cd7e671fc0f5272ed9d47e8c6beeb70e8f996096c28d634d81d479b",
+      "result_labels": [
+        "round5_trig_vector"
+      ],
+      "status": "rejected"
+    },
+    {
+      "name": "trig_vector_queue",
+      "patch": "trig_vector_queue.patch",
+      "source_sha256": "632ccd0117282fb934489bdc065efe055acd83c924ce8756c0eb270509fad6a9",
+      "result_labels": [
+        "round5_trig_vector_queue",
+        "round5_trig_vector_queue_shared"
+      ],
+      "status": "rejected"
+    },
+    {
+      "name": "bulk_precise",
+      "patch": "bulk_precise.patch",
+      "source_sha256": "44a31514337527acbea7551dc56f7559e41e48720e6ec3f5682ef2452403fadb",
+      "result_labels": [
+        "round5_bulk_precise",
+        "round5_bulk_precise_shared"
+      ],
+      "status": "retained"
+    },
+    {
+      "name": "fp32_dma",
+      "patch": "fp32_dma.patch",
+      "source_sha256": "394a298a65222b3d1a43b5ea5b8eb25040f070fea18be1cc4e0cfd372b565579",
+      "result_labels": [
+        "round5_fp32_dma_shared"
+      ],
+      "status": "retained"
+    },
+    {
+      "name": "final",
+      "patch": "final.patch",
+      "source_sha256": "d04a5eedfadf0293736adbf6dd7d6573f03c8425cdeab12085bdf785f975d321",
+      "result_labels": [
+        "round5_merged_screen",
+        "profiled_v6_shared",
+        "profiled_v6_balanced",
+        "profiled_v6",
+        "profiled_v6_audit",
+        "profiled_v6_bits",
+        "profiled_v6_extended_bits",
+        "profiled_v6_sweep",
+        "profiled_v6_packed_sweep",
+        "profiled_v6_path_sweep",
+        "profiled_v6_paired",
+        "profiled_v6_aligned_audit"
+      ],
+      "status": "retained",
+      "profile_labels": [
+        "profiled_v6_baseline_deepseek_float",
+        "profiled_v6_baseline_sequence8192",
+        "profiled_v6_baseline_unaligned_h128_d30_half",
+        "profiled_v6_baseline_sequence_d1024_float",
+        "profiled_v6_candidate_deepseek_float",
+        "profiled_v6_candidate_sequence8192",
+        "profiled_v6_candidate_unaligned_h128_d30_half",
+        "profiled_v6_candidate_sequence_d1024_float"
+      ]
+    }
+  ],
+  "calibration_results": [
+    "round5_self_check_shared",
+    "round5_native_self_check"
+  ]
+}

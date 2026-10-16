@@ -1,0 +1,124 @@
+--- baseline.asc
++++ kernel.asc
+@@ -715,6 +715,101 @@
+     PackedRotary<T> op;op.Init(x,p,y,tokens,heads,dim,tile,f);op.Process();
+ }
+ 
++template <typename T> class BulkPositionRotary {
++public:
++    template <typename F>
++    __aicore__ inline void Init(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
++        uint32_t dim,uint32_t tileTokens,const F& f) {
++        x_.SetGlobalBuffer((__gm__ T*)x);y_.SetGlobalBuffer((__gm__ T*)y);
++        pos_.SetGlobalBuffer((__gm__ int32_t*)p);
++        tokens_=tokens;dim_=dim;half_=dim/2;tile_=tileTokens;size_=tile_*dim;pair_=size_/2;
++        pipe_.InitBuffer(in_,2,size_*sizeof(T));pipe_.InitBuffer(out_,2,size_*sizeof(T));
++        pipe_.InitBuffer(work_,3*size_*sizeof(float));
++        pipe_.InitBuffer(trig_,3*pair_*sizeof(float));
++        pipe_.InitBuffer(positionIn_,2,tile_*sizeof(int32_t));
++        pipe_.InitBuffer(zeroMask_,(size_+255)/256*32);
++        pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
++        auto freq=freq_.Get<float>();
++        FillFrequencies(freq,f,half_,(half_+7)/8*8,work_.Get<float>());
++        PipeBarrier<PIPE_ALL>();
++    }
++    __aicore__ inline uint32_t Rows(uint64_t job) {
++        uint64_t n=tokens_-job*tile_;return n<tile_?n:tile_;
++    }
++    __aicore__ inline void Prefetch(uint64_t job) {
++        auto in=in_.AllocTensor<T>();
++        DataCopyPad(in,x_[job*tile_*dim_],{1,Rows(job)*dim_*uint32_t(sizeof(T)),0,0,0},
++                    DataCopyPadExtParams<T>{false,0,0,0});in_.EnQue(in);
++        auto p=positionIn_.AllocTensor<int32_t>();
++        DataCopyPad(p,pos_[job*tile_],{1,Rows(job)*uint32_t(sizeof(int32_t)),0,0,0},
++                    DataCopyPadExtParams<int32_t>{false,0,0,0});positionIn_.EnQue(p);
++    }
++    __aicore__ inline void Process() {
++        uint64_t jobs=(tokens_+tile_-1)/tile_;
++        uint64_t begin=jobs*GetBlockIdx()/GetBlockNum(),end=jobs*(GetBlockIdx()+1)/GetBlockNum();
++        if(begin==end)return;
++        Prefetch(begin);
++        auto z=work_.Get<float>();auto r=z[size_];auto t=z[2*size_];
++        auto angle=trig_.Get<float>();auto c=angle[pair_];auto s=angle[2*pair_];
++        BinaryRepeatParams pairs{1,1,1,uint8_t(dim_/8),uint8_t(dim_/8),uint8_t(half_/8)};
++        BinaryRepeatParams same{1,1,1,uint8_t(dim_/8),uint8_t(dim_/8),uint8_t(dim_/8)};
++        for(uint64_t job=begin;job<end;++job) {
++            auto input=in_.DeQue<T>();auto positions=positionIn_.DeQue<int32_t>();
++            if(job+1<end)Prefetch(job+1);
++            uint32_t rows=Rows(job),count=rows*dim_;
++            auto pf=positions.template ReinterpretCast<float>();
++            Cast(pf,positions,RoundMode::CAST_NONE,(rows+7)/8*8);
++            Brcb(z,pf,(rows+7)/8,BrcbRepeatParams{uint16_t(dim_/8),uint16_t(dim_)});
++            PipeBarrier<PIPE_V>();
++            for(uint32_t built=8;built<dim_;built*=2) {
++                uint32_t more=dim_-built<built?dim_-built:built;
++                for(uint32_t col=0;col<more;col+=64) {
++                    uint32_t mask=more-col<64?more-col:64;
++                    Copy(z[built+col],z[col],mask,rows,CopyRepeatParams{1,1,uint16_t(dim_/8),uint16_t(dim_/8)});
++                }
++                PipeBarrier<PIPE_V>();
++            }
++            CompareScalar(zeroMask_.Get<uint8_t>(),z,0.0f,CMPMODE::EQ,(count+63)/64*64);
++            Mul(angle,z,freq_.Get<float>(),half_,rows,BinaryRepeatParams{1,1,1,uint8_t(half_/8),uint8_t(dim_/8),0});
++            SinCosFp32(angle,c,s,z,r,rows*half_);
++            LoadFp32(z,input,count);
++            
++            for(uint32_t col=0;col<half_;col+=64) {
++                uint64_t mask=half_-col<64?half_-col:64;
++                Mul(r[col],z[col],c[col],mask,rows,pairs);
++                Mul(t[col],z[half_+col],s[col],mask,rows,pairs);
++                Mul(r[half_+col],z[half_+col],c[col],mask,rows,pairs);
++                Mul(t[half_+col],z[col],s[col],mask,rows,pairs);
++            }
++            
++            for(uint32_t col=0;col<half_;col+=64) {
++                uint64_t mask=half_-col<64?half_-col:64;
++                Sub(r[col],r[col],t[col],mask,rows,same);
++                Add(r[half_+col],r[half_+col],t[half_+col],mask,rows,same);
++            }
++            
++            auto output=out_.AllocTensor<T>();
++            StoreFp32(output,r,count);
++            
++            Select(output,zeroMask_.Get<uint8_t>(),input,output,SELMODE::VSEL_TENSOR_TENSOR_MODE,count);
++            out_.EnQue(output);output=out_.DeQue<T>();
++            DataCopyPad(y_[job*tile_*dim_],output,{1,count*uint32_t(sizeof(T)),0,0,0});
++            in_.FreeTensor(input);positionIn_.FreeTensor(positions);out_.FreeTensor(output);
++        }
++        PipeBarrier<PIPE_ALL>();
++    }
++private:
++    TPipe pipe_;TQue<QuePosition::VECIN,2> in_;TQue<QuePosition::VECOUT,2> out_;TQue<QuePosition::VECIN,2> positionIn_;
++    TBuf<TPosition::VECCALC> work_,trig_,freq_,zeroMask_;
++    GlobalTensor<T> x_,y_;GlobalTensor<int32_t> pos_;
++    uint64_t tokens_;uint32_t dim_,half_,tile_,size_,pair_;
++};
++template <typename T>
++__global__ __vector__ void bulk_position_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
++    uint32_t dim,uint32_t tile,Frequencies f) {
++    BulkPositionRotary<T> op;op.Init(x,p,y,tokens,dim,tile,f);op.Process();
++}
++
+ } // namespace rope1743
+ 
+ extern "C" void run_kernel(GM_ADDR x, const TensorGroupInfo& info_x,
+@@ -739,6 +834,19 @@
+     uint32_t cores = availableCoreNum > 0 ? availableCoreNum : 1;
+     if (jobs < cores) cores = jobs;
+ 
++    if(aligned && dim<=128 && heads==1 && tokens>=128) {
++        uint32_t tile=tileTokens/8*8;if(tile<8)tile=8;
++        uint64_t bulkJobs=(tokens+tile-1)/tile;
++        uint32_t bulkCores=availableCoreNum>0?availableCoreNum:1;
++        if(bulkJobs<bulkCores)bulkCores=bulkJobs;
++        rope1743::Frequencies frequencies{};
++        for(uint32_t i=0;i<width;++i)frequencies.value[i]=1.0f/std::pow(theta,static_cast<float>(2*i)/dim);
++        if(info_x.tensors[0].dtype==0)
++            rope1743::bulk_position_kernel<float><<<bulkCores,nullptr,stream>>>(x,positions,y,tokens,dim,tile,frequencies);
++        else
++            rope1743::bulk_position_kernel<half><<<bulkCores,nullptr,stream>>>(x,positions,y,tokens,dim,tile,frequencies);
++        return;
++    }
+     if (dim<=128 && heads<=32 && tokens>=128 &&
+         (dim%16!=0 || (dim==16 && heads>1 && heads<=8))) {
+         uint32_t tile=2048/(heads*pitch);
