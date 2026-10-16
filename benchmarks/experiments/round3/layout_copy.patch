@@ -1,0 +1,138 @@
+--- baseline.asc
++++ kernel.asc
+@@ -715,6 +715,119 @@
+     PackedRotary<T> op;op.Init(x,p,y,tokens,heads,dim,tile,f);op.Process();
+ }
+ 
++template <typename T> class CopyRotary {
++public:
++    template <typename F>
++    __aicore__ inline void Init(GM_ADDR x, GM_ADDR p, GM_ADDR y, uint64_t tokens,
++                               uint32_t heads, uint32_t dim, uint32_t tileHeads,
++                               const F& f) {
++        x_.SetGlobalBuffer((__gm__ T*)x); y_.SetGlobalBuffer((__gm__ T*)y);
++        pos_.SetGlobalBuffer((__gm__ int32_t*)p);
++        tokens_=tokens; heads_=heads; dim_=dim; half_=dim/2;
++        tileHeads_=tileHeads; groups_=(heads+tileHeads-1)/tileHeads;
++        freqSize_=64;
++        size_=tileHeads*dim > freqSize_ ? tileHeads*dim : freqSize_;
++        pipe_.InitBuffer(in_,2,size_*sizeof(T));
++        pipe_.InitBuffer(out_,2,size_*sizeof(T));
++        pipe_.InitBuffer(work_,3*size_*sizeof(float));
++        batch_ = size_ / freqSize_;
++        if (batch_ > 16) batch_ = 16;
++        uint32_t baseBytes = 4*size_*sizeof(T) + 3*size_*sizeof(float);
++        uint32_t cacheCap = (188*1024 - baseBytes - freqSize_*sizeof(float)) /
++                            (3*freqSize_*sizeof(float));
++        if (batch_ > cacheCap) batch_ = cacheCap;
++        if (batch_ < 1) batch_ = 1;
++        cacheSize_ = batch_ * freqSize_;
++        pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
++        auto freq=trig_.Get<float>();
++        for(uint32_t i=0;i<64;++i)freq.SetValue(i,f.Get(i%32));
++        PipeBarrier<PIPE_ALL>();
++    }
++    __aicore__ inline uint32_t Rows(uint64_t job) {
++        uint32_t n=heads_-(job%groups_)*tileHeads_;
++        return n<tileHeads_?n:tileHeads_;
++    }
++    __aicore__ inline uint64_t Offset(uint64_t job) {
++        return (job/groups_*heads_+(job%groups_)*tileHeads_)*dim_;
++    }
++    __aicore__ inline void Prefetch(uint64_t job) {
++        auto in=in_.AllocTensor<T>();
++        DataCopyPad(in,x_[Offset(job)],{1,Rows(job)*dim_*uint32_t(sizeof(T)),0,0,0},
++                    DataCopyPadExtParams<T>{false,0,0,0});
++        in_.EnQue(in);
++    }
++    __aicore__ inline uint32_t TrigBatch(uint64_t token,uint64_t tokenLimit) {
++        uint32_t count = tokenLimit-token < batch_ ? tokenLimit-token : batch_;
++        auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=c[cacheSize_];
++        auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[size_];
++        for (uint32_t row=0;row<count;++row)
++            Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
++        
++        SinCosFp32(angle,c,s,q,temp,count*freqSize_);
++        Muls(angle,s,-1.0f,count*freqSize_);
++        Copy(angle[32],s[32],32,count,CopyRepeatParams{1,1,8,8});
++        return count;
++    }
++    __aicore__ inline void Process() {
++        uint64_t jobs=tokens_*groups_;
++        uint64_t begin=jobs*GetBlockIdx()/GetBlockNum();
++        uint64_t end=jobs*(GetBlockIdx()+1)/GetBlockNum();
++        if(begin==end)return;
++        Prefetch(begin);
++        uint64_t cached=static_cast<uint64_t>(-1);
++        uint32_t cachedCount=0;
++        auto z=work_.Get<float>();auto r=z[size_];auto t=z[2*size_];
++        auto cosCache=trig_.Get<float>()[freqSize_];auto sinCache=cosCache[cacheSize_];
++        auto negCache=sinCache[cacheSize_];
++        uint8_t stride=dim_/8;
++        BinaryRepeatParams broadcast{1,1,1,stride,stride,0};
++        BinaryRepeatParams paired{1,1,1,stride,stride,stride};
++        for(uint64_t job=begin;job<end;++job) {
++            auto input=in_.DeQue<T>();
++            if(job+1<end)Prefetch(job+1);
++            uint64_t token=job/groups_;
++            int32_t position=pos_.GetValue(token);
++            uint32_t rows=Rows(job), count=rows*dim_;
++            auto output=out_.AllocTensor<T>();
++            if(position==0) {
++                DataCopy(output,input,count);
++            } else {
++                if(cached==static_cast<uint64_t>(-1) || token>=cached+cachedCount) {
++                    cachedCount=TrigBatch(token,(end-1)/groups_+1);
++                    cached=token;
++                }
++                uint32_t trigOffset=(token-cached)*freqSize_;
++                auto c=cosCache[trigOffset];auto s=sinCache[trigOffset];auto negs=negCache[trigOffset];
++                LoadFp32(z,input,count);
++                
++                Copy(t,z[32],32,rows,CopyRepeatParams{1,1,8,8});
++                Copy(t[32],z,32,rows,CopyRepeatParams{1,1,8,8});
++                Mul(r,z,c,64,rows,broadcast);
++                MulAddDst(r,t,negs,64,rows,broadcast);
++                StoreFp32(output,r,count);
++            }
++            out_.EnQue(output);output=out_.DeQue<T>();
++            DataCopyPad(y_[Offset(job)],output,{1,count*uint32_t(sizeof(T)),0,0,0});
++            in_.FreeTensor(input);out_.FreeTensor(output);
++        }
++        PipeBarrier<PIPE_ALL>();
++    }
++private:
++    TPipe pipe_;
++    TQue<QuePosition::VECIN,2> in_;
++    TQue<QuePosition::VECOUT,2> out_;
++    TBuf<TPosition::VECCALC> work_,trig_;
++    GlobalTensor<T> x_,y_;
++    GlobalTensor<int32_t> pos_;
++    uint64_t tokens_;
++    uint32_t heads_,dim_,half_,tileHeads_,groups_,size_,freqSize_,batch_,cacheSize_;
++};
++template <typename T>
++__global__ __vector__ void copy_rotary_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
++    uint32_t heads,uint32_t tile,Frequencies f) {
++    CopyRotary<T> op;op.Init(x,p,y,tokens,heads,64,tile,f);op.Process();
++}
++
+ } // namespace rope1743
+ 
+ extern "C" void run_kernel(GM_ADDR x, const TensorGroupInfo& info_x,
+@@ -739,6 +852,15 @@
+     uint32_t cores = availableCoreNum > 0 ? availableCoreNum : 1;
+     if (jobs < cores) cores = jobs;
+ 
++    if(dim==64 && heads>1) {
++        rope1743::Frequencies f{};
++        for(uint32_t i=0;i<32;++i)f.value[i]=1.0f/std::pow(theta,static_cast<float>(2*i)/dim);
++        if(info_x.tensors[0].dtype==0)
++            rope1743::copy_rotary_kernel<float><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,tileHeads,f);
++        else
++            rope1743::copy_rotary_kernel<half><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,tileHeads,f);
++        return;
++    }
+     if (dim<=128 && heads<=32 && tokens>=128 &&
+         (dim%16!=0 || (dim==16 && heads>1 && heads<=8))) {
+         uint32_t tile=2048/(heads*pitch);

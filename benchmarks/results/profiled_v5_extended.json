@@ -1,0 +1,295 @@
+{
+  "label": "profiled_v5_extended",
+  "runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939",
+  "device": 0,
+  "order": [
+    "baseline",
+    "candidate",
+    "candidate",
+    "baseline"
+  ],
+  "metric": "msprof Task Duration(us), median of two per-process medians",
+  "per_profile_warmup": 5,
+  "per_profile_samples": 5,
+  "platform_hidden_cases_tested": false,
+  "cases": [
+    {
+      "name": "unaligned_h128_d30_half",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float16",
+      "baseline_us": 641.173,
+      "candidate_us": 102.972,
+      "speedup": 6.226673270403605,
+      "samples_us": {
+        "baseline": [
+          640.813,
+          641.533
+        ],
+        "candidate": [
+          102.582,
+          103.362
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "c6a237291092fb801de8b0329ac4701f970e41683d0b458f5d3fcf1cbe9ac370",
+        "positions.bin": "78490796833c12939c501b199818233d481327038721f9913bcaa68c1136091a"
+      }
+    },
+    {
+      "name": "unaligned_h128_d30_float",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float32",
+      "baseline_us": 434.0185,
+      "candidate_us": 103.082,
+      "speedup": 4.210419859917348,
+      "samples_us": {
+        "baseline": [
+          433.729,
+          434.308
+        ],
+        "candidate": [
+          102.682,
+          103.482
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "3034e37c11548d6bcec9800bbf5c02253a9ebf58ce4815f61bef307de4c06a81",
+        "positions.bin": "b626a8d6d329968f171667a891ff12ea5861649cc6b9af4e81b31a96ea88f4f1"
+      }
+    },
+    {
+      "name": "prefill_d192_half",
+      "shape": [
+        2,
+        512,
+        32,
+        192
+      ],
+      "dtype": "float16",
+      "baseline_us": 27.1,
+      "candidate_us": 20.7505,
+      "speedup": 1.3059926266836945,
+      "samples_us": {
+        "baseline": [
+          26.34,
+          27.86
+        ],
+        "candidate": [
+          19.22,
+          22.281
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "19dda3eca8f1a5866e4923a21afd6ba48979424d6d1c984c3af648db63885e24",
+        "positions.bin": "c119736c6fb310750abc78fc478501be27a383557ddc87a918fb8c37664fc7b4"
+      }
+    },
+    {
+      "name": "prefill_d384_float",
+      "shape": [
+        2,
+        512,
+        32,
+        384
+      ],
+      "dtype": "float32",
+      "baseline_us": 58.021,
+      "candidate_us": 57.120999999999995,
+      "speedup": 1.0157560266802053,
+      "samples_us": {
+        "baseline": [
+          56.501,
+          59.541
+        ],
+        "candidate": [
+          54.521,
+          59.721
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "977a9c23d016e36fad6572f71b4ba1a5e16da87b33a3367b9b6a9ff5d31b1887",
+        "positions.bin": "50314ab727b89e130b0435cece836a5c1bb3e5159cd829ab79913a6777195320"
+      }
+    },
+    {
+      "name": "large_stream_half",
+      "shape": [
+        4,
+        8192,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "baseline_us": 845.887,
+      "candidate_us": 830.1965,
+      "speedup": 1.0188997424103812,
+      "samples_us": {
+        "baseline": [
+          844.957,
+          846.817
+        ],
+        "candidate": [
+          830.256,
+          830.137
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "60c6498c0084a2b1d1080375a541998a7699bb51fa352cc60b94b542df264cf0",
+        "positions.bin": "874d497cf66b26cef2540ed23d7036a3c0d21277d6f6e3298fa7162d9743216a"
+      }
+    },
+    {
+      "name": "large_stream_float",
+      "shape": [
+        2,
+        8192,
+        64,
+        128
+      ],
+      "dtype": "float32",
+      "baseline_us": 848.217,
+      "candidate_us": 833.9865,
+      "speedup": 1.0170632258435839,
+      "samples_us": {
+        "baseline": [
+          848.077,
+          848.357
+        ],
+        "candidate": [
+          834.917,
+          833.056
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "28ef6c97a512c1ca65b14563e7608c4d3cbcb1cb4e44b99d248c4f876eff7200",
+        "positions.bin": "734a3ae8f22b2c3042beab6171b81fb52016e5aa2252f6458bc53a56117672dd"
+      }
+    },
+    {
+      "name": "sequence_d1024_half",
+      "shape": [
+        1,
+        8192,
+        1,
+        1024
+      ],
+      "dtype": "float16",
+      "baseline_us": 201.494,
+      "candidate_us": 106.422,
+      "speedup": 1.8933491195429517,
+      "samples_us": {
+        "baseline": [
+          199.484,
+          203.504
+        ],
+        "candidate": [
+          103.062,
+          109.782
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "609135e30693bc21b3c086843e79565a69dc92258ff5bb38b875847d9a138d90",
+        "positions.bin": "ccb114d7c753fa1b4e4a313fb280060ad8c20b1f17b5531f88419d06146bc77b"
+      }
+    },
+    {
+      "name": "unaligned_h64_d126_half",
+      "shape": [
+        2,
+        512,
+        64,
+        126
+      ],
+      "dtype": "float16",
+      "baseline_us": 111.972,
+      "candidate_us": 111.9125,
+      "speedup": 1.0005316653635652,
+      "samples_us": {
+        "baseline": [
+          111.362,
+          112.582
+        ],
+        "candidate": [
+          111.443,
+          112.382
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "7c42c1ca8b25c2fa435bcf02f0b9e2d8dc220972a51bc222eebf2c376318ab8b",
+        "positions.bin": "a708d7010207a5acbb9d41bc41689f059117c60915f79252eda07209e652d7e2"
+      }
+    },
+    {
+      "name": "unaligned_h64_d254_float",
+      "shape": [
+        2,
+        512,
+        64,
+        254
+      ],
+      "dtype": "float32",
+      "baseline_us": 162.5935,
+      "candidate_us": 162.613,
+      "speedup": 0.999880083388167,
+      "samples_us": {
+        "baseline": [
+          161.824,
+          163.363
+        ],
+        "candidate": [
+          161.743,
+          163.483
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "4bf5fd4385066fff4c01211c3d5a6a7b0da803fd5fcf01412b4573613fb80b8a",
+        "positions.bin": "3a9b1c01c60338fe437c463416135d97fac8b9c497b0d5ae326006afa63ce9cf"
+      }
+    },
+    {
+      "name": "sequence_d1024_float",
+      "shape": [
+        1,
+        8192,
+        1,
+        1024
+      ],
+      "dtype": "float32",
+      "baseline_us": 201.614,
+      "candidate_us": 116.02250000000001,
+      "speedup": 1.737714667413648,
+      "samples_us": {
+        "baseline": [
+          199.584,
+          203.644
+        ],
+        "candidate": [
+          112.642,
+          119.403
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "2a959a7db8a71c20fbca2b0e00715a5eadde3584016abb01b96ceca7104489d2",
+        "positions.bin": "baf900077a8770b9f5472722917b945698c1959724876c49b9ea2e867c2dfc27"
+      }
+    }
+  ],
+  "source_sha256": {
+    "baseline": "2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58",
+    "candidate": "217729cabc7de8ff0230343bcec7133fff9bc2157da1d52b7089e09c5755b7a9"
+  },
+  "binary_sha256": {
+    "baseline": "46c1ec8ad3dc5b95bd57fa14d736ee0f1056b562c9c83befad4dadcb78097c03",
+    "candidate": "24fee4ac9dea4027c71535edc64c4f923062c444fee7b208515c9cb78851540a"
+  }
+}

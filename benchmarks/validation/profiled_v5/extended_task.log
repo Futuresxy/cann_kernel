@@ -1,0 +1,56 @@
+任务已提交: task_20261015_195743_143341423409 (断开后可用 task-submit --wait task_20261015_195743_143341423409 重连)
+等待任务执行: task_20261015_195743_143341423409 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=1433552)
+unaligned_h128_d30_half: 640.813 us, IO >= 49.1 GB/s
+unaligned_h128_d30_float: 433.729 us, IO >= 145.1 GB/s
+prefill_d192_half: 26.340 us, IO >= 955.4 GB/s
+prefill_d384_float: 56.501 us, IO >= 1781.6 GB/s
+large_stream_half: 844.957 us, IO >= 1270.8 GB/s
+large_stream_float: 848.077 us, IO >= 1266.1 GB/s
+sequence_d1024_half: 199.484 us, IO >= 168.2 GB/s
+unaligned_h64_d126_half: 111.362 us, IO >= 296.6 GB/s
+unaligned_h64_d254_float: 161.824 us, IO >= 822.9 GB/s
+sequence_d1024_float: 199.584 us, IO >= 336.2 GB/s
+unaligned_h128_d30_half: 102.582 us, IO >= 306.7 GB/s
+unaligned_h128_d30_float: 102.682 us, IO >= 612.7 GB/s
+prefill_d192_half: 19.220 us, IO >= 1309.4 GB/s
+prefill_d384_float: 54.521 us, IO >= 1846.3 GB/s
+large_stream_half: 830.256 us, IO >= 1293.3 GB/s
+large_stream_float: 834.917 us, IO >= 1286.0 GB/s
+sequence_d1024_half: 103.062 us, IO >= 325.6 GB/s
+unaligned_h64_d126_half: 111.443 us, IO >= 296.4 GB/s
+unaligned_h64_d254_float: 161.743 us, IO >= 823.3 GB/s
+sequence_d1024_float: 112.642 us, IO >= 595.8 GB/s
+unaligned_h128_d30_half: 103.362 us, IO >= 304.3 GB/s
+unaligned_h128_d30_float: 103.482 us, IO >= 608.0 GB/s
+prefill_d192_half: 22.281 us, IO >= 1129.5 GB/s
+prefill_d384_float: 59.721 us, IO >= 1685.6 GB/s
+large_stream_half: 830.137 us, IO >= 1293.5 GB/s
+large_stream_float: 833.056 us, IO >= 1288.9 GB/s
+sequence_d1024_half: 109.782 us, IO >= 305.6 GB/s
+unaligned_h64_d126_half: 112.382 us, IO >= 293.9 GB/s
+unaligned_h64_d254_float: 163.483 us, IO >= 814.6 GB/s
+sequence_d1024_float: 119.403 us, IO >= 562.0 GB/s
+unaligned_h128_d30_half: 641.533 us, IO >= 49.0 GB/s
+unaligned_h128_d30_float: 434.308 us, IO >= 144.9 GB/s
+prefill_d192_half: 27.860 us, IO >= 903.3 GB/s
+prefill_d384_float: 59.541 us, IO >= 1690.7 GB/s
+large_stream_half: 846.817 us, IO >= 1268.0 GB/s
+large_stream_float: 848.357 us, IO >= 1265.7 GB/s
+sequence_d1024_half: 203.504 us, IO >= 164.9 GB/s
+unaligned_h64_d126_half: 112.582 us, IO >= 293.4 GB/s
+unaligned_h64_d254_float: 163.363 us, IO >= 815.2 GB/s
+sequence_d1024_float: 203.644 us, IO >= 329.5 GB/s
+unaligned_h128_d30_half: 641.173 -> 102.972 us (6.23x)
+unaligned_h128_d30_float: 434.019 -> 103.082 us (4.21x)
+prefill_d192_half: 27.100 -> 20.750 us (1.31x)
+prefill_d384_float: 58.021 -> 57.121 us (1.02x)
+large_stream_half: 845.887 -> 830.197 us (1.02x)
+large_stream_float: 848.217 -> 833.986 us (1.02x)
+sequence_d1024_half: 201.494 -> 106.422 us (1.89x)
+unaligned_h64_d126_half: 111.972 -> 111.912 us (1.00x)
+unaligned_h64_d254_float: 162.594 -> 162.613 us (1.00x)
+sequence_d1024_float: 201.614 -> 116.023 us (1.74x)
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

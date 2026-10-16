@@ -2,7 +2,7 @@
 """Count device tasks with msprof, without operator-profiler kernel replay.
 
 15 representative local cases x 5 calls = 75 expected AI Vector kernels.
-Two cases have dim > 512, reproducing the former 85-launch failure. These
+Covers all V5 dispatch paths, including wide and streaming shapes. These
 are local regression cases, not the platform's undisclosed 15 cases.
 Run only inside a short, single-device task-submit reservation.
 """
@@ -17,17 +17,18 @@ import subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 NAMES = [
-    'template', 'tiny', 'odd_stride_fp32', 'unaligned_half',
-    'deepseek_half', 'deepseek_float', 'extreme_d1024', 'extreme_d64',
-    'dim18', 'dim30', 'dim514', 'batch128', 'sequence8192', 'heads256',
-    'aligned_d512_fp32',
+    'tiny', 'unaligned_half', 'deepseek_half', 'deepseek_float',
+    'extreme_d1024', 'packed_mixed_zero_float', 'packed_mixed_zero_half',
+    'dim30', 'dim514', 'sequence8192', 'aligned_d512_fp32',
+    'stream_h128_d64_half', 'head_tile_large_half',
+    'wide_single_head_float', 'half_wide_prefill',
 ]
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--device', type=int, default=0)
-    parser.add_argument('--binary', default='build/rope_runner_single_launch_v3')
+    parser.add_argument('--binary', default='build/rope_runner')
     parser.add_argument('--label', required=True)
     parser.add_argument('--expected-launches', type=int, default=75)
     args = parser.parse_args()

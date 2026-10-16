@@ -540,5 +540,82 @@
     "pmax": 131073,
     "special": true,
     "zero_every": 7
+  },
+  {
+    "name": "stream_h128_d64_half",
+    "shape": [
+      2,
+      4096,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "stream_h32_d128_float",
+    "shape": [
+      2,
+      4096,
+      32,
+      128
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "head_tile_large_half",
+    "shape": [
+      1,
+      137,
+      129,
+      30
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "wide_single_head_float",
+    "shape": [
+      1,
+      137,
+      1,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "bulk_single_head_half",
+    "shape": [
+      1,
+      137,
+      1,
+      128
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "half_wide_prefill",
+    "shape": [
+      1,
+      137,
+      16,
+      1024
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
   }
 ]

@@ -1,0 +1,60 @@
+--- baseline.asc
++++ kernel.asc
+@@ -367,17 +367,18 @@
+ // In contrast to head tiling, each row has its own position and angle vector.
+ template <typename T> class BatchedRotary {
+ public:
++    template <typename F>
+     __aicore__ inline void Init(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
+-        uint32_t dim,uint32_t tileTokens,const Frequencies& f) {
++        uint32_t dim,uint32_t tileTokens,const F& f) {
+         x_.SetGlobalBuffer((__gm__ T*)x);y_.SetGlobalBuffer((__gm__ T*)y);
+         pos_.SetGlobalBuffer((__gm__ int32_t*)p);
+         tokens_=tokens;dim_=dim;half_=dim/2;tile_=tileTokens;size_=tile_*dim;pair_=size_/2;
+         pipe_.InitBuffer(in_,2,size_*sizeof(T));pipe_.InitBuffer(out_,2,size_*sizeof(T));
+         pipe_.InitBuffer(work_,3*size_*sizeof(float));
+         pipe_.InitBuffer(trig_,3*pair_*sizeof(float));
+-        pipe_.InitBuffer(freq_,((half_+7)/8*8)*sizeof(float));
++        pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
+         auto freq=freq_.Get<float>();
+-        for(uint32_t i=0;i<half_;++i)freq.SetValue(i,f.value[i]);
++        FillFrequencies(freq,f,half_,(half_+7)/8*8,work_.Get<float>());
+         PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+@@ -444,6 +445,12 @@
+ __global__ __vector__ void batched_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
+     uint32_t dim,uint32_t tileTokens,Frequencies f) {
+     BatchedRotary<T> op;op.Init(x,p,y,tokens,dim,tileTokens,f);op.Process();
++}
++
++template <typename T>
++__global__ __vector__ void wide_batched_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
++    uint32_t dim,uint32_t tile,WideFrequencies f) {
++    BatchedRotary<T> op;op.Init(x,p,y,tokens,dim,tile,f);op.Process();
+ }
+ 
+ template <typename T> class LargeAlignedRotary {
+@@ -731,7 +738,7 @@
+     uint32_t tileHeads = aligned ? tileElements / dim : 4096 / pitch;
+     if (tileHeads > (aligned ? 128u : 32u)) tileHeads = aligned ? 128 : 32;
+     if (tileHeads > heads) tileHeads = heads;
+-    bool batched = aligned && dim<=512 && heads == 1 && tokens >= 16;
++    bool batched = aligned && heads == 1 && tokens >= 16;
+     uint32_t tileTokens = 2048 / (dim / 2);
+     if (tileTokens > 64) tileTokens = 64;
+     uint64_t jobs = batched ? (tokens + tileTokens - 1) / tileTokens :
+@@ -768,7 +775,12 @@
+             frequencies.correction[i - 128] = static_cast<int16_t>(
+                 static_cast<int32_t>(exact.bits) - static_cast<int32_t>(predicted.bits));
+         }
+-        if(aligned) {
++        if(batched) {
++            if(info_x.tensors[0].dtype==0)
++                rope1743::wide_batched_kernel<float><<<cores,nullptr,stream>>>(x,positions,y,tokens,dim,tileTokens,frequencies);
++            else
++                rope1743::wide_batched_kernel<half><<<cores,nullptr,stream>>>(x,positions,y,tokens,dim,tileTokens,frequencies);
++        } else if(aligned) {
+             if(info_x.tensors[0].dtype==0)
+                 rope1743::large_wide_kernel<float><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
+             else

@@ -1,0 +1,112 @@
+[
+  {
+    "name": "unaligned_half",
+    "shape": [
+      2,
+      16,
+      3,
+      24
+    ],
+    "dtype": "float16",
+    "pmax": 8192
+  },
+  {
+    "name": "deepseek_half",
+    "shape": [
+      2,
+      512,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 8192
+  },
+  {
+    "name": "prefill_h32_d256_half",
+    "shape": [
+      2,
+      512,
+      32,
+      256
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_h32_d1024_half",
+    "shape": [
+      1,
+      256,
+      32,
+      1024
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "unaligned_h128_d30_half",
+    "shape": [
+      2,
+      1024,
+      128,
+      30
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "unaligned_h128_d30_float",
+    "shape": [
+      2,
+      1024,
+      128,
+      30
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "sequence_d1024_half",
+    "shape": [
+      1,
+      8192,
+      1,
+      1024
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "unaligned_h64_d126_half",
+    "shape": [
+      2,
+      512,
+      64,
+      126
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "unaligned_h64_d254_float",
+    "shape": [
+      2,
+      512,
+      64,
+      254
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "sequence_d1024_float",
+    "shape": [
+      1,
+      8192,
+      1,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  }
+]

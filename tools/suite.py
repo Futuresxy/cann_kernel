@@ -43,6 +43,7 @@ def main():
     ap.add_argument('--repeat',type=int,default=30);ap.add_argument('--batches',type=int,default=3)
     ap.add_argument('--sweep',action='store_true');ap.add_argument('--warmup',type=int,default=5)
     ap.add_argument('--packed-sweep',action='store_true')
+    ap.add_argument('--path-sweep',action='store_true')
     ap.add_argument('--cases-file',default='tests/cases.json')
     args=ap.parse_args();all_cases=json.loads((ROOT/args.cases_file).read_text())
     if args.sweep:
@@ -52,6 +53,16 @@ def main():
         all_cases=[dict(name=f'packed_sweep_{d}_{dt}_h{h}',shape=[1,137,h,d],dtype=dt,
                         pmax=131073,extreme=True,special=True,zero_every=7)
                    for d in range(16,129,2) for dt in ['float16','float32'] for h in [1,3,7,32]]
+    if args.path_sweep:
+        all_cases=[dict(name=f'headpath_{d}_{dt}_h{h}',shape=[1,137,h,d],dtype=dt,
+                        pmax=131073,extreme=True,special=True,zero_every=7)
+                   for d in range(18,129,2) for dt in ['float16','float32'] for h in [33,65,129,256]]
+        all_cases += [dict(name=f'widebatch_{d}_{dt}_s{n}',shape=[1,n,1,d],dtype=dt,
+                           pmax=131073,extreme=True,special=True,zero_every=7)
+                      for d in range(528,1025,16) for dt in ['float16','float32'] for n in [17,137]]
+        all_cases += [dict(name=f'halfpath_{d}_h{h}',shape=[1,137,h,d],dtype='float16',
+                           pmax=131073,extreme=True,special=True,zero_every=7)
+                      for d in range(32,1025,32) for h in [16,32,129]]
     cases=all_cases
     if args.cases!='all':
         requested=set(args.cases.split(','));known={c['name'] for c in cases}
@@ -91,13 +102,13 @@ def main():
             result['zero_identity_ok']=bool(np.array_equal(actual[zero].view(bits),x[zero].view(bits)))
             result['passed'] &= result['zero_identity_ok']
             results.append(result)
-            if not (args.sweep or args.packed_sweep) or not result['passed']:print(json.dumps(result),flush=True)
-        if args.sweep or args.packed_sweep:print(f"Sweep: {sum(c['passed'] for c in results)}/{len(results)} passed",flush=True)
+            if not (args.sweep or args.packed_sweep or args.path_sweep) or not result['passed']:print(json.dumps(result),flush=True)
+        if args.sweep or args.packed_sweep or args.path_sweep:print(f"Sweep: {sum(c['passed'] for c in results)}/{len(results)} passed",flush=True)
     if not args.generate_only:
         path=ROOT/'benchmarks/results'/f'{args.label}.json'
         path.parent.mkdir(parents=True,exist_ok=True)
         path.write_text(json.dumps(dict(label=args.label,seconds=time.time()-start,
-            source_sha256=source_sha,binary_sha256=binary_sha,
+            source_sha256=source_sha,binary_sha256=binary_sha,runner_sha256=meta.get('runner_sha256'),
             cases=results),indent=2)+'\n')
         if not all(c['passed'] for c in results):raise SystemExit(1)
 if __name__=='__main__':main()

@@ -1,0 +1,62 @@
+{
+  "PipeUtilization": {
+    "block_id": 23.5,
+    "aiv_time(us)": 192.727927875,
+    "aiv_total_cycles": 356546.6666666667,
+    "aiv_vec_time(us)": 148.97995522916665,
+    "aiv_vec_ratio": 0.7732775416666666,
+    "aiv_mte2_time(us)": 51.697207,
+    "aiv_mte2_ratio": 0.2683651875,
+    "aiv_mte2_active_bw(GB/s)": 12.600586104166666,
+    "aiv_mte3_time(us)": 25.181047145833332,
+    "aiv_mte3_ratio": 0.13072027083333335,
+    "aiv_mte3_active_bw(GB/s)": 25.898545729166667,
+    "aiv_icache_miss_rate": 0.0,
+    "aiv_scalar_time(us)": 102.12057352083333,
+    "aiv_scalar_ratio": 0.5296792916666667,
+    "aiv_scalar_single_time(us)": 17.4624099375,
+    "aiv_scalar_dual_time(us)": 38.73347991666667,
+    "aiv_scalar_mte2_stall_time(us)": 0.0,
+    "aiv_scalar_mte3_stall_time(us)": 0.0,
+    "aiv_scalar_stall_by_ub_time(us)": 0.0,
+    "aiv_scalar_vector_stall_time(us)": 105.15449322916666,
+    "aiv_scalar_wait_ib_time(us)": 0.32834458333333333,
+    "aiv_scalar_wait_time(us)": 0.0
+  },
+  "Memory": {
+    "block_id": 23.5,
+    "aiv_time(us)": 192.727927875,
+    "aiv_total_cycles": 356546.6666666667,
+    "aiv_ub_to_gm_bw(GB/s)": 3.379226083333333,
+    "aiv_gm_to_ub_bw(GB/s)": 3.379226083333333,
+    "aiv_main_mem_read_bw(GB/s)": 3.3998512708333335,
+    "aiv_main_mem_write_bw(GB/s)": 3.3798447291666665,
+    "aiv_mte2_instructions": 171.66666666666666,
+    "aiv_mte2_ratio": 0.2683651875,
+    "aiv_mte3_instructions": 171.66666666666666,
+    "aiv_mte3_ratio": 0.13072027083333335,
+    "read_main_memory_datas(KB)": 686.8333333333334,
+    "write_main_memory_datas(KB)": 682.7916666666666,
+    "GM_to_UB_datas(KB)": 682.6666666666666,
+    "GM_to_UB_bw_usage_rate(%)": 1.5355930416666665,
+    "UB_to_GM_datas(KB)": 682.6666666666666,
+    "UB_to_GM_bw_usage_rate(%)": 1.8090074999999999
+  },
+  "OpBasicInfo": {
+    "Task Duration(us)": 197.103943,
+    "Block Dim": 48.0,
+    "Device Id": 0.0,
+    "Pid": 1647112.0,
+    "Current Freq": 1850.0,
+    "Rated Freq": 1850.0
+  },
+  "MemoryUB": {
+    "block_id": 23.5,
+    "aiv_time(us)": 192.727927875,
+    "aiv_total_cycles": 356546.6666666667,
+    "aiv_ub_read_bw_vector(GB/s)": 113.869866375,
+    "aiv_ub_write_bw_vector(GB/s)": 79.44151208333334,
+    "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+    "aiv_ub_write_bw_scalar(GB/s)": 0.024750479166666665
+  }
+}

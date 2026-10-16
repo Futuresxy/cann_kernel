@@ -1,0 +1,79 @@
+[
+  {
+    "name": "deepseek_half",
+    "shape": [
+      2,
+      512,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 8192
+  },
+  {
+    "name": "deepseek_float",
+    "shape": [
+      2,
+      512,
+      128,
+      64
+    ],
+    "dtype": "float32",
+    "pmax": 8192
+  },
+  {
+    "name": "large_half",
+    "shape": [
+      4,
+      1024,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 8192
+  },
+  {
+    "name": "stream_h128_d64_half",
+    "shape": [
+      2,
+      4096,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "stream_h32_d128_float",
+    "shape": [
+      2,
+      4096,
+      32,
+      128
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "large_stream_half",
+    "shape": [
+      4,
+      8192,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "large_stream_float",
+    "shape": [
+      2,
+      8192,
+      64,
+      128
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  }
+]

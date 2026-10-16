@@ -1,0 +1,139 @@
+--- baseline.asc
++++ kernel.asc
+@@ -715,6 +715,116 @@
+     PackedRotary<T> op;op.Init(x,p,y,tokens,heads,dim,tile,f);op.Process();
+ }
+ 
++template <typename T> class HeadTileRotary {
++public:
++    __aicore__ inline void Init(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
++        uint32_t heads,uint32_t dim,uint32_t tileTokens,const Frequencies& f) {
++        x_.SetGlobalBuffer((__gm__ T*)x);pos_.SetGlobalBuffer((__gm__ int32_t*)p);
++        y_.SetGlobalBuffer((__gm__ T*)y);
++        tokens_=tokens;heads_=heads;dim_=dim;half_=dim/2;pitch_=(half_+15)/16*16;
++        tile_=tileTokens;rows_=tile_;groups_=(heads_+tile_-1)/tile_;capacity_=rows_*pitch_;
++        pipe_.InitBuffer(in_,2,2*capacity_*sizeof(T));
++        pipe_.InitBuffer(out_,2,2*capacity_*sizeof(T));
++        pipe_.InitBuffer(work_,6*capacity_*sizeof(float));
++        pipe_.InitBuffer(index_,5*capacity_*sizeof(uint32_t));
++        pipe_.InitBuffer(freq_,pitch_*sizeof(float));
++        pipe_.InitBuffer(mask_,((2*capacity_+255)/256*32));
++        auto freq=freq_.Get<float>();
++        for(uint32_t i=0;i<pitch_;++i)freq.SetValue(i,i<half_?f.value[i]:0.0f);
++        InitIndexes();
++        PipeBarrier<PIPE_ALL>();
++    }
++    __aicore__ inline void InitIndexes() {
++        auto low=index_.Get<int32_t>();auto high=low[capacity_];
++        auto trig=low[2*capacity_];auto packed=low[3*capacity_];
++        for(uint32_t i=0;i<pitch_;++i) {
++            low.SetValue(i,int32_t((i<half_?i:0)*4));
++            trig.SetValue(i,int32_t(i*4));
++        }
++        PipeBarrier<PIPE_ALL>();
++        for(uint32_t built=1;built<rows_;built*=2) {
++            uint32_t more=rows_-built<built?rows_-built:built;
++            Adds(low[built*pitch_],low,int32_t(built*dim_*4),more*pitch_);
++        }
++        Adds(high,low,int32_t(half_*4),capacity_);
++        for(uint32_t built=1;built<rows_;built*=2) {
++            uint32_t more=rows_-built<built?rows_-built:built;
++            DataCopy(trig[built*pitch_],trig,more*pitch_);
++        }
++        Duplicate(packed,int32_t(0),2*capacity_);
++        PipeBarrier<PIPE_ALL>();
++        uint32_t unit=1;
++        while((unit*dim_)%8!=0)++unit;
++        uint32_t first=rows_<unit?rows_:unit;
++        for(uint32_t h=0;h<first;++h)
++            for(uint32_t i=0;i<dim_;++i)
++                packed.SetValue(h*dim_+i,int32_t((h*pitch_+(i<half_?i:capacity_+i-half_))*4));
++        PipeBarrier<PIPE_ALL>();
++        for(uint32_t built=first;built<rows_;built*=2) {
++            uint32_t more=rows_-built<built?rows_-built:built;
++            Adds(packed[built*dim_],packed,int32_t(built*pitch_*4),more*dim_);
++        }
++    }
++    __aicore__ inline uint32_t Rows(uint64_t job) {
++        uint32_t left=heads_-(job%groups_)*tile_;return left<tile_?left:tile_;
++    }
++    __aicore__ inline uint64_t Offset(uint64_t job) {
++        return (job/groups_*heads_+(job%groups_)*tile_)*dim_;
++    }
++    __aicore__ inline void Prefetch(uint64_t job) {
++        auto input=in_.AllocTensor<T>();
++        DataCopyPad(input,x_[Offset(job)],{1,Rows(job)*dim_*uint32_t(sizeof(T)),0,0,0},
++            DataCopyPadExtParams<T>{false,0,0,0});in_.EnQue(input);
++    }
++    __aicore__ inline void Process() {
++        uint64_t jobs=tokens_*groups_;
++        uint64_t begin=jobs*GetBlockIdx()/GetBlockNum(),end=jobs*(GetBlockIdx()+1)/GetBlockNum();
++        if(begin==end)return;Prefetch(begin);
++        auto z=work_.Get<float>();auto lo=z[2*capacity_];auto hi=lo[capacity_];
++        auto c=z[4*capacity_];auto s=c[capacity_];
++        auto index=index_.Get<uint32_t>();auto high=index[capacity_];
++        auto trig=index[2*capacity_];auto packed=index[3*capacity_];
++        for(uint64_t job=begin;job<end;++job) {
++            auto input=in_.DeQue<T>();if(job+1<end)Prefetch(job+1);
++            uint32_t n=Rows(job)*dim_,aligned=(n+7)/8*8,pairs=Rows(job)*pitch_;
++            int32_t p=pos_.GetValue(job/groups_);
++            if(p==0) {
++                PipeBarrier<PIPE_ALL>();
++                DataCopyPad(y_[Offset(job)],input,{1,n*uint32_t(sizeof(T)),0,0,0});
++                PipeBarrier<PIPE_ALL>();in_.FreeTensor(input);continue;
++            }
++            Muls(lo,freq_.Get<float>(),static_cast<float>(p),pitch_);
++            SinCosFp32(lo,c,s,z,z[capacity_],pitch_);
++            PipeBarrier<PIPE_V>();
++            Gather(z,c,trig,0,pairs);Gather(z[capacity_],s,trig,0,pairs);
++            PipeBarrier<PIPE_V>();LoadFp32(c,input,aligned);
++            PipeBarrier<PIPE_V>();
++            Gather(lo,c,index,0,pairs);Gather(hi,c,high,0,pairs);
++            PipeBarrier<PIPE_V>();
++            Mul(c,lo,z,pairs);Mul(s,hi,z,pairs);
++            PipeBarrier<PIPE_V>();MulAddDst(s,lo,z[capacity_],pairs);
++            PipeBarrier<PIPE_V>();Muls(z[capacity_],z[capacity_],-1.0f,pairs);
++            PipeBarrier<PIPE_V>();MulAddDst(c,hi,z[capacity_],pairs);
++            PipeBarrier<PIPE_V>();Gather(lo,c,packed,0,aligned);
++            PipeBarrier<PIPE_V>();auto output=out_.AllocTensor<T>();StoreFp32(output,lo,aligned);
++            out_.EnQue(output);output=out_.DeQue<T>();
++            DataCopyPad(y_[Offset(job)],output,{1,n*uint32_t(sizeof(T)),0,0,0});
++            in_.FreeTensor(input);out_.FreeTensor(output);
++        }
++        PipeBarrier<PIPE_ALL>();
++    }
++private:
++    TPipe pipe_;TQue<QuePosition::VECIN,2> in_;TQue<QuePosition::VECOUT,2> out_;
++    TBuf<TPosition::VECCALC> work_,index_,freq_,mask_;
++    GlobalTensor<T> x_,y_;GlobalTensor<int32_t> pos_;uint64_t tokens_;
++    uint32_t heads_,dim_,half_,pitch_,tile_,rows_,capacity_,groups_;
++};
++template <typename T>
++__global__ __vector__ void head_tile_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
++    uint32_t heads,uint32_t dim,uint32_t tile,Frequencies f) {
++    HeadTileRotary<T> op;op.Init(x,p,y,tokens,heads,dim,tile,f);op.Process();
++}
++
+ } // namespace rope1743
+ 
+ extern "C" void run_kernel(GM_ADDR x, const TensorGroupInfo& info_x,
+@@ -739,6 +849,19 @@
+     uint32_t cores = availableCoreNum > 0 ? availableCoreNum : 1;
+     if (jobs < cores) cores = jobs;
+ 
++    if(dim%16!=0 && dim<=512 && heads>32 && tokens>=128) {
++        uint32_t tile=2048/pitch;if(tile>128)tile=128;if(tile>heads)tile=heads;
++        uint64_t headJobs=tokens*((heads+tile-1)/tile);
++        uint32_t headCores=availableCoreNum>0?availableCoreNum:1;
++        if(headJobs<headCores)headCores=headJobs;
++        rope1743::Frequencies f{};
++        for(uint32_t i=0;i<width;++i)f.value[i]=1.0f/std::pow(theta,static_cast<float>(2*i)/dim);
++        if(info_x.tensors[0].dtype==0)
++            rope1743::head_tile_kernel<float><<<headCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,f);
++        else
++            rope1743::head_tile_kernel<half><<<headCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,f);
++        return;
++    }
+     if (dim<=128 && heads<=32 && tokens>=128 &&
+         (dim%16!=0 || (dim==16 && heads>1 && heads<=8))) {
+         uint32_t tile=2048/(heads*pitch);

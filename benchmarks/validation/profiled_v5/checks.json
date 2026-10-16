@@ -1,0 +1,86 @@
+{
+  "source_sha256": "217729cabc7de8ff0230343bcec7133fff9bc2157da1d52b7089e09c5755b7a9",
+  "checks": {
+    "profiled_v5": {
+      "cases": 52,
+      "passed": true,
+      "audited_calls": 0,
+      "min_match_ratio": 0.9959210157394409,
+      "source_sha256": "217729cabc7de8ff0230343bcec7133fff9bc2157da1d52b7089e09c5755b7a9",
+      "binary_sha256": "24fee4ac9dea4027c71535edc64c4f923062c444fee7b208515c9cb78851540a",
+      "runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939"
+    },
+    "profiled_v5_audit": {
+      "cases": 52,
+      "passed": true,
+      "audited_calls": 312,
+      "min_match_ratio": 0.9959210157394409,
+      "source_sha256": "217729cabc7de8ff0230343bcec7133fff9bc2157da1d52b7089e09c5755b7a9",
+      "binary_sha256": "65ebb0d288dbbe5a41d3ec2adc152ed6ff16224d8e5019fdfa105f1d1552becd",
+      "runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939"
+    },
+    "profiled_v5_sweep": {
+      "cases": 1010,
+      "passed": true,
+      "audited_calls": 2020,
+      "min_match_ratio": 1.0,
+      "source_sha256": "217729cabc7de8ff0230343bcec7133fff9bc2157da1d52b7089e09c5755b7a9",
+      "binary_sha256": "65ebb0d288dbbe5a41d3ec2adc152ed6ff16224d8e5019fdfa105f1d1552becd",
+      "runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939"
+    },
+    "profiled_v5_packed_sweep": {
+      "cases": 456,
+      "passed": true,
+      "audited_calls": 912,
+      "min_match_ratio": 0.9964715442518248,
+      "source_sha256": "217729cabc7de8ff0230343bcec7133fff9bc2157da1d52b7089e09c5755b7a9",
+      "binary_sha256": "65ebb0d288dbbe5a41d3ec2adc152ed6ff16224d8e5019fdfa105f1d1552becd",
+      "runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939"
+    },
+    "profiled_v5_path_sweep": {
+      "cases": 672,
+      "passed": true,
+      "audited_calls": 1344,
+      "min_match_ratio": 0.9964359032846716,
+      "source_sha256": "217729cabc7de8ff0230343bcec7133fff9bc2157da1d52b7089e09c5755b7a9",
+      "binary_sha256": "65ebb0d288dbbe5a41d3ec2adc152ed6ff16224d8e5019fdfa105f1d1552becd",
+      "runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939"
+    },
+    "profiled_v5_paired": {
+      "cases": 23,
+      "device": 0,
+      "candidate_binary": "24fee4ac9dea4027c71535edc64c4f923062c444fee7b208515c9cb78851540a",
+      "runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939"
+    },
+    "profiled_v5_extended": {
+      "cases": 10,
+      "device": 0,
+      "candidate_binary": "24fee4ac9dea4027c71535edc64c4f923062c444fee7b208515c9cb78851540a",
+      "runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939"
+    }
+  },
+  "template_changed": [
+    "kernel.asc"
+  ],
+  "template_build_passed": true,
+  "template_runtime_passed": true,
+  "template_max_abs_error": 2.6226043701171875e-06,
+  "hardware": "Ascend910_9392",
+  "aiv_cores": 48,
+  "cann": "9.0.0",
+  "arch": "dav-2201",
+  "device_jobs_single_card": true,
+  "maximum_device_reservation_seconds": 60,
+  "correctness_case_count": 2190,
+  "api_audited_calls": 4588,
+  "device_profile_calls": 75,
+  "device_profile_kernels": 75,
+  "pmu_matches_paired_binary": [
+    "profiled_v5_baseline_deepseek_half",
+    "profiled_v5_baseline_unaligned_h128_d30_half",
+    "profiled_v5_baseline_sequence_d1024_float",
+    "profiled_v5_deepseek_half",
+    "profiled_v5_unaligned_h128_d30_half",
+    "profiled_v5_sequence_d1024_float"
+  ]
+}

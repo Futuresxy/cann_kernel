@@ -1,0 +1,771 @@
+{
+  "label": "round3_half_fast",
+  "source_sha256": "d315f06cc3dc95f972b67e2c32da36e0947eb0dde1f36bf216be6db118a48b09",
+  "binary_sha256": "1e4e506ffceb2b6e6d2d9b753a18c336cd6aa893a6debb08ce1c48a85beb78b6",
+  "command": [
+    "msprof",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/matrix_profiles/round3_half_fast",
+    "--runtime-api=on",
+    "--task-time=on",
+    "--ai-core=off",
+    "--aicpu=off",
+    "--type=text",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/tuning_round3/half_fast/build/rope_runner --device 0 --batch /data/pyptouser/songxiaoyou/cann_kernel/project/build/matrix_profiles/round3_half_fast/cases.txt"
+  ],
+  "run_kernel_calls": 300,
+  "actual_device_kernel_tasks": 300,
+  "cases": [
+    {
+      "name": "tiny",
+      "shape": [
+        1,
+        8,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "pmax": 8,
+      "input_sha256": {
+        "x.bin": "113177150d8ed22d86380bf54a38fb526ed710dc876836a8678d5afdf8ef0caf",
+        "positions.bin": "306f223e3fb26efbc3577ab7ed02d5c753705c3f1bfdfd8becadf4c816fa2dc3"
+      },
+      "task_us": 2.42,
+      "samples_us": [
+        5.58,
+        4.52,
+        2.18,
+        2.34,
+        2.42
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 0.4231404958677686
+    },
+    {
+      "name": "unaligned_half",
+      "shape": [
+        2,
+        16,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "input_sha256": {
+        "x.bin": "82cf4ced7a727febd3a6e57c1dc6ecdd2e598e623e4b5131160cc2a41fda2842",
+        "positions.bin": "c9152dcb4d27396c574593208dfb13af81021260ee908be48e16933ceecf6ea7"
+      },
+      "task_us": 5.18,
+      "samples_us": [
+        5.1,
+        5.1,
+        5.18,
+        5.32,
+        5.36
+      ],
+      "kernel": "_ZN8rope174313rotary_kernelIDhEEvPhS1_S1_mjjjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1.779150579150579
+    },
+    {
+      "name": "deepseek_half",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "input_sha256": {
+        "x.bin": "bdad53212412815e8cf51c051c6a35cf388228016dc362f44e142481c91683ad",
+        "positions.bin": "66721d2c86916be88b1c616963f2a97deae33b89de26d9c61aad2fe35e212f9b"
+      },
+      "task_us": 16.86,
+      "samples_us": [
+        16.64,
+        16.461,
+        16.86,
+        16.88,
+        17.221
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1990.179833926453
+    },
+    {
+      "name": "deepseek_float",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float32",
+      "pmax": 8192,
+      "input_sha256": {
+        "x.bin": "6d0225bab480bf9534bc768091bb365a18cf2f6c08b555426b991cd67f54bb18",
+        "positions.bin": "b4bceec88d4a05026a9b7e0c2087e598b1e092935ea6db23ff47899b49aea413"
+      },
+      "task_us": 24.041,
+      "samples_us": [
+        23.92,
+        23.881,
+        24.14,
+        24.041,
+        24.28
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 2791.4339669730875
+    },
+    {
+      "name": "sequence8192",
+      "shape": [
+        1,
+        8192,
+        1,
+        64
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "4fe2288d363c708980a6c7376e554704012ccca7e250ada5034ab33443096d31",
+        "positions.bin": "483e999d73e03487e59a1165a836a484f38f6534a7949e3033439e00989bd635"
+      },
+      "task_us": 14.721,
+      "samples_us": [
+        14.601,
+        14.76,
+        14.68,
+        14.721,
+        15.12
+      ],
+      "kernel": "_ZN8rope174314batched_kernelIfEEvPhS1_S1_mjjNS_11FrequenciesE",
+      "minimum_io_gbs": 284.91977447184297
+    },
+    {
+      "name": "large_half",
+      "shape": [
+        4,
+        1024,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "input_sha256": {
+        "x.bin": "54d846b72bb84d7c762c01202b547b87b28d630bfdf98cde7bee52f2435a797a",
+        "positions.bin": "1db7aa2ee9acb3c4dd6730316a7526163b6e16cbc4bc3514536d6ee917e04be8"
+      },
+      "task_us": 45.241,
+      "samples_us": [
+        45.24,
+        45.241,
+        45.241,
+        45.181,
+        45.601
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 2966.727702747508
+    },
+    {
+      "name": "heads256",
+      "shape": [
+        1,
+        32,
+        256,
+        128
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "5dd99e0be703d0402733e440e136a180ad96b15c6b30cd78494b2c9f89c6bc11",
+        "positions.bin": "b9e8930368247e900e3c5dc3f7ac826157d6dac849de81791cf5ea7ecab6d1fc"
+      },
+      "task_us": 11.7,
+      "samples_us": [
+        11.62,
+        11.62,
+        11.7,
+        11.941,
+        12.48
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 358.48752136752137
+    },
+    {
+      "name": "aligned_d512_half",
+      "shape": [
+        1,
+        7,
+        17,
+        512
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "5c8ae2b6dd3ac2f3242f3dd7e244a9fd9354abd9a828f3bc929dcfa5f2428403",
+        "positions.bin": "3eea0d266e8cce19cb5b533facd80c70f2f930b8ab66cadcbc9324bdc904b17c"
+      },
+      "task_us": 8.56,
+      "samples_us": [
+        10.66,
+        11.12,
+        8.56,
+        7.76,
+        8.121
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 28.471028037383178
+    },
+    {
+      "name": "wide_half",
+      "shape": [
+        1,
+        7,
+        17,
+        1024
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "extreme": true,
+      "input_sha256": {
+        "x.bin": "fd89ff7fd3a4291ae8ad99e321c5261563a9392a68ad5ea29fd30c4a0cc14942",
+        "positions.bin": "50e1813107797604d4674666850c912f22a44a1b71ea4f067eec76b46186f6be"
+      },
+      "task_us": 14.281,
+      "samples_us": [
+        14.56,
+        14.4,
+        14.281,
+        13.6,
+        14.02
+      ],
+      "kernel": "_ZN8rope174317large_wide_kernelIDhEEvPhS1_S1_mjjjNS_15WideFrequenciesE",
+      "minimum_io_gbs": 34.13094321125971
+    },
+    {
+      "name": "prefill_h32_d128_half",
+      "shape": [
+        2,
+        512,
+        32,
+        128
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "7c65bdc4475660c870cfaf0cb7eb931cd377515e386743685f30cb9d4a293a6c",
+        "positions.bin": "756c434c81818d335b4f9deeb8bc27fe7b32dd1ce85c9176f80de84dcf8221ce"
+      },
+      "task_us": 16.16,
+      "samples_us": [
+        15.9,
+        15.981,
+        16.34,
+        16.16,
+        16.741
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1038.1940594059406
+    },
+    {
+      "name": "prefill_h32_d128_float",
+      "shape": [
+        2,
+        512,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "fcb7ab40ebf3806ff19476c249ca22343cfee71e745ac35b9a3399123f1f93a6",
+        "positions.bin": "65c1582bc7cf322aedd677fc905b78fbfd5ea163509533b2f10fb9ab4203bc9c"
+      },
+      "task_us": 19.84,
+      "samples_us": [
+        19.7,
+        19.801,
+        19.98,
+        19.84,
+        20.481
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1691.2516129032258
+    },
+    {
+      "name": "prefill_h32_d256_half",
+      "shape": [
+        2,
+        512,
+        32,
+        256
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "563b93eb2ae7878dce75ba6e1fa8f7bbf4d1f4c88105cfde8f62b4a404340b63",
+        "positions.bin": "046654a0d99123e0dfd3bd954413dc244340bac6510eb5b1cc076a86d956b0b5"
+      },
+      "task_us": 23.98,
+      "samples_us": [
+        23.62,
+        23.641,
+        23.98,
+        24.081,
+        24.98
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1399.2673894912427
+    },
+    {
+      "name": "prefill_h8_d64_half",
+      "shape": [
+        2,
+        512,
+        8,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "5e4c9c5a81ba2d3b010fbe5e78b4b2908442b401a2cc29ab2e8c5ead3239748c",
+        "positions.bin": "0df1140e78399ee91073c972dcd7aef6eaac6ddd1370c52270e9bbd6571b128f"
+      },
+      "task_us": 11.401,
+      "samples_us": [
+        11.401,
+        11.26,
+        11.38,
+        11.42,
+        11.8
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 183.944566266117
+    },
+    {
+      "name": "prefill_h3_d24_half",
+      "shape": [
+        2,
+        512,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "390ad93857dc563cfd4dbd515369e76681a42d3bc11fb4d7c98ea38015f09f1d",
+        "positions.bin": "e4c107e05d0e9eaef9725f2e312d2ab1cd8316afddc44ad4396d618a735fd8b1"
+      },
+      "task_us": 6.88,
+      "samples_us": [
+        6.88,
+        6.86,
+        6.92,
+        6.861,
+        7.08
+      ],
+      "kernel": "_ZN8rope174313packed_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 42.86511627906977
+    },
+    {
+      "name": "prefill_h32_d30_float",
+      "shape": [
+        2,
+        512,
+        32,
+        30
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "df6ee7a24c09dab99ef933813ffaf346947387504fa0dc54232450cb28759df5",
+        "positions.bin": "f12f541ab2b3661b3aa0b6faa59a004d9f171a7bec2175401eb4a4034ddfac66"
+      },
+      "task_us": 20.161,
+      "samples_us": [
+        20.241,
+        20.12,
+        20.12,
+        20.161,
+        20.36
+      ],
+      "kernel": "_ZN8rope174313packed_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 390.0758890928029
+    },
+    {
+      "name": "prefill_h32_d96_half",
+      "shape": [
+        2,
+        512,
+        32,
+        96
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "91ceeeab68bbd6e9e0da66fe28b48065bf3934b85af4dae51ccd1651adfede2e",
+        "positions.bin": "666d6a753176e15ecc3afa9e4b7fcea04a06e307a79ffda895305c29bf03b6d9"
+      },
+      "task_us": 14.061,
+      "samples_us": [
+        13.98,
+        13.92,
+        14.18,
+        14.061,
+        14.58
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 894.8803072327715
+    },
+    {
+      "name": "prefill_h32_d1024_half",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "18d35046421d8cda3701af58dacaacf6da8effd765290cd6cbfa52a3d794e324",
+        "positions.bin": "0a655fb2b854784cd77089c9b1a0e9246a30f8c1d3b900a5c75c478a2933ea5f"
+      },
+      "task_us": 56.741,
+      "samples_us": [
+        55.841,
+        55.741,
+        56.821,
+        56.741,
+        59.021
+      ],
+      "kernel": "_ZN8rope174317large_wide_kernelIDhEEvPhS1_S1_mjjjNS_15WideFrequenciesE",
+      "minimum_io_gbs": 591.3613084013324
+    },
+    {
+      "name": "prefill_h32_d1024_float",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "91367b251bbdaa96f6cbc6c1cfc81ead1a6edbba9a272c929e5dead764fa8af4",
+        "positions.bin": "866eeb1702eb89448c1de882f38414848ee7d13349a22089e39a90c905d9ef37"
+      },
+      "task_us": 60.221,
+      "samples_us": [
+        59.721,
+        59.541,
+        60.221,
+        60.541,
+        62.782
+      ],
+      "kernel": "_ZN8rope174317large_wide_kernelIfEEvPhS1_S1_mjjjNS_15WideFrequenciesE",
+      "minimum_io_gbs": 1114.3764467544545
+    },
+    {
+      "name": "stream_h128_d64_half",
+      "shape": [
+        2,
+        4096,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "dff441bc4a51a086652aadbb697e6507fecb1a6645f1762cdc3613eded7c7d97",
+        "positions.bin": "0c64a12c59cc49c670ed5f4a747926cf3664ea47c1bf44c2930421da066ff8d5"
+      },
+      "task_us": 221.724,
+      "samples_us": [
+        222.344,
+        221.065,
+        221.964,
+        221.325,
+        221.724
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1210.6738828453392
+    },
+    {
+      "name": "stream_h32_d128_float",
+      "shape": [
+        2,
+        4096,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "1916ce8556899dec2a3637c15eb874fa14fb1b041d894e3eb0ffc462e1a99a5f",
+        "positions.bin": "0fd01c92726223a6d208175d6fc5e1a647b9c5a782cbdbdf3a8b6350847aabcb"
+      },
+      "task_us": 227.125,
+      "samples_us": [
+        227.125,
+        225.444,
+        227.345,
+        225.544,
+        228.285
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1181.8842311502476
+    },
+    {
+      "name": "single_token_many_heads",
+      "shape": [
+        1,
+        1,
+        256,
+        128
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "3ff1d5efe0f4425cb6065bc551cb4837f6f05afc43e3ececc4ceaa3434bf94d2",
+        "positions.bin": "75a2861f5330b32dd09f85cb14ed4dce68d344a286b4f0ba04e3a61de9e2ec04"
+      },
+      "task_us": 8.22,
+      "samples_us": [
+        8.14,
+        8.22,
+        7.86,
+        9.16,
+        8.7
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 15.945498783454989
+    },
+    {
+      "name": "short_s16_h32",
+      "shape": [
+        1,
+        16,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "ed5246de613a21e0b0ec24041feb934a413fe34caff774ed908534203d90ce6c",
+        "positions.bin": "506c98036047e57fa5c3555ccb8b922e26a503ec9afee0403246ecfeadaf880b"
+      },
+      "task_us": 7.08,
+      "samples_us": [
+        7.08,
+        7.02,
+        7.42,
+        6.64,
+        8.261
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 74.05197740112995
+    },
+    {
+      "name": "narrow_head_long",
+      "shape": [
+        1,
+        8192,
+        4,
+        16
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "c36aa69b0a9e107f88df7d473a652455d3d72f380c1182f208396d45eb4180cb",
+        "positions.bin": "4e051244f89aa70f396968ce54d96563d0f872df4bd85daabc15db0bd239b5c9"
+      },
+      "task_us": 22.101,
+      "samples_us": [
+        22.12,
+        22.061,
+        22.1,
+        22.101,
+        22.12
+      ],
+      "kernel": "_ZN8rope174313packed_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 94.88946201529343
+    },
+    {
+      "name": "unaligned_h128_d30_half",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "c6a237291092fb801de8b0329ac4701f970e41683d0b458f5d3fcf1cbe9ac370",
+        "positions.bin": "78490796833c12939c501b199818233d481327038721f9913bcaa68c1136091a"
+      },
+      "task_us": 652.273,
+      "samples_us": [
+        652.273,
+        653.213,
+        658.914,
+        649.333,
+        651.053
+      ],
+      "kernel": "_ZN8rope174313rotary_kernelIDhEEvPhS1_S1_mjjjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 48.22716868550438
+    },
+    {
+      "name": "unaligned_h128_d30_float",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "3034e37c11548d6bcec9800bbf5c02253a9ebf58ce4815f61bef307de4c06a81",
+        "positions.bin": "b626a8d6d329968f171667a891ff12ea5861649cc6b9af4e81b31a96ea88f4f1"
+      },
+      "task_us": 433.348,
+      "samples_us": [
+        426.169,
+        435.569,
+        428.688,
+        437.609,
+        433.348
+      ],
+      "kernel": "_ZN8rope174313rotary_kernelIfEEvPhS1_S1_mjjjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 145.1825322835227
+    },
+    {
+      "name": "prefill_d192_half",
+      "shape": [
+        2,
+        512,
+        32,
+        192
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "19dda3eca8f1a5866e4923a21afd6ba48979424d6d1c984c3af648db63885e24",
+        "positions.bin": "c119736c6fb310750abc78fc478501be27a383557ddc87a918fb8c37664fc7b4"
+      },
+      "task_us": 21.44,
+      "samples_us": [
+        21.04,
+        21.081,
+        21.44,
+        21.44,
+        22.181
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1173.779104477612
+    },
+    {
+      "name": "prefill_d384_float",
+      "shape": [
+        2,
+        512,
+        32,
+        384
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "977a9c23d016e36fad6572f71b4ba1a5e16da87b33a3367b9b6a9ff5d31b1887",
+        "positions.bin": "50314ab727b89e130b0435cece836a5c1bb3e5159cd829ab79913a6777195320"
+      },
+      "task_us": 57.761,
+      "samples_us": [
+        56.561,
+        57.281,
+        57.761,
+        58.062,
+        59.281
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1742.755423209432
+    },
+    {
+      "name": "large_stream_half",
+      "shape": [
+        4,
+        8192,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "60c6498c0084a2b1d1080375a541998a7699bb51fa352cc60b94b542df264cf0",
+        "positions.bin": "874d497cf66b26cef2540ed23d7036a3c0d21277d6f6e3298fa7162d9743216a"
+      },
+      "task_us": 872.838,
+      "samples_us": [
+        873.897,
+        872.838,
+        872.357,
+        873.858,
+        871.417
+      ],
+      "kernel": "_ZN8rope174316half_fast_kernelEPhS0_S0_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1230.1730951218897
+    },
+    {
+      "name": "large_stream_float",
+      "shape": [
+        2,
+        8192,
+        64,
+        128
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "28ef6c97a512c1ca65b14563e7608c4d3cbcb1cb4e44b99d248c4f876eff7200",
+        "positions.bin": "734a3ae8f22b2c3042beab6171b81fb52016e5aa2252f6458bc53a56117672dd"
+      },
+      "task_us": 873.978,
+      "samples_us": [
+        872.077,
+        875.557,
+        873.818,
+        875.037,
+        873.978
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1228.5684811288156
+    },
+    {
+      "name": "sequence_d1024_half",
+      "shape": [
+        1,
+        8192,
+        1,
+        1024
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "input_sha256": {
+        "x.bin": "609135e30693bc21b3c086843e79565a69dc92258ff5bb38b875847d9a138d90",
+        "positions.bin": "ccb114d7c753fa1b4e4a313fb280060ad8c20b1f17b5531f88419d06146bc77b"
+      },
+      "task_us": 199.404,
+      "samples_us": [
+        196.623,
+        198.824,
+        199.524,
+        199.404,
+        201.144
+      ],
+      "kernel": "_ZN8rope174317large_wide_kernelIDhEEvPhS1_S1_mjjjNS_15WideFrequenciesE",
+      "minimum_io_gbs": 168.27361537381395
+    }
+  ],
+  "platform_hidden_cases_tested": false
+}

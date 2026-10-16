@@ -25,6 +25,7 @@ def main():
     ap=argparse.ArgumentParser();ap.add_argument('--label',required=True);ap.add_argument('--case',default='deepseek_half')
     ap.add_argument('--device',type=int,default=0);ap.add_argument('--binary',default='build/rope_runner')
     ap.add_argument('--cases-file',default='tests/cases.json')
+    ap.add_argument('--metrics',default='PipeUtilization,Memory,MemoryUB')
     ap.add_argument('--analyze-only',action='store_true');args=ap.parse_args()
     if not args.analyze_only:
         c=next(c for c in json.loads((ROOT/args.cases_file).read_text()) if c['name']==args.case)
@@ -33,7 +34,7 @@ def main():
         app=[str(ROOT/args.binary),'--device',str(args.device),'--shape',*map(str,c['shape']),
              '--dtype',c['dtype'],'--theta',str(c.get('theta',10000)),'--input',str(dest),
              '--output',str(ROOT/'build/profile_output.bin'),'--warmup','6','--repeat','2','--batches','1']
-        cmd=['msprof','op','--aic-metrics=PipeUtilization,Memory,MemoryUB','--launch-count=1',
+        cmd=['msprof','op','--aic-metrics='+args.metrics,'--launch-count=1',
              '--launch-skip-before-match=5','--warm-up=2','--output='+str(ROOT/'build/profiles'/args.label),
              '--application='+shlex.join(app)]
         subprocess.run(cmd,check=True,timeout=65)

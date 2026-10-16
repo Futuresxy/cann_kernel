@@ -1,0 +1,165 @@
+--- baseline.asc
++++ kernel.asc
+@@ -83,28 +83,32 @@
+ __aicore__ inline void SinCosFp32(const LocalTensor<float>& angle,
+     const LocalTensor<float>& c,const LocalTensor<float>& s,
+     const LocalTensor<float>& q,const LocalTensor<float>& temp,uint32_t n) {
+-    Muls(q,angle,0.15915494309189535f,n);
+-    Cast(temp.ReinterpretCast<int32_t>(),q,RoundMode::CAST_RINT,n);
+-    Cast(q,temp.ReinterpretCast<int32_t>(),RoundMode::CAST_NONE,n);
+-    Muls(temp,q,6.25f,n);Sub(angle,angle,temp,n);
+-    Muls(temp,q,0.033203125f,n);Sub(angle,angle,temp,n);
+-    Muls(temp,q,-0.000017817820413523074f,n);Sub(angle,angle,temp,n);
+-    Muls(angle,angle,0.25f,n);
+-    Mul(q,angle,angle,n);
+-    Muls(s,q,1.0f/362880.0f,n);
+-    Adds(s,s,-1.0f/5040.0f,n);
+-    Mul(s,s,q,n);Adds(s,s,1.0f/120.0f,n);
+-    Mul(s,s,q,n);Adds(s,s,-1.0f/6.0f,n);
+-    Mul(s,s,q,n);Adds(s,s,1.0f,n);
+-    Mul(s,s,angle,n);
+-    Mul(c,s,s,n);Muls(c,c,-1.0f,n);
+-    Adds(c,c,1.0f,n);Sqrt(c,c,n);
+-    Mul(angle,s,c,n);Muls(angle,angle,2.0f,n);
+-    Mul(s,s,s,n);Muls(s,s,-2.0f,n);
+-    Adds(s,s,1.0f,n);
+-    Mul(c,angle,angle,n);Muls(c,c,-2.0f,n);
+-    Adds(c,c,1.0f,n);
+-    Mul(s,angle,s,n);Muls(s,s,2.0f,n);
++    SetMaskCount();
++    SetVectorMask<float,MaskMode::COUNTER>(n);
++    Muls<float,false>(q,angle,0.15915494309189535f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Cast<int32_t,float,false>(temp.ReinterpretCast<int32_t>(),q,RoundMode::CAST_RINT,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Cast<float,int32_t,false>(q,temp.ReinterpretCast<int32_t>(),RoundMode::CAST_NONE,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Muls<float,false>(temp,q,6.25f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});Sub<float,false>(angle,angle,temp,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Muls<float,false>(temp,q,0.033203125f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});Sub<float,false>(angle,angle,temp,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Muls<float,false>(temp,q,-0.000017817820413523074f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});Sub<float,false>(angle,angle,temp,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Muls<float,false>(angle,angle,0.25f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(q,angle,angle,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Muls<float,false>(s,q,1.0f/362880.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Adds<float,false>(s,s,-1.0f/5040.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,q,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Adds<float,false>(s,s,1.0f/120.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,q,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Adds<float,false>(s,s,-1.0f/6.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,q,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Adds<float,false>(s,s,1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,angle,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Mul<float,false>(c,s,s,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(c,c,-1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Adds<float,false>(c,c,1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});Sqrt<float,false>(c,c,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(angle,s,c,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(angle,angle,2.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,s,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(s,s,-2.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Adds<float,false>(s,s,1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(c,angle,angle,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(c,c,-2.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Adds<float,false>(c,c,1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,angle,s,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(s,s,2.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    SetMaskNorm();
++    ResetMask();
+ }
+ 
+ 
+@@ -251,10 +255,11 @@
+         size_=tileHeads*dim > freqSize_ ? tileHeads*dim : freqSize_;
+         pipe_.InitBuffer(in_,2,size_*sizeof(T));
+         pipe_.InitBuffer(out_,2,size_*sizeof(T));
+-        pipe_.InitBuffer(work_,3*size_*sizeof(float));
++        workStride_=size_+8;
++        pipe_.InitBuffer(work_,3*workStride_*sizeof(float));
+         batch_ = size_ / freqSize_;
+         if (batch_ > 16) batch_ = 16;
+-        uint32_t baseBytes = 4*size_*sizeof(T) + 3*size_*sizeof(float);
++        uint32_t baseBytes = 4*size_*sizeof(T) + 3*workStride_*sizeof(float);
+         uint32_t cacheCap = (188*1024 - baseBytes - freqSize_*sizeof(float)) /
+                             (3*freqSize_*sizeof(float));
+         if (batch_ > cacheCap) batch_ = cacheCap;
+@@ -281,9 +286,13 @@
+     __aicore__ inline uint32_t TrigBatch(uint64_t token,uint64_t tokenLimit) {
+         uint32_t count = tokenLimit-token < batch_ ? tokenLimit-token : batch_;
+         auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=c[cacheSize_];
+-        auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[size_];
++        auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[workStride_];
++        SetMaskCount();
++        SetVectorMask<float,MaskMode::COUNTER>(freqSize_);
+         for (uint32_t row=0;row<count;++row)
+-            Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
++            Muls<float,false>(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),
++                MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++        SetMaskNorm();ResetMask();
+         
+         SinCosFp32(angle,c,s,q,temp,count*freqSize_);
+         Muls(angle,s,-1.0f,count*freqSize_);
+@@ -297,7 +306,7 @@
+         Prefetch(begin);
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
+-        auto z=work_.Get<float>();auto r=z[size_];auto t=z[2*size_];
++        auto z=work_.Get<float>();auto r=z[workStride_];auto t=z[2*workStride_];
+         auto cosCache=trig_.Get<float>()[freqSize_];auto sinCache=cosCache[cacheSize_];
+         auto negCache=sinCache[cacheSize_];
+         uint8_t stride=dim_/8;
+@@ -323,16 +332,13 @@
+                 
+                 for(uint32_t col=0;col<half_;col+=64) {
+                     uint64_t mask=half_-col<64?half_-col:64;
+-                    Mul(r[col],z[col],c[col],mask,rows,broadcast);
+-                    Mul(r[half_+col],z[half_+col],c[col],mask,rows,broadcast);
++                    SetVectorMask<float>(mask);
++                    Mul<float,false>(r[col],z[col],c[col],MASK_PLACEHOLDER,rows,broadcast);
++                    Mul<float,false>(r[half_+col],z[half_+col],c[col],MASK_PLACEHOLDER,rows,broadcast);
++                    MulAddDst<float,float,false>(r[col],z[half_+col],negs[col],MASK_PLACEHOLDER,rows,broadcast);
++                    MulAddDst<float,float,false>(r[half_+col],z[col],s[col],MASK_PLACEHOLDER,rows,broadcast);
+                 }
+-                
+-                for(uint32_t col=0;col<half_;col+=64) {
+-                    uint64_t mask=half_-col<64?half_-col:64;
+-                    MulAddDst(r[col],z[half_+col],negs[col],mask,rows,broadcast);
+-                    MulAddDst(r[half_+col],z[col],s[col],mask,rows,broadcast);
+-                }
+-                
++                ResetMask();
+                 StoreFp32(output,r,count);
+             }
+             out_.EnQue(output);output=out_.DeQue<T>();
+@@ -349,7 +355,7 @@
+     GlobalTensor<T> x_,y_;
+     GlobalTensor<int32_t> pos_;
+     uint64_t tokens_;
+-    uint32_t heads_,dim_,half_,tileHeads_,groups_,size_,freqSize_,batch_,cacheSize_;
++    uint32_t heads_,dim_,half_,tileHeads_,groups_,size_,freqSize_,batch_,cacheSize_,workStride_;
+ };
+ template <typename T>
+ __global__ __vector__ void aligned_kernel(GM_ADDR x,GM_ADDR positions,GM_ADDR y,
+@@ -492,8 +498,12 @@
+         uint32_t count = tokenLimit-token < batch_ ? tokenLimit-token : batch_;
+         auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=c[cacheSize_];
+         auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[workStride_];
++        SetMaskCount();
++        SetVectorMask<float,MaskMode::COUNTER>(freqSize_);
+         for (uint32_t row=0;row<count;++row)
+-            Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
++            Muls<float,false>(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),
++                MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++        SetMaskNorm();ResetMask();
+         
+         SinCosFp32(angle,c,s,q,temp,count*freqSize_);
+         Muls(angle,s,-1.0f,count*freqSize_);
+@@ -534,16 +544,13 @@
+                 
+                 for(uint32_t col=0;col<half_;col+=64) {
+                     uint64_t mask=half_-col<64?half_-col:64;
+-                    Mul(r[col],z[col],c[col],mask,rows,broadcast);
+-                    Mul(r[half_+col],z[half_+col],c[col],mask,rows,broadcast);
++                    SetVectorMask<float>(mask);
++                    Mul<float,false>(r[col],z[col],c[col],MASK_PLACEHOLDER,rows,broadcast);
++                    Mul<float,false>(r[half_+col],z[half_+col],c[col],MASK_PLACEHOLDER,rows,broadcast);
++                    MulAddDst<float,float,false>(r[col],z[half_+col],negs[col],MASK_PLACEHOLDER,rows,broadcast);
++                    MulAddDst<float,float,false>(r[half_+col],z[col],s[col],MASK_PLACEHOLDER,rows,broadcast);
+                 }
+-                
+-                for(uint32_t col=0;col<half_;col+=64) {
+-                    uint64_t mask=half_-col<64?half_-col:64;
+-                    MulAddDst(r[col],z[half_+col],negs[col],mask,rows,broadcast);
+-                    MulAddDst(r[half_+col],z[col],s[col],mask,rows,broadcast);
+-                }
+-                
++                ResetMask();
+                 output=out_.AllocTensor<T>();
+                 StoreFp32(output,r,count);
+             }

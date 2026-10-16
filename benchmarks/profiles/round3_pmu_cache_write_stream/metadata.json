@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "stream_h128_d64_half",
+    "shape": [
+      2,
+      4096,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB,L2Cache",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/round3_pmu_cache_write_stream",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/tuning_round3/cache_write/build/rope_runner --device 0 --shape 2 4096 128 64 --dtype float16 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/stream_h128_d64_half --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "b9c1275fc9579ca7832fdaf4a25c785123476575dd8a22b4db47529cc740a799",
+  "binary_sha256": "321b264b62ead12dc7728595b5425553f44a654f0b3ede0665720c30679ff22c"
+}

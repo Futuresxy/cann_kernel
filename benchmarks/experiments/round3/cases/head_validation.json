@@ -1,0 +1,198 @@
+[
+  {
+    "name": "headtile_d18_float16",
+    "shape": [
+      1,
+      137,
+      129,
+      18
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d18_float32",
+    "shape": [
+      1,
+      137,
+      129,
+      18
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d30_float16",
+    "shape": [
+      1,
+      137,
+      129,
+      30
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d30_float32",
+    "shape": [
+      1,
+      137,
+      129,
+      30
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d62_float16",
+    "shape": [
+      1,
+      137,
+      129,
+      62
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d62_float32",
+    "shape": [
+      1,
+      137,
+      129,
+      62
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d126_float16",
+    "shape": [
+      1,
+      137,
+      129,
+      126
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d126_float32",
+    "shape": [
+      1,
+      137,
+      129,
+      126
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d130_float16",
+    "shape": [
+      1,
+      137,
+      129,
+      130
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d130_float32",
+    "shape": [
+      1,
+      137,
+      129,
+      130
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d254_float16",
+    "shape": [
+      1,
+      137,
+      129,
+      254
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d254_float32",
+    "shape": [
+      1,
+      137,
+      129,
+      254
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d510_float16",
+    "shape": [
+      1,
+      137,
+      129,
+      510
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  },
+  {
+    "name": "headtile_d510_float32",
+    "shape": [
+      1,
+      137,
+      129,
+      510
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "extreme": true,
+    "special": true,
+    "zero_every": 7
+  }
+]

@@ -1,0 +1,57 @@
+--- baseline.asc
++++ kernel.asc
+@@ -83,28 +83,32 @@
+ __aicore__ inline void SinCosFp32(const LocalTensor<float>& angle,
+     const LocalTensor<float>& c,const LocalTensor<float>& s,
+     const LocalTensor<float>& q,const LocalTensor<float>& temp,uint32_t n) {
+-    Muls(q,angle,0.15915494309189535f,n);
+-    Cast(temp.ReinterpretCast<int32_t>(),q,RoundMode::CAST_RINT,n);
+-    Cast(q,temp.ReinterpretCast<int32_t>(),RoundMode::CAST_NONE,n);
+-    Muls(temp,q,6.25f,n);Sub(angle,angle,temp,n);
+-    Muls(temp,q,0.033203125f,n);Sub(angle,angle,temp,n);
+-    Muls(temp,q,-0.000017817820413523074f,n);Sub(angle,angle,temp,n);
+-    Muls(angle,angle,0.25f,n);
+-    Mul(q,angle,angle,n);
+-    Muls(s,q,1.0f/362880.0f,n);
+-    Adds(s,s,-1.0f/5040.0f,n);
+-    Mul(s,s,q,n);Adds(s,s,1.0f/120.0f,n);
+-    Mul(s,s,q,n);Adds(s,s,-1.0f/6.0f,n);
+-    Mul(s,s,q,n);Adds(s,s,1.0f,n);
+-    Mul(s,s,angle,n);
+-    Mul(c,s,s,n);Muls(c,c,-1.0f,n);
+-    Adds(c,c,1.0f,n);Sqrt(c,c,n);
+-    Mul(angle,s,c,n);Muls(angle,angle,2.0f,n);
+-    Mul(s,s,s,n);Muls(s,s,-2.0f,n);
+-    Adds(s,s,1.0f,n);
+-    Mul(c,angle,angle,n);Muls(c,c,-2.0f,n);
+-    Adds(c,c,1.0f,n);
+-    Mul(s,angle,s,n);Muls(s,s,2.0f,n);
++    SetMaskCount();
++    SetVectorMask<float,MaskMode::COUNTER>(n);
++    Muls<float,false>(q,angle,0.15915494309189535f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Cast<int32_t,float,false>(temp.ReinterpretCast<int32_t>(),q,RoundMode::CAST_RINT,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Cast<float,int32_t,false>(q,temp.ReinterpretCast<int32_t>(),RoundMode::CAST_NONE,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Muls<float,false>(temp,q,6.25f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});Sub<float,false>(angle,angle,temp,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Muls<float,false>(temp,q,0.033203125f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});Sub<float,false>(angle,angle,temp,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Muls<float,false>(temp,q,-0.000017817820413523074f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});Sub<float,false>(angle,angle,temp,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Muls<float,false>(angle,angle,0.25f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(q,angle,angle,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Muls<float,false>(s,q,1.0f/362880.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Adds<float,false>(s,s,-1.0f/5040.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,q,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Adds<float,false>(s,s,1.0f/120.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,q,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Adds<float,false>(s,s,-1.0f/6.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,q,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Adds<float,false>(s,s,1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,angle,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});
++    Mul<float,false>(c,s,s,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(c,c,-1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Adds<float,false>(c,c,1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});Sqrt<float,false>(c,c,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(angle,s,c,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(angle,angle,2.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,s,s,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(s,s,-2.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Adds<float,false>(s,s,1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(c,angle,angle,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(c,c,-2.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Adds<float,false>(c,c,1.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    Mul<float,false>(s,angle,s,MASK_PLACEHOLDER,1,BinaryRepeatParams{1,1,1,8,8,8});Muls<float,false>(s,s,2.0f,MASK_PLACEHOLDER,1,UnaryRepeatParams{1,1,8,8});
++    SetMaskNorm();
++    ResetMask();
+ }
+ 
+ 

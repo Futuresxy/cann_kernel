@@ -1,0 +1,22 @@
+--- baseline.asc
++++ kernel.asc
+@@ -246,6 +246,9 @@
+         x_.SetGlobalBuffer((__gm__ T*)x); y_.SetGlobalBuffer((__gm__ T*)y);
+         pos_.SetGlobalBuffer((__gm__ int32_t*)p);
+         tokens_=tokens; heads_=heads; dim_=dim; half_=dim/2;
++        if(tokens*uint64_t(heads)*dim*sizeof(T)>=64ull*1024*1024) {
++            y_.SetL2CacheHint(CacheMode::CACHE_MODE_DISABLE);
++        }
+         tileHeads_=tileHeads; groups_=(heads+tileHeads-1)/tileHeads;
+         freqSize_=(half_+7)/8*8;
+         size_=tileHeads*dim > freqSize_ ? tileHeads*dim : freqSize_;
+@@ -455,6 +458,9 @@
+         x_.SetGlobalBuffer((__gm__ T*)x); y_.SetGlobalBuffer((__gm__ T*)y);
+         pos_.SetGlobalBuffer((__gm__ int32_t*)p);
+         tokens_=tokens; heads_=heads; dim_=dim; half_=dim/2;
++        if(tokens*uint64_t(heads)*dim*sizeof(T)>=64ull*1024*1024) {
++            y_.SetL2CacheHint(CacheMode::CACHE_MODE_DISABLE);
++        }
+         tileHeads_=tileHeads; groups_=(heads+tileHeads-1)/tileHeads;
+         freqSize_=(half_+7)/8*8;
+         size_=tileHeads*dim > freqSize_ ? tileHeads*dim : freqSize_;

@@ -24,6 +24,7 @@ def main():
     ap.add_argument('--binary', required=True)
     ap.add_argument('--label', required=True)
     ap.add_argument('--cases-file', default='tests/performance_cases.json')
+    ap.add_argument('--metrics', default='',help='Optional non-replay hardware counters, e.g. L2Cache')
     args = ap.parse_args()
     cases = json.loads((ROOT/args.cases_file).read_text())
     folder = ROOT/'build/matrix_profiles'/args.label
@@ -46,6 +47,9 @@ def main():
                '--task-time=on', '--ai-core=off', '--aicpu=off', '--type=text',
                '--application='+shlex.join([
                    str(binary), '--device', str(args.device), '--batch', str(manifest)])]
+    if args.metrics:
+        command.remove('--ai-core=off')
+        command.extend(['--ai-core=on','--aic-metrics='+args.metrics])
     run = subprocess.run(command, text=True, stdout=subprocess.PIPE,
                          stderr=subprocess.STDOUT, timeout=45)
     (folder/'collection.log').write_text(run.stdout)
@@ -73,14 +77,19 @@ def main():
         data=ROOT/'build/data'/c['name']
         input_hashes={name:hashlib.sha256((data/name).read_bytes()).hexdigest()
                       for name in ['x.bin','positions.bin']}
-        results.append(dict(**c, input_sha256=input_hashes, task_us=duration, samples_us=samples,
+        counters={}
+        for key in group[0]:
+            if 'cache' in key.lower():
+                try: counters[key]=statistics.mean(float(row[key]) for row in group[5:])
+                except (ValueError,TypeError): pass
+        results.append(dict(**c, hardware_counters=counters,input_sha256=input_hashes, task_us=duration, samples_us=samples,
                             kernel=group[0]['Op Name'],
                             minimum_io_gbs=minimum_bytes/(duration*1000)))
     dest = ROOT/'benchmarks/profiles'/args.label
     dest.mkdir(parents=True, exist_ok=True)
     shutil.copy2(summaries[0], dest/'op_summary.csv')
     meta = json.loads(Path(str(binary)+'.meta.json').read_text())
-    report = dict(label=args.label, source_sha256=meta['source_sha256'],
+    report = dict(label=args.label, pmu_metrics=args.metrics, runner_sha256=meta.get('runner_sha256'), source_sha256=meta['source_sha256'],
                   binary_sha256=hashlib.sha256(binary.read_bytes()).hexdigest(),
                   command=command, run_kernel_calls=len(cases)*10,
                   actual_device_kernel_tasks=len(rows), cases=results,

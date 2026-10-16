@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-16",
+  "sources": [
+    {
+      "url": "https://www.hiascend.com/developer/techArticles/20241107-1",
+      "use": "Mask reuse/Counter mode and reduction API tradeoffs; tested mask-only candidates, modest effect."
+    },
+    {
+      "url": "https://www.hiascend.com/document/detail/zh/CANNCommunityEdition/82RC1alpha002/API/ascendcopapi/atlasascendc_api_07_00033.html",
+      "use": "SetL2CacheHint semantics; tested input+output bypass and output-only bypass."
+    },
+    {
+      "url": "https://www.hiascend.com/developer/techArticles/20240906-1",
+      "use": "DMA block size, 512-byte alignment; corrected local runner guard alignment for both baseline and candidate."
+    },
+    {
+      "url": "https://gitcode.com/cann/ops-transformer/tree/9.0.0-beta.1/posembedding/rotary_position_embedding",
+      "use": "Official rotate-half operator equation and supported hardware; interface has cos/sin input, so cannot substitute directly for this contest ABI."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/vllm-project/vllm-ascend/main/vllm_ascend/ops/triton/rope.py",
+      "use": "Head tiling, shared per-token cos/sin, UB footprint accounting. No external code copied."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Dao-AILab/flash-attention/main/flash_attn/ops/triton/rotary.py",
+      "use": "Token/head partitioning and fused rotary writes; its external cos/sin cache is outside the contest interface."
+    },
+    {
+      "url": "https://www.hiascend.com/doc_center/source/en/canncommercial/850/devaids/optool/atlasopdev_16_0131.html",
+      "use": "Available PMU/L2 metrics; non-replay L2 counters added to avoid replay cache-state effects."
+    }
+  ],
+  "local_sdk_checks": [
+    "CANN 9.0.0 MulCast on dav_c220 supports half to int8/uint8, not a float/half multiply-cast fast path.",
+    "Copy emits vcopy; DataCopy UB-to-UB emits copy_ubuf_to_ubuf. Regular vector-copy candidate measured slower.",
+    "Float sin/cos and frequencies stay FP32; FP16 coefficient conversion occurs only for permitted FP16 rotation."
+  ]
+}

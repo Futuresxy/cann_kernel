@@ -46,7 +46,7 @@ python3 tools/package.py --result restored_full_v3 --launch-profile restored_ful
 
 ## 数学与精度
 
-`x[B,S,H,D]` 按前后两半旋转。频率在算子 host 入口用 FP32 `pow` 与倒数实时生成；位置、角度、cos/sin、乘加均为 FP32。频率并非新增输入，不提供外部 cos/sin 或离线常量表。FP16 输出仅最后舍入一次。
+`x[B,S,H,D]` 按前后两半旋转。频率在算子 host 入口用 FP32 `pow` 与倒数实时生成；位置、角度、cos/sin生成均为 FP32；部分FP16多head路径采用输入精度旋转，其余路径采用FP32旋转。频率并非新增输入，不提供外部 cos/sin 或离线常量表。精度判定保持赛题原阈值。
 
 对于较大位置，使用三段2π常量缩减角度，避免直接调用高阶 Sin/Cos 超出有效范围。优化版共用正余弦的范围缩减，在四分之一角上计算多项式并通过二倍角恢复。position=0 单独保持原始位模式，包括 NaN/Inf。
 
@@ -85,27 +85,32 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 
 ## 当前优化版
 
-`operators/rotary_pos_emb/kernel.asc` 为 `ROPE1743_PROFILED_V4`。完整源码及提交包由 `tools/package.py` 生成，首末标记、行数、SHA256 以 `dist/manifest.json` 为准。请完整替换平台编辑框内容。
+`operators/rotary_pos_emb/kernel.asc` 为 `ROPE1743_PROFILED_V5`。相对于已经通过平台15点的V4，新增FP16原精度旋转、输出L2缓存策略、宽维度单head合批、positions向量广播，以及非对齐多head的连续搬运。详细结果、候选补丁、硬件计数与复现说明见 [本轮报告](docs/profiled_v5.md)。
 
-本轮相对于已通过平台的 V3 调优，而非相对于最早的慢基线。新增按 shape 选择的跨 token 三角函数缓存、非对齐小维度连续搬运/UB Gather，以及宽维度频率向量恢复。原始 CSV、候选补丁、失败记录、性能对照和精度限制见 [本轮报告](docs/profiled_v4.md)。
+本地runner将输出前后哨兵设为512字节，保持输出512字节对齐。基线和候选必须由同一个runner重建，配对脚本会核对runner、输入和二进制哈希。原模板的7个非kernel文件保持不变。
 
 ```bash
+source /usr/local/Ascend/ascend-toolkit/latest/set_env.sh
+bash tools/build_revision.sh 0a4281f platform_v4
 bash tools/build.sh
 bash tools/build_launch_audit.sh
 python3 tools/suite.py --generate-only
-python3 tools/suite.py --sweep --generate-only
-python3 tools/suite.py --packed-sweep --generate-only
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled.sh --phase correctness'
-# CPU 生成完整性能矩阵输入，再在同一卡上按 ABBA 顺序采集设备任务耗时
-python3 tools/suite.py --cases-file tests/performance_cases.json --generate-only
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled.sh --phase paired'
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled.sh --phase pmu'
-# 确保当前 kernel 已提交 Git；三项门槛必须对应同一源码/二进制
-python3 tools/package.py --result profiled_v4 --launch-profile profiled_v4_launches
+python3 tools/suite.py --path-sweep --generate-only
+# 各阶段串行申请单卡，分别限制60秒
+# correctness:固定集+API逐次审计+非replay设备计数75/75
+# sweeps:1010+456+672项精度与逐次启动检查
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v5.sh --phase correctness'
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v5.sh --phase sweeps'
+python3 tools/suite.py --cases-file tests/round3_performance_cases.json --generate-only
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v5.sh --phase paired'
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v5.sh --phase extended'
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v5.sh --phase pmu'
+# 当前kernel先提交Git，再将精度/启动数/源码/二进制哈希一致的结果打包
+python3 tools/package.py --result profiled_v5 --launch-profile profiled_v5_launches --extra-result profiled_v5_sweep --extra-result profiled_v5_packed_sweep --extra-result profiled_v5_path_sweep
 python3 tools/verify_submission.py
 ```
 
-`paired` 需要预先保留 V3 基线二进制 `build/rope_runner_platform_v1`，或用 `tools/build_revision.sh b32d3a6 platform_v1` 重建。设备审计采用实际 CANN 启动 API 与非 replay msprof 两套证据。本地 runner 和测试脚本不进入提交包。
+探索候选可用 `python3 tools/replay_experiment.py half_fast --round round3` 重建。原始设备CSV位于benchmarks/profiles，所有本地矩阵均非平台未公开的15个隐藏shape。完整上传文件的行数、SHA256、首末标记以 `dist/manifest.json` 为准。
 
 ## 完整源码的下载与复制
 

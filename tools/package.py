@@ -12,6 +12,7 @@ from verify_submission import ROOT, original_template, sha256, verify
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--result', default='kernel_only')
+    ap.add_argument('--extra-result',action='append',default=[],help='Additional audited source-matched sweep results required for this package')
     ap.add_argument('--launch-profile', required=True,
                     help='msprof launch-count regression result for this source')
     args = ap.parse_args()
@@ -26,9 +27,17 @@ def main():
         raise SystemExit('Correctness gate failed')
     if result['source_sha256'] != digest:
         raise SystemExit('Results do not belong to current source; rebuild and retest')
+    if sha256((ROOT/'build/rope_runner').read_bytes()) != result['binary_sha256']:
+        raise SystemExit('Results do not belong to the current normal runner')
+    if result.get('runner_sha256') is not None and not all(c.get('output_alignment_bytes')==512 for c in result['cases']):
+        raise SystemExit('The validated normal runner must preserve 512-byte output alignment')
     audit = json.loads((ROOT/'benchmarks/results'/f'{args.result}_audit.json').read_text())
     if audit['source_sha256'] != digest or {c['name'] for c in audit['cases']} != names:
         raise SystemExit('Per-invocation launch audit does not cover the current source/cases')
+    if sha256((ROOT/'build/launch_audit/rope_runner').read_bytes()) != audit['binary_sha256']:
+        raise SystemExit('Audit results do not belong to the current audit runner')
+    if result.get('runner_sha256') != audit.get('runner_sha256'):
+        raise SystemExit('Normal/audit runners use different test harnesses')
     if not all(c['passed'] and c.get('launch_audit') and c.get('one_kernel_per_iteration')
                and c['iterations'] == c['kernel_launches'] for c in audit['cases']):
         raise SystemExit('Each run_kernel invocation must launch exactly one kernel')
@@ -38,6 +47,16 @@ def main():
             or not launches['single_kernel_rule_passed']
             or launches['actual_device_kernel_tasks'] != launches['run_kernel_calls']):
         raise SystemExit('Device profiling must confirm one kernel task per invocation')
+    extra_validation = {}
+    for label in args.extra_result:
+        extra = json.loads((ROOT/'benchmarks/results'/f'{label}.json').read_text())
+        if extra['source_sha256'] != digest or not all(
+                c['passed'] and c['guard_ok'] and c.get('zero_identity_ok',False)
+                and c.get('launch_audit') and c.get('one_kernel_per_iteration')
+                and c['iterations']==c['kernel_launches'] for c in extra['cases']):
+            raise SystemExit('Additional correctness/launch gate failed: '+label)
+        extra_validation[label] = dict(case_count=len(extra['cases']),
+            audited_launches=sum(c['kernel_launches'] for c in extra['cases']))
     revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     committed = subprocess.check_output(
         ['git', 'show', revision+':operators/rotary_pos_emb/kernel.asc'], cwd=ROOT)
@@ -77,7 +96,7 @@ def main():
                     kernel_bytes=len(source), kernel_lines=len(source.splitlines()),
                     kernel_first_line=source.splitlines()[0].decode(),
                     kernel_last_line=source.splitlines()[-1].decode(),
-                    result=args.result, validated_case_count=len(result['cases']),
+                    result=args.result, extra_validation=extra_validation, validated_case_count=len(result['cases']),
                     launch_audit=args.result+'_audit', launch_profile=args.launch_profile,
                     single_kernel_per_iteration=True,
                     template_diff=diff, platform_hidden_cases_tested=False)

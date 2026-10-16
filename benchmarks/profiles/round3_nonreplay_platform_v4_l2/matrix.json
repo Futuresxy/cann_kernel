@@ -1,0 +1,295 @@
+{
+  "label": "round3_nonreplay_platform_v4_l2",
+  "pmu_metrics": "L2Cache",
+  "source_sha256": "2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58",
+  "binary_sha256": "070e4bbaf52ef28cdc6a23bf601b53a7915e7ad3207124de4f36b47db1f628ee",
+  "command": [
+    "msprof",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/matrix_profiles/round3_nonreplay_platform_v4_l2",
+    "--runtime-api=on",
+    "--task-time=on",
+    "--aicpu=off",
+    "--type=text",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/rope_runner_platform_v4 --device 3 --batch /data/pyptouser/songxiaoyou/cann_kernel/project/build/matrix_profiles/round3_nonreplay_platform_v4_l2/cases.txt",
+    "--ai-core=on",
+    "--aic-metrics=L2Cache"
+  ],
+  "run_kernel_calls": 70,
+  "actual_device_kernel_tasks": 70,
+  "cases": [
+    {
+      "name": "deepseek_half",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "hardware_counters": {
+        "aic_write_cache_hit": 0.0,
+        "aic_write_cache_miss_allocate": 0.0,
+        "aic_r0_read_cache_hit": 0.0,
+        "aic_r0_read_cache_miss_allocate": 0.0,
+        "aic_r1_read_cache_hit": 0.0,
+        "aic_r1_read_cache_miss_allocate": 0.0,
+        "aiv_write_cache_hit": 34864.0,
+        "aiv_write_cache_miss_allocate": 0.0,
+        "aiv_r0_read_cache_hit": 65679.2,
+        "aiv_r0_read_cache_miss_allocate": 0.2,
+        "aiv_r1_read_cache_hit": 65679.8,
+        "aiv_r1_read_cache_miss_allocate": 0.8
+      },
+      "input_sha256": {
+        "x.bin": "bdad53212412815e8cf51c051c6a35cf388228016dc362f44e142481c91683ad",
+        "positions.bin": "66721d2c86916be88b1c616963f2a97deae33b89de26d9c61aad2fe35e212f9b"
+      },
+      "task_us": 21.321,
+      "samples_us": [
+        21.561,
+        21.58,
+        21.28,
+        21.321,
+        20.94
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1573.7738380000937
+    },
+    {
+      "name": "deepseek_float",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float32",
+      "pmax": 8192,
+      "hardware_counters": {
+        "aic_write_cache_hit": 0.0,
+        "aic_write_cache_miss_allocate": 0.0,
+        "aic_r0_read_cache_hit": 0.0,
+        "aic_r0_read_cache_miss_allocate": 0.0,
+        "aic_r1_read_cache_hit": 0.0,
+        "aic_r1_read_cache_miss_allocate": 0.0,
+        "aiv_write_cache_hit": 69680.0,
+        "aiv_write_cache_miss_allocate": 0.0,
+        "aiv_r0_read_cache_hit": 131215.2,
+        "aiv_r0_read_cache_miss_allocate": 0.6,
+        "aiv_r1_read_cache_hit": 131215.8,
+        "aiv_r1_read_cache_miss_allocate": 0.4
+      },
+      "input_sha256": {
+        "x.bin": "6d0225bab480bf9534bc768091bb365a18cf2f6c08b555426b991cd67f54bb18",
+        "positions.bin": "b4bceec88d4a05026a9b7e0c2087e598b1e092935ea6db23ff47899b49aea413"
+      },
+      "task_us": 25.081,
+      "samples_us": [
+        25.101,
+        25.12,
+        24.841,
+        24.7,
+        25.081
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 2675.68533950002
+    },
+    {
+      "name": "large_half",
+      "shape": [
+        4,
+        1024,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "hardware_counters": {
+        "aic_write_cache_hit": 0.0,
+        "aic_write_cache_miss_allocate": 0.0,
+        "aic_r0_read_cache_hit": 0.0,
+        "aic_r0_read_cache_miss_allocate": 0.0,
+        "aic_r1_read_cache_hit": 0.0,
+        "aic_r1_read_cache_miss_allocate": 0.0,
+        "aiv_write_cache_hit": 139312.0,
+        "aiv_write_cache_miss_allocate": 0.0,
+        "aiv_r0_read_cache_hit": 262382.8,
+        "aiv_r0_read_cache_miss_allocate": 0.2,
+        "aiv_r1_read_cache_hit": 262384.2,
+        "aiv_r1_read_cache_miss_allocate": 0.8
+      },
+      "input_sha256": {
+        "x.bin": "54d846b72bb84d7c762c01202b547b87b28d630bfdf98cde7bee52f2435a797a",
+        "positions.bin": "1db7aa2ee9acb3c4dd6730316a7526163b6e16cbc4bc3514536d6ee917e04be8"
+      },
+      "task_us": 61.541,
+      "samples_us": [
+        61.541,
+        61.641,
+        61.582,
+        61.201,
+        61.001
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 2180.9481158902195
+    },
+    {
+      "name": "stream_h128_d64_half",
+      "shape": [
+        2,
+        4096,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "hardware_counters": {
+        "aic_write_cache_hit": 0.0,
+        "aic_write_cache_miss_allocate": 0.0,
+        "aic_r0_read_cache_hit": 0.0,
+        "aic_r0_read_cache_miss_allocate": 0.0,
+        "aic_r1_read_cache_hit": 0.0,
+        "aic_r1_read_cache_miss_allocate": 0.0,
+        "aiv_write_cache_hit": 26519.8,
+        "aiv_write_cache_miss_allocate": 252056.2,
+        "aiv_r0_read_cache_hit": 14438.8,
+        "aiv_r0_read_cache_miss_allocate": 510217.2,
+        "aiv_r1_read_cache_hit": 14427.0,
+        "aiv_r1_read_cache_miss_allocate": 510229.0
+      },
+      "input_sha256": {
+        "x.bin": "dff441bc4a51a086652aadbb697e6507fecb1a6645f1762cdc3613eded7c7d97",
+        "positions.bin": "0c64a12c59cc49c670ed5f4a747926cf3664ea47c1bf44c2930421da066ff8d5"
+      },
+      "task_us": 217.824,
+      "samples_us": [
+        220.044,
+        219.585,
+        217.824,
+        216.524,
+        213.405
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1232.3502277067723
+    },
+    {
+      "name": "stream_h32_d128_float",
+      "shape": [
+        2,
+        4096,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "hardware_counters": {
+        "aic_write_cache_hit": 0.0,
+        "aic_write_cache_miss_allocate": 0.0,
+        "aic_r0_read_cache_hit": 0.0,
+        "aic_r0_read_cache_miss_allocate": 0.0,
+        "aic_r1_read_cache_hit": 0.0,
+        "aic_r1_read_cache_miss_allocate": 0.0,
+        "aiv_write_cache_hit": 70028.6,
+        "aiv_write_cache_miss_allocate": 208547.4,
+        "aiv_r0_read_cache_hit": 45529.6,
+        "aiv_r0_read_cache_miss_allocate": 479176.2,
+        "aiv_r1_read_cache_hit": 45473.0,
+        "aiv_r1_read_cache_miss_allocate": 479229.2
+      },
+      "input_sha256": {
+        "x.bin": "1916ce8556899dec2a3637c15eb874fa14fb1b041d894e3eb0ffc462e1a99a5f",
+        "positions.bin": "0fd01c92726223a6d208175d6fc5e1a647b9c5a782cbdbdf3a8b6350847aabcb"
+      },
+      "task_us": 197.984,
+      "samples_us": [
+        199.444,
+        197.984,
+        197.744,
+        197.704,
+        198.624
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1355.8441894294488
+    },
+    {
+      "name": "large_stream_half",
+      "shape": [
+        4,
+        8192,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "hardware_counters": {
+        "aic_write_cache_hit": 0.0,
+        "aic_write_cache_miss_allocate": 0.0,
+        "aic_r0_read_cache_hit": 0.0,
+        "aic_r0_read_cache_miss_allocate": 0.0,
+        "aic_r1_read_cache_hit": 0.0,
+        "aic_r1_read_cache_miss_allocate": 0.0,
+        "aiv_write_cache_hit": 65535.0,
+        "aiv_write_cache_miss_allocate": 1048625.0,
+        "aiv_r0_read_cache_hit": 981.8,
+        "aiv_r0_read_cache_miss_allocate": 2097308.4,
+        "aiv_r1_read_cache_hit": 993.8,
+        "aiv_r1_read_cache_miss_allocate": 2097292.0
+      },
+      "input_sha256": {
+        "x.bin": "60c6498c0084a2b1d1080375a541998a7699bb51fa352cc60b94b542df264cf0",
+        "positions.bin": "874d497cf66b26cef2540ed23d7036a3c0d21277d6f6e3298fa7162d9743216a"
+      },
+      "task_us": 871.517,
+      "samples_us": [
+        871.517,
+        872.857,
+        872.698,
+        871.037,
+        871.318
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1232.037727319146
+    },
+    {
+      "name": "large_stream_float",
+      "shape": [
+        2,
+        8192,
+        64,
+        128
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "hardware_counters": {
+        "aic_write_cache_hit": 0.0,
+        "aic_write_cache_miss_allocate": 0.0,
+        "aic_r0_read_cache_hit": 0.0,
+        "aic_r0_read_cache_miss_allocate": 0.0,
+        "aic_r1_read_cache_hit": 0.0,
+        "aic_r1_read_cache_miss_allocate": 0.0,
+        "aiv_write_cache_hit": 65535.0,
+        "aiv_write_cache_miss_allocate": 1048625.0,
+        "aiv_r0_read_cache_hit": 541.6,
+        "aiv_r0_read_cache_miss_allocate": 2097281.0,
+        "aiv_r1_read_cache_hit": 535.4,
+        "aiv_r1_read_cache_miss_allocate": 2097290.0
+      },
+      "input_sha256": {
+        "x.bin": "28ef6c97a512c1ca65b14563e7608c4d3cbcb1cb4e44b99d248c4f876eff7200",
+        "positions.bin": "734a3ae8f22b2c3042beab6171b81fb52016e5aa2252f6458bc53a56117672dd"
+      },
+      "task_us": 874.138,
+      "samples_us": [
+        875.378,
+        874.457,
+        874.138,
+        873.197,
+        874.138
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1228.3436070734826
+    }
+  ],
+  "platform_hidden_cases_tested": false
+}

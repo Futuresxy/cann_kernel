@@ -1,0 +1,366 @@
+[
+  {
+    "name": "tiny",
+    "shape": [
+      1,
+      8,
+      1,
+      16
+    ],
+    "dtype": "float32",
+    "pmax": 8
+  },
+  {
+    "name": "unaligned_half",
+    "shape": [
+      2,
+      16,
+      3,
+      24
+    ],
+    "dtype": "float16",
+    "pmax": 8192
+  },
+  {
+    "name": "deepseek_half",
+    "shape": [
+      2,
+      512,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 8192
+  },
+  {
+    "name": "deepseek_float",
+    "shape": [
+      2,
+      512,
+      128,
+      64
+    ],
+    "dtype": "float32",
+    "pmax": 8192
+  },
+  {
+    "name": "sequence8192",
+    "shape": [
+      1,
+      8192,
+      1,
+      64
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "large_half",
+    "shape": [
+      4,
+      1024,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 8192
+  },
+  {
+    "name": "heads256",
+    "shape": [
+      1,
+      32,
+      256,
+      128
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "aligned_d512_half",
+    "shape": [
+      1,
+      7,
+      17,
+      512
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "wide_half",
+    "shape": [
+      1,
+      7,
+      17,
+      1024
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true
+  },
+  {
+    "name": "prefill_h32_d128_half",
+    "shape": [
+      2,
+      512,
+      32,
+      128
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_h32_d128_float",
+    "shape": [
+      2,
+      512,
+      32,
+      128
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_h32_d256_half",
+    "shape": [
+      2,
+      512,
+      32,
+      256
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_h8_d64_half",
+    "shape": [
+      2,
+      512,
+      8,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_h3_d24_half",
+    "shape": [
+      2,
+      512,
+      3,
+      24
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_h32_d30_float",
+    "shape": [
+      2,
+      512,
+      32,
+      30
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_h32_d96_half",
+    "shape": [
+      2,
+      512,
+      32,
+      96
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_h32_d1024_half",
+    "shape": [
+      1,
+      256,
+      32,
+      1024
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_h32_d1024_float",
+    "shape": [
+      1,
+      256,
+      32,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "stream_h128_d64_half",
+    "shape": [
+      2,
+      4096,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "stream_h32_d128_float",
+    "shape": [
+      2,
+      4096,
+      32,
+      128
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "single_token_many_heads",
+    "shape": [
+      1,
+      1,
+      256,
+      128
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "short_s16_h32",
+    "shape": [
+      1,
+      16,
+      32,
+      128
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "narrow_head_long",
+    "shape": [
+      1,
+      8192,
+      4,
+      16
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "unaligned_h128_d30_half",
+    "shape": [
+      2,
+      1024,
+      128,
+      30
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "unaligned_h128_d30_float",
+    "shape": [
+      2,
+      1024,
+      128,
+      30
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_d192_half",
+    "shape": [
+      2,
+      512,
+      32,
+      192
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "prefill_d384_float",
+    "shape": [
+      2,
+      512,
+      32,
+      384
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "large_stream_half",
+    "shape": [
+      4,
+      8192,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "large_stream_float",
+    "shape": [
+      2,
+      8192,
+      64,
+      128
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "sequence_d1024_half",
+    "shape": [
+      1,
+      8192,
+      1,
+      1024
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "unaligned_h64_d126_half",
+    "shape": [
+      2,
+      512,
+      64,
+      126
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "unaligned_h64_d254_float",
+    "shape": [
+      2,
+      512,
+      64,
+      254
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  {
+    "name": "sequence_d1024_float",
+    "shape": [
+      1,
+      8192,
+      1,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  }
+]

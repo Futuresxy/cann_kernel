@@ -1,0 +1,137 @@
+{
+  "baseline_revision": "0a4281f1a3789d78f15c76750f2dc76c85526329",
+  "baseline_sha256": "2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58",
+  "candidates": [
+    {
+      "name": "mask_trig",
+      "patch": "mask_trig.patch",
+      "source_sha256": "a4f3765aae0a56b48e4b3557ed2d19f14a04fdfb4bc30d004123657ad414d819",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_mask_trig"
+      ]
+    },
+    {
+      "name": "mask_all",
+      "patch": "mask_all.patch",
+      "source_sha256": "c9183e4a2dca29bae6dbc2229e5ab35957d38d2301c0f9e02d7984ef601362d6",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_mask_all"
+      ]
+    },
+    {
+      "name": "mask_pad",
+      "patch": "mask_pad.patch",
+      "source_sha256": "d02d8209ad050afe43909e0057be165b117a8ec65eec9fcf6daa4ff54968b5fa",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_mask_pad"
+      ]
+    },
+    {
+      "name": "half_fast",
+      "patch": "half_fast.patch",
+      "source_sha256": "d315f06cc3dc95f972b67e2c32da36e0947eb0dde1f36bf216be6db118a48b09",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_half_fast"
+      ]
+    },
+    {
+      "name": "cache_stream",
+      "patch": "cache_stream.patch",
+      "source_sha256": "d2c2b53969c792ae92f181fb38f44fd479860260337edd69939dd6c8c64e16e4",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_cache_stream"
+      ]
+    },
+    {
+      "name": "cache_write",
+      "patch": "cache_write.patch",
+      "source_sha256": "b9c1275fc9579ca7832fdaf4a25c785123476575dd8a22b4db47529cc740a799",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_cache_write"
+      ]
+    },
+    {
+      "name": "layout_copy",
+      "patch": "layout_copy.patch",
+      "source_sha256": "6490b0d29aea12af259a4d433a6916d954b430e7537f4f1e6b134877461318f7",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_layout_copy"
+      ]
+    },
+    {
+      "name": "head_tile",
+      "patch": "head_tile.patch",
+      "source_sha256": "8ac763eba0c1b10c6b8881791f76297ef3f8b4c61ae2fe33d6fc542a1bef0bec",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_head_tile"
+      ]
+    },
+    {
+      "name": "wide_batch",
+      "patch": "wide_batch.patch",
+      "source_sha256": "ed11311168bce03c30fa6277d1381ebbaa91c42c59bd51155099fccee4c1afac",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_wide_batch"
+      ]
+    },
+    {
+      "name": "half_wide",
+      "patch": "half_wide.patch",
+      "source_sha256": "7f167768004f9a3f3beb47679d4f7e9af55618eea26f4f02bcdaad5fcc5e3140",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_half_wide"
+      ]
+    },
+    {
+      "name": "batch_fma",
+      "patch": "batch_fma.patch",
+      "source_sha256": "7eccb3abade41251bbafb6f542e3f739f1f121ec31b207820fddfcc2eb8a874d",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_batch_fma"
+      ]
+    },
+    {
+      "name": "bulk_position",
+      "patch": "bulk_position.patch",
+      "source_sha256": "6fc672c916e69a8e9b62381f94e5572dd4491d8d44c44b004e1bdf81faf4b0ce",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_bulk_position"
+      ]
+    },
+    {
+      "name": "merged_cache64",
+      "patch": "merged_cache64.patch",
+      "source_sha256": "60917718260dcabd65b17ace4de152b21689d13233608f0a8d5a6569a75d4c99",
+      "runner_alignment_bytes": 128,
+      "result_labels": [
+        "round3_merged",
+        "round3_merged_paths"
+      ]
+    },
+    {
+      "name": "merged",
+      "patch": "merged.patch",
+      "source_sha256": "217729cabc7de8ff0230343bcec7133fff9bc2157da1d52b7089e09c5755b7a9",
+      "runner_alignment_bytes": 512,
+      "result_labels": [
+        "profiled_v5",
+        "profiled_v5_paired",
+        "profiled_v5_extended"
+      ]
+    }
+  ],
+  "exploration_runner_sha256": "ec0a29f294fac6812b1fdf6cda15afdd82d4fcc1e200913013c3dd5fca5485e0",
+  "release_runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939"
+}
