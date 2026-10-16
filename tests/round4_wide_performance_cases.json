@@ -1,0 +1,24 @@
+[
+  {
+    "name": "sequence_d1024_half",
+    "shape": [
+      1,
+      8192,
+      1,
+      1024
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  {
+    "name": "sequence_d1024_float",
+    "shape": [
+      1,
+      8192,
+      1,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  }
+]

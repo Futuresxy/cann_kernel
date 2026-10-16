@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "sequence_d1024_float",
+    "shape": [
+      1,
+      8192,
+      1,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/round4_precision_safe_tiled_candidate_sequence_d1024_float",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/tuning_round4/precision_safe_tiled/build/rope_runner --device 0 --shape 1 8192 1 1024 --dtype float32 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/sequence_d1024_float --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "394a298a65222b3d1a43b5ea5b8eb25040f070fea18be1cc4e0cfd372b565579",
+  "binary_sha256": "3647f27c12f31b65e646c22f4e8b7e531782e50198968fb94b669bbc7899e6cc"
+}

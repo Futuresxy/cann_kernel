@@ -1,0 +1,8 @@
+{
+  "runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939",
+  "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+  "source_sha256": "394a298a65222b3d1a43b5ea5b8eb25040f070fea18be1cc4e0cfd372b565579",
+  "binary_sha256": "d5d92e18e8d3f4ab0968b6545a02d6337571e29bbc3e14f36bdce977a965beab",
+  "git_dirty": true,
+  "git_commit": "0950bc4c904e993777a9eb501e7768cc49df0927"
+}

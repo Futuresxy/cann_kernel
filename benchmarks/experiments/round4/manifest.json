@@ -1,0 +1,56 @@
+{
+  "baseline_revision": "0a4281f1a3789d78f15c76750f2dc76c85526329",
+  "baseline_sha256": "2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58",
+  "candidates": [
+    {
+      "name": "precision_safe",
+      "patch": "precision_safe.patch",
+      "source_sha256": "854ef74a9688bcc32c22ce2e389630a961e45709f7cf8725a53613caed5f970a",
+      "runner_alignment_bytes": 512,
+      "result_labels": [
+        "round4_precision_safe",
+        "round4_precision_safe_audit",
+        "round4_precision_safe_bits",
+        "round4_precision_safe_extended",
+        "round4_precision_safe_paired",
+        "round4_precision_safe_controls_repeat"
+      ],
+      "status": "experimental_not_promoted",
+      "reason": "Targeted gains; control-case regressions/variation unresolved; keep formal release V4"
+    },
+    {
+      "name": "trig_batch64",
+      "patch": "trig_batch64.patch",
+      "source_sha256": "7084c55b89f89cbb85f8adde4b608f0ca213982922e867f1566d355f8f372b11",
+      "runner_alignment_bytes": 512,
+      "result_labels": [
+        "round4_trig_batch64_paired"
+      ],
+      "status": "rejected",
+      "reason": "8% stream regression in local paired profile"
+    },
+    {
+      "name": "precision_safe_tiled",
+      "patch": "precision_safe_tiled.patch",
+      "source_sha256": "394a298a65222b3d1a43b5ea5b8eb25040f070fea18be1cc4e0cfd372b565579",
+      "runner_alignment_bytes": 512,
+      "result_labels": [
+        "round4_precision_safe_tiled",
+        "round4_precision_safe_tiled_audit",
+        "round4_precision_safe_tiled_bits",
+        "round4_wide_tiling_paired",
+        "round4_precision_safe_tiled_paths"
+      ],
+      "status": "experimental_not_promoted",
+      "reason": "Targeted gains; control-case regressions/variation unresolved; keep formal release V4",
+      "profile_labels": [
+        "round4_precision_safe_tiled_baseline_unaligned_h128_d30_half",
+        "round4_precision_safe_tiled_baseline_sequence_d1024_float",
+        "round4_precision_safe_tiled_candidate_unaligned_h128_d30_half",
+        "round4_precision_safe_tiled_candidate_sequence_d1024_float"
+      ]
+    }
+  ],
+  "formal_release": "V4 restored exactly; candidates remain experimental",
+  "rejected_platform_revision": "e4f273774302b33168a43f461a1260e16f3025df"
+}

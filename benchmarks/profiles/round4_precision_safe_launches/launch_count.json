@@ -1,0 +1,39 @@
+{
+  "label": "round4_precision_safe_launches",
+  "source_sha256": "854ef74a9688bcc32c22ce2e389630a961e45709f7cf8725a53613caed5f970a",
+  "binary_sha256": "805c09ae23bf3a134ca2db082938766aaa83be34287a5743812af27312966b29",
+  "local_cases": [
+    "tiny",
+    "unaligned_half",
+    "deepseek_half",
+    "deepseek_float",
+    "extreme_d1024",
+    "packed_mixed_zero_float",
+    "packed_mixed_zero_half",
+    "dim30",
+    "dim514",
+    "sequence8192",
+    "aligned_d512_fp32",
+    "stream_h128_d64_half",
+    "head_tile_large_half",
+    "wide_single_head_float",
+    "half_wide_prefill"
+  ],
+  "case_count": 15,
+  "calls_per_case": 5,
+  "run_kernel_calls": 75,
+  "actual_device_kernel_tasks": 75,
+  "expected_device_kernel_tasks": 75,
+  "single_kernel_rule_passed": true,
+  "command": [
+    "msprof",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/launch_profiles/round4_precision_safe_launches",
+    "--runtime-api=on",
+    "--task-time=on",
+    "--ai-core=off",
+    "--aicpu=off",
+    "--type=text",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/tuning_round4/precision_safe/build/rope_runner --device 0 --batch /data/pyptouser/songxiaoyou/cann_kernel/project/build/launch_profiles/round4_precision_safe_launches/cases.txt"
+  ],
+  "platform_hidden_cases_tested": false
+}

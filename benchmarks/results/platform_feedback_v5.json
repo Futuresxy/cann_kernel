@@ -1,0 +1,15 @@
+{
+  "version": "ROPE1743_PROFILED_V5",
+  "revision": "e4f273774302b33168a43f461a1260e16f3025df",
+  "source": "user platform feedback",
+  "accepted": false,
+  "numerical_error_percent_reported": 2.36,
+  "failing_case_count_reported": 2,
+  "latency_regression_case_ids": [
+    13,
+    14
+  ],
+  "latencies_us": null,
+  "hidden_shapes_available": false,
+  "action": "Restore exact V4 source from 0a4281f; reject native half rotation and L2 output bypass"
+}

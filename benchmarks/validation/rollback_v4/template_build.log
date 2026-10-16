@@ -1,0 +1,53 @@
+{
+  "changed": [
+    "kernel.asc"
+  ],
+  "added": [],
+  "removed": [],
+  "unchanged": [
+    "CMakeLists.txt",
+    "data_utils.h",
+    "main.asc",
+    "run.sh",
+    "scripts/RotaryPosEmb.py",
+    "scripts/gen_data.py",
+    "scripts/verify_result.py"
+  ],
+  "kernel_sha256": "2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58"
+}
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /data/pyptouser/songxiaoyou/cann_kernel/project/build/template_only_submission_check/build
+Consolidate compiler generated dependencies of target rotary_pos_emb_custom
+[ 50%] Building ASC object CMakeFiles/rotary_pos_emb_custom.dir/main.asc.o
+/data/pyptouser/songxiaoyou/cann_kernel/project/build/template_only_submission_check/main.asc:77:17: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+    run_kernel((GM_ADDR)inputDevice_x, info_x, (GM_ADDR)inputDevice_positions, info_positions, (GM_ADDR)outputDevice_y, info_y, availableCoreNum, stream, theta);
+                ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+/data/pyptouser/songxiaoyou/cann_kernel/project/build/template_only_submission_check/main.asc:77:49: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+    run_kernel((GM_ADDR)inputDevice_x, info_x, (GM_ADDR)inputDevice_positions, info_positions, (GM_ADDR)outputDevice_y, info_y, availableCoreNum, stream, theta);
+                                                ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+/data/pyptouser/songxiaoyou/cann_kernel/project/build/template_only_submission_check/main.asc:77:97: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+    run_kernel((GM_ADDR)inputDevice_x, info_x, (GM_ADDR)inputDevice_positions, info_positions, (GM_ADDR)outputDevice_y, info_y, availableCoreNum, stream, theta);
+                                                                                                ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+3 warnings generated.
+[100%] Linking ASC executable rotary_pos_emb_custom
+[100%] Built target rotary_pos_emb_custom
+Generated test data and golden output for 1 cases.

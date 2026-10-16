@@ -87,6 +87,8 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 
 当前正式源码恢复为平台15点精度通过的 V4（`ROPE1743_PROFILED_V4`），与提交 `0a4281f` 的 kernel.asc 逐字节一致。V5 被平台反馈为两个用例出现2.36%数值错误，且测试13、14退化，已撤回；其历史报告和实验数据保留用于分析，不作为可提交版本。
 
+本轮回退验证、逐位精度门槛、候选收益与未晋级原因见 [回退与第四轮实验报告](docs/rollback_v4_round4.md)。
+
 稳定版的所有旋转算术保持FP32，撤回FP16原精度旋转和输出L2绕过策略。后续候选在独立实验目录中验证，正式提交包继续使用V4。精度门槛不放宽，并增加与V4直接逐位比较，避免局部通过率掩盖新增误差。
 
 本地runner保持输出512字节对齐，基线和候选必须由同一runner重建。恢复验证使用 `tools/validate_profiled_v5.sh --phase correctness --label rollback_v4`（脚本名为历史名称，实际验证当前构建的源码）。打包结果和源码哈希由 `dist/manifest.json` 记录；原模板的7个非kernel文件保持不变。
