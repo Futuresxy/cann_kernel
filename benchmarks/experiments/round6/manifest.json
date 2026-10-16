@@ -1,0 +1,149 @@
+{
+  "baseline_revision": "4e5f3efa8975494957b12713d6460e6dcd73eee4",
+  "baseline_sha256": "d04a5eedfadf0293736adbf6dd7d6573f03c8425cdeab12085bdf785f975d321",
+  "baseline_submission_eligible": false,
+  "baseline_role": "historical performance control; Host frequency math is disallowed by supplementary rules",
+  "normal_runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+  "candidates": [
+    {
+      "name": "device_exp",
+      "patch": "device_exp.patch",
+      "source_sha256": "413c344c3441d9a8d1546b3cd39577f33c9abfd314cde18e03d110835ce5cf6b",
+      "result_labels": [
+        "round6_device_exp"
+      ],
+      "status": "experiment-only",
+      "decision": "rejected: 36/52 accuracy failures; naive log/exp error is amplified by positions up to 131072"
+    },
+    {
+      "name": "device_dd",
+      "patch": "device_dd.patch",
+      "source_sha256": "9aac99c9d71e731ea9d5dd1fd559b3191c6b13687f6144028b7ac5188018da9f",
+      "result_labels": [
+        "round6_device_dd"
+      ],
+      "status": "experiment-only",
+      "decision": "rejected: 51/52; wide_theta_half maximum absolute error 0.170407 exceeds 0.1"
+    },
+    {
+      "name": "device_dd_bias",
+      "patch": "device_dd_bias.patch",
+      "source_sha256": "fbf4befc03e1281ee32bb9836dae9f30ffe57d822f78f740926f6cb36662e671",
+      "result_labels": [
+        "round6_device_dd_bias"
+      ],
+      "status": "experiment-only",
+      "decision": "superseded: 52/52 but initialization dominates"
+    },
+    {
+      "name": "device_fixed_nofence",
+      "patch": "device_fixed_nofence.patch",
+      "source_sha256": "23ff664e4748e394043e374437e40564087bc94f8db2239ec1c1efde9d9387a4",
+      "result_labels": [
+        "round6_device_fixed_nofence"
+      ],
+      "status": "experiment-only",
+      "decision": "superseded: 52/52 but too many vector math instructions"
+    },
+    {
+      "name": "device_table_fast",
+      "patch": "device_table_fast.patch",
+      "source_sha256": "edf8b1cdb25ca3861eba3f5df2adc698f0339b09176e9aca378d709cd258bc54",
+      "result_labels": [
+        "round6_device_table_fast"
+      ],
+      "status": "experiment-only",
+      "decision": "retained as parent of final: generate generic exp2 table inside Device; 52/52"
+    },
+    {
+      "name": "cos_full",
+      "patch": "cos_full.patch",
+      "source_sha256": "ae75f6ac8d32bedc53fd9c850e6e860e9667bde0b7d078108f3f8f1a6e4689a5",
+      "result_labels": [
+        "round6_cos_full"
+      ],
+      "status": "experiment-only",
+      "decision": "retained as parent: smaller workspace and full-width cosine multiplication; 52/52"
+    },
+    {
+      "name": "scalar_small",
+      "patch": "scalar_small.patch",
+      "source_sha256": "d7cf8014f7256f1c69bc09ea5e337cdf991a23d64649dc2789b9582e5bb36e03",
+      "result_labels": [
+        "round6_scalar_small"
+      ],
+      "status": "experiment-only",
+      "decision": "partly retained: scalar guard-bit frequencies only for width <=32; width64 was slower"
+    },
+    {
+      "name": "sin_split",
+      "patch": "sin_split.patch",
+      "source_sha256": "ee205701654195d9e3255c1cbc2f5b1fb39bbd1e295d3d0f29d0ffe4013b1132",
+      "result_labels": [
+        "round6_sin_split"
+      ],
+      "status": "experiment-only",
+      "decision": "rejected: no stable improvement, DeepSeek FP16 slower than parent"
+    },
+    {
+      "name": "dma_plain",
+      "patch": "dma_plain.patch",
+      "source_sha256": "79e02fc3c2fc66b3ab8fe6d8aad7d403ecbd5aa340857c8e3b6e087bf137f37e",
+      "result_labels": [
+        "round6_dma_plain"
+      ],
+      "status": "experiment-only",
+      "decision": "rejected: aligned DataCopy replacement has no stable gain"
+    },
+    {
+      "name": "selected_scratch",
+      "patch": "selected_scratch.patch",
+      "source_sha256": "c328c772c04aec08ab7d68b4766420a2774c7a3f2f5f449bd65c577e13e6002a",
+      "result_labels": [],
+      "status": "superseded-by-scalar-table",
+      "evidence_directory": "selected_validation",
+      "decision": "superseded: full accuracy gates passed; scalar table further reduces initialization"
+    },
+    {
+      "name": "scalar_table",
+      "patch": "scalar_table.patch",
+      "source_sha256": "1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b",
+      "result_labels": [
+        "round6_scalar_table",
+        "round6_scalar_table_math",
+        "round6_scalar_table_persistent"
+      ],
+      "profile_labels": [
+        "round6_screen_scalar_table"
+      ],
+      "status": "retained",
+      "decision": "retained: lower Device initialization cost; all final source-matched correctness/bitwise/launch gates passed"
+    }
+  ],
+  "paired_runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+  "calibration_results": [
+    "round6_persistent_self_check"
+  ],
+  "initial_normal_runner_sha256": "d28f9980d1410e4511f28e240fb2dc65d1ec0631390e8ad35259ca8144741939",
+  "final_source_revision": "aab7c650fee6fa9ac1f95308da42aff778bbb279",
+  "final_source_sha256": "1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b",
+  "final_result_labels": [
+    "profiled_v7",
+    "profiled_v7_audit",
+    "profiled_v7_math",
+    "profiled_v7_sweep",
+    "profiled_v7_packed_sweep",
+    "profiled_v7_path_sweep",
+    "profiled_v7_aligned_audit",
+    "profiled_v7_bits",
+    "profiled_v7_extended_bits",
+    "profiled_v7_balanced"
+  ],
+  "final_profile_labels": [
+    "profiled_v7_launches",
+    "profiled_v7_balanced_forward",
+    "profiled_v7_balanced_reverse",
+    "profiled_v7_tiny",
+    "profiled_v7_prefill_h32_d1024_half"
+  ]
+}

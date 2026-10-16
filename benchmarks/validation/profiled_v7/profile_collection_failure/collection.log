@@ -1,0 +1,94 @@
+[INFO] Start profiling....
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+{"event_us":17.535999,"min_event_us":15.960001,"host_us":183.131300,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":22.584000,"min_event_us":19.888000,"host_us":65.595150,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":22.340000,"min_event_us":19.556000,"host_us":69.071650,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":25.668003,"min_event_us":22.387999,"host_us":78.884250,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":17.312000,"min_event_us":15.812001,"host_us":94.445400,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":63.991997,"min_event_us":54.159996,"host_us":166.651600,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":26.491999,"min_event_us":19.968000,"host_us":65.494150,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":22.063999,"min_event_us":17.208000,"host_us":57.852050,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":28.204000,"min_event_us":16.336000,"host_us":62.907100,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":26.535999,"min_event_us":21.148001,"host_us":75.320200,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":22.592001,"min_event_us":16.692001,"host_us":67.726650,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":37.692001,"min_event_us":29.100000,"host_us":106.330050,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":24.348000,"min_event_us":17.576000,"host_us":57.235050,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":20.740000,"min_event_us":16.368000,"host_us":58.288550,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":29.804001,"min_event_us":20.864000,"host_us":89.159400,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":23.803999,"min_event_us":18.212000,"host_us":69.998150,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":61.435997,"min_event_us":34.580002,"host_us":122.296200,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":60.439995,"min_event_us":35.959999,"host_us":185.102300,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":216.444000,"min_event_us":213.188019,"host_us":484.822200,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":226.920013,"min_event_us":219.084015,"host_us":503.003350,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":22.152000,"min_event_us":16.091999,"host_us":67.874650,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":43.592003,"min_event_us":37.580002,"host_us":120.085650,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":39.239998,"min_event_us":32.475998,"host_us":121.981200,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":111.940002,"min_event_us":102.695999,"host_us":257.152000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":114.363998,"min_event_us":100.931999,"host_us":261.336550,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":35.148003,"min_event_us":25.775997,"host_us":103.237000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":trusoc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+e,"output_alignment_bytes":512}
+{"event_us":52.884003,"min_event_us":32.924000,"host_us":123.279200,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":850.940063,"min_event_us":844.783997,"host_us":1735.268700,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":847.675964,"min_event_us":844.612000,"host_us":1733.272200,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":117.304001,"min_event_us":89.991997,"host_us":251.373900,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":114.507996,"min_event_us":109.932007,"host_us":256.314950,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":167.652008,"min_event_us":156.360001,"host_us":362.762000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":125.119995,"min_event_us":97.175995,"host_us":253.594450,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+[INFO] Start export data in PROF_000001_20261016015604997_02488403IHODJGKA.
+Fri 16 Oct 2026 01:56:13 [INFO] [MSVP] [2805262] msprof_common.py: Start analyzing data in "/data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/host" ...
+Fri 16 Oct 2026 01:56:13 [INFO] [MSVP] [2805262] msprof_common.py: It may take few minutes, please be patient ...
+Fri 16 Oct 2026 01:56:13 [INFO] [MSVP] [2805262] msprof_common.py: Analysis data in "/data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/host" finished.
+Fri 16 Oct 2026 01:56:13 [INFO] [MSVP] [2805262] msprof_common.py: Start analyzing data in "/data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/device_0" ...
+Fri 16 Oct 2026 01:56:13 [INFO] [MSVP] [2805262] msprof_common.py: It may take few minutes, please be patient ...
+Fri 16 Oct 2026 01:56:13 [INFO] [MSVP] [2805262] msprof_common.py: Analysis data in "/data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/device_0" finished.
+Fri 16 Oct 2026 01:56:13 [INFO] [MSVP] [2805262] msprof_export.py: All collected data will be exported, path is: /data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/device_0.
+Fri 16 Oct 2026 01:56:15 [INFO] [MSVP] [2888862] msprof_export.py: The data in "/data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/host" has been analyzed. Parsing phase will be skipped.
+Fri 16 Oct 2026 01:56:15 [INFO] [MSVP] [2888862] msprof_export.py: The data in "/data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/device_0" has been analyzed. Parsing phase will be skipped.
+Fri 16 Oct 2026 01:56:15 [INFO] [MSVP] [2888862] msprof_export.py: All collected data will be exported, path is: /data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/device_0.
+Fri 16 Oct 2026 01:56:15 [INFO] [MSVP] [2888862] msprof_export.py: There is no summary data to export for "/data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/host"
+Fri 16 Oct 2026 01:56:15 [INFO] [MSVP] [2888862] msprof_export.py: All collected data will be exported, path is: /data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/device_0.
+Fri 16 Oct 2026 01:56:15 [INFO] [MSVP] [2888862] msprof_export.py: There is no summary data to export for "/data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/device_0"
+Fri 16 Oct 2026 01:56:15 [INFO] [MSVP] [2888862] msprof_common.py: Start exporting summary output_file.
+Fri 16 Oct 2026 01:56:15 [INFO] [MSVP] [2888862] msprof_common.py: End exporting summary output_file.The file is stored in the /data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA/mindstudio_profiler_output path.
+[INFO] Export all data in PROF_000001_20261016015604997_02488403IHODJGKA done.
+[INFO] Start query data in PROF_000001_20261016015604997_02488403IHODJGKA.
+Job Info	Device ID	Dir Name	Collection Time           	Model ID	Iteration Number	Top Time Iteration	Rank ID	
+
+NA      	         	host    	2026-10-16 01:56:05.871775	N/A     	N/A             	N/A               	-1     	
+
+NA      	0        	device_0	2026-10-16 01:56:05.878679	N/A     	N/A             	N/A               	-1     	
+
+[INFO] Query all data in PROF_000001_20261016015604997_02488403IHODJGKA done.
+[INFO] Profiling finished.
+[INFO] Process profiling data complete. Data is saved in /data/pyptouser/songxiaoyou/cann_kernel/project/build/paired_profiles/profiled_v7_balanced_reverse/PROF_000001_20261016015604997_02488403IHODJGKA

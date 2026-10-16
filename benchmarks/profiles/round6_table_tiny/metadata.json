@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "tiny",
+    "shape": [
+      1,
+      8,
+      1,
+      16
+    ],
+    "dtype": "float32",
+    "pmax": 8
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/round6_table_tiny",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/tuning_round6/device_table_fast/build/rope_runner --device 0 --shape 1 8 1 16 --dtype float32 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/tiny --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "edf8b1cdb25ca3861eba3f5df2adc698f0339b09176e9aca378d709cd258bc54",
+  "binary_sha256": "43ce775282e5ab13813dcbd87271a8f92485ae4345cca7c4dc51c8e421b8c55b"
+}

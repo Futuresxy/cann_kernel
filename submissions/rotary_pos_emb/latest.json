@@ -1,5 +1,7 @@
 {
-  "status": "blocked",
-  "kernel_sha256": "d04a5eedfadf0293736adbf6dd7d6573f03c8425cdeab12085bdf785f975d321",
-  "reason": "V6 computes inverse-frequency tables on Host. Move the computation to Device and rerun validation before publishing a candidate under the supplementary rules."
+  "status": "ready",
+  "kernel_sha256": "1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b",
+  "git_commit": "aab7c650fee6fa9ac1f95308da42aff778bbb279",
+  "candidate_path": "submissions/rotary_pos_emb/1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b",
+  "published_at": "2026-10-16T09:15:12.772520+00:00"
 }

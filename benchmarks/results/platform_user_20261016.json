@@ -1,0 +1,23 @@
+{
+  "source": "user_report",
+  "platform_cases": 15,
+  "shape_dtype_not_disclosed": true,
+  "latencies_us": [
+    3.28,
+    4.92,
+    6.68,
+    10.22,
+    17.65,
+    17.25,
+    19.8,
+    14.03,
+    53.35,
+    3370,
+    43.72,
+    53.23,
+    349.77,
+    864.48,
+    286.43
+  ],
+  "kernel_revision_association": "User current platform version; exact uploaded SHA not independently verified"
+}

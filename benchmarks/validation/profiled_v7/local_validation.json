@@ -1,0 +1,12 @@
+{
+  "kernel_sha256": "1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b",
+  "git_commit": "aab7c650fee6fa9ac1f95308da42aff778bbb279",
+  "checked_at": "2026-10-16T09:16:45.539176+00:00",
+  "original_template_cmake_build_passed": true,
+  "only_kernel_changed": true,
+  "template_files_unchanged": 7,
+  "normal_cpu_policy_tests": 17,
+  "platform_hidden_cases_tested": false,
+  "original_template_device_sample_passed": true,
+  "original_template_sample_max_abs_error": 2.6226043701171875e-06
+}

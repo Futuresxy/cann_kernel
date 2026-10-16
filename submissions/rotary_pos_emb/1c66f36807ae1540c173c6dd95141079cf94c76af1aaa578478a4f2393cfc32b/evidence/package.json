@@ -1,0 +1,69 @@
+{
+  "problem": 1743,
+  "git_commit": "aab7c650fee6fa9ac1f95308da42aff778bbb279",
+  "kernel_sha256": "1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b",
+  "kernel_bytes": 72118,
+  "kernel_lines": 1562,
+  "kernel_first_line": "// ROPE1743_PROFILED_V7",
+  "kernel_last_line": "// END_ROPE1743_V7",
+  "result": "profiled_v7",
+  "extra_validation": {
+    "profiled_v7_math": {
+      "case_count": 256,
+      "audited_launches": 512
+    },
+    "profiled_v7_sweep": {
+      "case_count": 1010,
+      "audited_launches": 2020
+    },
+    "profiled_v7_packed_sweep": {
+      "case_count": 456,
+      "audited_launches": 912
+    },
+    "profiled_v7_path_sweep": {
+      "case_count": 672,
+      "audited_launches": 1344
+    },
+    "profiled_v7_aligned_audit": {
+      "case_count": 166,
+      "audited_launches": 332
+    }
+  },
+  "bitwise_validation": {
+    "profiled_v7_bits": {
+      "case_count": 248,
+      "elements": 75567008,
+      "changed_elements": 0
+    },
+    "profiled_v7_extended_bits": {
+      "case_count": 166,
+      "elements": 165971676,
+      "changed_elements": 0
+    }
+  },
+  "validated_case_count": 52,
+  "launch_audit": "profiled_v7_audit",
+  "launch_profile": "profiled_v7_launches",
+  "single_kernel_per_iteration": true,
+  "template_diff": {
+    "changed": [
+      "kernel.asc"
+    ],
+    "added": [],
+    "removed": [],
+    "unchanged": [
+      "CMakeLists.txt",
+      "data_utils.h",
+      "main.asc",
+      "run.sh",
+      "scripts/RotaryPosEmb.py",
+      "scripts/gen_data.py",
+      "scripts/verify_result.py"
+    ],
+    "kernel_sha256": "1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b"
+  },
+  "platform_hidden_cases_tested": false,
+  "compliance_review_sha256": "2939aa510b16d73addac1dadaf1f344baff965c4c1a995f1446b4056a56dbfc2",
+  "compliance_policy": "device-computation-supplement-2026-10-15",
+  "submission_eligible": true
+}

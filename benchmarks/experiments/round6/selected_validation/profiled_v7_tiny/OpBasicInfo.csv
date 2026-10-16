@@ -1,0 +1,2 @@
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+_ZN8rope174319direct_float_kernelINS_11FrequenciesEEEvPhS2_S2_mjjjT_,vector,6.460129,8,NA,0,2885414,1850,1850,

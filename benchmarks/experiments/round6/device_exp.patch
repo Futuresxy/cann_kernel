@@ -1,0 +1,148 @@
+--- baseline/kernel.asc
++++ device_exp/kernel.asc
+@@ -6,57 +6,20 @@
+ // This translation unit is included by the competition harness. Keep run_kernel's ABI.
+ namespace rope1743 {
+ using namespace AscendC;
+-struct Frequencies {
+-    float value[256];
+-    __aicore__ inline float Get(uint32_t i) const { return value[i]; }
+-};
+-
+-union FloatBits { float value; uint32_t bits; };
+-
+-// A full 512-float table exceeds the kernel argument limit. Store 128 exact
+-// FP32 seeds and three FP32 scale factors. Integer ULP corrections recover
+-// the independently computed FP32 frequencies, without an additional launch.
+-struct WideFrequencies {
+-    float value[128];
+-    float scale[3];
+-    int16_t correction[384];
+-
+-    __aicore__ inline float Get(uint32_t i) const {
+-        if (i < 128) return value[i];
+-        FloatBits result;
+-        result.value = value[i % 128] * scale[i / 128 - 1];
+-        result.bits += static_cast<int32_t>(correction[i - 128]);
+-        return result.value;
+-    }
+-};
+-static_assert(sizeof(WideFrequencies) == 1292, "Keep launch arguments below 1536 bytes");
+-
+-
+-__aicore__ inline void FillFrequencies(const LocalTensor<float>& dst,const Frequencies& f,
+-    uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+-    for(uint32_t i=0;i<pitch;++i)dst.SetValue(i,i<width?f.value[i]:0.0f);
+-}
+-__aicore__ inline void FillFrequencies(const LocalTensor<float>& dst,const WideFrequencies& f,
+-    uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+-    for(uint32_t i=0;i<128;++i)dst.SetValue(i,f.value[i]);
+-    auto correction=scratch.ReinterpretCast<int16_t>();
+-    auto packed=scratch.ReinterpretCast<int32_t>();
+-    for(uint32_t i=0;i<192;++i) {
+-        int32_t word;
+-        __builtin_memcpy(&word,&f.correction[2*i],sizeof(word));
+-        packed.SetValue(i,word);
+-    }
++struct Frequencies { float theta; };
++using WideFrequencies = Frequencies;
++__aicore__ inline void FillFrequencies(const LocalTensor<float>& dst, const Frequencies& f,
++    uint32_t width, uint32_t pitch, const LocalTensor<float>& scratch) {
++    for(uint32_t i=0;i<pitch;++i)dst.SetValue(i,float(int32_t(i))/float(int32_t(width)));
++    Duplicate(scratch,f.theta,pitch);
+     PipeBarrier<PIPE_ALL>();
+-    for(uint32_t j=0;j<3;++j)Muls(dst[(j+1)*128],dst,f.scale[j],128);
+-    auto floatCorrection=scratch[256];
+-    auto widened=scratch.ReinterpretCast<int32_t>()[640];
+-    Cast(floatCorrection,correction,RoundMode::CAST_NONE,384);
+-    Cast(widened,floatCorrection,RoundMode::CAST_RINT,384);
+-    auto bits=dst.ReinterpretCast<int32_t>();
+-    Add(bits[128],bits[128],widened,384);
+-    if(width<pitch) { PipeBarrier<PIPE_ALL>();
+-        for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+-    }
++    Ln(scratch,scratch,pitch);
++    Mul(dst,dst,scratch,pitch);
++    Exp(dst,dst,pitch);
++    Duplicate(scratch,1.0f,pitch);
++    Div(dst,scratch,dst,pitch);
++    PipeBarrier<PIPE_ALL>();
++    for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+ }
+ 
+ // C++14 overloads keep datatype dispatch inside this file. The original
+@@ -598,7 +561,7 @@
+         pipe_.InitBuffer(freq_,pitch_*sizeof(float));
+         pipe_.InitBuffer(mask_,((2*capacity_+255)/256*32));
+         auto freq=freq_.Get<float>();
+-        for(uint32_t i=0;i<pitch_;++i)freq.SetValue(i,i<half_?f.value[i]:0.0f);
++        FillFrequencies(freq,f,half_,pitch_,work_.Get<float>());
+         InitIndexes();
+         PipeBarrier<PIPE_ALL>();
+     }
+@@ -737,7 +700,7 @@
+         pipe_.InitBuffer(freq_,pitch_*sizeof(float));
+         pipe_.InitBuffer(mask_,((2*capacity_+255)/256*32));
+         auto freq=freq_.Get<float>();
+-        for(uint32_t i=0;i<pitch_;++i)freq.SetValue(i,i<half_?f.value[i]:0.0f);
++        FillFrequencies(freq,f,half_,pitch_,work_.Get<float>());
+         InitIndexes();
+         PipeBarrier<PIPE_ALL>();
+     }
+@@ -1087,7 +1050,7 @@
+         uint32_t bulkCores=availableCoreNum>0?availableCoreNum:1;
+         if(bulkJobs<bulkCores)bulkCores=bulkJobs;
+         rope1743::Frequencies frequencies{};
+-        for(uint32_t i=0;i<width;++i)frequencies.value[i]=1.0f/std::pow(theta,static_cast<float>(2*i)/dim);
++        frequencies.theta=theta;
+         if(info_x.tensors[0].dtype==0)
+             rope1743::bulk_position_kernel<float><<<bulkCores,nullptr,stream>>>(x,positions,y,tokens,dim,tile,frequencies);
+         else
+@@ -1100,7 +1063,7 @@
+         uint32_t headCores=availableCoreNum>0?availableCoreNum:1;
+         if(headJobs<headCores)headCores=headJobs;
+         rope1743::Frequencies f{};
+-        for(uint32_t i=0;i<width;++i)f.value[i]=1.0f/std::pow(theta,static_cast<float>(2*i)/dim);
++        f.theta=theta;
+         if(info_x.tensors[0].dtype==0)
+             rope1743::head_tile_kernel<float><<<headCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,f);
+         else
+@@ -1115,8 +1078,7 @@
+         uint32_t packedCores=availableCoreNum>0?availableCoreNum:1;
+         if(packedJobs<packedCores)packedCores=packedJobs;
+         rope1743::Frequencies frequencies{};
+-        for(uint32_t i=0;i<width;++i)
+-            frequencies.value[i]=1.0f/std::pow(theta,static_cast<float>(2*i)/dim);
++        frequencies.theta=theta;
+         if(info_x.tensors[0].dtype==0)
+             rope1743::packed_kernel<float><<<packedCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,frequencies);
+         else
+@@ -1125,17 +1087,7 @@
+     }
+     if (dim > 512) {
+         rope1743::WideFrequencies frequencies{};
+-        for (uint32_t i = 0; i < 128; ++i)
+-            frequencies.value[i] = 1.0f / std::pow(theta, static_cast<float>(2 * i) / dim);
+-        for (uint32_t j = 0; j < 3; ++j)
+-            frequencies.scale[j] = 1.0f / std::pow(theta, static_cast<float>(256 * (j + 1)) / dim);
+-        for (uint32_t i = 128; i < width; ++i) {
+-            rope1743::FloatBits exact, predicted;
+-            exact.value = 1.0f / std::pow(theta, static_cast<float>(2 * i) / dim);
+-            predicted.value = frequencies.value[i % 128] * frequencies.scale[i / 128 - 1];
+-            frequencies.correction[i - 128] = static_cast<int16_t>(
+-                static_cast<int32_t>(exact.bits) - static_cast<int32_t>(predicted.bits));
+-        }
++        frequencies.theta=theta;
+         if(batched) {
+             if(info_x.tensors[0].dtype==0)
+                 rope1743::wide_batched_kernel<float><<<cores,nullptr,stream>>>(x,positions,y,tokens,dim,tileTokens,frequencies);
+@@ -1157,8 +1109,7 @@
+     }
+ 
+     rope1743::Frequencies frequencies{};
+-    for (uint32_t i = 0; i < width; ++i)
+-        frequencies.value[i] = 1.0f / std::pow(theta, static_cast<float>(2 * i) / dim);
++    frequencies.theta=theta;
+     if (batched) {
+         if (info_x.tensors[0].dtype == 0)
+             rope1743::batched_kernel<float><<<cores, nullptr, stream>>>(

@@ -1,0 +1,19 @@
+{
+  "kernel_sha256": "c328c772c04aec08ab7d68b4766420a2774c7a3f2f5f449bd65c577e13e6002a",
+  "reviewer": "Codex source review",
+  "reviewed_at": "2026-10-16T08:59:40.913167+00:00",
+  "device_math_notes": "Host receives only shapes/dtypes/theta, computes tile and core counts, passes scalar theta and launches one exclusive branch. Device builds frequencies anew from theta. Generic log2/exp2 coefficients and Q53/Q61 guard bits describe a numerical algorithm, not stored RoPE outputs. The 32-entry generic exp2 table is generated on Device during every invocation; it is not supplied by Host or persisted between calls. Frequencies are rounded to FP32 before FP32 angles/trig/rotation. No input tensor is read by Host. Shape branches depend on alignment, working-set and parallelism. Position-zero copy implements the specified exact identity. In-call trig reuse is confined to one core and current positions; no cross-invocation state or global workspace.",
+  "assertions": {
+    "host_only_validation_shape_tiling_launch": true,
+    "no_host_tensor_read_or_reorder": true,
+    "all_frequency_angle_trig_rotation_on_device": true,
+    "no_precomputed_results_or_host_vectors": true,
+    "no_testcase_or_data_pattern_shortcuts": true,
+    "no_markers_stale_output_or_uninitialized_memory": true,
+    "no_judge_precision_or_timing_changes": true,
+    "no_empty_kernel_or_warmup_detection": true,
+    "no_cross_invocation_cache": true,
+    "exactly_one_device_kernel_per_invocation": true,
+    "kernel_asc_is_only_template_change": true
+  }
+}

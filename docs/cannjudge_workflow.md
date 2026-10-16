@@ -4,7 +4,7 @@
 
 当前状态（2026-10-15）：工具和本地浏览器测试已完成，真实站点尚未接通，未自动提交或取得新平台成绩。服务器的 HTTP 客户端与 Chromium 访问平台均出现连接关闭，也没有连接到截图中的登录浏览器。默认站点配置 `calibrated=false`，禁止点击提交，直到浏览器连接和真实结果页校准完成。
 
-**当前 V6 暂停提交。** 新规则要求完整数学计算在 Device 完成，V6 却在 Host 使用 `std::pow` 生成频率、宽维种子和 ULP 修正表。V4 有同类问题。历史精度、性能结果保留，但不能充当新规则下的合规凭证。本次未修改内核源码，Device 频率算法需单独实现并重新验证，尤其是最大位置下的角度误差。
+**V7 已实现 Device 完整频率计算。** 本地验证见 [V7 报告](profiled_v7.md)，GitHub 的 latest.json 指向通过源码规则、精度和启动检查的冻结候选。V4/V6 的 Host 频率表仍属历史对照，不能用于新规则下的提交。真实浏览器页面仍需首次校准，尚未取得 V7 平台成绩。
 
 ## 流程
 
@@ -36,7 +36,7 @@
 | `build/platform_candidates/<sha>/` | 冻结源码、Git 版本、本地验证证据 |
 | `benchmarks/platform/runs/<run-id>/` | 真实平台记录、截图和日志，默认不进入 Git |
 | `.local/cannjudge/` | 登录目录、站点配置、探测记录，不进入 Git |
-| `benchmarks/validation/supplementary_rules_v6.json` | 当前 V6 被拦截的具体行号 |
+| `benchmarks/validation/supplementary_rules_v6.json` | 历史 V6 被拦截的具体行号 |
 
 本地模拟页面验证浏览器 API 契约，不代表真实平台已联调，也不修改任何平台判题逻辑。
 
@@ -103,7 +103,7 @@ python3 tools/cannjudge.py inspect --cdp http://127.0.0.1:9222 \
 
 ## 冻结与提交
 
-先实现 Device 频率计算并重新验证。数学改变后，不能沿用 V6 的精度结果。静态 `audit` 只是保守筛查，不能证明全部规则；Host 帮助函数、Device 完整计算、临时复用与持久缓存的区别仍需源码审查。
+V7 已完成 Device 频率迁移；后续数学改变时仍须重新验证，不能沿用旧版本精度结果。静态 `audit` 只是保守筛查，不能证明全部规则；Host 帮助函数、Device 完整计算、临时复用与持久缓存的区别仍需源码审查。
 
 审查文件 `compliance.json` 包含 `kernel_sha256`、`reviewer`、`reviewed_at`、`device_math_notes` 和 `assertions`。必需的断言名称由 `audit` 输出的 `required_review_assertions` 给出，每项需在实际审查后填为 true。说明中应指明频率、角度、三角函数和旋转的 Device 实现位置，以及没有跨调用缓存的依据。这是技术证据，不是额外的用户授权步骤。
 

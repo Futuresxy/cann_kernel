@@ -1,0 +1,8 @@
+{
+  "status": "invalid-profile-not-used-for-speedup",
+  "expected": 1320,
+  "observed": 1240,
+  "runner_exit_code": 0,
+  "case_guard_checks": 33,
+  "reason": "Task-count mismatch; collection rejected; runner completed 33 guard checks. Cause not established."
+}

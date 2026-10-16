@@ -1,0 +1,14 @@
+{
+  "kernel_sha256": "1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b",
+  "git_commit": "aab7c650fee6fa9ac1f95308da42aff778bbb279",
+  "staged_at": "2026-10-16T09:14:48.660822+00:00",
+  "kernel_bytes": 72118,
+  "kernel_lines": 1562,
+  "evidence_sha256": {
+    "compliance.json": "2939aa510b16d73addac1dadaf1f344baff965c4c1a995f1446b4056a56dbfc2",
+    "launch_count.json": "68c4b16d34d0f1871673e5d10dce99f0bacb360f82a70561304625cee5ef31c7",
+    "launch_audit.json": "3e52473ae99a3e73297b01331040d52f995439c94d31592e0109d411d04d114b",
+    "package.json": "475363789b523e7d737122692f9592ed9f4216ac0d7e9fdd8d41e48cad4ae281",
+    "correctness.json": "c1c576e894a35adb18fe36ac33ae0828878a22826ff0ef017e5412d483b0762e"
+  }
+}

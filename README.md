@@ -2,7 +2,7 @@
 
 平台测试在 **Mac 本地 Chrome** 执行：GitHub 同步已验证版本、提交、记录结果；Ascend910 负责开发和 profiling。**不需要服务器隧道。** [Mac 安装和运行步骤](docs/mac_cannjudge.md)。
 
-**2026-10-15 补充规则更新：当前 V6 与历史 V4 的 Host 频率表不符合新增的 Device 完整计算要求，暂停提交。** 历史精度和性能记录保留，内核尚未迁移频率计算。打包与自动提交流程已增加拦截，需完成 Device 迁移并重新验证。浏览器接入、工具用法与尚待接通的限制见 [平台提交工作流](docs/cannjudge_workflow.md)。
+**当前候选 V7 已将频率、角度、三角函数和旋转全部放到 Device，Host 只负责分块和启动。** 本地性能、精度与源码规则审查见 [V7 报告](docs/profiled_v7.md)。平台隐藏 15 点尚未测试；V4/V6 的 Host 频率表按新增规则仅保留为历史对照。
 
 2026 初赛 RotaryPosEmb（problem 1743），Ascend C 原生实现，匹配附件的 `run_kernel` 直接调用接口。基础版和后续优化版通过 Git 提交保存；源码、测试、profiling、报告、原始模板和提交包分目录管理。
 
@@ -36,25 +36,29 @@ bash tools/build_revision.sh 0a4281f platform_v4
 bash tools/build.sh
 bash tools/build_launch_audit.sh
 # CPU准备输入，不申请NPU
-bash tools/validate_profiled_v6.sh --phase prepare
+bash tools/validate_profiled_v7.sh --phase prepare
 # 各阶段串行申请单卡，等待完成释放后执行下一条
 # correctness包含52项回归、逐次API审计和75/75设备任务检查
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v6.sh --phase correctness'
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v6.sh --phase precision'
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v6.sh --phase sweeps'
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v6.sh --phase aligned_audit'
-# 当前kernel先提交Git；打包同时要求参考精度、V4逐位比较和两类启动检查
-python3 tools/package.py --result profiled_v6 --launch-profile profiled_v6_launches \
-  --extra-result profiled_v6_sweep --extra-result profiled_v6_packed_sweep \
-  --extra-result profiled_v6_path_sweep --extra-result profiled_v6_aligned_audit \
-  --bitwise-result profiled_v6_bits --bitwise-result profiled_v6_extended_bits
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v7.sh --phase correctness'
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v7.sh --phase precision'
+for phase in math sweep packed_sweep path_sweep; do
+  task-submit --device auto --max-time 60 --run "bash tools/validate_profiled_v7.sh --phase $phase"
+done
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v7.sh --phase aligned_audit'
+# 当前kernel先提交Git；打包同时要求参考精度、逐位比较、启动检查与源码规则审查
+python3 tools/package.py --result profiled_v7 --launch-profile profiled_v7_launches \
+  --extra-result profiled_v7_math --extra-result profiled_v7_sweep \
+  --extra-result profiled_v7_packed_sweep --extra-result profiled_v7_path_sweep \
+  --extra-result profiled_v7_aligned_audit \
+  --bitwise-result profiled_v7_bits --bitwise-result profiled_v7_extended_bits \
+  --compliance-review benchmarks/validation/profiled_v7/compliance.json
 ```
 
 设备任务始终经过服务器 task-submit 队列。编译和报告在 CPU 上完成。不要将 profiler replay 内的 event 时间当作原生 kernel 性能；小算子 event 时间还会包含 host 下发空洞。
 
 ## 数学与精度
 
-`x[B,S,H,D]` 按前后两半旋转。以下为已暂停提交的 V6 历史数学路径；新规则下必须迁移频率生成并重新验证。频率在算子 host 入口用 FP32 `pow` 与倒数实时生成；位置、角度、cos/sin生成均为 FP32；所有路径均采用FP32旋转，最后转换到输出类型。频率并非新增输入，不提供外部 cos/sin 或离线常量表。精度判定保持赛题原阈值。
+`x[B,S,H,D]` 按前后两半旋转。频率在 Device 内按当前 theta 生成，使用保护位保持 FP32 舍入精度；角度、cos/sin 和旋转均采用 FP32，最后转换到输出类型。通用数学小表在当前 Device 调用内生成，不存储或传入预计算的 RoPE 结果，不跨调用缓存。精度判定保持赛题原阈值。
 
 对于较大位置，使用三段2π常量缩减角度，避免直接调用高阶 Sin/Cos 超出有效范围。优化版共用正余弦的范围缩减，在四分之一角上计算多项式并通过二倍角恢复。position=0 单独保持原始位模式，包括 NaN/Inf。
 
@@ -91,13 +95,13 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 
 仓库根目录的开发构建工程、tools、tests及benchmarks仅用于本地测试和profiling，不进入比赛提交包。`templates/rotaryposemb_1743.sha256.json`记录用户原始ZIP中各文件的SHA256，打包和检查均使用这一固定基准。
 
-## 历史候选V6与平台基线V4（按补充规则暂停提交）
+## 当前 V7 与历史版本
 
-当前源码为 `ROPE1743_PROFILED_V6`，基于平台15点通过的V4继续优化。三角函数、旋转和中间结果均保留FP32。保留FP32直接在队列上计算、非对齐连续DMA、宽维单head合批，以及保持V4乘加顺序的positions向量化。平台隐藏点得分待提交验证，本地结果不能冒充平台成绩。
+V7 保留 FP32 计算，移除 Host 频率数学与宽维修正表；优化当前调用内的频率生成、工作区复用、head 分块和余弦向量指令。完整结果、失败候选与复现见 [V7 报告](docs/profiled_v7.md)。平台得分必须等待 Mac 上的真实平台提交反馈。
 
-本地2190项回归通过，414项直接V4输出比较覆盖约2.42亿元素，新增差异为0；逐次API审计和75/75设备任务检查通过。对照、负收益候选、硬件流水数据与完整复现见 [V6报告](docs/profiled_v6.md)。同进程共享分配的ABBA/BAAB工具用 `tools/build_paired.sh` 构建、`tools/profile_balanced.py` 采集。
+V6 历史数据见 [V6 报告](docs/profiled_v6.md)，其 Host 数学不满足新增规则。V4 的源码仍可从 Git 0a4281f 重建，用于精度逐位对照。V5 因平台精度和性能反馈撤回，见 [回退报告](docs/rollback_v4_round4.md)。
 
-完整提交包仍只替换kernel.asc，其余7文件保持附件模板原样。V4源码和提交包备份位于 `dist/history/profiled_v4/`；也可从Git 0a4281f重建。V5的FP16原精度旋转及缓存策略已因平台反馈撤回，历史记录见 [回退报告](docs/rollback_v4_round4.md)，不作为可提交版本。
+完整提交包只替换 kernel.asc，其余 7 文件保持附件模板原样。本地 tests、tools、benchmarks、docs 不进入比赛提交工程。
 
 ## 完整源码的下载与复制
 
