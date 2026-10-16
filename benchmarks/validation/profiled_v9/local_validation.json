@@ -45,5 +45,13 @@
   "changed_finite_elements": 0,
   "device_calls": 75,
   "device_tasks": 75,
-  "platform_hidden_cases_tested": false
+  "platform_hidden_cases_tested": false,
+  "original_template_build_passed": true,
+  "sole_template_change": "kernel.asc",
+  "fixed_performance_profile": "profiled_v9_balanced",
+  "fixed_performance_case_count": 33,
+  "supplemental_performance_profile": "profiled_v9_extended_balanced",
+  "supplemental_performance_case_count": 105,
+  "original_template_device_passed": true,
+  "original_template_max_abs_error": 2.6226043701171875e-06
 }

@@ -1,7 +1,7 @@
 {
   "status": "ready",
-  "kernel_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
-  "git_commit": "686199c801c6058cf2e0e980be1d97ed3887f04f",
-  "candidate_path": "submissions/rotary_pos_emb/c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
-  "published_at": "2026-10-16T15:14:26.334584+00:00"
+  "kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "git_commit": "975bca9354893d2d350154e2ab86c8a859975d4a",
+  "candidate_path": "submissions/rotary_pos_emb/5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "published_at": "2026-10-16T17:05:10.542244+00:00"
 }

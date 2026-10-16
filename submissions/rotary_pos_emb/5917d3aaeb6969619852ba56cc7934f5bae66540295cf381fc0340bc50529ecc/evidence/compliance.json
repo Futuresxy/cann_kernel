@@ -1,0 +1,19 @@
+{
+  "kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "reviewer": "Codex source review",
+  "reviewed_at": "2026-10-16T16:49:15.399876+00:00",
+  "device_math_notes": "Host performs metadata-based tiling and one exclusive launch; theta remains a scalar. All frequencies, angles, trig and rotations are computed inside that Device invocation. The generic exp2 polynomial has universal approximation coefficients, not stored operator results. Only ambiguous rounding intervals build five generic root powers in the current invocation UB; rootsReady is a local initialized subexpression-reuse condition, not an output marker or cross-invocation cache. The Q53 ambiguity path preserves FP32 frequency rounding. Binary-width exponent generation uses exact binary scaling. Small scratch is sized for five uint64 roots, with all reads dominated by their initialization. Nonzero log(theta) very close to zero uses the guard-bit algorithm as a numerical-conditioning choice for arbitrary widths; it does not match test IDs or data generation patterns, and exact theta=1 uses the existing vector computation. First input DMA overlaps initialization in aligned/direct kernels with distinct live buffers and completion barriers before consumption. No Host tensor read/reorder, Host vector math, prerecorded RoPE result, global cache/workspace, extra kernel, empty launch, stale-output read, warmup recognition or judging/timing modification is present. All elements are written once except mathematically exact position-zero copying. Original payload only replaces kernel.asc. Final frequency strategies are distinct compile-time types. The ABI entry chooses a metadata-only Host launcher; both the entry and helper are covered by the conservative source screen. The helper only selects tile/core counts, passes theta scalars and executes one exclusive kernel branch. Device Process propagates the chosen type through initialization and the first-input overlap. Repeated identical rounded powers reuse a reciprocal only in the current function invocation; the key is computed from current theta/exponent, starts with an impossible sentinel, and no global or cross-call state is used. The small-argument linear exp2 evaluation stays inside the same 16-Q31-unit bound. Small-column block counts are capped by the provided core budget.",
+  "assertions": {
+    "host_only_validation_shape_tiling_launch": true,
+    "no_host_tensor_read_or_reorder": true,
+    "all_frequency_angle_trig_rotation_on_device": true,
+    "no_precomputed_results_or_host_vectors": true,
+    "no_testcase_or_data_pattern_shortcuts": true,
+    "no_markers_stale_output_or_uninitialized_memory": true,
+    "no_judge_precision_or_timing_changes": true,
+    "no_empty_kernel_or_warmup_detection": true,
+    "no_cross_invocation_cache": true,
+    "exactly_one_device_kernel_per_invocation": true,
+    "kernel_asc_is_only_template_change": true
+  }
+}

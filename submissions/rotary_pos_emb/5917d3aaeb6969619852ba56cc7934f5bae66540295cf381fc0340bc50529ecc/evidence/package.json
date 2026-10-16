@@ -1,0 +1,81 @@
+{
+  "problem": 1743,
+  "git_commit": "975bca9354893d2d350154e2ab86c8a859975d4a",
+  "kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "kernel_bytes": 89328,
+  "kernel_lines": 1889,
+  "kernel_first_line": "// ROPE1743_PROFILED_V9",
+  "kernel_last_line": "// END_ROPE1743_V9",
+  "result": "profiled_v9",
+  "extra_validation": {
+    "profiled_v9_math": {
+      "case_count": 256,
+      "audited_launches": 512
+    },
+    "profiled_v9_small": {
+      "case_count": 544,
+      "audited_launches": 1088
+    },
+    "profiled_v9_new_math": {
+      "case_count": 640,
+      "audited_launches": 1280
+    },
+    "profiled_v9_dispatch": {
+      "case_count": 192,
+      "audited_launches": 384
+    },
+    "profiled_v9_sweep": {
+      "case_count": 1010,
+      "audited_launches": 2020
+    },
+    "profiled_v9_packed_sweep": {
+      "case_count": 456,
+      "audited_launches": 912
+    },
+    "profiled_v9_path_sweep": {
+      "case_count": 672,
+      "audited_launches": 1344
+    },
+    "profiled_v9_aligned_audit": {
+      "case_count": 166,
+      "audited_launches": 332
+    }
+  },
+  "bitwise_validation": {
+    "profiled_v9_bits": {
+      "case_count": 248,
+      "elements": 75567008,
+      "changed_elements": 0
+    },
+    "profiled_v9_extended_bits": {
+      "case_count": 166,
+      "elements": 165971676,
+      "changed_elements": 0
+    }
+  },
+  "validated_case_count": 52,
+  "launch_audit": "profiled_v9_audit",
+  "launch_profile": "profiled_v9_launches",
+  "single_kernel_per_iteration": true,
+  "template_diff": {
+    "changed": [
+      "kernel.asc"
+    ],
+    "added": [],
+    "removed": [],
+    "unchanged": [
+      "CMakeLists.txt",
+      "data_utils.h",
+      "main.asc",
+      "run.sh",
+      "scripts/RotaryPosEmb.py",
+      "scripts/gen_data.py",
+      "scripts/verify_result.py"
+    ],
+    "kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc"
+  },
+  "platform_hidden_cases_tested": false,
+  "compliance_review_sha256": "5d51d0cfae4de7b033382cb511d27df59cc3337bd3ecff17cd128659d149a2ee",
+  "compliance_policy": "device-computation-supplement-2026-10-15",
+  "submission_eligible": true
+}
