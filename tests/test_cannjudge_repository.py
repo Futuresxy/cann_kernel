@@ -1,0 +1,105 @@
+"""Git exchange tests. Local repositories only; no GitHub, browser or NPU."""
+import json
+from pathlib import Path
+import subprocess
+import sys
+import tempfile
+import unittest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
+from judge_workflow.core import digest, read_json, validate_candidate, write_json
+from judge_workflow.repository import POINTER, SOURCE, export_result, publish_candidate, sync_candidate
+from test_cannjudge_workflow import SOURCE as KERNEL, fixture_candidate
+
+
+class RepositoryTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.base = Path(self.temporary.name)
+        self.repository = self.base / 'repository'
+        self.repository.mkdir()
+        self.git('init', '-q')
+        self.git('config', 'user.email', 'fixture@example.invalid')
+        self.git('config', 'user.name', 'Local fixture')
+        kernel = self.repository / SOURCE
+        kernel.parent.mkdir(parents=True)
+        kernel.write_bytes(KERNEL)
+        self.git('add', '.'); self.git('commit', '-qm', 'fixture kernel')
+        self.revision = self.git('rev-parse', 'HEAD').strip()
+        self.candidate = self.base / 'candidate'
+        manifest = fixture_candidate(self.candidate)
+        manifest['git_commit'] = self.revision
+        package = self.candidate / 'evidence/package.json'
+        content = read_json(package); content['git_commit'] = self.revision; write_json(package, content)
+        manifest['evidence_sha256']['package.json'] = digest(package.read_bytes())
+        write_json(self.candidate / 'candidate.json', manifest)
+
+    def tearDown(self):
+        self.temporary.cleanup()
+
+    def git(self, *args):
+        return subprocess.check_output(['git', *args], cwd=self.repository, text=True, stderr=subprocess.PIPE)
+
+    def publish(self):
+        result = publish_candidate(self.candidate, self.repository)
+        self.git('add', '.'); self.git('commit', '-qm', 'publish fixture')
+        return result
+
+    def test_publish_sync_preserves_mac_worktree(self):
+        (self.candidate / 'not_for_github.txt').write_text('must not be copied')
+        published = self.publish()
+        self.assertFalse((published / 'not_for_github.txt').exists())
+        (self.repository / SOURCE).write_bytes(b'local user edit')
+        result, tip = sync_candidate(self.repository, self.base / 'downloads', fetch=False, ref='HEAD')
+        self.assertEqual((self.repository / SOURCE).read_bytes(), b'local user edit')
+        self.assertEqual((result / 'kernel.asc').read_bytes(), KERNEL)
+        self.assertEqual(validate_candidate(result)[0]['git_commit'], self.revision)
+        self.assertEqual(tip, self.git('rev-parse', 'HEAD').strip())
+
+    def test_fetch_candidate_in_separate_mac_clone(self):
+        self.publish()
+        self.git('branch', '-M', 'main')
+        clone = self.base / 'mac clone'
+        subprocess.check_call(['git', 'clone', '-q', str(self.repository), str(clone)])
+        result, tip = sync_candidate(clone, clone / 'build/candidates')
+        self.assertEqual((result / 'kernel.asc').read_bytes(), KERNEL)
+        self.assertEqual(tip, self.git('rev-parse', 'HEAD').strip())
+
+    def test_blocked_release_never_becomes_a_candidate(self):
+        write_json(self.repository / POINTER, {'status': 'blocked', 'reason': 'Host frequency table'})
+        self.git('add', '.'); self.git('commit', '-qm', 'blocked')
+        with self.assertRaisesRegex(ValueError, 'Host frequency table'):
+            sync_candidate(self.repository, self.base / 'downloads', fetch=False, ref='HEAD')
+
+    def test_new_unvalidated_git_kernel_blocks_old_pointer(self):
+        self.publish()
+        (self.repository / SOURCE).write_bytes(KERNEL + b'// new source\n')
+        self.git('add', '.'); self.git('commit', '-qm', 'unvalidated change')
+        with self.assertRaisesRegex(ValueError, 'differs'):
+            sync_candidate(self.repository, self.base / 'downloads', fetch=False, ref='HEAD')
+
+    def test_published_evidence_tampering_is_blocked(self):
+        published = self.publish()
+        (published / 'evidence/correctness.json').write_text('{}')
+        self.git('add', '.'); self.git('commit', '-qm', 'broken evidence')
+        with self.assertRaisesRegex(ValueError, 'evidence changed'):
+            sync_candidate(self.repository, self.base / 'downloads', fetch=False, ref='HEAD')
+
+    def test_export_omits_private_browser_information(self):
+        run = self.base / 'run.json'
+        record = {'run_id': 'fixture-run-1', 'kernel_sha256': digest(KERNEL), 'git_commit': self.revision,
+                  'submission_id': 'test-1', 'state': 'accepted', 'platform_status': 'Accepted',
+                  'cases': [{'id': i, 'latency_us': 2.5} for i in range(1, 16)],
+                  'cookies': 'private', 'result_url': 'https://example.invalid/?secret=private',
+                  'last_error': 'private account details'}
+        write_json(run, record)
+        destination = export_result(run, self.repository)
+        exported = read_json(destination)
+        self.assertEqual(len(exported['cases']), 15)
+        self.assertNotIn('private', destination.read_text())
+        record['state'] = 'pending'; write_json(run, record)
+        with self.assertRaises(ValueError): export_result(run, self.repository)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

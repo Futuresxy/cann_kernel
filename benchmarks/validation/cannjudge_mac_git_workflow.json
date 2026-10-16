@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-10-16T07:06:29.682503+00:00",
+  "test_command": "build/platform_workflow/venv/bin/python -m unittest discover -s tests -p 'test_cannjudge*.py' -v",
+  "tests_run": 25,
+  "tests_passed": 25,
+  "tested_environment": "Linux ARM64, Python 3.10, Playwright 1.61.0, local Git repositories and Chromium fixture",
+  "macos_chrome_tested": false,
+  "real_platform_submissions": 0,
+  "npu_jobs": 0,
+  "deployment": "Mac local Chrome and GitHub; no Ascend SSH tunnel",
+  "candidate_status": "blocked_host_frequency_computation",
+  "files_sha256": {
+    "tools/cannjudge.py": "4b4e647f73dbeece6e770320e725d6a1cec985d8c849bd46548f21b4ca233f8c",
+    "tools/mac_cannjudge.sh": "9d58f2ba1254e47c1d0e58723a12641de82ad3a88e0645e65c034fc0a446037c",
+    "tools/judge_workflow/repository.py": "a06079237379e18b8d5e078328009c489ad19495e2bf4ee08ef6ba2bc72834e1",
+    "tools/judge_workflow/browser.py": "4a46639ae2bc75766559f8759ac77a54a18e0f40fefd68e06a0e2cc425e447b5",
+    "tests/test_cannjudge_repository.py": "9635154a8aef3d32a7f076fe1957ddefb5f05c17b8b9eb9db6fea2a468774c51",
+    "tests/test_cannjudge_workflow.py": "8ace9fa70f47bb06b1b9990a49a5dba26e6d4862e076830c7d99817be18e9028"
+  }
+}

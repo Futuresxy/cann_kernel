@@ -28,7 +28,8 @@ async def browser_context(args):
         else:
             args.profile.mkdir(parents=True, exist_ok=True, mode=0o700)
             context = await p.chromium.launch_persistent_context(
-                str(args.profile.resolve()), headless=args.headless)
+                str(args.profile.resolve()), headless=args.headless,
+                channel=getattr(args, 'channel', None))
             try:
                 yield context
             finally:

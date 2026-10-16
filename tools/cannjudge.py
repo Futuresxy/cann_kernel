@@ -12,6 +12,7 @@ import sys
 
 from judge_workflow.core import (ROOT, Journal, check_origin, check_review, compare_results,
                            digest, read_json, static_audit, utcnow, validate_candidate, write_json)
+from judge_workflow.repository import export_result, publish_candidate, sync_candidate
 
 
 @contextmanager
@@ -151,6 +152,14 @@ def parser():
     stage_parser = commands.add_parser('stage', help='Freeze local validation evidence and the complete kernel')
     stage_parser.add_argument('--review', type=Path, required=True)
     stage_parser.add_argument('--output', type=Path, default=ROOT / 'build/platform_candidates')
+    publish = commands.add_parser('publish', help='Prepare a validated candidate for Git commit/push')
+    publish.add_argument('--candidate', type=Path, required=True)
+    sync = commands.add_parser('sync', help='Fetch a published candidate from GitHub without changing the checkout')
+    sync.add_argument('--output', type=Path, default=ROOT / 'build/platform_candidates')
+    sync.add_argument('--no-fetch', action='store_true', help='Read a locally available Git ref without network')
+    sync.add_argument('--ref', default='origin/main', help='Used only with --no-fetch')
+    export = commands.add_parser('export-result', help='Write a small platform result summary for Git sharing')
+    export.add_argument('--run', type=Path, required=True)
     comparison = commands.add_parser('compare', help='Compare two accepted platform run.json records')
     comparison.add_argument('--baseline', type=Path, required=True)
     comparison.add_argument('--candidate', type=Path, required=True)
@@ -161,6 +170,8 @@ def parser():
         sub.add_argument('--cdp', help='Chrome debug endpoint reachable from this process, e.g. http://127.0.0.1:9222')
         sub.add_argument('--profile', type=Path, default=ROOT / '.local/cannjudge/browser')
         sub.add_argument('--headless', action='store_true')
+        sub.add_argument('--channel', choices=('chrome', 'chromium'),
+                         help='Launch installed Chrome directly; no CDP port or SSH tunnel needed')
         if command in ('submit', 'resume'):
             sub.add_argument('--runs', type=Path, default=ROOT / 'benchmarks/platform/runs')
         if command == 'submit':
@@ -184,6 +195,13 @@ def main():
         return 0 if report['static_screen_passed'] else 2
     if args.command == 'stage':
         stage(args)
+    elif args.command == 'publish':
+        print(publish_candidate(args.candidate))
+    elif args.command == 'sync':
+        destination, tip = sync_candidate(output=args.output, fetch=not args.no_fetch, ref=args.ref)
+        print(json.dumps({'candidate': str(destination.resolve()), 'fetched_commit': tip}, indent=2))
+    elif args.command == 'export-result':
+        print(export_result(args.run))
     elif args.command == 'compare':
         write_json(args.output, compare_results(read_json(args.baseline), read_json(args.candidate)))
         print(args.output.resolve())

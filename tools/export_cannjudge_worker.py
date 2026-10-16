@@ -7,7 +7,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
-    files = [ROOT / 'tools/cannjudge.py', ROOT / 'docs/cannjudge_workflow.md']
+    files = [ROOT / 'tools/cannjudge.py', ROOT / 'tools/mac_cannjudge.sh',
+             ROOT / 'docs/cannjudge_workflow.md', ROOT / 'docs/mac_cannjudge.md']
     files.extend(sorted(p for p in (ROOT / 'tools/judge_workflow').iterdir()
                         if p.is_file() and p.suffix in ('.py', '.json', '.txt')))
     destination = ROOT / 'dist/cannjudge_worker.zip'
@@ -19,6 +20,7 @@ def main():
             'Browser worker only. This archive contains no kernel, authentication or submission history.\n'
             'Read docs/cannjudge_workflow.md. Install tools/judge_workflow/requirements.txt.\n'
             'login / inspect / submit / resume / compare run on this worker.\n'
+            'GitHub sync requires a full clone; see docs/mac_cannjudge.md.\n'
             'stage and package run in the full SSH repository. Copy the complete staged candidate directory here.\n'
             'The example configuration is uncalibrated and cannot submit.\n')
     print(destination)

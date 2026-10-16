@@ -1,5 +1,7 @@
 # CANN Kernel：RotaryPosEmb
 
+平台测试在 **Mac 本地 Chrome** 执行：GitHub 同步已验证版本、提交、记录结果；Ascend910 负责开发和 profiling。**不需要服务器隧道。** [Mac 安装和运行步骤](docs/mac_cannjudge.md)。
+
 **2026-10-15 补充规则更新：当前 V6 与历史 V4 的 Host 频率表不符合新增的 Device 完整计算要求，暂停提交。** 历史精度和性能记录保留，内核尚未迁移频率计算。打包与自动提交流程已增加拦截，需完成 Device 迁移并重新验证。浏览器接入、工具用法与尚待接通的限制见 [平台提交工作流](docs/cannjudge_workflow.md)。
 
 2026 初赛 RotaryPosEmb（problem 1743），Ascend C 原生实现，匹配附件的 `run_kernel` 直接调用接口。基础版和后续优化版通过 Git 提交保存；源码、测试、profiling、报告、原始模板和提交包分目录管理。
