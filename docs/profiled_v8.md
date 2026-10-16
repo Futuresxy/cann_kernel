@@ -71,7 +71,9 @@ python3 benchmarks/experiments/round7/numerical_model/adaptive_all.py
 复现最终性能采集前先在 CPU 重新生成性能矩阵，避免之前精度套件覆盖同名输入。构建两个交换源文件的 runner 后，单卡执行：
 
 ```bash
-# 将实际的冻结 V7 kernel.asc 放在 build/tuning_round7/v7/。
+# 恢复冻结 V7 源码；不会修改当前算子文件。
+mkdir -p build/tuning_round7/v7
+git show 36bcd8ce792ddbe2e8327a569d9e28b69a6d37db:operators/rotary_pos_emb/kernel.asc > build/tuning_round7/v7/kernel.asc
 bash tools/build_paired.sh build/tuning_round7/v7 operators/rotary_pos_emb build/tuning_round7/occupancy_forward
 bash tools/build_paired.sh operators/rotary_pos_emb build/tuning_round7/v7 build/tuning_round7/occupancy_reverse
 python3 tools/suite.py --cases-file tests/round7_performance_cases.json --generate-only
@@ -102,3 +104,8 @@ done
 [FlashInfer 的 RoPE](https://github.com/flashinfer-ai/flashinfer/blob/main/include/flashinfer/pos_enc.cuh) 根据 token 网格与硬件并发度选择 head 并行，启发本轮在行并行不足时增加列并行。[FlashAttention 的 Triton 实现](https://github.com/Dao-AILab/flash-attention/blob/main/flash_attn/ops/triton/rotary.py) 使用 token/head 分块和向量搬运。[CANN RotaryPositionEmbedding](https://gitcode.com/cann/ops-transformer/tree/9.0.0-beta.1/posembedding/rotary_position_embedding) 按布局分派并广播同一位置的三角值。后两者接口可接收外部 cos/sin，不能照搬为本题的预计算表输入；本实现仍在唯一 kernel 内完成全流程，也没有照搬第三方 kernel 源码。
 
 本轮主要解决小输入的初始化和核利用率。大输入保留 V7 已验证的搬运和计算方式，未宣称带宽瓶颈已消除或平台 15 点全面加速。正式上传只替换 `kernel.asc`；提交目录其余 7 个文件必须与最初附件逐字节相同。
+
+
+## 上传文件验收
+
+原始附件模板原样构建通过；单独预约卡 0 执行其未改动的 main.asc 和校验脚本，通过，最大绝对误差 2.6226043701171875e-6。日志保存在 `benchmarks/validation/profiled_v8/template_{build,device}.log`。独立核验确认提交目录没有新增或删除文件，仅 kernel.asc 改变，其余 7 文件与原始模板哈希一致。独立源码、完整文本副本、提交目录中的 kernel.asc 均为上述 SHA256；复制后应检查首行和最后一行 V8 标记。

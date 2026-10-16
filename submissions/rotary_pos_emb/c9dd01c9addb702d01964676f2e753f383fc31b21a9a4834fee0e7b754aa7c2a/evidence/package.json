@@ -1,0 +1,73 @@
+{
+  "problem": 1743,
+  "git_commit": "686199c801c6058cf2e0e980be1d97ed3887f04f",
+  "kernel_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
+  "kernel_bytes": 83836,
+  "kernel_lines": 1773,
+  "kernel_first_line": "// ROPE1743_PROFILED_V8",
+  "kernel_last_line": "// END_ROPE1743_V8",
+  "result": "profiled_v8",
+  "extra_validation": {
+    "profiled_v8_math": {
+      "case_count": 256,
+      "audited_launches": 512
+    },
+    "profiled_v8_small": {
+      "case_count": 544,
+      "audited_launches": 1088
+    },
+    "profiled_v8_sweep": {
+      "case_count": 1010,
+      "audited_launches": 2020
+    },
+    "profiled_v8_packed_sweep": {
+      "case_count": 456,
+      "audited_launches": 912
+    },
+    "profiled_v8_path_sweep": {
+      "case_count": 672,
+      "audited_launches": 1344
+    },
+    "profiled_v8_aligned_audit": {
+      "case_count": 166,
+      "audited_launches": 332
+    }
+  },
+  "bitwise_validation": {
+    "profiled_v8_bits": {
+      "case_count": 248,
+      "elements": 75567008,
+      "changed_elements": 0
+    },
+    "profiled_v8_extended_bits": {
+      "case_count": 166,
+      "elements": 165971676,
+      "changed_elements": 0
+    }
+  },
+  "validated_case_count": 52,
+  "launch_audit": "profiled_v8_audit",
+  "launch_profile": "profiled_v8_launches",
+  "single_kernel_per_iteration": true,
+  "template_diff": {
+    "changed": [
+      "kernel.asc"
+    ],
+    "added": [],
+    "removed": [],
+    "unchanged": [
+      "CMakeLists.txt",
+      "data_utils.h",
+      "main.asc",
+      "run.sh",
+      "scripts/RotaryPosEmb.py",
+      "scripts/gen_data.py",
+      "scripts/verify_result.py"
+    ],
+    "kernel_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a"
+  },
+  "platform_hidden_cases_tested": false,
+  "compliance_review_sha256": "61109fdd29bb3da95803b4bca0ef3f1f41ceaf76fbe18b6b661de13d66ef57c0",
+  "compliance_policy": "device-computation-supplement-2026-10-15",
+  "submission_eligible": true
+}

@@ -39,5 +39,16 @@
   "per_invocation_runtime_audit": true,
   "device_tasks": 75,
   "device_call_count": 75,
-  "platform_hidden_cases_tested": false
+  "platform_hidden_cases_tested": false,
+  "performance_profile": {
+    "label": "profiled_v8_balanced",
+    "case_count": 105,
+    "run_kernel_calls": 8400,
+    "actual_device_kernel_tasks": 8400,
+    "device": 0
+  },
+  "original_template_build_passed": true,
+  "sole_template_change": "kernel.asc",
+  "original_template_device_passed": true,
+  "original_template_max_abs_error": 2.6226043701171875e-06
 }

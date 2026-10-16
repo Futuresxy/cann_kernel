@@ -1,0 +1,19 @@
+{
+  "kernel_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
+  "reviewer": "Codex source review",
+  "reviewed_at": "2026-10-16T15:07:30.599606+00:00",
+  "device_math_notes": "Host performs shape/dtype/working-set/alignment/parallelism tiling and one exclusive launch only; theta remains a scalar. No input tensor is read or rearranged by Host. Device generates current-invocation frequencies using Q53/Q61 guard-bit log2/exp2; the Q31 evaluation accepts only intervals certified to round to the same FP32 power, otherwise it executes Q53. Generic polynomial constants are mathematical approximation coefficients, not RoPE results. A generic exp2 reduction table is freshly generated inside each Device invocation from its defining series; no theta/position/frequency/output lookup table is precomputed on Host, compiled into the kernel or persisted across calls. SmallRotary distributes complete paired columns to cores only when row jobs leave at least three quarters of cores idle; all output elements have unique owners and are written. FP32 angle/trig/four-multiply-two-add rotation remains unchanged. Per-token trig reuse is local to the current call. Position-zero is exact operator identity; no output markers, uninitialized-data reads, timing/warmup recognition, global scratch caches, extra kernels, or evaluation modifications are present. New padded lanes are explicitly initialized. Only kernel.asc differs inside the submission payload; local runners/profilers and tests are development-only.",
+  "assertions": {
+    "host_only_validation_shape_tiling_launch": true,
+    "no_host_tensor_read_or_reorder": true,
+    "all_frequency_angle_trig_rotation_on_device": true,
+    "no_precomputed_results_or_host_vectors": true,
+    "no_testcase_or_data_pattern_shortcuts": true,
+    "no_markers_stale_output_or_uninitialized_memory": true,
+    "no_judge_precision_or_timing_changes": true,
+    "no_empty_kernel_or_warmup_detection": true,
+    "no_cross_invocation_cache": true,
+    "exactly_one_device_kernel_per_invocation": true,
+    "kernel_asc_is_only_template_change": true
+  }
+}
