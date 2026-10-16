@@ -1,0 +1,183 @@
+{
+  "source": "platform_user_v8_20261016.json and frozen profiled_v8_balanced.json",
+  "cases": [
+    {
+      "test": 1,
+      "v4_us": 3.26,
+      "v7_us": 4.51,
+      "v8_us": 4.72,
+      "vs_v4_percent": 44.78527607361964,
+      "vs_v7_percent": 4.656319290465638
+    },
+    {
+      "test": 2,
+      "v4_us": 5.03,
+      "v7_us": 6.34,
+      "v8_us": 6.1,
+      "vs_v4_percent": 21.27236580516898,
+      "vs_v7_percent": -3.785488958990535
+    },
+    {
+      "test": 3,
+      "v4_us": 6.29,
+      "v7_us": 7.98,
+      "v8_us": 7.41,
+      "vs_v4_percent": 17.806041335453095,
+      "vs_v7_percent": -7.142857142857151
+    },
+    {
+      "test": 4,
+      "v4_us": 10.01,
+      "v7_us": 11.73,
+      "v8_us": 11.76,
+      "vs_v4_percent": 17.48251748251748,
+      "vs_v7_percent": 0.2557544757033181
+    },
+    {
+      "test": 5,
+      "v4_us": 17.65,
+      "v7_us": 19.74,
+      "v8_us": 19.98,
+      "vs_v4_percent": 13.201133144475929,
+      "vs_v7_percent": 1.2158054711246313
+    },
+    {
+      "test": 6,
+      "v4_us": 17.07,
+      "v7_us": 18.33,
+      "v8_us": 18.39,
+      "vs_v4_percent": 7.732864674868201,
+      "vs_v7_percent": 0.3273322422258751
+    },
+    {
+      "test": 7,
+      "v4_us": 19.73,
+      "v7_us": 20.88,
+      "v8_us": 20.93,
+      "vs_v4_percent": 6.082108464267599,
+      "vs_v7_percent": 0.23946360153257462
+    },
+    {
+      "test": 8,
+      "v4_us": 14.02,
+      "v7_us": 13.31,
+      "v8_us": 13.25,
+      "vs_v4_percent": -5.492154065620536,
+      "vs_v7_percent": -0.45078888054095323
+    },
+    {
+      "test": 9,
+      "v4_us": 53.22,
+      "v7_us": 54.3,
+      "v8_us": 54.48,
+      "vs_v4_percent": 2.367531003382184,
+      "vs_v7_percent": 0.33149171270718814
+    },
+    {
+      "test": 10,
+      "v4_us": 3370,
+      "v7_us": 3360,
+      "v8_us": 3360,
+      "vs_v4_percent": -0.29673590504450953,
+      "vs_v7_percent": 0.0
+    },
+    {
+      "test": 11,
+      "v4_us": 45.87,
+      "v7_us": 40.61,
+      "v8_us": 40.31,
+      "vs_v4_percent": -12.12121212121211,
+      "vs_v7_percent": -0.7387343018960824
+    },
+    {
+      "test": 12,
+      "v4_us": 52.6,
+      "v7_us": 50.42,
+      "v8_us": 49.37,
+      "vs_v4_percent": -6.140684410646391,
+      "vs_v7_percent": -2.08250694168981
+    },
+    {
+      "test": 13,
+      "v4_us": 352.49,
+      "v7_us": 342.3,
+      "v8_us": 340.71,
+      "vs_v4_percent": -3.3419387784050736,
+      "vs_v7_percent": -0.46450482033305596
+    },
+    {
+      "test": 14,
+      "v4_us": 864.59,
+      "v7_us": 852.97,
+      "v8_us": 853.2,
+      "vs_v4_percent": -1.3173874321932955,
+      "vs_v7_percent": 0.026964606023671678
+    },
+    {
+      "test": 15,
+      "v4_us": 284.71,
+      "v7_us": 269.71,
+      "v8_us": 270.47,
+      "vs_v4_percent": -5.001580555653106,
+      "vs_v7_percent": 0.28178413851915884
+    }
+  ],
+  "geometric_latency_ratio_vs_v4": 1.0560657209131035,
+  "geometric_latency_ratio_vs_v7": 0.9948049866802569,
+  "metric_is_not_official_score": true,
+  "v8_faster_than_v4": 7,
+  "v8_faster_than_v7": 6,
+  "local_buckets": {
+    "all105": {
+      "count": 105,
+      "geometric_speedup": 1.1147994804948536
+    },
+    "original33": {
+      "count": 33,
+      "geometric_speedup": 1.024026816596448
+    },
+    "added72": {
+      "count": 72,
+      "geometric_speedup": 1.1590510873890003
+    }
+  },
+  "local_dispatch_coverage": {
+    "available_aiv_cores_assumed_from_measured_hardware": 48,
+    "small_column_cases": 28,
+    "small_column_original33": [
+      "single_token_many_heads"
+    ],
+    "small_column_added72": [
+      "r7_perf_s1_h1_d32_float32",
+      "r7_perf_s1_h32_d32_float32",
+      "r7_perf_s8_h3_d32_float32",
+      "r7_perf_s1_h1_d64_float16",
+      "r7_perf_s1_h1_d64_float32",
+      "r7_perf_s1_h32_d64_float16",
+      "r7_perf_s1_h32_d64_float32",
+      "r7_perf_s8_h3_d64_float16",
+      "r7_perf_s8_h3_d64_float32",
+      "r7_perf_s1_h1_d96_float16",
+      "r7_perf_s1_h1_d96_float32",
+      "r7_perf_s1_h32_d96_float16",
+      "r7_perf_s1_h32_d96_float32",
+      "r7_perf_s8_h3_d96_float16",
+      "r7_perf_s8_h3_d96_float32",
+      "r7_perf_s1_h1_d128_float16",
+      "r7_perf_s1_h1_d128_float32",
+      "r7_perf_s1_h32_d128_float16",
+      "r7_perf_s1_h32_d128_float32",
+      "r7_perf_s8_h3_d128_float16",
+      "r7_perf_s8_h3_d128_float32",
+      "r7_perf_s1_h1_d256_float16",
+      "r7_perf_s1_h1_d256_float32",
+      "r7_perf_s1_h32_d256_float16",
+      "r7_perf_s1_h32_d256_float32",
+      "r7_perf_s8_h3_d256_float16",
+      "r7_perf_s8_h3_d256_float32"
+    ],
+    "hidden_dispatch_coverage": "unknown"
+  },
+  "kernel_modified": false,
+  "npu_reserved_for_this_analysis": false
+}

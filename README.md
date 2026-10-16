@@ -2,7 +2,7 @@
 
 平台测试在 **Mac 本地 Chrome** 执行：GitHub 同步已验证版本、提交、记录结果；Ascend910 负责开发和 profiling。**不需要服务器隧道。** [Mac 安装和运行步骤](docs/mac_cannjudge.md)。
 
-**当前候选 V8 按 AIV 并行度分派小输入，频率、角度、三角函数和旋转全部在 Device 完成，Host 只负责分块和启动。** 本地性能、精度与源码规则审查见 [V8 报告](docs/profiled_v8.md)。V8 平台隐藏 15 点尚未测试；V4/V6 的 Host 频率表按新增规则仅保留为历史对照。
+**当前候选 V8 按 AIV 并行度分派小输入，频率、角度、三角函数和旋转全部在 Device 完成，Host 只负责分块和启动。** 本地性能、精度与源码规则审查见 [V8 报告](docs/profiled_v8.md)。已收到 V8 平台 15 点耗时反馈，整体没有明显提分，原因与后续优先级见 [平台复盘](docs/v8_platform_feedback.md)；V4/V6 的 Host 频率表按新增规则仅保留为历史对照。
 
 2026 初赛 RotaryPosEmb（problem 1743），Ascend C 原生实现，匹配附件的 `run_kernel` 直接调用接口。基础版和后续优化版通过 Git 提交保存；源码、测试、profiling、报告、原始模板和提交包分目录管理。
 
