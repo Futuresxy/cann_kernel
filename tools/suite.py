@@ -9,6 +9,7 @@ def generate(case, dest, seed):
     x=rng.uniform(-scale,scale,case['shape']).astype(case['dtype'])
     p=rng.integers(0,case['pmax'],case['shape'][:2],dtype=np.int32)
     if case.get('extreme'): p.flat[:min(4,p.size)]=[131072,131071,65536,0][:min(4,p.size)]
+    if case.get('zero_every'): p.flat[::case['zero_every']]=0
     if case.get('special'): x.flat[:4]=[np.nan,np.inf,-np.inf,-0.0]
     d=x.shape[-1]
     exponent=np.arange(0,d,2,dtype=np.float32)/np.float32(d)
@@ -41,10 +42,16 @@ def main():
     ap.add_argument('--binary',default='build/rope_runner');ap.add_argument('--generate-only',action='store_true')
     ap.add_argument('--repeat',type=int,default=30);ap.add_argument('--batches',type=int,default=3)
     ap.add_argument('--sweep',action='store_true');ap.add_argument('--warmup',type=int,default=5)
-    args=ap.parse_args();all_cases=json.loads((ROOT/'tests/cases.json').read_text())
+    ap.add_argument('--packed-sweep',action='store_true')
+    ap.add_argument('--cases-file',default='tests/cases.json')
+    args=ap.parse_args();all_cases=json.loads((ROOT/args.cases_file).read_text())
     if args.sweep:
         all_cases=[dict(name=f'sweep_{d}_{dt}',shape=[1,4,3,d],dtype=dt,pmax=131073,extreme=True)
                    for d in range(16,1025,2) for dt in ['float16','float32']]
+    if args.packed_sweep:
+        all_cases=[dict(name=f'packed_sweep_{d}_{dt}_h{h}',shape=[1,137,h,d],dtype=dt,
+                        pmax=131073,extreme=True,special=True,zero_every=7)
+                   for d in range(16,129,2) for dt in ['float16','float32'] for h in [1,3,7,32]]
     cases=all_cases
     if args.cases!='all':
         requested=set(args.cases.split(','));known={c['name'] for c in cases}
@@ -58,7 +65,7 @@ def main():
     prepared=[];commands=[]
     for case in cases:
         dest=ROOT/'build/data'/case['name']
-        x,p,y=generate(case,dest,42+all_cases.index(case))
+        x,p,y=generate(case,dest,case.get('seed',42+all_cases.index(case)))
         if args.generate_only:continue
         prepared.append((case,dest,y))
         cmd=['--shape',*map(str,case['shape']),'--dtype',case['dtype'],
@@ -84,8 +91,8 @@ def main():
             result['zero_identity_ok']=bool(np.array_equal(actual[zero].view(bits),x[zero].view(bits)))
             result['passed'] &= result['zero_identity_ok']
             results.append(result)
-            if not args.sweep or not result['passed']:print(json.dumps(result),flush=True)
-        if args.sweep:print(f"Sweep: {sum(c['passed'] for c in results)}/{len(results)} passed",flush=True)
+            if not (args.sweep or args.packed_sweep) or not result['passed']:print(json.dumps(result),flush=True)
+        if args.sweep or args.packed_sweep:print(f"Sweep: {sum(c['passed'] for c in results)}/{len(results)} passed",flush=True)
     if not args.generate_only:
         path=ROOT/'benchmarks/results'/f'{args.label}.json'
         path.parent.mkdir(parents=True,exist_ok=True)

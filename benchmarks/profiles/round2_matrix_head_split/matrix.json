@@ -1,0 +1,504 @@
+{
+  "label": "round2_matrix_head_split",
+  "source_sha256": "7a4a66080e6b768cb9936b76dca7e4d911cf997083dcbb3284aed32ea9355c2c",
+  "binary_sha256": "b2ee52a152220ac0c4da800c9120e31c99b0ed9501343d2a753744c0b8ecd6c4",
+  "command": [
+    "msprof",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/matrix_profiles/round2_matrix_head_split",
+    "--runtime-api=on",
+    "--task-time=on",
+    "--ai-core=off",
+    "--aicpu=off",
+    "--type=text",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/tuning_round2/head_split/build/rope_runner --device 1 --batch /data/pyptouser/songxiaoyou/cann_kernel/project/build/matrix_profiles/round2_matrix_head_split/cases.txt"
+  ],
+  "run_kernel_calls": 230,
+  "actual_device_kernel_tasks": 230,
+  "cases": [
+    {
+      "name": "tiny",
+      "shape": [
+        1,
+        8,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "pmax": 8,
+      "task_us": 2.26,
+      "samples_us": [
+        6.021,
+        4.64,
+        2.22,
+        2.26,
+        2.26
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 0.45309734513274336
+    },
+    {
+      "name": "unaligned_half",
+      "shape": [
+        2,
+        16,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "task_us": 4.8,
+      "samples_us": [
+        4.7,
+        4.8,
+        4.76,
+        4.82,
+        4.8
+      ],
+      "kernel": "_ZN8rope174313rotary_kernelIDhEEvPhS1_S1_mjjjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1.92
+    },
+    {
+      "name": "deepseek_half",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "task_us": 61.021,
+      "samples_us": [
+        61.001,
+        60.941,
+        61.042,
+        61.021,
+        61.321
+      ],
+      "kernel": "_ZN8rope174318head_packed_kernelIDhEEvPhS1_S1_mjjNS_11FrequenciesE",
+      "minimum_io_gbs": 549.8833516330444
+    },
+    {
+      "name": "deepseek_float",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float32",
+      "pmax": 8192,
+      "task_us": 64.382,
+      "samples_us": [
+        64.521,
+        64.301,
+        64.361,
+        64.382,
+        64.761
+      ],
+      "kernel": "_ZN8rope174318head_packed_kernelIfEEvPhS1_S1_mjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1042.3544468950947
+    },
+    {
+      "name": "sequence8192",
+      "shape": [
+        1,
+        8192,
+        1,
+        64
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "task_us": 13.92,
+      "samples_us": [
+        13.86,
+        13.92,
+        13.861,
+        14.1,
+        14.28
+      ],
+      "kernel": "_ZN8rope174314batched_kernelIfEEvPhS1_S1_mjjNS_11FrequenciesE",
+      "minimum_io_gbs": 301.3149425287356
+    },
+    {
+      "name": "large_half",
+      "shape": [
+        4,
+        1024,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "task_us": 218.164,
+      "samples_us": [
+        217.844,
+        217.945,
+        218.224,
+        218.164,
+        218.425
+      ],
+      "kernel": "_ZN8rope174318head_packed_kernelIDhEEvPhS1_S1_mjjNS_11FrequenciesE",
+      "minimum_io_gbs": 615.2148292110522
+    },
+    {
+      "name": "heads256",
+      "shape": [
+        1,
+        32,
+        256,
+        128
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 11.3,
+      "samples_us": [
+        11.1,
+        11.02,
+        11.3,
+        11.3,
+        11.94
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 371.17734513274337
+    },
+    {
+      "name": "aligned_d512_half",
+      "shape": [
+        1,
+        7,
+        17,
+        512
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 12.921,
+      "samples_us": [
+        12.921,
+        12.26,
+        13.3,
+        12.721,
+        13.54
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 18.861698010989862
+    },
+    {
+      "name": "wide_half",
+      "shape": [
+        1,
+        7,
+        17,
+        1024
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "extreme": true,
+      "task_us": 20.76,
+      "samples_us": [
+        20.76,
+        20.561,
+        20.48,
+        21.24,
+        21.741
+      ],
+      "kernel": "_ZN8rope174311wide_kernelIDhEEvPhS1_S1_mjjjNS_15WideFrequenciesE",
+      "minimum_io_gbs": 23.478998073217728
+    },
+    {
+      "name": "prefill_h32_d128_half",
+      "shape": [
+        2,
+        512,
+        32,
+        128
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 18.4,
+      "samples_us": [
+        18.1,
+        18.241,
+        18.4,
+        18.421,
+        19.14
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 911.8052173913044
+    },
+    {
+      "name": "prefill_h32_d128_float",
+      "shape": [
+        2,
+        512,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "task_us": 18.54,
+      "samples_us": [
+        18.42,
+        18.301,
+        18.54,
+        18.72,
+        19.441
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1809.839913700108
+    },
+    {
+      "name": "prefill_h32_d256_half",
+      "shape": [
+        2,
+        512,
+        32,
+        256
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 33.601,
+      "samples_us": [
+        33.141,
+        33.18,
+        33.861,
+        33.601,
+        34.74
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 998.6140888664028
+    },
+    {
+      "name": "prefill_h8_d64_half",
+      "shape": [
+        2,
+        512,
+        8,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 11.3,
+      "samples_us": [
+        11.041,
+        11.32,
+        11.3,
+        11.14,
+        11.681
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 185.58867256637168
+    },
+    {
+      "name": "prefill_h3_d24_half",
+      "shape": [
+        2,
+        512,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 34.3,
+      "samples_us": [
+        34.181,
+        34.3,
+        34.361,
+        34.261,
+        34.64
+      ],
+      "kernel": "_ZN8rope174313rotary_kernelIDhEEvPhS1_S1_mjjjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 8.59801749271137
+    },
+    {
+      "name": "prefill_h32_d30_float",
+      "shape": [
+        2,
+        512,
+        32,
+        30
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "task_us": 72.501,
+      "samples_us": [
+        72.501,
+        72.242,
+        72.461,
+        72.581,
+        72.522
+      ],
+      "kernel": "_ZN8rope174313rotary_kernelIfEEvPhS1_S1_mjjjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 108.47188314643935
+    },
+    {
+      "name": "prefill_h32_d96_half",
+      "shape": [
+        2,
+        512,
+        32,
+        96
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 16.12,
+      "samples_us": [
+        15.98,
+        15.941,
+        16.18,
+        16.12,
+        16.66
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 780.5776674937964
+    },
+    {
+      "name": "prefill_h32_d1024_half",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 64.942,
+      "samples_us": [
+        64.561,
+        63.841,
+        65.421,
+        64.942,
+        68.321
+      ],
+      "kernel": "_ZN8rope174311wide_kernelIDhEEvPhS1_S1_mjjjNS_15WideFrequenciesE",
+      "minimum_io_gbs": 516.6830710480122
+    },
+    {
+      "name": "prefill_h32_d1024_float",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "task_us": 67.041,
+      "samples_us": [
+        64.021,
+        66.722,
+        67.041,
+        67.981,
+        70.002
+      ],
+      "kernel": "_ZN8rope174311wide_kernelIfEEvPhS1_S1_mjjjNS_15WideFrequenciesE",
+      "minimum_io_gbs": 1001.0122760698677
+    },
+    {
+      "name": "stream_h128_d64_half",
+      "shape": [
+        2,
+        4096,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 427.288,
+      "samples_us": [
+        427.128,
+        427.169,
+        427.288,
+        427.469,
+        427.468
+      ],
+      "kernel": "_ZN8rope174318head_packed_kernelIDhEEvPhS1_S1_mjjNS_11FrequenciesE",
+      "minimum_io_gbs": 628.2307389863511
+    },
+    {
+      "name": "stream_h32_d128_float",
+      "shape": [
+        2,
+        4096,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "task_us": 224.644,
+      "samples_us": [
+        224.165,
+        224.644,
+        224.205,
+        224.724,
+        226.305
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 1194.9371271879063
+    },
+    {
+      "name": "single_token_many_heads",
+      "shape": [
+        1,
+        1,
+        256,
+        128
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 7.46,
+      "samples_us": [
+        7.46,
+        7.52,
+        7.5,
+        7.4,
+        7.241
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 17.569973190348527
+    },
+    {
+      "name": "short_s16_h32",
+      "shape": [
+        1,
+        16,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "task_us": 7.18,
+      "samples_us": [
+        7.46,
+        6.82,
+        6.5,
+        7.18,
+        7.26
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIfEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 73.02061281337048
+    },
+    {
+      "name": "narrow_head_long",
+      "shape": [
+        1,
+        8192,
+        4,
+        16
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "task_us": 47.881,
+      "samples_us": [
+        47.561,
+        47.901,
+        47.881,
+        47.781,
+        48.181
+      ],
+      "kernel": "_ZN8rope174314aligned_kernelIDhEEvPhS1_S1_mjjjNS_11FrequenciesE",
+      "minimum_io_gbs": 43.799252313026045
+    }
+  ],
+  "platform_hidden_cases_tested": false
+}

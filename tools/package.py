@@ -81,6 +81,17 @@ def main():
                     launch_audit=args.result+'_audit', launch_profile=args.launch_profile,
                     single_kernel_per_iteration=True,
                     template_diff=diff, platform_hidden_cases_tested=False)
+    diagnostic = ROOT/'benchmarks/results'/f'{args.result}_precision_stress.json'
+    if diagnostic.exists():
+        stress = json.loads(diagnostic.read_text())
+        if stress['source_sha256'] != digest:
+            raise SystemExit('Precision diagnostic does not belong to the current source')
+        metadata['precision_stress_diagnostic'] = dict(
+            result_file=diagnostic.relative_to(ROOT).as_posix(),
+            all_passed=all(c['passed'] for c in stress['cases']),
+            failing_cases=[dict(name=c['name'], max_abs_error=c['max_abs_error'],
+                                matched_ratio=c['matched_ratio'])
+                           for c in stress['cases'] if not c['passed']])
     (dest/'manifest.json').write_text(json.dumps(metadata, indent=2)+'\n')
     print(json.dumps(dict(kernel=str(dest/'kernel.asc'), archive=str(archive),
                           full_text=str(dest/'kernel_full_source.txt'),

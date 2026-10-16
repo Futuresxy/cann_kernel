@@ -24,9 +24,10 @@ def analyze(label):
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--label',required=True);ap.add_argument('--case',default='deepseek_half')
     ap.add_argument('--device',type=int,default=0);ap.add_argument('--binary',default='build/rope_runner')
+    ap.add_argument('--cases-file',default='tests/cases.json')
     ap.add_argument('--analyze-only',action='store_true');args=ap.parse_args()
     if not args.analyze_only:
-        c=next(c for c in json.loads((ROOT/'tests/cases.json').read_text()) if c['name']==args.case)
+        c=next(c for c in json.loads((ROOT/args.cases_file).read_text()) if c['name']==args.case)
         dest=ROOT/'build/data'/c['name']
         if not (dest/'x.bin').exists():raise RuntimeError('Run suite.py --generate-only first')
         app=[str(ROOT/args.binary),'--device',str(args.device),'--shape',*map(str,c['shape']),

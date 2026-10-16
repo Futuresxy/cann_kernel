@@ -1,0 +1,79 @@
+--- baseline.asc
++++ kernel.asc
+@@ -225,7 +225,15 @@
+         pipe_.InitBuffer(in_,2,size_*sizeof(T));
+         pipe_.InitBuffer(out_,2,size_*sizeof(T));
+         pipe_.InitBuffer(work_,3*size_*sizeof(float));
+-        pipe_.InitBuffer(trig_,4*freqSize_*sizeof(float));
++        batch_ = size_ / freqSize_;
++        if (batch_ > 16) batch_ = 16;
++        uint32_t baseBytes = 4*size_*sizeof(T) + 3*size_*sizeof(float);
++        uint32_t cacheCap = (188*1024 - baseBytes - freqSize_*sizeof(float)) /
++                            (3*freqSize_*sizeof(float));
++        if (batch_ > cacheCap) batch_ = cacheCap;
++        if (batch_ < 1) batch_ = 1;
++        cacheSize_ = batch_ * freqSize_;
++        pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+         auto freq=trig_.Get<float>();
+         for(uint32_t i=0;i<freqSize_;++i)freq.SetValue(i,i<half_?f.value[i]:0.0f);
+         PipeBarrier<PIPE_ALL>();
+@@ -243,11 +251,16 @@
+                     DataCopyPadExtParams<T>{false,0,0,0});
+         in_.EnQue(in);
+     }
+-    __aicore__ inline void Trig(uint64_t token, int32_t position) {
+-        auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=freq[2*freqSize_];
+-        auto angle=freq[3*freqSize_];auto q=work_.Get<float>();auto temp=q[size_];
+-        Muls(angle,freq,static_cast<float>(position),freqSize_);PipeBarrier<PIPE_V>();
+-        SinCosFp32(angle,c,s,q,temp,freqSize_);
++    __aicore__ inline uint32_t TrigBatch(uint64_t token) {
++        uint32_t count = tokens_-token < batch_ ? tokens_-token : batch_;
++        auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=c[cacheSize_];
++        auto angle=s[cacheSize_];auto q=work_.Get<float>();auto temp=q[size_];
++        for (uint32_t row=0;row<count;++row)
++            Muls(angle[row*freqSize_],freq,static_cast<float>(pos_.GetValue(token+row)),freqSize_);
++        PipeBarrier<PIPE_V>();
++        SinCosFp32(angle,c,s,q,temp,count*freqSize_);
++        Muls(angle,s,-1.0f,count*freqSize_);PipeBarrier<PIPE_V>();
++        return count;
+     }
+     __aicore__ inline void Process() {
+         uint64_t jobs=tokens_*groups_;
+@@ -256,9 +269,10 @@
+         if(begin==end)return;
+         Prefetch(begin);
+         uint64_t cached=static_cast<uint64_t>(-1);
++        uint32_t cachedCount=0;
+         auto z=work_.Get<float>();auto r=z[size_];auto t=z[2*size_];
+-        auto c=trig_.Get<float>()[freqSize_];auto s=trig_.Get<float>()[2*freqSize_];
+-        auto negs=trig_.Get<float>()[3*freqSize_];
++        auto cosCache=trig_.Get<float>()[freqSize_];auto sinCache=cosCache[cacheSize_];
++        auto negCache=sinCache[cacheSize_];
+         uint8_t stride=dim_/8;
+         BinaryRepeatParams broadcast{1,1,1,stride,stride,0};
+         BinaryRepeatParams paired{1,1,1,stride,stride,stride};
+@@ -272,11 +286,12 @@
+             if(position==0) {
+                 DataCopy(output,input,count);
+             } else {
+-                if(cached!=token) {
+-                    Trig(token,position);
+-                    Muls(negs,s,-1.0f,freqSize_);PipeBarrier<PIPE_V>();
++                if(cached==static_cast<uint64_t>(-1) || token>=cached+cachedCount) {
++                    cachedCount=TrigBatch(token);
+                     cached=token;
+                 }
++                uint32_t trigOffset=(token-cached)*freqSize_;
++                auto c=cosCache[trigOffset];auto s=sinCache[trigOffset];auto negs=negCache[trigOffset];
+                 LoadFp32(z,input,count);
+                 PipeBarrier<PIPE_V>();
+                 for(uint32_t col=0;col<half_;col+=64) {
+@@ -307,7 +322,7 @@
+     GlobalTensor<T> x_,y_;
+     GlobalTensor<int32_t> pos_;
+     uint64_t tokens_;
+-    uint32_t heads_,dim_,half_,tileHeads_,groups_,size_,freqSize_;
++    uint32_t heads_,dim_,half_,tileHeads_,groups_,size_,freqSize_,batch_,cacheSize_;
+ };
+ template <typename T>
+ __global__ __vector__ void aligned_kernel(GM_ADDR x,GM_ADDR positions,GM_ADDR y,

@@ -1,0 +1,32 @@
+{
+  "label": "profiled_v4_precision_stress",
+  "seconds": 3.0632057189941406,
+  "source_sha256": "2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58",
+  "binary_sha256": "070e4bbaf52ef28cdc6a23bf601b53a7915e7ad3207124de4f36b47db1f628ee",
+  "cases": [
+    {
+      "name": "head_packed_overflow_half",
+      "shape": [
+        1,
+        37,
+        17,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "scale": 60000,
+      "seed": 88,
+      "event_us": 10.486667,
+      "min_event_us": 10.486667,
+      "host_us": 70.294,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "device": 0,
+      "guard_ok": true,
+      "passed": false,
+      "matched_ratio": 0.9999751589825119,
+      "max_abs_error": 32.0,
+      "zero_identity_ok": true
+    }
+  ]
+}

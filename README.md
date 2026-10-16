@@ -10,9 +10,12 @@ CMakeLists.txt                      本地可配置测试工程
 templates/rotaryposemb_1743/         用户附件原始工程，保留不改
 tests/runner.asc                    通用 ACL runner，计时与边界哨兵
 tests/cases.json                    固定扩展集，非平台隐藏用例
+tests/performance_cases.json        23项同卡性能矩阵
+tests/precision_stress_cases.json   独立极大幅度精度诊断，保留已知失败
 tools/                             编译、精度、profiling、分析、打包
 benchmarks/results/                原生 event/host 时间与精度结果
 benchmarks/profiles/               profiling 原始 CSV、摘要和元数据
+benchmarks/experiments/            候选源码补丁、哈希与基线版本
 docs/problem_statement.md          赛题说明
 docs/tuning_workflow.md             指标驱动的实验记录
 dist/rotaryposemb_1743_submission/  严格原模板工程，仅kernel.asc不同
@@ -80,16 +83,30 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 
 仓库根目录的开发构建工程、tools、tests及benchmarks仅用于本地测试和profiling，不进入比赛提交包。`templates/rotaryposemb_1743.sha256.json`记录用户原始ZIP中各文件的SHA256，打包和检查均使用这一固定基准。
 
-## 当前上传版与单次启动规则
+## 当前优化版
 
-当前kernel.asc为471行、23153字节，第一行`// ROPE1743_SINGLE_LAUNCH_V3`，末行`// END_ROPE1743_V3`。已恢复可读排版。旧80行版因dim>512时两次启动违反profiling规则，已被替换；该问题与排版无关。
+`operators/rotary_pos_emb/kernel.asc` 为 `ROPE1743_PROFILED_V4`。完整源码及提交包由 `tools/package.py` 生成，首末标记、行数、SHA256 以 `dist/manifest.json` 为准。请完整替换平台编辑框内容。
 
-本地设备Profiling复现旧版75次调用产生85个kernel任务，新版为75/75。37例精度、1010项维度扫描，以及222+2020次逐次启动检查均通过。详细证据与提交源码哈希见`docs/performance.md`。
+本轮相对于已通过平台的 V3 调优，而非相对于最早的慢基线。新增按 shape 选择的跨 token 三角函数缓存、非对齐小维度连续搬运/UB Gather，以及宽维度频率向量恢复。原始 CSV、候选补丁、失败记录、性能对照和精度限制见 [本轮报告](docs/profiled_v4.md)。
 
-`tests/launch_audit.h`与根目录CMake新增选项只用于本地runner。提交模板中的CMakeLists.txt、main.asc、run.sh等7个文件原样保留。
+```bash
+bash tools/build.sh
+bash tools/build_launch_audit.sh
+python3 tools/suite.py --generate-only
+python3 tools/suite.py --sweep --generate-only
+python3 tools/suite.py --packed-sweep --generate-only
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled.sh --phase correctness'
+# CPU 生成完整性能矩阵输入，再在同一卡上按 ABBA 顺序采集设备任务耗时
+python3 tools/suite.py --cases-file tests/performance_cases.json --generate-only
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled.sh --phase paired'
+task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled.sh --phase pmu'
+# 确保当前 kernel 已提交 Git；三项门槛必须对应同一源码/二进制
+python3 tools/package.py --result profiled_v4 --launch-profile profiled_v4_launches
+python3 tools/verify_submission.py
+```
+
+`paired` 需要预先保留 V3 基线二进制 `build/rope_runner_platform_v1`，或用 `tools/build_revision.sh b32d3a6 platform_v1` 重建。设备审计采用实际 CANN 启动 API 与非 replay msprof 两套证据。本地 runner 和测试脚本不进入提交包。
 
 ## 完整源码的下载与复制
 
-`dist/kernel_full_source.txt`为完整471行源码，与`dist/kernel.asc`字节一致；`dist/kernel_upload.zip`只含完整kernel.asc。解压后替换平台整个源码，纯文本可用于编辑器的全选复制。打包后的manifest同时给出首行、末行、行数、字节数及SHA256，校验器会比对两种下载与正式工程。
-
-如果平台源码第一行是`auto input=in_.DeQue<T>()`，它对应完整版第353行，缺少必要的前文定义；详情和复现记录见`docs/compile_error_analysis.md`。
+`dist/kernel_full_source.txt` 与 `dist/kernel.asc` 字节一致；`dist/kernel_upload.zip` 只含完整 kernel.asc。解压后替换平台整个源码，纯文本可用于全选复制。不要只复制源码预览中的某个函数片段。

@@ -1,0 +1,162 @@
+--- baseline.asc
++++ kernel.asc
+@@ -55,28 +55,28 @@
+ __aicore__ inline void SinCosFp32(const LocalTensor<float>& angle,
+     const LocalTensor<float>& c,const LocalTensor<float>& s,
+     const LocalTensor<float>& q,const LocalTensor<float>& temp,uint32_t n) {
+-    Muls(q,angle,0.15915494309189535f,n);PipeBarrier<PIPE_V>();
+-    Cast(temp.ReinterpretCast<int32_t>(),q,RoundMode::CAST_RINT,n);PipeBarrier<PIPE_V>();
+-    Cast(q,temp.ReinterpretCast<int32_t>(),RoundMode::CAST_NONE,n);PipeBarrier<PIPE_V>();
+-    Muls(temp,q,6.25f,n);PipeBarrier<PIPE_V>();Sub(angle,angle,temp,n);PipeBarrier<PIPE_V>();
+-    Muls(temp,q,0.033203125f,n);PipeBarrier<PIPE_V>();Sub(angle,angle,temp,n);PipeBarrier<PIPE_V>();
+-    Muls(temp,q,-0.000017817820413523074f,n);PipeBarrier<PIPE_V>();Sub(angle,angle,temp,n);PipeBarrier<PIPE_V>();
+-    Muls(angle,angle,0.25f,n);PipeBarrier<PIPE_V>();
+-    Mul(q,angle,angle,n);PipeBarrier<PIPE_V>();
+-    Muls(s,q,1.0f/362880.0f,n);PipeBarrier<PIPE_V>();
+-    Adds(s,s,-1.0f/5040.0f,n);PipeBarrier<PIPE_V>();
+-    Mul(s,s,q,n);PipeBarrier<PIPE_V>();Adds(s,s,1.0f/120.0f,n);PipeBarrier<PIPE_V>();
+-    Mul(s,s,q,n);PipeBarrier<PIPE_V>();Adds(s,s,-1.0f/6.0f,n);PipeBarrier<PIPE_V>();
+-    Mul(s,s,q,n);PipeBarrier<PIPE_V>();Adds(s,s,1.0f,n);PipeBarrier<PIPE_V>();
+-    Mul(s,s,angle,n);PipeBarrier<PIPE_V>();
+-    Mul(c,s,s,n);PipeBarrier<PIPE_V>();Muls(c,c,-1.0f,n);PipeBarrier<PIPE_V>();
+-    Adds(c,c,1.0f,n);PipeBarrier<PIPE_V>();Sqrt(c,c,n);PipeBarrier<PIPE_V>();
+-    Mul(angle,s,c,n);PipeBarrier<PIPE_V>();Muls(angle,angle,2.0f,n);PipeBarrier<PIPE_V>();
+-    Mul(s,s,s,n);PipeBarrier<PIPE_V>();Muls(s,s,-2.0f,n);PipeBarrier<PIPE_V>();
+-    Adds(s,s,1.0f,n);PipeBarrier<PIPE_V>();
+-    Mul(c,angle,angle,n);PipeBarrier<PIPE_V>();Muls(c,c,-2.0f,n);PipeBarrier<PIPE_V>();
+-    Adds(c,c,1.0f,n);PipeBarrier<PIPE_V>();
+-    Mul(s,angle,s,n);PipeBarrier<PIPE_V>();Muls(s,s,2.0f,n);PipeBarrier<PIPE_V>();
++    Muls(q,angle,0.15915494309189535f,n);
++    Cast(temp.ReinterpretCast<int32_t>(),q,RoundMode::CAST_RINT,n);
++    Cast(q,temp.ReinterpretCast<int32_t>(),RoundMode::CAST_NONE,n);
++    Muls(temp,q,6.25f,n);Sub(angle,angle,temp,n);
++    Muls(temp,q,0.033203125f,n);Sub(angle,angle,temp,n);
++    Muls(temp,q,-0.000017817820413523074f,n);Sub(angle,angle,temp,n);
++    Muls(angle,angle,0.25f,n);
++    Mul(q,angle,angle,n);
++    Muls(s,q,1.0f/362880.0f,n);
++    Adds(s,s,-1.0f/5040.0f,n);
++    Mul(s,s,q,n);Adds(s,s,1.0f/120.0f,n);
++    Mul(s,s,q,n);Adds(s,s,-1.0f/6.0f,n);
++    Mul(s,s,q,n);Adds(s,s,1.0f,n);
++    Mul(s,s,angle,n);
++    Mul(c,s,s,n);Muls(c,c,-1.0f,n);
++    Adds(c,c,1.0f,n);Sqrt(c,c,n);
++    Mul(angle,s,c,n);Muls(angle,angle,2.0f,n);
++    Mul(s,s,s,n);Muls(s,s,-2.0f,n);
++    Adds(s,s,1.0f,n);
++    Mul(c,angle,angle,n);Muls(c,c,-2.0f,n);
++    Adds(c,c,1.0f,n);
++    Mul(s,angle,s,n);Muls(s,s,2.0f,n);
+ }
+ 
+ 
+@@ -147,28 +147,28 @@
+                 // FP32 angles match the supplied reference's rounding. A split 2*pi
+                 // reduction also covers positions above the Sin/Cos API's input range.
+                 Muls(a, freq_.Get<float>(), static_cast<float>(position), pitch_);
+-                PipeBarrier<PIPE_V>();
++                
+                 SinCosFp32(a,c,s,tmp,b,pitch_);
+                 for (uint32_t h = 1; h < tileHeads_; ++h) {
+                     DataCopy(c[h * pitch_], c, pitch_);
+                     DataCopy(s[h * pitch_], s, pitch_);
+                 }
+-                PipeBarrier<PIPE_V>();
++                
+                 lastToken = token;
+             }
+             LoadFp32(a, in, count);
+             LoadFp32(b, in[capacity_], count);
+-            PipeBarrier<PIPE_V>();
++            
+             auto out = out_.AllocTensor<T>();
+-            Mul(tmp, b, s, count); PipeBarrier<PIPE_V>();
+-            Mul(a, a, c, count); PipeBarrier<PIPE_V>();
+-            Sub(a, a, tmp, count); PipeBarrier<PIPE_V>();
++            Mul(tmp, b, s, count); 
++            Mul(a, a, c, count); 
++            Sub(a, a, tmp, count); 
+             // Recover the original first half for y2; the input is still resident.
+             LoadFp32(tmp, in, count);
+-            PipeBarrier<PIPE_V>();
+-            Mul(tmp, tmp, s, count); PipeBarrier<PIPE_V>();
+-            Mul(b, b, c, count); PipeBarrier<PIPE_V>();
+-            Add(b, b, tmp, count); PipeBarrier<PIPE_V>();
++            
++            Mul(tmp, tmp, s, count); 
++            Mul(b, b, c, count); 
++            Add(b, b, tmp, count); 
+             StoreFp32(out, a, count);
+             StoreFp32(out[capacity_], b, count);
+             out_.EnQue(out); out = out_.DeQue<T>();
+@@ -246,7 +246,7 @@
+     __aicore__ inline void Trig(uint64_t token, int32_t position) {
+         auto freq=trig_.Get<float>();auto c=freq[freqSize_];auto s=freq[2*freqSize_];
+         auto angle=freq[3*freqSize_];auto q=work_.Get<float>();auto temp=q[size_];
+-        Muls(angle,freq,static_cast<float>(position),freqSize_);PipeBarrier<PIPE_V>();
++        Muls(angle,freq,static_cast<float>(position),freqSize_);
+         SinCosFp32(angle,c,s,q,temp,freqSize_);
+     }
+     __aicore__ inline void Process() {
+@@ -274,23 +274,23 @@
+             } else {
+                 if(cached!=token) {
+                     Trig(token,position);
+-                    Muls(negs,s,-1.0f,freqSize_);PipeBarrier<PIPE_V>();
++                    Muls(negs,s,-1.0f,freqSize_);
+                     cached=token;
+                 }
+                 LoadFp32(z,input,count);
+-                PipeBarrier<PIPE_V>();
++                
+                 for(uint32_t col=0;col<half_;col+=64) {
+                     uint64_t mask=half_-col<64?half_-col:64;
+                     Mul(r[col],z[col],c[col],mask,rows,broadcast);
+                     Mul(r[half_+col],z[half_+col],c[col],mask,rows,broadcast);
+                 }
+-                PipeBarrier<PIPE_V>();
++                
+                 for(uint32_t col=0;col<half_;col+=64) {
+                     uint64_t mask=half_-col<64?half_-col:64;
+                     MulAddDst(r[col],z[half_+col],negs[col],mask,rows,broadcast);
+                     MulAddDst(r[half_+col],z[col],s[col],mask,rows,broadcast);
+                 }
+-                PipeBarrier<PIPE_V>();
++                
+                 StoreFp32(output,r,count);
+             }
+             out_.EnQue(output);output=out_.DeQue<T>();
+@@ -356,10 +356,10 @@
+                 float p=static_cast<float>(pos_.GetValue(job*tile_+row));
+                 Muls(angle[row*half_],freq_.Get<float>(),p,half_);
+             }
+-            PipeBarrier<PIPE_V>();
++            
+             SinCosFp32(angle,c,s,z,r,rows*half_);
+             LoadFp32(z,input,count);
+-            PipeBarrier<PIPE_V>();
++            
+             for(uint32_t col=0;col<half_;col+=64) {
+                 uint64_t mask=half_-col<64?half_-col:64;
+                 Mul(r[col],z[col],c[col],mask,rows,pairs);
+@@ -367,16 +367,16 @@
+                 Mul(r[half_+col],z[half_+col],c[col],mask,rows,pairs);
+                 Mul(t[half_+col],z[col],s[col],mask,rows,pairs);
+             }
+-            PipeBarrier<PIPE_V>();
++            
+             for(uint32_t col=0;col<half_;col+=64) {
+                 uint64_t mask=half_-col<64?half_-col:64;
+                 Sub(r[col],r[col],t[col],mask,rows,same);
+                 Add(r[half_+col],r[half_+col],t[half_+col],mask,rows,same);
+             }
+-            PipeBarrier<PIPE_V>();
++            
+             auto output=out_.AllocTensor<T>();
+             StoreFp32(output,r,count);
+-            PipeBarrier<PIPE_V>();
++            
+             // Preserve exact identity for zero positions, including NaN/Inf and signed zero.
+             for(uint32_t row=0;row<rows;++row)
+                 if(pos_.GetValue(job*tile_+row)==0)DataCopy(output[row*dim_],input[row*dim_],dim_);

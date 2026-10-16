@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "prefill_h32_d30_float",
+    "shape": [
+      2,
+      512,
+      32,
+      30
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/round2_packed_d30",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/tuning_round2/packed/build/rope_runner --device 1 --shape 2 512 32 30 --dtype float32 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/prefill_h32_d30_float --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "cb2abfc3788872ef93d73bb992f4f7f3634d9301860cea744796dabb0234ba55",
+  "binary_sha256": "0f02711f295a9488012c79e64824eb681d0272c51d5f37fabb100996a6a6dfaa"
+}

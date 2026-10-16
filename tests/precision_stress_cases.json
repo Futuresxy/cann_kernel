@@ -1,0 +1,15 @@
+[
+  {
+    "name": "head_packed_overflow_half",
+    "shape": [
+      1,
+      37,
+      17,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "scale": 60000,
+    "seed": 88
+  }
+]

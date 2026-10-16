@@ -1,0 +1,122 @@
+{
+  "label": "round2_head_mask_correctness",
+  "seconds": 2.667564868927002,
+  "source_sha256": "3c93f4d40eecd22f84d55fc501526914429654a5157453759bf761d195fbb9f4",
+  "binary_sha256": "2b075105883ffa7cdb4727404d9bfa2c75a32e9e4447a2d106f74628c0566720",
+  "cases": [
+    {
+      "name": "deepseek_half",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 8192,
+      "event_us": 74.089996,
+      "min_event_us": 74.089996,
+      "host_us": 149.4465,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "device": 2,
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 0.0078125,
+      "zero_identity_ok": true
+    },
+    {
+      "name": "deepseek_float",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float32",
+      "pmax": 8192,
+      "event_us": 71.769997,
+      "min_event_us": 71.769997,
+      "host_us": 104.666,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "device": 2,
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 7.62939453125e-06,
+      "zero_identity_ok": true
+    },
+    {
+      "name": "head_packed_odd_half",
+      "shape": [
+        1,
+        37,
+        17,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "extreme": true,
+      "event_us": 12.96,
+      "min_event_us": 12.96,
+      "host_us": 59.4605,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "device": 2,
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 0.0078125,
+      "zero_identity_ok": true
+    },
+    {
+      "name": "head_packed_zero_float",
+      "shape": [
+        1,
+        37,
+        17,
+        64
+      ],
+      "dtype": "float32",
+      "pmax": 1,
+      "special": true,
+      "event_us": 15.39,
+      "min_event_us": 15.39,
+      "host_us": 46.3105,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "device": 2,
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 0.0,
+      "zero_identity_ok": true
+    },
+    {
+      "name": "head_packed_mixed_half",
+      "shape": [
+        1,
+        39,
+        129,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "special": true,
+      "zero_every": 7,
+      "event_us": 18.18,
+      "min_event_us": 18.18,
+      "host_us": 52.3955,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "device": 2,
+      "guard_ok": true,
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 0.0078125,
+      "zero_identity_ok": true
+    }
+  ]
+}

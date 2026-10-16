@@ -1,0 +1,31 @@
+{
+  "label": "round2_platform_stress",
+  "seconds": 2.0769476890563965,
+  "source_sha256": "ee0613601ab08a72d401203035bf2ab7b9c4b08fa04f332eb39a7518ddd77130",
+  "binary_sha256": "ef23c987f3e30d753c57c621a9b0b7ed7ec458e2e8b5d05bd66a266f8823f7e5",
+  "cases": [
+    {
+      "name": "head_packed_overflow_half",
+      "shape": [
+        1,
+        37,
+        17,
+        64
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "scale": 60000,
+      "event_us": 21.58,
+      "min_event_us": 21.58,
+      "host_us": 152.631,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "device": 1,
+      "guard_ok": true,
+      "passed": false,
+      "matched_ratio": 0.9999751589825119,
+      "max_abs_error": 32.0,
+      "zero_identity_ok": true
+    }
+  ]
+}

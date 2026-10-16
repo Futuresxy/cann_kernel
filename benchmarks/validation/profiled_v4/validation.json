@@ -1,0 +1,54 @@
+{
+  "source_sha256": "2acfbd5c205915280dfe6818d8217a78f08a9fb769ad3a1843b4f58a73eb3d58",
+  "kernel_lines": 815,
+  "kernel_bytes": 39093,
+  "template_changed_files": [
+    "kernel.asc"
+  ],
+  "template_build_passed": true,
+  "template_runtime_passed": true,
+  "template_runtime_device": 0,
+  "template_runtime_max_abs_error": 2.6226043701171875e-06,
+  "soc": "Ascend910_9392",
+  "npu_arch": "dav-2201",
+  "cann": "9.0.0",
+  "aiv_cores": 48,
+  "checks": {
+    "profiled_v4": {
+      "cases": 46,
+      "all_passed": true,
+      "device": 0,
+      "seconds": 4.825911283493042,
+      "audited_launches": 0
+    },
+    "profiled_v4_audit": {
+      "cases": 46,
+      "all_passed": true,
+      "device": 0,
+      "seconds": 4.911656618118286,
+      "audited_launches": 276
+    },
+    "profiled_v4_sweep": {
+      "cases": 1010,
+      "all_passed": true,
+      "device": 0,
+      "seconds": 3.9404053688049316,
+      "audited_launches": 2020
+    },
+    "profiled_v4_packed_sweep": {
+      "cases": 456,
+      "all_passed": true,
+      "device": 0,
+      "seconds": 4.69962739944458,
+      "audited_launches": 912
+    },
+    "precision_stress": {
+      "result": "FAIL inherited from platform-v1",
+      "result_file": "benchmarks/results/profiled_v4_precision_stress.json",
+      "part_of_passing_case_count": false
+    }
+  },
+  "each_device_job_cards": 1,
+  "device_jobs_serial": true,
+  "maximum_reservation_seconds": 60
+}

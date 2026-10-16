@@ -1,0 +1,31 @@
+[ 50%] Building ASC object CMakeFiles/rotary_pos_emb_custom.dir/main.asc.o
+/data/pyptouser/songxiaoyou/cann_kernel/project/build/pristine_v4_template/main.asc:77:17: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+    run_kernel((GM_ADDR)inputDevice_x, info_x, (GM_ADDR)inputDevice_positions, info_positions, (GM_ADDR)outputDevice_y, info_y, availableCoreNum, stream, theta);
+                ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+/data/pyptouser/songxiaoyou/cann_kernel/project/build/pristine_v4_template/main.asc:77:49: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+    run_kernel((GM_ADDR)inputDevice_x, info_x, (GM_ADDR)inputDevice_positions, info_positions, (GM_ADDR)outputDevice_y, info_y, availableCoreNum, stream, theta);
+                                                ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+/data/pyptouser/songxiaoyou/cann_kernel/project/build/pristine_v4_template/main.asc:77:97: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+    run_kernel((GM_ADDR)inputDevice_x, info_x, (GM_ADDR)inputDevice_positions, info_positions, (GM_ADDR)outputDevice_y, info_y, availableCoreNum, stream, theta);
+                                                                                                ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+3 warnings generated.
+[100%] Linking ASC executable rotary_pos_emb_custom
+[100%] Built target rotary_pos_emb_custom
