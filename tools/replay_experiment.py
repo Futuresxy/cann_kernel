@@ -15,7 +15,7 @@ def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('name')
     ap.add_argument('--source-only',action='store_true')
-    ap.add_argument('--round',default='round2',choices=['round2','round3','round4','round5','round6'])
+    ap.add_argument('--round',default='round2',choices=['round2','round3','round4','round5','round6','round7'])
     args=ap.parse_args()
     record=RECORD/args.round
     manifest=json.loads((record/'manifest.json').read_text())

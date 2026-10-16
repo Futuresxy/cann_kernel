@@ -1,0 +1,20 @@
+{
+  "kernel_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
+  "checked_at": "2026-10-16T15:07:30.604663+00:00",
+  "static_screen_passed": true,
+  "issues": [],
+  "scope": "Conservative source screen only; device computation and Host helper calls need source review.",
+  "required_review_assertions": [
+    "host_only_validation_shape_tiling_launch",
+    "no_host_tensor_read_or_reorder",
+    "all_frequency_angle_trig_rotation_on_device",
+    "no_precomputed_results_or_host_vectors",
+    "no_testcase_or_data_pattern_shortcuts",
+    "no_markers_stale_output_or_uninitialized_memory",
+    "no_judge_precision_or_timing_changes",
+    "no_empty_kernel_or_warmup_detection",
+    "no_cross_invocation_cache",
+    "exactly_one_device_kernel_per_invocation",
+    "kernel_asc_is_only_template_change"
+  ]
+}

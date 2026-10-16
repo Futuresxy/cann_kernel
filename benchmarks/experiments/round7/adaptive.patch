@@ -1,0 +1,241 @@
+--- baseline/kernel.asc
++++ adaptive/kernel.asc
+@@ -331,9 +331,32 @@
+     if(signedNumerator<0)value=-value;
+     return value+int64_t(exponent)*int64_t(9007199254740992LL);
+ }
++// This computes the same FP32-rounded power as the protected path. Q31 error
++// after normalization is bounded by 32 units. Only results farther than this
++// bound from an FP32 halfway point are accepted; other values use Q53 below.
++// The table is generic exp2 range reduction generated in this invocation.
++__aicore__ inline bool TryFrequencyPowerQ31(int64_t log,uint32_t i,uint32_t widthLog,
++    const LocalTensor<uint64_t>& table,uint64_t& mantissa,int32_t& exponent) {
++    int64_t log31=log/int64_t(4194304LL);
++    int64_t x=(log31*int64_t(i))>>widthLog;
++    int64_t k=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<26));if(x<0)k=-k;
++    int64_t r=x-k*int64_t(uint64_t(1)<<26);
++    int64_t p=int64_t(2147483648LL)+((r*(int64_t(1488522236LL)+
++        ((r*(int64_t(515886673LL)+((r*int64_t(119193107LL))>>31)))>>31)))>>31);
++    uint64_t center=RoundDivide(table.GetValue(uint32_t(k&31)),uint64_t(1)<<30);
++    uint64_t v=(center*uint64_t(p))>>31;exponent=int32_t(k>>5);
++    if(v<(uint64_t(1)<<31)){v<<=1;--exponent;}
++    else if(v>=(uint64_t(1)<<32)){v>>=1;++exponent;}
++    uint32_t remainder=uint32_t(v&255);
++    if(remainder>=96 && remainder<=160)return false;
++    mantissa=(v+128)>>8;return true;
++}
++
+ __aicore__ inline void ScalarFrequencies(const LocalTensor<float>& dst,float theta,
+     uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+     int64_t log=DeviceLog2Q53(theta);
++    bool binaryWidth=(width&(width-1))==0;uint32_t widthLog=0;
++    if(binaryWidth){uint32_t n=width;while(n>1){n>>=1;++widthLog;}}
+     auto table=scratch.ReinterpretCast<uint64_t>();
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+@@ -343,9 +366,15 @@
+     for(uint32_t i=0;i<width;++i) {
+         uint32_t result=0x3f800000u;
+         if(i!=0) {
+-            uint32_t shift=0;while((i<<shift)<width)++shift;
+-            uint64_t mant=RoundDivide(uint64_t(i)<<(23+shift),width);
+-            int64_t exponent=int64_t(mant<<(30-shift));
++            uint64_t pm=0;int32_t e=0;
++            if(!(binaryWidth && TryFrequencyPowerQ31(log,i,widthLog,table,pm,e))) {
++            int64_t exponent;
++            if(binaryWidth)exponent=int64_t(uint64_t(i)<<(53-widthLog));
++            else {
++                uint32_t shift=0;while((i<<shift)<width)++shift;
++                uint64_t mant=RoundDivide(uint64_t(i)<<(23+shift),width);
++                exponent=int64_t(mant<<(30-shift));
++            }
+             int64_t x=SignedMultiplyQ53(log,exponent);
+             int64_t ki=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<48));
+             if(x<0)ki=-ki;
+@@ -354,10 +383,11 @@
+                 int64_t(6243314769351382LL)+SignedMultiplyQ53(r,
+                 int64_t(2163785536024893LL)+SignedMultiplyQ53(r,int64_t(499932125008441LL))));
+             uint64_t center=RoundDivide(table.GetValue(uint32_t(ki&31)),256);
+-            uint64_t power=MultiplyQ53(center,uint64_t(p));int32_t e=int32_t(ki>>5);
++            uint64_t power=MultiplyQ53(center,uint64_t(p));e=int32_t(ki>>5);
+             if(power<(uint64_t(1)<<53)){power<<=1;--e;}
+             else if(power>=(uint64_t(1)<<54)){power>>=1;++e;}
+-            uint64_t pm=RoundDivide(power,uint64_t(1)<<30);
++            pm=RoundDivide(power,uint64_t(1)<<30);
++            }
+             if(pm>=(uint64_t(1)<<24)){pm>>=1;++e;}
+             int32_t fe;uint64_t fm;
+             if(pm==(uint64_t(1)<<23)){fe=-e;fm=uint64_t(1)<<23;}
+@@ -470,6 +500,139 @@
+     Mul(s,angle,s,n);Muls(s,s,2.0f,n);
+ }
+ 
++
++__aicore__ inline void ScalarFrequencyRange(const LocalTensor<float>& dst,float theta,
++    uint32_t width,uint32_t start,uint32_t count,uint32_t pitch,const LocalTensor<float>& scratch) {
++    int64_t log=DeviceLog2Q53(theta);
++    bool binaryWidth=(width&(width-1))==0;uint32_t widthLog=0;
++    if(binaryWidth){uint32_t n=width;while(n>1){n>>=1;++widthLog;}}
++    auto table=scratch.ReinterpretCast<uint64_t>();
++    uint64_t term=uint64_t(1)<<61,total=term;
++    uint64_t step=uint64_t(1598288580650331957ULL)>>5;
++    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    uint64_t v=uint64_t(1)<<61;
++    for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
++    for(uint32_t col=0;col<count;++col) {
++        uint32_t i=start+col;
++        uint32_t result=0x3f800000u;
++        if(i!=0) {
++            uint64_t pm=0;int32_t e=0;
++            if(!(binaryWidth && TryFrequencyPowerQ31(log,i,widthLog,table,pm,e))) {
++            int64_t exponent;
++            if(binaryWidth)exponent=int64_t(uint64_t(i)<<(53-widthLog));
++            else {
++                uint32_t shift=0;while((i<<shift)<width)++shift;
++                uint64_t mant=RoundDivide(uint64_t(i)<<(23+shift),width);
++                exponent=int64_t(mant<<(30-shift));
++            }
++            int64_t x=SignedMultiplyQ53(log,exponent);
++            int64_t ki=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<48));
++            if(x<0)ki=-ki;
++            int64_t r=x-ki*int64_t(uint64_t(1)<<48);
++            int64_t p=int64_t(9007199254740992LL)+SignedMultiplyQ53(r,
++                int64_t(6243314769351382LL)+SignedMultiplyQ53(r,
++                int64_t(2163785536024893LL)+SignedMultiplyQ53(r,int64_t(499932125008441LL))));
++            uint64_t center=RoundDivide(table.GetValue(uint32_t(ki&31)),256);
++            uint64_t power=MultiplyQ53(center,uint64_t(p));e=int32_t(ki>>5);
++            if(power<(uint64_t(1)<<53)){power<<=1;--e;}
++            else if(power>=(uint64_t(1)<<54)){power>>=1;++e;}
++            pm=RoundDivide(power,uint64_t(1)<<30);
++            }
++            if(pm>=(uint64_t(1)<<24)){pm>>=1;++e;}
++            int32_t fe;uint64_t fm;
++            if(pm==(uint64_t(1)<<23)){fe=-e;fm=uint64_t(1)<<23;}
++            else {fe=-e-1;fm=RoundDivide(uint64_t(1)<<47,pm);}
++            if(fm>=(uint64_t(1)<<24)){fm>>=1;++fe;}
++            result=(uint32_t(fe+127)<<23)|uint32_t(fm-(uint64_t(1)<<23));
++        }
++        FloatBits f;f.bits=result;dst.SetValue(col,f.value);
++    }
++    for(uint32_t i=count;i<pitch;++i)dst.SetValue(i,0.0f);
++    PipeBarrier<PIPE_ALL>();
++}
++
++// Small working sets distribute independent frequency columns over AIV cores.
++// Each core owns complete paired columns; every output is written once.
++template <typename T> class SmallRotary {
++public:
++    __aicore__ inline void Init(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
++        uint32_t heads,uint32_t dim,uint32_t tileHeads,uint32_t splits,float theta) {
++        x_.SetGlobalBuffer((__gm__ T*)x);y_.SetGlobalBuffer((__gm__ T*)y);
++        pos_.SetGlobalBuffer((__gm__ int32_t*)p);
++        tokens_=tokens;heads_=heads;dim_=dim;half_=dim/2;tile_=tileHeads;splits_=splits;
++        uint32_t quantum=32/sizeof(T);
++        uint32_t part=((half_+splits-1)/splits+quantum-1)/quantum*quantum;
++        start_=(GetBlockIdx()%splits)*part;
++        width_=half_-start_<part?half_-start_:part;
++        pitch_=(width_+quantum-1)/quantum*quantum;capacity_=tile_*pitch_;
++        groups_=(heads_+tile_-1)/tile_;
++        pipe_.InitBuffer(in_,1,2*capacity_*sizeof(T));
++        pipe_.InitBuffer(out_,1,2*capacity_*sizeof(T));
++        uint32_t workCount=5*capacity_;if(workCount<64)workCount=64;
++        pipe_.InitBuffer(work_,workCount*sizeof(float));
++        pipe_.InitBuffer(trig_,4*pitch_*sizeof(float));
++        ScalarFrequencyRange(trig_.Get<float>(),theta,half_,start_,width_,pitch_,work_.Get<float>());
++    }
++    __aicore__ inline void Process() {
++        uint64_t jobs=tokens_*groups_;
++        uint32_t block=GetBlockIdx()/splits_,blocks=GetBlockNum()/splits_;
++        uint64_t first=jobs*block/blocks,last=jobs*(block+1)/blocks;
++        auto a=work_.Get<float>();auto b=a[capacity_];auto r1=b[capacity_];
++        auto r2=r1[capacity_];auto tmp=r2[capacity_];
++        auto freq=trig_.Get<float>();auto angle=freq[pitch_];auto c=angle[pitch_];auto s=c[pitch_];
++        uint64_t cached=static_cast<uint64_t>(-1);
++        uint8_t stride=pitch_/8;
++        BinaryRepeatParams broadcast{1,1,1,stride,stride,0};
++        BinaryRepeatParams paired{1,1,1,stride,stride,stride};
++        uint32_t localGap=(pitch_*sizeof(T)-(width_*sizeof(T)+31)/32*32)/32;
++        for(uint64_t job=first;job<last;++job) {
++            uint64_t token=job/groups_;uint32_t head=(job%groups_)*tile_;
++            uint32_t rows=heads_-head;if(rows>tile_)rows=tile_;
++            uint32_t count=rows*pitch_;uint64_t offset=(token*heads_+head)*dim_+start_;
++            auto in=in_.AllocTensor<T>();
++            DataCopyExtParams load{static_cast<uint16_t>(rows),width_*uint32_t(sizeof(T)),
++                (dim_-width_)*uint32_t(sizeof(T)),localGap,0};
++            DataCopyPad(in,x_[offset],load,DataCopyPadExtParams<T>{true,0,static_cast<uint8_t>(pitch_-width_),0});
++            DataCopyPad(in[capacity_],x_[offset+half_],load,DataCopyPadExtParams<T>{true,0,static_cast<uint8_t>(pitch_-width_),0});
++            in_.EnQue(in);in=in_.DeQue<T>();
++            int32_t p=pos_.GetValue(token);
++            auto out=out_.AllocTensor<T>();
++            if(p==0) {DataCopy(out,in,count);DataCopy(out[capacity_],in[capacity_],count);}
++            else {
++                if(token!=cached) {
++                    Muls(angle,freq,static_cast<float>(p),width_);
++                    SinCosFp32(angle,c,s,a,b,width_);cached=token;
++                }
++                LoadFp32(a,in,count);LoadFp32(b,in[capacity_],count);
++                Duplicate(r1,0.0f,count);Duplicate(r2,0.0f,count);
++                for(uint32_t col=0;col<width_;col+=64) {
++                    uint64_t mask=width_-col<64?width_-col:64;
++                    Mul(r1[col],a[col],c[col],mask,rows,broadcast);
++                    Mul(tmp[col],b[col],s[col],mask,rows,broadcast);
++                    Sub(r1[col],r1[col],tmp[col],mask,rows,paired);
++                    Mul(r2[col],b[col],c[col],mask,rows,broadcast);
++                    Mul(tmp[col],a[col],s[col],mask,rows,broadcast);
++                    Add(r2[col],r2[col],tmp[col],mask,rows,paired);
++                }
++                StoreFp32(out,r1,count);StoreFp32(out[capacity_],r2,count);
++            }
++            out_.EnQue(out);out=out_.DeQue<T>();
++            DataCopyExtParams store{static_cast<uint16_t>(rows),width_*uint32_t(sizeof(T)),
++                localGap,(dim_-width_)*uint32_t(sizeof(T)),0};
++            DataCopyPad(y_[offset],out,store);DataCopyPad(y_[offset+half_],out[capacity_],store);
++            PipeBarrier<PIPE_ALL>();in_.FreeTensor(in);out_.FreeTensor(out);
++        }
++    }
++private:
++    TPipe pipe_;TQue<QuePosition::VECIN,1> in_;TQue<QuePosition::VECOUT,1> out_;
++    TBuf<TPosition::VECCALC> work_,trig_;GlobalTensor<T> x_,y_;GlobalTensor<int32_t> pos_;
++    uint64_t tokens_;uint32_t heads_,dim_,half_,tile_,splits_,start_,width_,pitch_,capacity_,groups_;
++};
++template <typename T>
++__global__ __vector__ void small_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
++    uint32_t heads,uint32_t dim,uint32_t tile,uint32_t splits,float theta) {
++    SmallRotary<T> op;op.Init(x,p,y,tokens,heads,dim,tile,splits,theta);op.Process();
++}
+ 
+ template <typename T> class Rotary {
+ public:
+@@ -1435,6 +1598,32 @@
+     uint32_t heads = shape[2], dim = shape[3];
+     uint32_t width = dim / 2;
+     uint32_t pitch = (width + 15) / 16 * 16;
++    // Frequency-column partitioning trades a few short DMA bursts for lower
++    // per-core initialization and more parallelism in small working sets.
++    uint64_t inputBytes=tokens*heads*dim*(info_x.tensors[0].dtype==0?4u:2u);
++    if(tokens<128 && inputBytes<=2*1024*1024 && dim<=256 &&
++       (heads>1 || tokens<16) && theta>=0x1p-64f && theta<=0x1p64f) {
++        uint32_t quantum=info_x.tensors[0].dtype==0?8:16;
++        uint32_t splits=1;
++        if(dim%(2*quantum)==0) {
++            splits=width/quantum;if(splits>8)splits=8;
++            uint32_t part=((width+splits-1)/splits+quantum-1)/quantum*quantum;
++            splits=(width+part-1)/part;
++        } else if(dim>64) splits=0;
++        uint32_t available=availableCoreNum>0?availableCoreNum:1;
++        if(splits>available)splits=1;
++        if(splits) {
++            uint32_t tile=heads<32?heads:32;
++            uint64_t jobs=tokens*((heads+tile-1)/tile);
++            uint32_t logical=available/splits;if(jobs<logical)logical=jobs;
++            uint32_t blocks=logical*splits;
++            if(info_x.tensors[0].dtype==0)
++                rope1743::small_kernel<float><<<blocks,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,splits,theta);
++            else
++                rope1743::small_kernel<half><<<blocks,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,splits,theta);
++            return;
++        }
++    }
+     bool aligned = (dim % 16 == 0);
+     uint32_t tileElements = dim>=512 ? (info_x.tensors[0].dtype==0?8192:12288) :
+         (info_x.tensors[0].dtype==0?4096:11264);

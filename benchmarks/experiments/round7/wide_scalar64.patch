@@ -1,0 +1,156 @@
+--- baseline/kernel.asc
++++ wide_scalar64/kernel.asc
+@@ -6,7 +6,7 @@
+ // This translation unit is included by the competition harness. Keep run_kernel's ABI.
+ namespace rope1743 {
+ using namespace AscendC;
+-struct Frequencies { float theta; };
++struct Frequencies { float theta; uint32_t scalarLimit; };
+ using WideFrequencies=Frequencies;
+ union FloatBits {float value;uint32_t bits;};
+ __aicore__ inline uint64_t MultiplyQ53(uint64_t a,uint64_t b) {
+@@ -331,9 +331,31 @@
+     if(signedNumerator<0)value=-value;
+     return value+int64_t(exponent)*int64_t(9007199254740992LL);
+ }
++// This computes the same FP32-rounded power as the protected path. Q31 error
++// after normalization is bounded by 32 units. Only results farther than this
++// bound from an FP32 halfway point are accepted; other values use Q53 below.
++// The table is generic exp2 range reduction generated in this invocation.
++__aicore__ inline bool TryFrequencyPowerQ31(int64_t log31,uint32_t numerator,uint32_t denominatorLog,
++    const LocalTensor<uint64_t>& table,uint64_t& mantissa,int32_t& exponent) {
++    int64_t x=(log31*int64_t(numerator))>>denominatorLog;
++    int64_t k=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<26));if(x<0)k=-k;
++    int64_t r=x-k*int64_t(uint64_t(1)<<26);
++    int64_t p=int64_t(2147483648LL)+((r*(int64_t(1488522236LL)+
++        ((r*(int64_t(515886673LL)+((r*int64_t(119193107LL))>>31)))>>31)))>>31);
++    uint64_t center=RoundDivide(table.GetValue(uint32_t(k&31)),uint64_t(1)<<30);
++    uint64_t v=(center*uint64_t(p))>>31;exponent=int32_t(k>>5);
++    if(v<(uint64_t(1)<<31)){v<<=1;--exponent;}
++    else if(v>=(uint64_t(1)<<32)){v>>=1;++exponent;}
++    uint32_t remainder=uint32_t(v&255);
++    if(remainder>=96 && remainder<=160)return false;
++    mantissa=(v+128)>>8;return true;
++}
++
+ __aicore__ inline void ScalarFrequencies(const LocalTensor<float>& dst,float theta,
+     uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+-    int64_t log=DeviceLog2Q53(theta);
++    int64_t log=DeviceLog2Q53(theta),log31=log/int64_t(4194304LL);
++    bool binaryWidth=(width&(width-1))==0;uint32_t widthLog=0;
++    if(binaryWidth){uint32_t n=width;while(n>1){n>>=1;++widthLog;}}
+     auto table=scratch.ReinterpretCast<uint64_t>();
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+@@ -343,9 +365,21 @@
+     for(uint32_t i=0;i<width;++i) {
+         uint32_t result=0x3f800000u;
+         if(i!=0) {
+-            uint32_t shift=0;while((i<<shift)<width)++shift;
+-            uint64_t mant=RoundDivide(uint64_t(i)<<(23+shift),width);
+-            int64_t exponent=int64_t(mant<<(30-shift));
++            uint32_t numerator=i,denominatorLog=widthLog;
++            int64_t exponent;
++            if(binaryWidth)exponent=int64_t(uint64_t(i)<<(53-widthLog));
++            else {
++                uint32_t shift=0;while((i<<shift)<width)++shift;
++                uint64_t mant;
++                if(width<=128) {
++                    uint32_t n=i<<(23+shift),q=n/width,r=n-q*width;
++                    mant=q+uint32_t(r>width-r || (r==width-r && (q&1)));
++                } else mant=RoundDivide(uint64_t(i)<<(23+shift),width);
++                numerator=uint32_t(mant);denominatorLog=23+shift;
++                exponent=int64_t(mant<<(30-shift));
++            }
++            uint64_t pm=0;int32_t e=0;
++            if(!TryFrequencyPowerQ31(log31,numerator,denominatorLog,table,pm,e)) {
+             int64_t x=SignedMultiplyQ53(log,exponent);
+             int64_t ki=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<48));
+             if(x<0)ki=-ki;
+@@ -354,10 +388,11 @@
+                 int64_t(6243314769351382LL)+SignedMultiplyQ53(r,
+                 int64_t(2163785536024893LL)+SignedMultiplyQ53(r,int64_t(499932125008441LL))));
+             uint64_t center=RoundDivide(table.GetValue(uint32_t(ki&31)),256);
+-            uint64_t power=MultiplyQ53(center,uint64_t(p));int32_t e=int32_t(ki>>5);
++            uint64_t power=MultiplyQ53(center,uint64_t(p));e=int32_t(ki>>5);
+             if(power<(uint64_t(1)<<53)){power<<=1;--e;}
+             else if(power>=(uint64_t(1)<<54)){power>>=1;++e;}
+-            uint64_t pm=RoundDivide(power,uint64_t(1)<<30);
++            pm=RoundDivide(power,uint64_t(1)<<30);
++            }
+             if(pm>=(uint64_t(1)<<24)){pm>>=1;++e;}
+             int32_t fe;uint64_t fm;
+             if(pm==(uint64_t(1)<<23)){fe=-e;fm=uint64_t(1)<<23;}
+@@ -389,7 +424,7 @@
+ 
+ __aicore__ inline void FillFrequencies(const LocalTensor<float>& dst,const Frequencies& f,
+     uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+-    if(width<=32 && f.theta>=0x1p-64f && f.theta<=0x1p64f){ScalarFrequencies(dst,f.theta,width,pitch,scratch);return;}
++    if(width<=(f.scalarLimit?f.scalarLimit:32u) && f.theta>=0x1p-64f && f.theta<=0x1p64f){ScalarFrequencies(dst,f.theta,width,pitch,scratch);return;}
+     FloatBits bits;bits.value=f.theta;
+     int32_t exponent=int32_t((bits.bits>>23)&255)-127;
+     if(exponent==-127){bits.value=f.theta*8388608.0f;exponent=int32_t((bits.bits>>23)&255)-127-23;}
+@@ -413,7 +448,7 @@
+ 
+ __aicore__ inline void FillDeviceFrequencies(TPipe& pipe,TBuf<TPosition::VECCALC>& fallback,
+     const LocalTensor<float>& dst,const Frequencies& f,uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+-    bool scalar=width<=32 && f.theta>=0x1p-64f && f.theta<=0x1p64f;
++    bool scalar=width<=(f.scalarLimit?f.scalarLimit:32u) && f.theta>=0x1p-64f && f.theta<=0x1p64f;
+     uint32_t full=scalar?64:FREQUENCY_MATH_SLOTS*(pitch<32?32:pitch)+64;
+     // In these kernels, a reusable region <=24 KiB implies less than 140 KiB
+     // of live UB. Even a full 512-lane math region keeps the total below 192 KiB.
+@@ -1433,6 +1468,9 @@
+     const auto& shape = info_x.tensors[0].shape;
+     uint64_t tokens = static_cast<uint64_t>(shape[0]) * shape[1];
+     uint32_t heads = shape[2], dim = shape[3];
++    uint64_t inputBytes=tokens*heads*dim*(info_x.tensors[0].dtype==0?4u:2u);
++    // Algorithm choice only: no tensor values or mathematical results on Host.
++    uint32_t frequencyScalarLimit=(tokens<128 && inputBytes<=2*1024*1024)?64u:32u;
+     uint32_t width = dim / 2;
+     uint32_t pitch = (width + 15) / 16 * 16;
+     bool aligned = (dim % 16 == 0);
+@@ -1467,7 +1505,7 @@
+         uint32_t bulkCores=availableCoreNum>0?availableCoreNum:1;
+         if(bulkJobs<bulkCores)bulkCores=bulkJobs;
+         rope1743::Frequencies frequencies{};
+-        frequencies.theta=theta;
++        frequencies.theta=theta;frequencies.scalarLimit=frequencyScalarLimit;
+         if(info_x.tensors[0].dtype==0)
+             rope1743::bulk_position_kernel<float><<<bulkCores,nullptr,stream>>>(x,positions,y,tokens,dim,tile,frequencies);
+         else
+@@ -1480,7 +1518,7 @@
+         uint32_t headCores=availableCoreNum>0?availableCoreNum:1;
+         if(headJobs<headCores)headCores=headJobs;
+         rope1743::Frequencies f{};
+-        f.theta=theta;
++        f.theta=theta;f.scalarLimit=frequencyScalarLimit;
+         if(info_x.tensors[0].dtype==0)
+             rope1743::head_tile_kernel<float><<<headCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,f);
+         else
+@@ -1495,7 +1533,7 @@
+         uint32_t packedCores=availableCoreNum>0?availableCoreNum:1;
+         if(packedJobs<packedCores)packedCores=packedJobs;
+         rope1743::Frequencies frequencies{};
+-        frequencies.theta=theta;
++        frequencies.theta=theta;frequencies.scalarLimit=frequencyScalarLimit;
+         if(info_x.tensors[0].dtype==0)
+             rope1743::packed_kernel<float><<<packedCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,frequencies);
+         else
+@@ -1504,7 +1542,7 @@
+     }
+     if (dim > 512) {
+         rope1743::WideFrequencies frequencies{};
+-        frequencies.theta=theta;
++        frequencies.theta=theta;frequencies.scalarLimit=frequencyScalarLimit;
+         if(batched) {
+             if(info_x.tensors[0].dtype==0)
+                 rope1743::wide_batched_kernel<float><<<cores,nullptr,stream>>>(x,positions,y,tokens,dim,tileTokens,frequencies);
+@@ -1526,7 +1564,7 @@
+     }
+ 
+     rope1743::Frequencies frequencies{};
+-    frequencies.theta=theta;
++    frequencies.theta=theta;frequencies.scalarLimit=frequencyScalarLimit;
+     if (batched) {
+         if (info_x.tensors[0].dtype == 0)
+             rope1743::batched_kernel<float><<<cores, nullptr, stream>>>(

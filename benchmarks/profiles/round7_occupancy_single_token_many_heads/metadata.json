@@ -1,0 +1,26 @@
+{
+  "case": {
+    "name": "single_token_many_heads",
+    "shape": [
+      1,
+      1,
+      256,
+      128
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 62
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/round7_occupancy_single_token_many_heads",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/tuning_round7/occupancy/build/rope_runner --device 1 --shape 1 1 256 128 --dtype float16 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/single_token_many_heads --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
+  "binary_sha256": "b6e5a6002c539c4c74445d4f78caecbd5a9ccaee4ab9ad1776e909aae03a6174"
+}

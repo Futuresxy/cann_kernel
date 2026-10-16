@@ -1,0 +1,43 @@
+{
+  "source_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
+  "normal_binary_sha256": "b6e5a6002c539c4c74445d4f78caecbd5a9ccaee4ab9ad1776e909aae03a6174",
+  "normal_cases": 52,
+  "audited_unique_cases": 3156,
+  "audited_launches": 6364,
+  "results": {
+    "profiled_v8_audit": {
+      "case_count": 52,
+      "audited_launches": 156
+    },
+    "profiled_v8_math": {
+      "case_count": 256,
+      "audited_launches": 512
+    },
+    "profiled_v8_small": {
+      "case_count": 544,
+      "audited_launches": 1088
+    },
+    "profiled_v8_sweep": {
+      "case_count": 1010,
+      "audited_launches": 2020
+    },
+    "profiled_v8_packed_sweep": {
+      "case_count": 456,
+      "audited_launches": 912
+    },
+    "profiled_v8_path_sweep": {
+      "case_count": 672,
+      "audited_launches": 1344
+    },
+    "profiled_v8_aligned_audit": {
+      "case_count": 166,
+      "audited_launches": 332
+    }
+  },
+  "bitwise_cases": 414,
+  "changed_finite_elements": 0,
+  "per_invocation_runtime_audit": true,
+  "device_tasks": 75,
+  "device_call_count": 75,
+  "platform_hidden_cases_tested": false
+}

@@ -2,7 +2,7 @@
 
 平台测试在 **Mac 本地 Chrome** 执行：GitHub 同步已验证版本、提交、记录结果；Ascend910 负责开发和 profiling。**不需要服务器隧道。** [Mac 安装和运行步骤](docs/mac_cannjudge.md)。
 
-**当前候选 V7 已将频率、角度、三角函数和旋转全部放到 Device，Host 只负责分块和启动。** 本地性能、精度与源码规则审查见 [V7 报告](docs/profiled_v7.md)。平台隐藏 15 点尚未测试；V4/V6 的 Host 频率表按新增规则仅保留为历史对照。
+**当前候选 V8 按 AIV 并行度分派小输入，频率、角度、三角函数和旋转全部在 Device 完成，Host 只负责分块和启动。** 本地性能、精度与源码规则审查见 [V8 报告](docs/profiled_v8.md)。V8 平台隐藏 15 点尚未测试；V4/V6 的 Host 频率表按新增规则仅保留为历史对照。
 
 2026 初赛 RotaryPosEmb（problem 1743），Ascend C 原生实现，匹配附件的 `run_kernel` 直接调用接口。基础版和后续优化版通过 Git 提交保存；源码、测试、profiling、报告、原始模板和提交包分目录管理。
 
@@ -36,22 +36,22 @@ bash tools/build_revision.sh 0a4281f platform_v4
 bash tools/build.sh
 bash tools/build_launch_audit.sh
 # CPU准备输入，不申请NPU
-bash tools/validate_profiled_v7.sh --phase prepare
+bash tools/validate_profiled_v8.sh --phase prepare
 # 各阶段串行申请单卡，等待完成释放后执行下一条
 # correctness包含52项回归、逐次API审计和75/75设备任务检查
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v7.sh --phase correctness'
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v7.sh --phase precision'
-for phase in math sweep packed_sweep path_sweep; do
-  task-submit --device auto --max-time 60 --run "bash tools/validate_profiled_v7.sh --phase $phase"
+task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/validate_profiled_v8.sh --phase correctness'
+task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/validate_profiled_v8.sh --phase precision'
+for phase in math small sweep packed_sweep path_sweep; do
+  task-submit --device auto --timeout 0 --max-time 60 --run "bash tools/validate_profiled_v8.sh --phase $phase"
 done
-task-submit --device auto --max-time 60 --run 'bash tools/validate_profiled_v7.sh --phase aligned_audit'
+task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/validate_profiled_v8.sh --phase aligned_audit'
 # 当前kernel先提交Git；打包同时要求参考精度、逐位比较、启动检查与源码规则审查
-python3 tools/package.py --result profiled_v7 --launch-profile profiled_v7_launches \
-  --extra-result profiled_v7_math --extra-result profiled_v7_sweep \
-  --extra-result profiled_v7_packed_sweep --extra-result profiled_v7_path_sweep \
-  --extra-result profiled_v7_aligned_audit \
-  --bitwise-result profiled_v7_bits --bitwise-result profiled_v7_extended_bits \
-  --compliance-review benchmarks/validation/profiled_v7/compliance.json
+python3 tools/package.py --result profiled_v8 --launch-profile profiled_v8_launches \
+  --extra-result profiled_v8_math --extra-result profiled_v8_small --extra-result profiled_v8_sweep \
+  --extra-result profiled_v8_packed_sweep --extra-result profiled_v8_path_sweep \
+  --extra-result profiled_v8_aligned_audit \
+  --bitwise-result profiled_v8_bits --bitwise-result profiled_v8_extended_bits \
+  --compliance-review benchmarks/validation/profiled_v8/compliance.json
 ```
 
 设备任务始终经过服务器 task-submit 队列。编译和报告在 CPU 上完成。不要将 profiler replay 内的 event 时间当作原生 kernel 性能；小算子 event 时间还会包含 host 下发空洞。
@@ -73,9 +73,9 @@ python3 tools/package.py --result profiled_v7 --launch-profile profiled_v7_launc
 bash tools/build_revision.sh e35b0cc baseline
 # 同一卡上按 baseline/candidate/candidate/baseline 交替采样
 # candidate 参数可指定当前已保存的候选二进制
-task-submit --device auto --max-time 60 --run 'bash tools/paired.sh --candidate build/rope_runner'
+task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/paired.sh --candidate build/rope_runner'
 # 全部505个偶数维度 × 两种dtype：1010个精度用例
-task-submit --device auto --max-time 60 --run 'bash tools/device_suite.sh --label sweep --sweep --warmup 1 --repeat 1 --batches 1'
+task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/device_suite.sh --label sweep --sweep --warmup 1 --repeat 1 --batches 1'
 ```
 
 ## 仅允许修改kernel.asc的提交要求
@@ -95,9 +95,9 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 
 仓库根目录的开发构建工程、tools、tests及benchmarks仅用于本地测试和profiling，不进入比赛提交包。`templates/rotaryposemb_1743.sha256.json`记录用户原始ZIP中各文件的SHA256，打包和检查均使用这一固定基准。
 
-## 当前 V7 与历史版本
+## 当前 V8 与历史版本
 
-V7 保留 FP32 计算，移除 Host 频率数学与宽维修正表；优化当前调用内的频率生成、工作区复用、head 分块和余弦向量指令。完整结果、失败候选与复现见 [V7 报告](docs/profiled_v7.md)。平台得分必须等待 Mac 上的真实平台提交反馈。
+V8 保留 FP32 旋转，使用带舍入保护的 Device 频率求值，并在 AIV 核利用率不足时拆分配对列。105 个本地形状同地址双顺序对照的几何平均加速约 1.115 倍，部分小输入接近 2 倍，大输入基本持平。结果、失败候选与复现见 [V8 报告](docs/profiled_v8.md)。平台得分必须等待 Mac 上的真实平台提交反馈。V7 的 Device 频率迁移记录见 [V7 报告](docs/profiled_v7.md)。
 
 V6 历史数据见 [V6 报告](docs/profiled_v6.md)，其 Host 数学不满足新增规则。V4 的源码仍可从 Git 0a4281f 重建，用于精度逐位对照。V5 因平台精度和性能反馈撤回，见 [回退报告](docs/rollback_v4_round4.md)。
 

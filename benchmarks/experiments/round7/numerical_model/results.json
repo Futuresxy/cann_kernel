@@ -1,0 +1,11 @@
+{
+  "scope": "CPU scalar numerical model, not device validation",
+  "theta_count": 75,
+  "widths": [
+    8,
+    128
+  ],
+  "accepted": 455622,
+  "fallback": 152403,
+  "mismatches": 0
+}

@@ -1,0 +1,126 @@
+{
+  "baseline_revision": "36bcd8ce792ddbe2e8327a569d9e28b69a6d37db",
+  "baseline_sha256": "1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b",
+  "baseline_submission_eligible": true,
+  "candidates": [
+    {
+      "name": "adaptive",
+      "source_sha256": "506be4d3e45ab5c264929fbe029462a0a3221952bcafe0ed4091186a4736f400",
+      "patch": "adaptive.patch",
+      "status": "cpu-only-not-selected",
+      "result_labels": [],
+      "decision": "CPU-built precursor; superseded by adaptive_all, no NPU run claimed."
+    },
+    {
+      "name": "adaptive_all",
+      "source_sha256": "b92533a5cc67b87ac476e55748c82d0f2bf254f6797744be6f0217bbf03f0b0b",
+      "patch": "adaptive_all.patch",
+      "status": "rejected",
+      "result_labels": [
+        "round7_adaptive_all",
+        "round7_adaptive_all_math",
+        "round7_adaptive_all_small",
+        "round7_all_shared"
+      ],
+      "decision": "Correctness passed; column partitioning regressed already-parallel row grids. Refined by occupancy gate."
+    },
+    {
+      "name": "adaptive_only",
+      "source_sha256": "b21634370d2e82e1a0b2a6c0653c29d4ae0b1c186f581a291e53c830f472b586",
+      "patch": "adaptive_only.patch",
+      "status": "rejected",
+      "result_labels": [
+        "round7_adaptive_only",
+        "round7_adaptive_only_math",
+        "round7_only_shared"
+      ],
+      "decision": "Preserved as the numerical-only control; full candidate adds partitioning only with spare cores."
+    },
+    {
+      "name": "ratio_exact",
+      "source_sha256": "b7b52175191e537f9ac3b8cb32a0ceb387b80995b2abbf3f44640cc2211d1255",
+      "patch": "ratio_exact.patch",
+      "status": "cpu-only-not-selected",
+      "result_labels": [],
+      "decision": "CPU proof showed binary dimension ratio is exact; incorporated in later candidates."
+    },
+    {
+      "name": "sparse_exact",
+      "source_sha256": "b1c7f3f70d3a0f471bfc6d9fdcbc0e49c1ab8dbd60ae9885dab1b7605111f4c3",
+      "patch": "sparse_exact.patch",
+      "status": "cpu-only-not-selected",
+      "result_labels": [],
+      "decision": "CPU-only exploration; no device performance claim, omitted from submission."
+    },
+    {
+      "name": "split_scalar",
+      "source_sha256": "5adadc74ffe42e16de1abcff07f786a80887119c690f5a326e0d352bfaa92bbd",
+      "patch": "split_scalar.patch",
+      "status": "rejected",
+      "result_labels": [
+        "round7_split_scalar",
+        "round7_split_small"
+      ],
+      "decision": "52+544 correctness passed; splitting busy grids increased DMA/trig work. Replaced by occupancy-aware partitioning."
+    },
+    {
+      "name": "wide_scalar128",
+      "source_sha256": "5d7e56d750236e0ab2ff2699efc14f94a9600904363ff4a204d5517cfb20716e",
+      "patch": "wide_scalar128.patch",
+      "status": "rejected",
+      "result_labels": [
+        "round7_wide_scalar128",
+        "round7_wide_scalar128_math"
+      ],
+      "decision": "Normal profile showed large regressions for D=256; rejected without asserting a matched paired measurement."
+    },
+    {
+      "name": "wide_scalar64",
+      "source_sha256": "1a0530e2d41baa0ced46d87bd3d8222e7cc889826387ce9351ef8cceeca6bd6e",
+      "patch": "wide_scalar64.patch",
+      "status": "rejected",
+      "result_labels": [
+        "round7_wide_scalar64",
+        "round7_wide_scalar64_math",
+        "round7_wide64_shared"
+      ],
+      "decision": "Paired profile geomean below one; serializing all 64 frequency columns was slower than V7 vector initialization."
+    },
+    {
+      "name": "occupancy",
+      "source_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
+      "patch": "occupancy.patch",
+      "status": "selected-full-device-validation-passed",
+      "result_labels": [
+        "round7_occupancy_balanced",
+        "round7_v7_tiny",
+        "round7_v7_single_token_many_heads",
+        "round7_occupancy_tiny",
+        "round7_occupancy_single_token_many_heads",
+        "profiled_v8",
+        "profiled_v8_audit",
+        "profiled_v8_math",
+        "profiled_v8_small",
+        "profiled_v8_sweep",
+        "profiled_v8_packed_sweep",
+        "profiled_v8_path_sweep",
+        "profiled_v8_aligned_audit",
+        "profiled_v8_bits",
+        "profiled_v8_extended_bits",
+        "profiled_v8_balanced"
+      ],
+      "decision": "Selected: Q31 power with Q53 ambiguity fallback, and paired-column partitioning only if jobs*4<=available AIV cores."
+    }
+  ],
+  "selection_profile": "round7_occupancy_balanced",
+  "selection_profile_case_count": 56,
+  "reference_urls": [
+    "https://github.com/flashinfer-ai/flashinfer/blob/main/include/flashinfer/pos_enc.cuh",
+    "https://github.com/Dao-AILab/flash-attention/blob/main/flash_attn/ops/triton/rotary.py",
+    "https://gitcode.com/cann/ops-transformer/tree/9.0.0-beta.1/posembedding/rotary_position_embedding",
+    "https://raw.githubusercontent.com/ARM-software/optimized-routines/master/math/exp2f.c",
+    "https://raw.githubusercontent.com/ARM-software/optimized-routines/master/math/exp2f_data.c"
+  ],
+  "final_performance_profile": "profiled_v8_balanced",
+  "final_performance_case_count": 105
+}
