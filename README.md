@@ -1,5 +1,7 @@
 # CANN Kernel：RotaryPosEmb
 
+**2026-10-15 补充规则更新：当前 V6 与历史 V4 的 Host 频率表不符合新增的 Device 完整计算要求，暂停提交。** 历史精度和性能记录保留，内核尚未迁移频率计算。打包与自动提交流程已增加拦截，需完成 Device 迁移并重新验证。浏览器接入、工具用法与尚待接通的限制见 [平台提交工作流](docs/cannjudge_workflow.md)。
+
 2026 初赛 RotaryPosEmb（problem 1743），Ascend C 原生实现，匹配附件的 `run_kernel` 直接调用接口。基础版和后续优化版通过 Git 提交保存；源码、测试、profiling、报告、原始模板和提交包分目录管理。
 
 ## 目录
@@ -50,7 +52,7 @@ python3 tools/package.py --result profiled_v6 --launch-profile profiled_v6_launc
 
 ## 数学与精度
 
-`x[B,S,H,D]` 按前后两半旋转。频率在算子 host 入口用 FP32 `pow` 与倒数实时生成；位置、角度、cos/sin生成均为 FP32；所有路径均采用FP32旋转，最后转换到输出类型。频率并非新增输入，不提供外部 cos/sin 或离线常量表。精度判定保持赛题原阈值。
+`x[B,S,H,D]` 按前后两半旋转。以下为已暂停提交的 V6 历史数学路径；新规则下必须迁移频率生成并重新验证。频率在算子 host 入口用 FP32 `pow` 与倒数实时生成；位置、角度、cos/sin生成均为 FP32；所有路径均采用FP32旋转，最后转换到输出类型。频率并非新增输入，不提供外部 cos/sin 或离线常量表。精度判定保持赛题原阈值。
 
 对于较大位置，使用三段2π常量缩减角度，避免直接调用高阶 Sin/Cos 超出有效范围。优化版共用正余弦的范围缩减，在四分之一角上计算多项式并通过二倍角恢复。position=0 单独保持原始位模式，包括 NaN/Inf。
 
@@ -87,7 +89,7 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 
 仓库根目录的开发构建工程、tools、tests及benchmarks仅用于本地测试和profiling，不进入比赛提交包。`templates/rotaryposemb_1743.sha256.json`记录用户原始ZIP中各文件的SHA256，打包和检查均使用这一固定基准。
 
-## 当前提交候选V6与平台基线V4
+## 历史候选V6与平台基线V4（按补充规则暂停提交）
 
 当前源码为 `ROPE1743_PROFILED_V6`，基于平台15点通过的V4继续优化。三角函数、旋转和中间结果均保留FP32。保留FP32直接在队列上计算、非对齐连续DMA、宽维单head合批，以及保持V4乘加顺序的positions向量化。平台隐藏点得分待提交验证，本地结果不能冒充平台成绩。
 

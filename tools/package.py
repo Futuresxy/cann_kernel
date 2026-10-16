@@ -7,6 +7,7 @@ import subprocess
 from zipfile import ZIP_DEFLATED, ZipFile
 
 from verify_submission import ROOT, original_template, sha256, verify
+from judge_workflow.core import check_review, static_audit
 
 
 def main():
@@ -16,8 +17,17 @@ def main():
     ap.add_argument('--bitwise-result',action='append',default=[],help='Require a source/binary-matched direct V4 output comparison')
     ap.add_argument('--launch-profile', required=True,
                     help='msprof launch-count regression result for this source')
+    ap.add_argument('--compliance-review', type=Path,
+                    help='Source-matched review under the supplementary Device-computation rules')
     args = ap.parse_args()
     source = (ROOT/'operators/rotary_pos_emb/kernel.asc').read_bytes()
+    screen = static_audit(source)
+    if screen['issues']:
+        raise SystemExit('Supplementary competition rules block packaging: '+json.dumps(screen['issues']))
+    if not args.compliance_review:
+        raise SystemExit('Packaging requires --compliance-review for the supplementary competition rules')
+    review = json.loads(args.compliance_review.read_text())
+    check_review(source, review)
     digest = sha256(source)
     result = json.loads((ROOT/'benchmarks/results'/f'{args.result}.json').read_text())
     names = {c['name'] for c in json.loads((ROOT/'tests/cases.json').read_text())}
@@ -114,6 +124,9 @@ def main():
                     launch_audit=args.result+'_audit', launch_profile=args.launch_profile,
                     single_kernel_per_iteration=True,
                     template_diff=diff, platform_hidden_cases_tested=False)
+    metadata['compliance_review_sha256'] = sha256(args.compliance_review.read_bytes())
+    metadata['compliance_policy'] = 'device-computation-supplement-2026-10-15'
+    metadata['submission_eligible'] = True
     diagnostic = ROOT/'benchmarks/results'/f'{args.result}_precision_stress.json'
     if diagnostic.exists():
         stress = json.loads(diagnostic.read_text())

@@ -1,5 +1,7 @@
 # RotaryPosEmb 调优工作流
 
+> 补充规则更新：下文 Host 生成频率的实现仅保留作历史实验。当前 V6/V4 暂停提交，需将全部数学计算移至 Device 并重新验证。[自动提交工作流及状态](cannjudge_workflow.md)。后续单卡任务每阶段上限 60 秒，串行执行。
+
 所有设备运行经 `task-submit --device auto` 申请一张卡；精度任务上限 120 秒，profiling 上限 90 秒，不进行多卡测试。编译、生成数据和分析不占卡。
 
 1. 固定 tests/cases.json、随机种子、输入分布、theta、编译器和 SoC。公开模板只有一个用例，扩展集不冒充平台隐藏 15 用例。

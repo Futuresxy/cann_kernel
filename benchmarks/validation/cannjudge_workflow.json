@@ -1,0 +1,21 @@
+{
+  "test_command": "build/platform_workflow/venv/bin/python tests/test_cannjudge_workflow.py",
+  "tests_run": 19,
+  "tests_passed": 19,
+  "browser": "Playwright 1.61.0 / Chromium 149",
+  "test_target": "Local HTTP fixture with Monaco model API contract",
+  "npu_jobs": 0,
+  "real_platform_submissions": 0,
+  "real_platform_status": "not_connected",
+  "connection_error": "Chromium net::ERR_CONNECTION_CLOSED; urllib/curl TLS connection closed",
+  "active_kernel_sha256": "d04a5eedfadf0293736adbf6dd7d6573f03c8425cdeab12085bdf785f975d321",
+  "active_kernel_status": "blocked_host_frequency_computation",
+  "files_sha256": {
+    "tools/cannjudge.py": "70a49ea5c433bee296f2e30568913ad5119cecff99bfdb4a958d17d5ffbcbe22",
+    "tools/judge_workflow/core.py": "ef71c5451653ec648221e83359c5af4158b0aabcce091ae47829aed83668815b",
+    "tools/judge_workflow/browser.py": "6617bee5e84a528eec4af38957b52cc16cccb6b82af93842f9b53e9f0ba2a2c4",
+    "tools/judge_workflow/cannjudge.example.json": "10a2a040a51ab74ab11e9ea01a58b137c7fba41ffe483a82566a2389875ca24b",
+    "tests/test_cannjudge_workflow.py": "8ace9fa70f47bb06b1b9990a49a5dba26e6d4862e076830c7d99817be18e9028",
+    "tools/package.py": "e2e39d80894bdb56fd5ff17e8530277982ef4cc42196a7a0ca83a102928950f9"
+  }
+}
