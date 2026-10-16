@@ -1,0 +1,36 @@
+--- a/kernel.asc
++++ b/kernel.asc
+@@ -315,6 +315,15 @@
+     uint64_t q=a/b,r=a-q*b;
+     return q+uint64_t(r>b-r || (r==b-r && (q&1)));
+ }
++// Exact division of 2^47 by a normalized FP32 significand. Each
++// remainder fits 24 bits; appending eight bits stays within uint32_t.
++__aicore__ inline uint64_t ReciprocalSignificand(uint32_t m) {
++    uint32_t n=uint32_t(1)<<31,q=n/m,r=n-q*m;
++    n=r<<8;uint32_t a=n/m;r=n-a*m;
++    n=r<<8;uint32_t b=n/m;r=n-b*m;
++    q=(q<<16)|(a<<8)|b;
++    return q+uint32_t(r>m-r || (r==m-r && (q&1)));
++}
+ __aicore__ inline int64_t DeviceLog2Q53(float theta) {
+     FloatBits bits;bits.value=theta;int32_t exponent=int32_t((bits.bits>>23)&255)-127;
+     bits.bits=(bits.bits&0x7fffffu)|0x3f800000u;
+@@ -396,7 +405,7 @@
+             if(pm>=(uint64_t(1)<<24)){pm>>=1;++e;}
+             int32_t fe;uint64_t fm;
+             if(pm==(uint64_t(1)<<23)){fe=-e;fm=uint64_t(1)<<23;}
+-            else {fe=-e-1;fm=RoundDivide(uint64_t(1)<<47,pm);}
++            else {fe=-e-1;fm=ReciprocalSignificand(uint32_t(pm));}
+             if(fm>=(uint64_t(1)<<24)){fm>>=1;++fe;}
+             result=(uint32_t(fe+127)<<23)|uint32_t(fm-(uint64_t(1)<<23));
+         }
+@@ -552,7 +561,7 @@
+             if(pm>=(uint64_t(1)<<24)){pm>>=1;++e;}
+             int32_t fe;uint64_t fm;
+             if(pm==(uint64_t(1)<<23)){fe=-e;fm=uint64_t(1)<<23;}
+-            else {fe=-e-1;fm=RoundDivide(uint64_t(1)<<47,pm);}
++            else {fe=-e-1;fm=ReciprocalSignificand(uint32_t(pm));}
+             if(fm>=(uint64_t(1)<<24)){fm>>=1;++fe;}
+             result=(uint32_t(fe+127)<<23)|uint32_t(fm-(uint64_t(1)<<23));
+         }

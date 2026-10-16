@@ -1,0 +1,19 @@
+{
+  "domain": [
+    -0.5,
+    0.5
+  ],
+  "coefficients_q31_descending": [
+    32864,
+    332210,
+    2863343,
+    20654553,
+    119194167,
+    515882507,
+    1488522236,
+    2147483648
+  ],
+  "interpolation_bound_q31": 0.12248364254484603,
+  "combined_normalized_q31_bound": 10.66599985896388,
+  "selected_guard_units": 16
+}

@@ -2,7 +2,7 @@
 
 平台测试在 **Mac 本地 Chrome** 执行：GitHub 同步已验证版本、提交、记录结果；Ascend910 负责开发和 profiling。**不需要服务器隧道。** [Mac 安装和运行步骤](docs/mac_cannjudge.md)。
 
-**当前候选 V8 按 AIV 并行度分派小输入，频率、角度、三角函数和旋转全部在 Device 完成，Host 只负责分块和启动。** 本地性能、精度与源码规则审查见 [V8 报告](docs/profiled_v8.md)。已收到 V8 平台 15 点耗时反馈，整体没有明显提分，原因与后续优先级见 [平台复盘](docs/v8_platform_feedback.md)；V4/V6 的 Host 频率表按新增规则仅保留为历史对照。
+**当前候选 V9 通过 Device 频率求值、工作区复用和计算路径独立编译降低初始化开销。** 固定 33 点本地双顺序采集几何平均加速约 1.030 倍，tiny 为 3.05→2.65us，大流式输入基本持平；详见 [V9 报告](docs/profiled_v9.md)。V9 平台隐藏 15 点尚待反馈。此前 V8 平台效果复盘见 [分析记录](docs/v8_platform_feedback.md)；V4/V6 的 Host 频率表仅保留为历史对照。
 
 2026 初赛 RotaryPosEmb（problem 1743），Ascend C 原生实现，匹配附件的 `run_kernel` 直接调用接口。基础版和后续优化版通过 Git 提交保存；源码、测试、profiling、报告、原始模板和提交包分目录管理。
 
@@ -36,22 +36,23 @@ bash tools/build_revision.sh 0a4281f platform_v4
 bash tools/build.sh
 bash tools/build_launch_audit.sh
 # CPU准备输入，不申请NPU
-bash tools/validate_profiled_v8.sh --phase prepare
+bash tools/validate_profiled_v9.sh --phase prepare
 # 各阶段串行申请单卡，等待完成释放后执行下一条
 # correctness包含52项回归、逐次API审计和75/75设备任务检查
-task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/validate_profiled_v8.sh --phase correctness'
-task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/validate_profiled_v8.sh --phase precision'
-for phase in math small sweep packed_sweep path_sweep; do
-  task-submit --device auto --timeout 0 --max-time 60 --run "bash tools/validate_profiled_v8.sh --phase $phase"
+task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/validate_profiled_v9.sh --phase correctness'
+task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/validate_profiled_v9.sh --phase precision'
+for phase in math small new_math dispatch sweep packed_sweep path_sweep; do
+  task-submit --device auto --timeout 0 --max-time 60 --run "bash tools/validate_profiled_v9.sh --phase $phase"
 done
-task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/validate_profiled_v8.sh --phase aligned_audit'
+task-submit --device auto --timeout 0 --max-time 60 --run 'bash tools/validate_profiled_v9.sh --phase aligned_audit'
 # 当前kernel先提交Git；打包同时要求参考精度、逐位比较、启动检查与源码规则审查
-python3 tools/package.py --result profiled_v8 --launch-profile profiled_v8_launches \
-  --extra-result profiled_v8_math --extra-result profiled_v8_small --extra-result profiled_v8_sweep \
-  --extra-result profiled_v8_packed_sweep --extra-result profiled_v8_path_sweep \
-  --extra-result profiled_v8_aligned_audit \
-  --bitwise-result profiled_v8_bits --bitwise-result profiled_v8_extended_bits \
-  --compliance-review benchmarks/validation/profiled_v8/compliance.json
+python3 tools/package.py --result profiled_v9 --launch-profile profiled_v9_launches \
+  --extra-result profiled_v9_math --extra-result profiled_v9_small --extra-result profiled_v9_sweep \
+  --extra-result profiled_v9_new_math --extra-result profiled_v9_dispatch \
+  --extra-result profiled_v9_packed_sweep --extra-result profiled_v9_path_sweep \
+  --extra-result profiled_v9_aligned_audit \
+  --bitwise-result profiled_v9_bits --bitwise-result profiled_v9_extended_bits \
+  --compliance-review benchmarks/validation/profiled_v9/compliance.json
 ```
 
 设备任务始终经过服务器 task-submit 队列。编译和报告在 CPU 上完成。不要将 profiler replay 内的 event 时间当作原生 kernel 性能；小算子 event 时间还会包含 host 下发空洞。
@@ -95,9 +96,9 @@ task-submit --device 0 --max-time 30 --run 'bash tools/check_submission_device.s
 
 仓库根目录的开发构建工程、tools、tests及benchmarks仅用于本地测试和profiling，不进入比赛提交包。`templates/rotaryposemb_1743.sha256.json`记录用户原始ZIP中各文件的SHA256，打包和检查均使用这一固定基准。
 
-## 当前 V8 与历史版本
+## 当前 V9 与历史版本
 
-V8 保留 FP32 旋转，使用带舍入保护的 Device 频率求值，并在 AIV 核利用率不足时拆分配对列。105 个本地形状同地址双顺序对照的几何平均加速约 1.115 倍，部分小输入接近 2 倍，大输入基本持平。结果、失败候选与复现见 [V8 报告](docs/profiled_v8.md)。平台得分必须等待 Mac 上的真实平台提交反馈。V7 的 Device 频率迁移记录见 [V7 报告](docs/profiled_v7.md)。
+V9 将标量/向量频率算法分开编译，使用带舍入保护的快速 exp2、调用内根幂和 reciprocal 复用，缩减工作区并重叠首次输入搬运。3988 项参考检查、414 项历史逐位比较、8028 次逐次启动审计和 75/75 Device task 检查通过。性能与边界成本见 [V9 报告](docs/profiled_v9.md)，平台得分仍需真实提交反馈。V8 与 V7 的记录分别见 [V8 报告](docs/profiled_v8.md)、[V7 报告](docs/profiled_v7.md)。
 
 V6 历史数据见 [V6 报告](docs/profiled_v6.md)，其 Host 数学不满足新增规则。V4 的源码仍可从 Git 0a4281f 重建，用于精度逐位对照。V5 因平台精度和性能反馈撤回，见 [回退报告](docs/rollback_v4_round4.md)。
 

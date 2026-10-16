@@ -1,0 +1,170 @@
+--- a/kernel.asc
++++ b/kernel.asc
+@@ -26,7 +26,16 @@
+     uint64_t high=wide/denominator,remainder=wide-high*denominator;
+     uint64_t z=(high<<15)+((remainder<<15)/denominator);
+     uint64_t zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++term=MultiplyQ53(term,zz);sum+=term/5u;
++term=MultiplyQ53(term,zz);sum+=term/7u;
++term=MultiplyQ53(term,zz);sum+=term/9u;
++term=MultiplyQ53(term,zz);sum+=term/11u;
++term=MultiplyQ53(term,zz);sum+=term/13u;
++term=MultiplyQ53(term,zz);sum+=term/15u;
++term=MultiplyQ53(term,zz);sum+=term/17u;
++term=MultiplyQ53(term,zz);sum+=term/19u;
++term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(sum<<1);
+     if(signedNumerator<0)value=-value;
+     value=int64_t(MultiplyQ53(uint64_t(value<0?-value:value),uint64_t(12994641697113596ULL)))*(value<0?-1:1);
+@@ -57,6 +66,14 @@
+     auto v14=scratch[14*stride];
+     auto v15=scratch[15*stride];
+     auto v16=scratch[16*stride];
++    // Integer indices divided by a power of two are exactly representable.
++    // Preserve the general compensated division for other widths.
++    if((width&(width-1))==0) {
++        uint32_t shift=0;for(uint32_t w=width;w>1;w>>=1)++shift;
++        FloatBits scale;scale.bits=(127u-shift)<<23;
++        CreateVecIndex(v7,static_cast<float>(static_cast<int32_t>(start)),n);
++        Muls(v7,v7,scale.value,n);
++    } else {
+     CreateVecIndex(v0,static_cast<float>(static_cast<int32_t>(start)),n);
+     Duplicate(v1,static_cast<float>(static_cast<int32_t>(width)),n);
+     Div(v2,v0,v1,n);
+@@ -95,6 +112,7 @@
+     Sub(v7,v5,v3,n);
+     Add(v3,v8,v7,n);
+     Add(v7,v1,v3,n);
++    }
+     Duplicate(v3,logHi,n);
+     Duplicate(v1,logLo,n);
+     Mul(v8,v7,v3,n);
+@@ -326,7 +344,16 @@
+     uint64_t denominator=uint64_t(sig)+16777216,wide=numerator<<38;
+     uint64_t h=wide/denominator,r=wide-h*denominator;
+     uint64_t z=(h<<15)+((r<<15)/denominator),zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++term=MultiplyQ53(term,zz);sum+=term/5u;
++term=MultiplyQ53(term,zz);sum+=term/7u;
++term=MultiplyQ53(term,zz);sum+=term/9u;
++term=MultiplyQ53(term,zz);sum+=term/11u;
++term=MultiplyQ53(term,zz);sum+=term/13u;
++term=MultiplyQ53(term,zz);sum+=term/15u;
++term=MultiplyQ53(term,zz);sum+=term/17u;
++term=MultiplyQ53(term,zz);sum+=term/19u;
++term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(MultiplyQ53(sum<<1,uint64_t(12994641697113596ULL)));
+     if(signedNumerator<0)value=-value;
+     return value+int64_t(exponent)*int64_t(9007199254740992LL);
+@@ -359,7 +386,15 @@
+     auto table=scratch.ReinterpretCast<uint64_t>();
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    term=MultiplyQ61(term,step)/1u;total+=term;
++term=MultiplyQ61(term,step)/2u;total+=term;
++term=MultiplyQ61(term,step)/3u;total+=term;
++term=MultiplyQ61(term,step)/4u;total+=term;
++term=MultiplyQ61(term,step)/5u;total+=term;
++term=MultiplyQ61(term,step)/6u;total+=term;
++term=MultiplyQ61(term,step)/7u;total+=term;
++term=MultiplyQ61(term,step)/8u;total+=term;
++term=MultiplyQ61(term,step)/9u;total+=term;
+     uint64_t v=uint64_t(1)<<61;
+     for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
+     for(uint32_t i=0;i<width;++i) {
+@@ -410,7 +445,15 @@
+ __aicore__ inline void DeviceExp2Table(const LocalTensor<float>& table,const LocalTensor<float>& scratch,uint32_t stride) {
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    term=MultiplyQ61(term,step)/1u;total+=term;
++term=MultiplyQ61(term,step)/2u;total+=term;
++term=MultiplyQ61(term,step)/3u;total+=term;
++term=MultiplyQ61(term,step)/4u;total+=term;
++term=MultiplyQ61(term,step)/5u;total+=term;
++term=MultiplyQ61(term,step)/6u;total+=term;
++term=MultiplyQ61(term,step)/7u;total+=term;
++term=MultiplyQ61(term,step)/8u;total+=term;
++term=MultiplyQ61(term,step)/9u;total+=term;
+     uint64_t v=uint64_t(1)<<61;
+     for(uint32_t j=0;j<32;++j) {
+         float hi=static_cast<float>(int32_t(v>>38))*0x1p-23f;
+@@ -442,8 +485,8 @@
+         uint32_t count=pitch-start<stride?pitch-start:stride;
+         DeviceFrequencyChunk(dst[start],table,scratch,start,width,count,stride,logHi,logLo,shift,finish);
+     }
++    for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+     PipeBarrier<PIPE_ALL>();
+-    for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+ }
+ 
+ __aicore__ inline void FillDeviceFrequencies(TPipe& pipe,TBuf<TPosition::VECCALC>& fallback,
+@@ -514,7 +557,15 @@
+     auto table=scratch.ReinterpretCast<uint64_t>();
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    term=MultiplyQ61(term,step)/1u;total+=term;
++term=MultiplyQ61(term,step)/2u;total+=term;
++term=MultiplyQ61(term,step)/3u;total+=term;
++term=MultiplyQ61(term,step)/4u;total+=term;
++term=MultiplyQ61(term,step)/5u;total+=term;
++term=MultiplyQ61(term,step)/6u;total+=term;
++term=MultiplyQ61(term,step)/7u;total+=term;
++term=MultiplyQ61(term,step)/8u;total+=term;
++term=MultiplyQ61(term,step)/9u;total+=term;
+     uint64_t v=uint64_t(1)<<61;
+     for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
+     for(uint32_t col=0;col<count;++col) {
+@@ -666,7 +717,6 @@
+         pipe_.InitBuffer(freq_, (width_>256?512:pitch_) * sizeof(float));
+         auto f = freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,f,frequencies,width_,pitch_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+ 
+     __aicore__ inline void Process() {
+@@ -802,7 +852,6 @@
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+         auto freq=trig_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -929,7 +978,6 @@
+         pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
+         auto freq=freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,(half_+7)/8*8,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint64_t n=tokens_-job*tile_;return n<tile_?n:tile_;
+@@ -1030,7 +1078,6 @@
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+         auto freq=trig_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -1411,7 +1458,6 @@
+         auto freq=trig_.Get<float>();
+         auto scratch=out_.AllocTensor<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,scratch);
+-        PipeBarrier<PIPE_ALL>();
+         out_.FreeTensor(scratch);
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+@@ -1520,7 +1566,6 @@
+         pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
+         auto freq=freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,(half_+7)/8*8,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint64_t n=tokens_-job*tile_;return n<tile_?n:tile_;

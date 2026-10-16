@@ -1,0 +1,19 @@
+{
+  "kernel_sha256": "a4f5c20d76438272300cf78a8d932dbbdf4a4d4f94ca99d65318bc4619c9ec77",
+  "reviewer": "Codex source review",
+  "reviewed_at": "2026-10-16T16:31:23.253609+00:00",
+  "device_math_notes": "Host performs metadata-based tiling and one exclusive launch; theta remains a scalar. All frequencies, angles, trig and rotations are computed inside that Device invocation. The generic exp2 polynomial has universal approximation coefficients, not stored operator results. Only ambiguous rounding intervals build five generic root powers in the current invocation UB; rootsReady is a local initialized subexpression-reuse condition, not an output marker or cross-invocation cache. The Q53 ambiguity path preserves FP32 frequency rounding. Binary-width exponent generation uses exact binary scaling. Small scratch is sized for five uint64 roots, with all reads dominated by their initialization. Nonzero log(theta) very close to zero uses the guard-bit algorithm as a numerical-conditioning choice for arbitrary widths; it does not match test IDs or data generation patterns, and exact theta=1 uses the existing vector computation. First input DMA overlaps initialization in aligned/direct kernels with distinct live buffers and completion barriers before consumption. No Host tensor read/reorder, Host vector math, prerecorded RoPE result, global cache/workspace, extra kernel, empty launch, stale-output read, warmup recognition or judging/timing modification is present. All elements are written once except mathematically exact position-zero copying. Original payload only replaces kernel.asc.",
+  "assertions": {
+    "host_only_validation_shape_tiling_launch": true,
+    "no_host_tensor_read_or_reorder": true,
+    "all_frequency_angle_trig_rotation_on_device": true,
+    "no_precomputed_results_or_host_vectors": true,
+    "no_testcase_or_data_pattern_shortcuts": true,
+    "no_markers_stale_output_or_uninitialized_memory": true,
+    "no_judge_precision_or_timing_changes": true,
+    "no_empty_kernel_or_warmup_detection": true,
+    "no_cross_invocation_cache": true,
+    "exactly_one_device_kernel_per_invocation": true,
+    "kernel_asc_is_only_template_change": true
+  }
+}

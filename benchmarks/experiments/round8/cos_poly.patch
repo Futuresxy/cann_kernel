@@ -1,0 +1,16 @@
+--- a/kernel.asc
++++ b/kernel.asc
+@@ -495,8 +495,11 @@
+     Mul(s,s,q,n);Adds(s,s,-1.0f/6.0f,n);
+     Mul(s,s,q,n);Adds(s,s,1.0f,n);
+     Mul(s,s,angle,n);
+-    Mul(c,s,s,n);Muls(c,c,-1.0f,n);
+-    Adds(c,c,1.0f,n);Sqrt(c,c,n);
++    // cos(angle/4) on [-pi/4, pi/4]; avoid the vector square root.
++    Muls(c,q,1.0f/40320.0f,n);Adds(c,c,-1.0f/720.0f,n);
++    Mul(c,c,q,n);Adds(c,c,1.0f/24.0f,n);
++    Mul(c,c,q,n);Adds(c,c,-0.5f,n);
++    Mul(c,c,q,n);Adds(c,c,1.0f,n);
+     Mul(angle,s,c,n);Muls(angle,angle,2.0f,n);
+     Mul(s,s,s,n);Muls(s,s,-2.0f,n);
+     Adds(s,s,1.0f,n);

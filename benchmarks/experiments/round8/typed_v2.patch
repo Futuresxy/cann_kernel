@@ -1,0 +1,753 @@
+--- a/kernel.asc
++++ b/kernel.asc
+@@ -7,6 +7,7 @@
+ namespace rope1743 {
+ using namespace AscendC;
+ struct Frequencies { float theta; };
++struct ScalarFrequencyConfig {float theta;};
+ using WideFrequencies=Frequencies;
+ union FloatBits {float value;uint32_t bits;};
+ __aicore__ inline uint64_t MultiplyQ53(uint64_t a,uint64_t b) {
+@@ -26,7 +27,16 @@
+     uint64_t high=wide/denominator,remainder=wide-high*denominator;
+     uint64_t z=(high<<15)+((remainder<<15)/denominator);
+     uint64_t zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++    term=MultiplyQ53(term,zz);sum+=term/5u;
++    term=MultiplyQ53(term,zz);sum+=term/7u;
++    term=MultiplyQ53(term,zz);sum+=term/9u;
++    term=MultiplyQ53(term,zz);sum+=term/11u;
++    term=MultiplyQ53(term,zz);sum+=term/13u;
++    term=MultiplyQ53(term,zz);sum+=term/15u;
++    term=MultiplyQ53(term,zz);sum+=term/17u;
++    term=MultiplyQ53(term,zz);sum+=term/19u;
++    term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(sum<<1);
+     if(signedNumerator<0)value=-value;
+     value=int64_t(MultiplyQ53(uint64_t(value<0?-value:value),uint64_t(12994641697113596ULL)))*(value<0?-1:1);
+@@ -57,6 +67,14 @@
+     auto v14=scratch[14*stride];
+     auto v15=scratch[15*stride];
+     auto v16=scratch[16*stride];
++    // Integer indices divided by a power of two are exactly representable.
++    // Preserve the general compensated division for other widths.
++    if((width&(width-1))==0) {
++        uint32_t shift=0;for(uint32_t w=width;w>1;w>>=1)++shift;
++        FloatBits scale;scale.bits=(127u-shift)<<23;
++        CreateVecIndex(v7,static_cast<float>(static_cast<int32_t>(start)),n);
++        Muls(v7,v7,scale.value,n);
++    } else {
+     CreateVecIndex(v0,static_cast<float>(static_cast<int32_t>(start)),n);
+     Duplicate(v1,static_cast<float>(static_cast<int32_t>(width)),n);
+     Div(v2,v0,v1,n);
+@@ -95,6 +113,7 @@
+     Sub(v7,v5,v3,n);
+     Add(v3,v8,v7,n);
+     Add(v7,v1,v3,n);
++    }
+     Duplicate(v3,logHi,n);
+     Duplicate(v1,logLo,n);
+     Mul(v8,v7,v3,n);
+@@ -326,29 +345,69 @@
+     uint64_t denominator=uint64_t(sig)+16777216,wide=numerator<<38;
+     uint64_t h=wide/denominator,r=wide-h*denominator;
+     uint64_t z=(h<<15)+((r<<15)/denominator),zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++    term=MultiplyQ53(term,zz);sum+=term/5u;
++    term=MultiplyQ53(term,zz);sum+=term/7u;
++    term=MultiplyQ53(term,zz);sum+=term/9u;
++    term=MultiplyQ53(term,zz);sum+=term/11u;
++    term=MultiplyQ53(term,zz);sum+=term/13u;
++    term=MultiplyQ53(term,zz);sum+=term/15u;
++    term=MultiplyQ53(term,zz);sum+=term/17u;
++    term=MultiplyQ53(term,zz);sum+=term/19u;
++    term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(MultiplyQ53(sum<<1,uint64_t(12994641697113596ULL)));
+     if(signedNumerator<0)value=-value;
+     return value+int64_t(exponent)*int64_t(9007199254740992LL);
+ }
+-// This computes the same FP32-rounded power as the protected path. Q31 error
+-// after normalization is bounded by 32 units. Only results farther than this
+-// bound from an FP32 halfway point are accepted; other values use Q53 below.
+-// The table is generic exp2 range reduction generated in this invocation.
+-__aicore__ inline bool TryFrequencyPowerQ31(int64_t log31,uint32_t numerator,uint32_t denominatorLog,
+-    const LocalTensor<uint64_t>& table,uint64_t& mantissa,int32_t& exponent) {
++// Build generic exp2 root powers only if guard-bit evaluation is needed.
++// The five values live in this invocation's UB and depend on no RoPE data.
++__aicore__ inline void BuildExp2Roots(const LocalTensor<uint64_t>& roots) {
++    uint64_t term=uint64_t(1)<<61,total=term;
++    uint64_t step=uint64_t(1598288580650331957ULL)>>5;
++    term=MultiplyQ61(term,step)/1u;total+=term;
++    term=MultiplyQ61(term,step)/2u;total+=term;
++    term=MultiplyQ61(term,step)/3u;total+=term;
++    term=MultiplyQ61(term,step)/4u;total+=term;
++    term=MultiplyQ61(term,step)/5u;total+=term;
++    term=MultiplyQ61(term,step)/6u;total+=term;
++    term=MultiplyQ61(term,step)/7u;total+=term;
++    term=MultiplyQ61(term,step)/8u;total+=term;
++    term=MultiplyQ61(term,step)/9u;total+=term;
++    roots.SetValue(0,total);
++    for(uint32_t i=1;i<5;++i){total=MultiplyQ61(total,total);roots.SetValue(i,total);}
++}
++__aicore__ inline uint64_t Exp2Center(const LocalTensor<uint64_t>& roots,uint32_t index) {
++    uint64_t value=uint64_t(1)<<61;
++    for(uint32_t i=0;i<5;++i)if(index&(1u<<i))value=MultiplyQ61(value,roots.GetValue(i));
++    return value;
++}
++__aicore__ inline bool TryExp2PowerQ31(int64_t log31,uint32_t numerator,uint32_t denominatorLog,
++    uint64_t& mantissa,int32_t& exponent) {
+     int64_t x=(log31*int64_t(numerator))>>denominatorLog;
+-    int64_t k=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<26));if(x<0)k=-k;
+-    int64_t r=x-k*int64_t(uint64_t(1)<<26);
+-    int64_t p=int64_t(2147483648LL)+((r*(int64_t(1488522236LL)+
+-        ((r*(int64_t(515886673LL)+((r*int64_t(119193107LL))>>31)))>>31)))>>31);
+-    uint64_t center=RoundDivide(table.GetValue(uint32_t(k&31)),uint64_t(1)<<30);
+-    uint64_t v=(center*uint64_t(p))>>31;exponent=int32_t(k>>5);
+-    if(v<(uint64_t(1)<<31)){v<<=1;--exponent;}
+-    else if(v>=(uint64_t(1)<<32)){v>>=1;++exponent;}
+-    uint32_t remainder=uint32_t(v&255);
+-    if(remainder>=96 && remainder<=160)return false;
+-    mantissa=(v+128)>>8;return true;
++    int64_t k=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<31));if(x<0)k=-k;
++    int64_t r=x-k*int64_t(uint64_t(1)<<31);
++    int64_t p;
++    if(r>=-4096 && r<=4096) {
++        // The quadratic correction is below 0.002 Q31 units here; the
++        // same 16-unit rounding guard still covers the linear evaluation.
++        p=2147483648LL+((r*1488522236LL)>>31);
++    } else {
++    p=32864LL;
++    p=332210LL+((r*p)>>31);
++    p=2863343LL+((r*p)>>31);
++    p=20654553LL+((r*p)>>31);
++    p=119194167LL+((r*p)>>31);
++    p=515882507LL+((r*p)>>31);
++    p=1488522236LL+((r*p)>>31);
++    p=2147483648LL+((r*p)>>31);
++    }
++    uint64_t power=uint64_t(p);exponent=int32_t(k);
++    if(power<(uint64_t(1)<<31)){power<<=1;--exponent;}
++    else if(power>=(uint64_t(1)<<32)){power>>=1;++exponent;}
++    // 16 Q31 units cover coefficient, evaluation and log truncation error.
++    uint32_t remainder=uint32_t(power&255);
++    if(remainder>=112 && remainder<=144)return false;
++    mantissa=(power+128)>>8;return true;
+ }
+ 
+ __aicore__ inline void ScalarFrequencies(const LocalTensor<float>& dst,float theta,
+@@ -357,11 +416,8 @@
+     bool binaryWidth=(width&(width-1))==0;uint32_t widthLog=0;
+     if(binaryWidth){uint32_t n=width;while(n>1){n>>=1;++widthLog;}}
+     auto table=scratch.ReinterpretCast<uint64_t>();
+-    uint64_t term=uint64_t(1)<<61,total=term;
+-    uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
+-    uint64_t v=uint64_t(1)<<61;
+-    for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
++    bool rootsReady=false;
++    uint64_t previousPower=~uint64_t(0);uint32_t previousResult=0;
+     for(uint32_t i=0;i<width;++i) {
+         uint32_t result=0x3f800000u;
+         if(i!=0) {
+@@ -379,26 +435,34 @@
+                 exponent=int64_t(mant<<(30-shift));
+             }
+             uint64_t pm=0;int32_t e=0;
+-            if(!TryFrequencyPowerQ31(log31,numerator,denominatorLog,table,pm,e)) {
++            if(!TryExp2PowerQ31(log31,numerator,denominatorLog,pm,e)) {
+             int64_t x=SignedMultiplyQ53(log,exponent);
+             int64_t ki=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<48));
+             if(x<0)ki=-ki;
++            if((ki&31)!=0 && !rootsReady){BuildExp2Roots(table);rootsReady=true;}
+             int64_t r=x-ki*int64_t(uint64_t(1)<<48);
+             int64_t p=int64_t(9007199254740992LL)+SignedMultiplyQ53(r,
+                 int64_t(6243314769351382LL)+SignedMultiplyQ53(r,
+                 int64_t(2163785536024893LL)+SignedMultiplyQ53(r,int64_t(499932125008441LL))));
+-            uint64_t center=RoundDivide(table.GetValue(uint32_t(ki&31)),256);
++            uint64_t center=RoundDivide(Exp2Center(table,uint32_t(ki&31)),256);
+             uint64_t power=MultiplyQ53(center,uint64_t(p));e=int32_t(ki>>5);
+             if(power<(uint64_t(1)<<53)){power<<=1;--e;}
+             else if(power>=(uint64_t(1)<<54)){power>>=1;++e;}
+             pm=RoundDivide(power,uint64_t(1)<<30);
+             }
+             if(pm>=(uint64_t(1)<<24)){pm>>=1;++e;}
++            // Reuse an identical rounded power only inside this call.
++            // Every exponent and power is still computed from current theta.
++            uint64_t powerKey=(uint64_t(uint32_t(e))<<24)|pm;
++            if(powerKey==previousPower)result=previousResult;
++            else {
+             int32_t fe;uint64_t fm;
+             if(pm==(uint64_t(1)<<23)){fe=-e;fm=uint64_t(1)<<23;}
+             else {fe=-e-1;fm=RoundDivide(uint64_t(1)<<47,pm);}
+             if(fm>=(uint64_t(1)<<24)){fm>>=1;++fe;}
+             result=(uint32_t(fe+127)<<23)|uint32_t(fm-(uint64_t(1)<<23));
++                previousPower=powerKey;previousResult=result;
++            }
+         }
+         FloatBits f;f.bits=result;dst.SetValue(i,f.value);
+     }
+@@ -410,7 +474,15 @@
+ __aicore__ inline void DeviceExp2Table(const LocalTensor<float>& table,const LocalTensor<float>& scratch,uint32_t stride) {
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    term=MultiplyQ61(term,step)/1u;total+=term;
++    term=MultiplyQ61(term,step)/2u;total+=term;
++    term=MultiplyQ61(term,step)/3u;total+=term;
++    term=MultiplyQ61(term,step)/4u;total+=term;
++    term=MultiplyQ61(term,step)/5u;total+=term;
++    term=MultiplyQ61(term,step)/6u;total+=term;
++    term=MultiplyQ61(term,step)/7u;total+=term;
++    term=MultiplyQ61(term,step)/8u;total+=term;
++    term=MultiplyQ61(term,step)/9u;total+=term;
+     uint64_t v=uint64_t(1)<<61;
+     for(uint32_t j=0;j<32;++j) {
+         float hi=static_cast<float>(int32_t(v>>38))*0x1p-23f;
+@@ -422,9 +494,16 @@
+     PipeBarrier<PIPE_ALL>();
+ }
+ 
++// Near log(theta)=0, power values can lie closer to an FP32 halfway
++// point than the double-float vector approximation can resolve. Use the
++// integer guard-bit algorithm for this numerical conditioning window.
++__aicore__ inline bool ScalarFrequencyMode(uint32_t width,float theta) {
++    bool nearUnity=theta!=1.0f && theta>=1.0f-0x1p-20f && theta<=1.0f+0x1p-20f;
++    return (width<=32 || nearUnity) && theta>=0x1p-64f && theta<=0x1p64f;
++}
++
+ __aicore__ inline void FillFrequencies(const LocalTensor<float>& dst,const Frequencies& f,
+     uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+-    if(width<=32 && f.theta>=0x1p-64f && f.theta<=0x1p64f){ScalarFrequencies(dst,f.theta,width,pitch,scratch);return;}
+     FloatBits bits;bits.value=f.theta;
+     int32_t exponent=int32_t((bits.bits>>23)&255)-127;
+     if(exponent==-127){bits.value=f.theta*8388608.0f;exponent=int32_t((bits.bits>>23)&255)-127-23;}
+@@ -442,14 +521,18 @@
+         uint32_t count=pitch-start<stride?pitch-start:stride;
+         DeviceFrequencyChunk(dst[start],table,scratch,start,width,count,stride,logHi,logLo,shift,finish);
+     }
++    for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+     PipeBarrier<PIPE_ALL>();
+-    for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+-}
+-
++}
++
++__aicore__ inline void FillDeviceFrequencies(TPipe& pipe,TBuf<TPosition::VECCALC>& fallback,
++    const LocalTensor<float>& dst,const ScalarFrequencyConfig& f,uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
++    if(scratch.GetSize()>=16)ScalarFrequencies(dst,f.theta,width,pitch,scratch);
++    else {pipe.InitBuffer(fallback,64);ScalarFrequencies(dst,f.theta,width,pitch,fallback.Get<float>());}
++}
+ __aicore__ inline void FillDeviceFrequencies(TPipe& pipe,TBuf<TPosition::VECCALC>& fallback,
+     const LocalTensor<float>& dst,const Frequencies& f,uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+-    bool scalar=width<=32 && f.theta>=0x1p-64f && f.theta<=0x1p64f;
+-    uint32_t full=scalar?64:FREQUENCY_MATH_SLOTS*(pitch<32?32:pitch)+64;
++    uint32_t full=FREQUENCY_MATH_SLOTS*(pitch<32?32:pitch)+64;
+     // In these kernels, a reusable region <=24 KiB implies less than 140 KiB
+     // of live UB. Even a full 512-lane math region keeps the total below 192 KiB.
+     if(scratch.GetSize()>=full || scratch.GetSize()>6144)
+@@ -512,11 +595,8 @@
+     bool binaryWidth=(width&(width-1))==0;uint32_t widthLog=0;
+     if(binaryWidth){uint32_t n=width;while(n>1){n>>=1;++widthLog;}}
+     auto table=scratch.ReinterpretCast<uint64_t>();
+-    uint64_t term=uint64_t(1)<<61,total=term;
+-    uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
+-    uint64_t v=uint64_t(1)<<61;
+-    for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
++    bool rootsReady=false;
++    uint64_t previousPower=~uint64_t(0);uint32_t previousResult=0;
+     for(uint32_t col=0;col<count;++col) {
+         uint32_t i=start+col;
+         uint32_t result=0x3f800000u;
+@@ -535,26 +615,34 @@
+                 exponent=int64_t(mant<<(30-shift));
+             }
+             uint64_t pm=0;int32_t e=0;
+-            if(!TryFrequencyPowerQ31(log31,numerator,denominatorLog,table,pm,e)) {
++            if(!TryExp2PowerQ31(log31,numerator,denominatorLog,pm,e)) {
+             int64_t x=SignedMultiplyQ53(log,exponent);
+             int64_t ki=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<48));
+             if(x<0)ki=-ki;
++            if((ki&31)!=0 && !rootsReady){BuildExp2Roots(table);rootsReady=true;}
+             int64_t r=x-ki*int64_t(uint64_t(1)<<48);
+             int64_t p=int64_t(9007199254740992LL)+SignedMultiplyQ53(r,
+                 int64_t(6243314769351382LL)+SignedMultiplyQ53(r,
+                 int64_t(2163785536024893LL)+SignedMultiplyQ53(r,int64_t(499932125008441LL))));
+-            uint64_t center=RoundDivide(table.GetValue(uint32_t(ki&31)),256);
++            uint64_t center=RoundDivide(Exp2Center(table,uint32_t(ki&31)),256);
+             uint64_t power=MultiplyQ53(center,uint64_t(p));e=int32_t(ki>>5);
+             if(power<(uint64_t(1)<<53)){power<<=1;--e;}
+             else if(power>=(uint64_t(1)<<54)){power>>=1;++e;}
+             pm=RoundDivide(power,uint64_t(1)<<30);
+             }
+             if(pm>=(uint64_t(1)<<24)){pm>>=1;++e;}
++            // Reuse an identical rounded power only inside this call.
++            // Every exponent and power is still computed from current theta.
++            uint64_t powerKey=(uint64_t(uint32_t(e))<<24)|pm;
++            if(powerKey==previousPower)result=previousResult;
++            else {
+             int32_t fe;uint64_t fm;
+             if(pm==(uint64_t(1)<<23)){fe=-e;fm=uint64_t(1)<<23;}
+             else {fe=-e-1;fm=RoundDivide(uint64_t(1)<<47,pm);}
+             if(fm>=(uint64_t(1)<<24)){fm>>=1;++fe;}
+             result=(uint32_t(fe+127)<<23)|uint32_t(fm-(uint64_t(1)<<23));
++                previousPower=powerKey;previousResult=result;
++            }
+         }
+         FloatBits f;f.bits=result;dst.SetValue(col,f.value);
+     }
+@@ -579,7 +667,7 @@
+         groups_=(heads_+tile_-1)/tile_;
+         pipe_.InitBuffer(in_,1,2*capacity_*sizeof(T));
+         pipe_.InitBuffer(out_,1,2*capacity_*sizeof(T));
+-        uint32_t workCount=5*capacity_;if(workCount<64)workCount=64;
++        uint32_t workCount=5*capacity_;if(workCount<16)workCount=16;
+         pipe_.InitBuffer(work_,workCount*sizeof(float));
+         pipe_.InitBuffer(trig_,4*pitch_*sizeof(float));
+         ScalarFrequencyRange(trig_.Get<float>(),theta,half_,start_,width_,pitch_,work_.Get<float>());
+@@ -666,7 +754,6 @@
+         pipe_.InitBuffer(freq_, (width_>256?512:pitch_) * sizeof(float));
+         auto f = freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,f,frequencies,width_,pitch_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+ 
+     __aicore__ inline void Process() {
+@@ -754,19 +841,19 @@
+     uint32_t heads_, dim_, half_, colStart_, width_, pitch_, tileHeads_, groups_, capacity_;
+ };
+ 
+-template <typename T>
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void rotary_kernel(GM_ADDR x, GM_ADDR positions, GM_ADDR y,
+-    uint64_t tokens, uint32_t heads, uint32_t dim, uint32_t colStart, uint32_t width, uint32_t tileHeads, Frequencies frequencies) {
++    uint64_t tokens, uint32_t heads, uint32_t dim, uint32_t colStart, uint32_t width, uint32_t tileHeads, F frequencies) {
+     Rotary<T> op;
+     op.Init(x, positions, y, tokens, heads, dim, colStart, width, tileHeads, frequencies);
+     op.Process();
+ }
+ // All columns of wide dimensions execute in this one kernel. Each core owns
+ // complete half-pairs, so no inter-kernel scratch or second launch is needed.
+-template <typename T>
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void wide_kernel(GM_ADDR x, GM_ADDR positions, GM_ADDR y,
+     uint64_t tokens, uint32_t heads, uint32_t dim, uint32_t tileHeads,
+-    WideFrequencies frequencies) {
++    F frequencies) {
+     Rotary<T> op;
+     op.Init(x, positions, y, tokens, heads, dim, 0, dim / 2, tileHeads, frequencies);
+     op.Process();
+@@ -800,9 +887,7 @@
+         fullCos_=(dim_<=64 && tileHeads_>=16);
+         if(fullCos_)pipe_.InitBuffer(cosFull_,2*cacheSize_*sizeof(float));
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+-        auto freq=trig_.Get<float>();
+-        FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
++        theta_=f.theta;
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -833,12 +918,16 @@
+         }
+         return count;
+     }
++    template <typename F>
+     __aicore__ inline void Process() {
+         uint64_t jobs=tokens_*groups_;
+         uint64_t begin=jobs*GetBlockIdx()/GetBlockNum();
+         uint64_t end=jobs*(GetBlockIdx()+1)/GetBlockNum();
+         if(begin==end)return;
+         Prefetch(begin);
++        F frequencyParameters{theta_};
++        FillDeviceFrequencies(pipe_,frequencyMath_,trig_.Get<float>(),frequencyParameters,half_,freqSize_,work_.Get<float>());
++
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
+         auto z=work_.Get<float>();auto r=z[size_];
+@@ -891,6 +980,7 @@
+         PipeBarrier<PIPE_ALL>();
+     }
+ private:
++    float theta_;
+     TPipe pipe_; TBuf<TPosition::VECCALC> frequencyMath_;
+     TQue<QuePosition::VECIN,2> in_;
+     TQue<QuePosition::VECOUT,2> out_;
+@@ -901,16 +991,16 @@
+     uint64_t tokens_;
+     uint32_t heads_,dim_,half_,tileHeads_,groups_,size_,freqSize_,batch_,cacheSize_;
+ };
+-template <typename T>
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void aligned_kernel(GM_ADDR x,GM_ADDR positions,GM_ADDR y,
+-    uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,Frequencies frequencies) {
+-    AlignedRotary<T> op;op.Init(x,positions,y,tokens,heads,dim,tileHeads,frequencies);op.Process();
+-}
+-
+-template <typename T>
++    uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,F frequencies) {
++    AlignedRotary<T> op;op.Init(x,positions,y,tokens,heads,dim,tileHeads,frequencies);op.template Process<F>();
++}
++
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void wide_aligned_kernel(GM_ADDR x,GM_ADDR positions,GM_ADDR y,
+-    uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,WideFrequencies frequencies) {
+-    AlignedRotary<T> op;op.Init(x,positions,y,tokens,heads,dim,tileHeads,frequencies);op.Process();
++    uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,F frequencies) {
++    AlignedRotary<T> op;op.Init(x,positions,y,tokens,heads,dim,tileHeads,frequencies);op.template Process<F>();
+ }
+ 
+ // H=1: combine tokens so the expensive transcendental work fills SIMD lanes.
+@@ -929,7 +1019,6 @@
+         pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
+         auto freq=freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,(half_+7)/8*8,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint64_t n=tokens_-job*tile_;return n<tile_?n:tile_;
+@@ -991,15 +1080,15 @@
+     GlobalTensor<T> x_,y_;GlobalTensor<int32_t> pos_;
+     uint64_t tokens_;uint32_t dim_,half_,tile_,size_,pair_;
+ };
+-template <typename T>
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void batched_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
+-    uint32_t dim,uint32_t tileTokens,Frequencies f) {
++    uint32_t dim,uint32_t tileTokens,F f) {
+     BatchedRotary<T> op;op.Init(x,p,y,tokens,dim,tileTokens,f);op.Process();
+ }
+ 
+-template <typename T>
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void wide_batched_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
+-    uint32_t dim,uint32_t tile,WideFrequencies f) {
++    uint32_t dim,uint32_t tile,F f) {
+     BatchedRotary<T> op;op.Init(x,p,y,tokens,dim,tile,f);op.Process();
+ }
+ 
+@@ -1028,9 +1117,7 @@
+         if (batch_ < 1) batch_ = 1;
+         cacheSize_ = batch_ * freqSize_;
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+-        auto freq=trig_.Get<float>();
+-        FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
++        theta_=f.theta;
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -1056,12 +1143,16 @@
+         Muls(angle,s,-1.0f,count*freqSize_);
+         return count;
+     }
++    template <typename F>
+     __aicore__ inline void Process() {
+         uint64_t jobs=tokens_*groups_;
+         uint64_t begin=jobs*GetBlockIdx()/GetBlockNum();
+         uint64_t end=jobs*(GetBlockIdx()+1)/GetBlockNum();
+         if(begin==end)return;
+         Prefetch(begin);
++        F frequencyParameters{theta_};
++        FillDeviceFrequencies(pipe_,frequencyMath_,trig_.Get<float>(),frequencyParameters,half_,freqSize_,work_.Get<float>());
++
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
+         auto z=work_.Get<float>();auto r=z[workStride_];
+@@ -1111,6 +1202,7 @@
+         PipeBarrier<PIPE_ALL>();
+     }
+ private:
++    float theta_;
+     TPipe pipe_; TBuf<TPosition::VECCALC> frequencyMath_;
+     TQue<QuePosition::VECIN,2> in_;
+     TQue<QuePosition::VECOUT,2> out_;
+@@ -1120,23 +1212,24 @@
+     uint64_t tokens_;
+     uint32_t heads_,dim_,half_,tileHeads_,groups_,size_,freqSize_,batch_,cacheSize_,workStride_;
+ };
+-template <typename T>
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void large_aligned_kernel(GM_ADDR x,GM_ADDR positions,GM_ADDR y,
+-    uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,Frequencies frequencies) {
+-    LargeAlignedRotary<T> op;op.Init(x,positions,y,tokens,heads,dim,tileHeads,frequencies);op.Process();
+-}
+-
+-template <typename T>
++    uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,F frequencies) {
++    LargeAlignedRotary<T> op;op.Init(x,positions,y,tokens,heads,dim,tileHeads,frequencies);op.template Process<F>();
++}
++
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void large_wide_kernel(GM_ADDR x,GM_ADDR positions,GM_ADDR y,
+-    uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,WideFrequencies frequencies) {
+-    LargeAlignedRotary<T> op;op.Init(x,positions,y,tokens,heads,dim,tileHeads,frequencies);op.Process();
++    uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,F frequencies) {
++    LargeAlignedRotary<T> op;op.Init(x,positions,y,tokens,heads,dim,tileHeads,frequencies);op.template Process<F>();
+ }
+ 
+ // Continuous token tiles; UB gathers separate and rejoin rotate-half pairs.
+ template <typename T> class PackedRotary {
+ public:
++    template <typename F>
+     __aicore__ inline void Init(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
+-        uint32_t heads,uint32_t dim,uint32_t tileTokens,const Frequencies& f) {
++        uint32_t heads,uint32_t dim,uint32_t tileTokens,const F& f) {
+         x_.SetGlobalBuffer((__gm__ T*)x);pos_.SetGlobalBuffer((__gm__ int32_t*)p);
+         y_.SetGlobalBuffer((__gm__ T*)y);
+         tokens_=tokens;heads_=heads;dim_=dim;half_=dim/2;pitch_=(half_+15)/16*16;
+@@ -1266,16 +1359,17 @@
+     GlobalTensor<T> x_,y_;GlobalTensor<int32_t> pos_;uint64_t tokens_;
+     uint32_t heads_,dim_,half_,pitch_,tile_,rows_,capacity_;
+ };
+-template <typename T>
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void packed_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
+-    uint32_t heads,uint32_t dim,uint32_t tile,Frequencies f) {
++    uint32_t heads,uint32_t dim,uint32_t tile,F f) {
+     PackedRotary<T> op;op.Init(x,p,y,tokens,heads,dim,tile,f);op.Process();
+ }
+ 
+ template <typename T> class HeadTileRotary {
+ public:
++    template <typename F>
+     __aicore__ inline void Init(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
+-        uint32_t heads,uint32_t dim,uint32_t tileTokens,const Frequencies& f) {
++        uint32_t heads,uint32_t dim,uint32_t tileTokens,const F& f) {
+         x_.SetGlobalBuffer((__gm__ T*)x);pos_.SetGlobalBuffer((__gm__ int32_t*)p);
+         y_.SetGlobalBuffer((__gm__ T*)y);
+         tokens_=tokens;heads_=heads;dim_=dim;half_=dim/2;pitch_=(half_+15)/16*16;
+@@ -1379,9 +1473,9 @@
+     GlobalTensor<T> x_,y_;GlobalTensor<int32_t> pos_;uint64_t tokens_;
+     uint32_t heads_,dim_,half_,pitch_,tile_,rows_,capacity_,groups_;
+ };
+-template <typename T>
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void head_tile_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
+-    uint32_t heads,uint32_t dim,uint32_t tile,Frequencies f) {
++    uint32_t heads,uint32_t dim,uint32_t tile,F f) {
+     HeadTileRotary<T> op;op.Init(x,p,y,tokens,heads,dim,tile,f);op.Process();
+ }
+ 
+@@ -1408,11 +1502,7 @@
+         if (batch_ < 1) batch_ = 1;
+         cacheSize_ = batch_ * freqSize_;
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+-        auto freq=trig_.Get<float>();
+-        auto scratch=out_.AllocTensor<float>();
+-        FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,scratch);
+-        PipeBarrier<PIPE_ALL>();
+-        out_.FreeTensor(scratch);
++        theta_=f.theta;
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -1438,12 +1528,18 @@
+         Muls(angle,s,-1.0f,count*freqSize_);
+         return count;
+     }
++    template <typename F>
+     __aicore__ inline void Process() {
+         uint64_t jobs=tokens_*groups_;
+         uint64_t begin=jobs*GetBlockIdx()/GetBlockNum();
+         uint64_t end=jobs*(GetBlockIdx()+1)/GetBlockNum();
+         if(begin==end)return;
+         Prefetch(begin);
++        F frequencyParameters{theta_};
++        auto frequencyScratch=out_.AllocTensor<float>();
++        FillDeviceFrequencies(pipe_,frequencyMath_,trig_.Get<float>(),frequencyParameters,half_,freqSize_,frequencyScratch);
++        out_.FreeTensor(frequencyScratch);
++
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
+         auto cosCache=trig_.Get<float>()[freqSize_];auto sinCache=cosCache[cacheSize_];
+@@ -1489,6 +1585,7 @@
+         PipeBarrier<PIPE_ALL>();
+     }
+ private:
++    float theta_;
+     TPipe pipe_; TBuf<TPosition::VECCALC> frequencyMath_;
+     TQue<QuePosition::VECIN,2> in_;
+     TQue<QuePosition::VECOUT,2> out_;
+@@ -1501,7 +1598,7 @@
+ template <typename F>
+ __global__ __vector__ void direct_float_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,
+     uint64_t tokens,uint32_t heads,uint32_t dim,uint32_t tileHeads,F frequencies) {
+-    DirectFloatRotary op;op.Init(x,p,y,tokens,heads,dim,tileHeads,frequencies);op.Process();
++    DirectFloatRotary op;op.Init(x,p,y,tokens,heads,dim,tileHeads,frequencies);op.Process<F>();
+ }
+ 
+ template <typename T> class BulkPositionRotary {
+@@ -1520,7 +1617,6 @@
+         pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
+         auto freq=freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,(half_+7)/8*8,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint64_t n=tokens_-job*tile_;return n<tile_?n:tile_;
+@@ -1593,15 +1689,16 @@
+     GlobalTensor<T> x_,y_;GlobalTensor<int32_t> pos_;
+     uint64_t tokens_;uint32_t dim_,half_,tile_,size_,pair_;
+ };
+-template <typename T>
++template <typename T,typename F=Frequencies>
+ __global__ __vector__ void bulk_position_kernel(GM_ADDR x,GM_ADDR p,GM_ADDR y,uint64_t tokens,
+-    uint32_t dim,uint32_t tile,Frequencies f) {
++    uint32_t dim,uint32_t tile,F f) {
+     BulkPositionRotary<T> op;op.Init(x,p,y,tokens,dim,tile,f);op.Process();
+ }
+ 
+ } // namespace rope1743
+ 
+-extern "C" void run_kernel(GM_ADDR x, const TensorGroupInfo& info_x,
++template <typename FrequencyType>
++void LaunchFrequencyMode(GM_ADDR x, const TensorGroupInfo& info_x,
+     GM_ADDR positions, const TensorGroupInfo& info_positions, GM_ADDR y,
+     const TensorGroupInfo& info_y, int64_t availableCoreNum, aclrtStream stream, float theta) {
+     const auto& shape = info_x.tensors[0].shape;
+@@ -1627,6 +1724,7 @@
+         if(splits>1) {
+             uint32_t maxSplits=(2*available)/jobs;
+             if(maxSplits<1)maxSplits=1;
++            if(maxSplits>available)maxSplits=available;
+             if(splits>maxSplits)splits=maxSplits;
+             uint32_t part=((width+splits-1)/splits+quantum-1)/quantum*quantum;
+             splits=(width+part-1)/part;
+@@ -1677,12 +1775,12 @@
+         uint64_t bulkJobs=(tokens+tile-1)/tile;
+         uint32_t bulkCores=availableCoreNum>0?availableCoreNum:1;
+         if(bulkJobs<bulkCores)bulkCores=bulkJobs;
+-        rope1743::Frequencies frequencies{};
++        FrequencyType frequencies{};
+         frequencies.theta=theta;
+         if(info_x.tensors[0].dtype==0)
+-            rope1743::bulk_position_kernel<float><<<bulkCores,nullptr,stream>>>(x,positions,y,tokens,dim,tile,frequencies);
++            rope1743::bulk_position_kernel<float,FrequencyType><<<bulkCores,nullptr,stream>>>(x,positions,y,tokens,dim,tile,frequencies);
+         else
+-            rope1743::bulk_position_kernel<half><<<bulkCores,nullptr,stream>>>(x,positions,y,tokens,dim,tile,frequencies);
++            rope1743::bulk_position_kernel<half,FrequencyType><<<bulkCores,nullptr,stream>>>(x,positions,y,tokens,dim,tile,frequencies);
+         return;
+     }
+     if(dim%16!=0 && dim<=64 && heads>32 && tokens>=128) {
+@@ -1690,12 +1788,12 @@
+         uint64_t headJobs=tokens*((heads+tile-1)/tile);
+         uint32_t headCores=availableCoreNum>0?availableCoreNum:1;
+         if(headJobs<headCores)headCores=headJobs;
+-        rope1743::Frequencies f{};
++        FrequencyType f{};
+         f.theta=theta;
+         if(info_x.tensors[0].dtype==0)
+-            rope1743::head_tile_kernel<float><<<headCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,f);
++            rope1743::head_tile_kernel<float,FrequencyType><<<headCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,f);
+         else
+-            rope1743::head_tile_kernel<half><<<headCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,f);
++            rope1743::head_tile_kernel<half,FrequencyType><<<headCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,f);
+         return;
+     }
+     if (dim<=128 && heads<=32 && tokens>=128 &&
+@@ -1705,69 +1803,81 @@
+         uint64_t packedJobs=(tokens+tile-1)/tile;
+         uint32_t packedCores=availableCoreNum>0?availableCoreNum:1;
+         if(packedJobs<packedCores)packedCores=packedJobs;
+-        rope1743::Frequencies frequencies{};
++        FrequencyType frequencies{};
+         frequencies.theta=theta;
+         if(info_x.tensors[0].dtype==0)
+-            rope1743::packed_kernel<float><<<packedCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,frequencies);
++            rope1743::packed_kernel<float,FrequencyType><<<packedCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,frequencies);
+         else
+-            rope1743::packed_kernel<half><<<packedCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,frequencies);
++            rope1743::packed_kernel<half,FrequencyType><<<packedCores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tile,frequencies);
+         return;
+     }
+     if (dim > 512) {
+-        rope1743::WideFrequencies frequencies{};
++        FrequencyType frequencies{};
+         frequencies.theta=theta;
+         if(batched) {
+             if(info_x.tensors[0].dtype==0)
+-                rope1743::wide_batched_kernel<float><<<cores,nullptr,stream>>>(x,positions,y,tokens,dim,tileTokens,frequencies);
++                rope1743::wide_batched_kernel<float,FrequencyType><<<cores,nullptr,stream>>>(x,positions,y,tokens,dim,tileTokens,frequencies);
+             else
+-                rope1743::wide_batched_kernel<half><<<cores,nullptr,stream>>>(x,positions,y,tokens,dim,tileTokens,frequencies);
++                rope1743::wide_batched_kernel<half,FrequencyType><<<cores,nullptr,stream>>>(x,positions,y,tokens,dim,tileTokens,frequencies);
+         } else if(directFloat) {
+-            rope1743::direct_float_kernel<rope1743::WideFrequencies><<<cores,nullptr,stream>>>(
++            rope1743::direct_float_kernel<FrequencyType><<<cores,nullptr,stream>>>(
+                 x,positions,y,tokens,heads,dim,tileHeads,frequencies);
+         } else if(aligned) {
+             if(info_x.tensors[0].dtype==0)
+-                rope1743::large_wide_kernel<float><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
++                rope1743::large_wide_kernel<float,FrequencyType><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
+             else
+-                rope1743::large_wide_kernel<half><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
++                rope1743::large_wide_kernel<half,FrequencyType><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
+         } else if(info_x.tensors[0].dtype==0)
+-            rope1743::wide_kernel<float><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
++            rope1743::wide_kernel<float,FrequencyType><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
+         else
+-            rope1743::wide_kernel<half><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
++            rope1743::wide_kernel<half,FrequencyType><<<cores,nullptr,stream>>>(x,positions,y,tokens,heads,dim,tileHeads,frequencies);
+         return;
+     }
+ 
+-    rope1743::Frequencies frequencies{};
++    FrequencyType frequencies{};
+     frequencies.theta=theta;
+     if (batched) {
+         if (info_x.tensors[0].dtype == 0)
+-            rope1743::batched_kernel<float><<<cores, nullptr, stream>>>(
++            rope1743::batched_kernel<float,FrequencyType><<<cores, nullptr, stream>>>(
+                 x, positions, y, tokens, dim, tileTokens, frequencies);
+         else
+-            rope1743::batched_kernel<half><<<cores, nullptr, stream>>>(
++            rope1743::batched_kernel<half,FrequencyType><<<cores, nullptr, stream>>>(
+                 x, positions, y, tokens, dim, tileTokens, frequencies);
+     } else if (directFloat) {
+-        rope1743::direct_float_kernel<rope1743::Frequencies><<<cores,nullptr,stream>>>(
++        rope1743::direct_float_kernel<FrequencyType><<<cores,nullptr,stream>>>(
+             x,positions,y,tokens,heads,dim,tileHeads,frequencies);
+     } else if (aligned && dim>=512) {
+         if (info_x.tensors[0].dtype == 0)
+-            rope1743::large_aligned_kernel<float><<<cores, nullptr, stream>>>(
++            rope1743::large_aligned_kernel<float,FrequencyType><<<cores, nullptr, stream>>>(
+                 x, positions, y, tokens, heads, dim, tileHeads, frequencies);
+         else
+-            rope1743::large_aligned_kernel<half><<<cores, nullptr, stream>>>(
++            rope1743::large_aligned_kernel<half,FrequencyType><<<cores, nullptr, stream>>>(
+                 x, positions, y, tokens, heads, dim, tileHeads, frequencies);
+     } else if (aligned) {
+         if (info_x.tensors[0].dtype == 0)
+-            rope1743::aligned_kernel<float><<<cores, nullptr, stream>>>(
++            rope1743::aligned_kernel<float,FrequencyType><<<cores, nullptr, stream>>>(
+                 x, positions, y, tokens, heads, dim, tileHeads, frequencies);
+         else
+-            rope1743::aligned_kernel<half><<<cores, nullptr, stream>>>(
++            rope1743::aligned_kernel<half,FrequencyType><<<cores, nullptr, stream>>>(
+                 x, positions, y, tokens, heads, dim, tileHeads, frequencies);
+     } else if (info_x.tensors[0].dtype == 0) {
+-        rope1743::rotary_kernel<float><<<cores, nullptr, stream>>>(
++        rope1743::rotary_kernel<float,FrequencyType><<<cores, nullptr, stream>>>(
+             x, positions, y, tokens, heads, dim, 0, width, tileHeads, frequencies);
+     } else {
+-        rope1743::rotary_kernel<half><<<cores, nullptr, stream>>>(
++        rope1743::rotary_kernel<half,FrequencyType><<<cores, nullptr, stream>>>(
+             x, positions, y, tokens, heads, dim, 0, width, tileHeads, frequencies);
+     }
+ }
++extern "C" void run_kernel(GM_ADDR x,const TensorGroupInfo& info_x,
++    GM_ADDR positions,const TensorGroupInfo& info_positions,GM_ADDR y,
++    const TensorGroupInfo& info_y,int64_t availableCoreNum,aclrtStream stream,float theta) {
++    uint32_t width=uint32_t(info_x.tensors[0].shape[3])/2;
++    bool nearUnity=theta!=1.0f && theta>=1.0f-0x1p-20f && theta<=1.0f+0x1p-20f;
++    bool scalar=(width<=32 || nearUnity) && theta>=0x1p-64f && theta<=0x1p64f;
++    if(scalar)LaunchFrequencyMode<rope1743::ScalarFrequencyConfig>(
++        x,info_x,positions,info_positions,y,info_y,availableCoreNum,stream,theta);
++    else LaunchFrequencyMode<rope1743::Frequencies>(
++        x,info_x,positions,info_positions,y,info_y,availableCoreNum,stream,theta);
++}
++
+ // END_ROPE1743_V8

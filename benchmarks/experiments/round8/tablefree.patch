@@ -1,0 +1,269 @@
+--- a/kernel.asc
++++ b/kernel.asc
+@@ -26,7 +26,16 @@
+     uint64_t high=wide/denominator,remainder=wide-high*denominator;
+     uint64_t z=(high<<15)+((remainder<<15)/denominator);
+     uint64_t zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++term=MultiplyQ53(term,zz);sum+=term/5u;
++term=MultiplyQ53(term,zz);sum+=term/7u;
++term=MultiplyQ53(term,zz);sum+=term/9u;
++term=MultiplyQ53(term,zz);sum+=term/11u;
++term=MultiplyQ53(term,zz);sum+=term/13u;
++term=MultiplyQ53(term,zz);sum+=term/15u;
++term=MultiplyQ53(term,zz);sum+=term/17u;
++term=MultiplyQ53(term,zz);sum+=term/19u;
++term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(sum<<1);
+     if(signedNumerator<0)value=-value;
+     value=int64_t(MultiplyQ53(uint64_t(value<0?-value:value),uint64_t(12994641697113596ULL)))*(value<0?-1:1);
+@@ -57,6 +66,14 @@
+     auto v14=scratch[14*stride];
+     auto v15=scratch[15*stride];
+     auto v16=scratch[16*stride];
++    // Integer indices divided by a power of two are exactly representable.
++    // Preserve the general compensated division for other widths.
++    if((width&(width-1))==0) {
++        uint32_t shift=0;for(uint32_t w=width;w>1;w>>=1)++shift;
++        FloatBits scale;scale.bits=(127u-shift)<<23;
++        CreateVecIndex(v7,static_cast<float>(static_cast<int32_t>(start)),n);
++        Muls(v7,v7,scale.value,n);
++    } else {
+     CreateVecIndex(v0,static_cast<float>(static_cast<int32_t>(start)),n);
+     Duplicate(v1,static_cast<float>(static_cast<int32_t>(width)),n);
+     Div(v2,v0,v1,n);
+@@ -95,6 +112,7 @@
+     Sub(v7,v5,v3,n);
+     Add(v3,v8,v7,n);
+     Add(v7,v1,v3,n);
++    }
+     Duplicate(v3,logHi,n);
+     Duplicate(v1,logLo,n);
+     Mul(v8,v7,v3,n);
+@@ -326,29 +344,62 @@
+     uint64_t denominator=uint64_t(sig)+16777216,wide=numerator<<38;
+     uint64_t h=wide/denominator,r=wide-h*denominator;
+     uint64_t z=(h<<15)+((r<<15)/denominator),zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++term=MultiplyQ53(term,zz);sum+=term/5u;
++term=MultiplyQ53(term,zz);sum+=term/7u;
++term=MultiplyQ53(term,zz);sum+=term/9u;
++term=MultiplyQ53(term,zz);sum+=term/11u;
++term=MultiplyQ53(term,zz);sum+=term/13u;
++term=MultiplyQ53(term,zz);sum+=term/15u;
++term=MultiplyQ53(term,zz);sum+=term/17u;
++term=MultiplyQ53(term,zz);sum+=term/19u;
++term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(MultiplyQ53(sum<<1,uint64_t(12994641697113596ULL)));
+     if(signedNumerator<0)value=-value;
+     return value+int64_t(exponent)*int64_t(9007199254740992LL);
+ }
+-// This computes the same FP32-rounded power as the protected path. Q31 error
+-// after normalization is bounded by 32 units. Only results farther than this
+-// bound from an FP32 halfway point are accepted; other values use Q53 below.
+-// The table is generic exp2 range reduction generated in this invocation.
+-__aicore__ inline bool TryFrequencyPowerQ31(int64_t log31,uint32_t numerator,uint32_t denominatorLog,
+-    const LocalTensor<uint64_t>& table,uint64_t& mantissa,int32_t& exponent) {
++// Generic exp2 polynomials on [-1/2,1/2]. Coefficients define a
++// numerical algorithm; no theta, input or RoPE output is stored here.
++__aicore__ inline void Exp2PowerQ53(int64_t x,uint64_t& mantissa,int32_t& exponent) {
++    int64_t k=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<53));if(x<0)k=-k;
++    int64_t r=x-k*int64_t(uint64_t(1)<<53);
++    int64_t p=4013444LL;
++    p=63718678LL+SignedMultiplyQ53(r,p);
++    p=916757882LL+SignedMultiplyQ53(r,p);
++    p=11903403409LL+SignedMultiplyQ53(r,p);
++    p=137384412890LL+SignedMultiplyQ53(r,p);
++    p=1387426681132LL+SignedMultiplyQ53(r,p);
++    p=12009801499936LL+SignedMultiplyQ53(r,p);
++    p=86632405329863LL+SignedMultiplyQ53(r,p);
++    p=499936566200844LL+SignedMultiplyQ53(r,p);
++    p=2163768014451052LL+SignedMultiplyQ53(r,p);
++    p=6243314768165359LL+SignedMultiplyQ53(r,p);
++    p=9007199254740992LL+SignedMultiplyQ53(r,p);
++    uint64_t power=uint64_t(p);exponent=int32_t(k);
++    if(power<(uint64_t(1)<<53)){power<<=1;--exponent;}
++    else if(power>=(uint64_t(1)<<54)){power>>=1;++exponent;}
++    mantissa=RoundDivide(power,uint64_t(1)<<30);
++}
++__aicore__ inline bool TryExp2PowerQ31(int64_t log31,uint32_t numerator,uint32_t denominatorLog,
++    uint64_t& mantissa,int32_t& exponent) {
+     int64_t x=(log31*int64_t(numerator))>>denominatorLog;
+-    int64_t k=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<26));if(x<0)k=-k;
+-    int64_t r=x-k*int64_t(uint64_t(1)<<26);
+-    int64_t p=int64_t(2147483648LL)+((r*(int64_t(1488522236LL)+
+-        ((r*(int64_t(515886673LL)+((r*int64_t(119193107LL))>>31)))>>31)))>>31);
+-    uint64_t center=RoundDivide(table.GetValue(uint32_t(k&31)),uint64_t(1)<<30);
+-    uint64_t v=(center*uint64_t(p))>>31;exponent=int32_t(k>>5);
+-    if(v<(uint64_t(1)<<31)){v<<=1;--exponent;}
+-    else if(v>=(uint64_t(1)<<32)){v>>=1;++exponent;}
+-    uint32_t remainder=uint32_t(v&255);
+-    if(remainder>=96 && remainder<=160)return false;
+-    mantissa=(v+128)>>8;return true;
++    int64_t k=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<31));if(x<0)k=-k;
++    int64_t r=x-k*int64_t(uint64_t(1)<<31);
++    int64_t p=32864LL;
++    p=332210LL+((r*p)>>31);
++    p=2863343LL+((r*p)>>31);
++    p=20654553LL+((r*p)>>31);
++    p=119194167LL+((r*p)>>31);
++    p=515882507LL+((r*p)>>31);
++    p=1488522236LL+((r*p)>>31);
++    p=2147483648LL+((r*p)>>31);
++    uint64_t power=uint64_t(p);exponent=int32_t(k);
++    if(power<(uint64_t(1)<<31)){power<<=1;--exponent;}
++    else if(power>=(uint64_t(1)<<32)){power>>=1;++exponent;}
++    // 16 Q31 units cover coefficient, evaluation and log truncation error.
++    uint32_t remainder=uint32_t(power&255);
++    if(remainder>=112 && remainder<=144)return false;
++    mantissa=(power+128)>>8;return true;
+ }
+ 
+ __aicore__ inline void ScalarFrequencies(const LocalTensor<float>& dst,float theta,
+@@ -356,12 +407,6 @@
+     int64_t log=DeviceLog2Q53(theta),log31=log/int64_t(4194304LL);
+     bool binaryWidth=(width&(width-1))==0;uint32_t widthLog=0;
+     if(binaryWidth){uint32_t n=width;while(n>1){n>>=1;++widthLog;}}
+-    auto table=scratch.ReinterpretCast<uint64_t>();
+-    uint64_t term=uint64_t(1)<<61,total=term;
+-    uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
+-    uint64_t v=uint64_t(1)<<61;
+-    for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
+     for(uint32_t i=0;i<width;++i) {
+         uint32_t result=0x3f800000u;
+         if(i!=0) {
+@@ -379,19 +424,8 @@
+                 exponent=int64_t(mant<<(30-shift));
+             }
+             uint64_t pm=0;int32_t e=0;
+-            if(!TryFrequencyPowerQ31(log31,numerator,denominatorLog,table,pm,e)) {
+-            int64_t x=SignedMultiplyQ53(log,exponent);
+-            int64_t ki=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<48));
+-            if(x<0)ki=-ki;
+-            int64_t r=x-ki*int64_t(uint64_t(1)<<48);
+-            int64_t p=int64_t(9007199254740992LL)+SignedMultiplyQ53(r,
+-                int64_t(6243314769351382LL)+SignedMultiplyQ53(r,
+-                int64_t(2163785536024893LL)+SignedMultiplyQ53(r,int64_t(499932125008441LL))));
+-            uint64_t center=RoundDivide(table.GetValue(uint32_t(ki&31)),256);
+-            uint64_t power=MultiplyQ53(center,uint64_t(p));e=int32_t(ki>>5);
+-            if(power<(uint64_t(1)<<53)){power<<=1;--e;}
+-            else if(power>=(uint64_t(1)<<54)){power>>=1;++e;}
+-            pm=RoundDivide(power,uint64_t(1)<<30);
++            if(!TryExp2PowerQ31(log31,numerator,denominatorLog,pm,e)) {
++                Exp2PowerQ53(SignedMultiplyQ53(log,exponent),pm,e);
+             }
+             if(pm>=(uint64_t(1)<<24)){pm>>=1;++e;}
+             int32_t fe;uint64_t fm;
+@@ -410,7 +444,15 @@
+ __aicore__ inline void DeviceExp2Table(const LocalTensor<float>& table,const LocalTensor<float>& scratch,uint32_t stride) {
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    term=MultiplyQ61(term,step)/1u;total+=term;
++term=MultiplyQ61(term,step)/2u;total+=term;
++term=MultiplyQ61(term,step)/3u;total+=term;
++term=MultiplyQ61(term,step)/4u;total+=term;
++term=MultiplyQ61(term,step)/5u;total+=term;
++term=MultiplyQ61(term,step)/6u;total+=term;
++term=MultiplyQ61(term,step)/7u;total+=term;
++term=MultiplyQ61(term,step)/8u;total+=term;
++term=MultiplyQ61(term,step)/9u;total+=term;
+     uint64_t v=uint64_t(1)<<61;
+     for(uint32_t j=0;j<32;++j) {
+         float hi=static_cast<float>(int32_t(v>>38))*0x1p-23f;
+@@ -442,8 +484,8 @@
+         uint32_t count=pitch-start<stride?pitch-start:stride;
+         DeviceFrequencyChunk(dst[start],table,scratch,start,width,count,stride,logHi,logLo,shift,finish);
+     }
++    for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+     PipeBarrier<PIPE_ALL>();
+-    for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+ }
+ 
+ __aicore__ inline void FillDeviceFrequencies(TPipe& pipe,TBuf<TPosition::VECCALC>& fallback,
+@@ -511,12 +553,6 @@
+     int64_t log=DeviceLog2Q53(theta),log31=log/int64_t(4194304LL);
+     bool binaryWidth=(width&(width-1))==0;uint32_t widthLog=0;
+     if(binaryWidth){uint32_t n=width;while(n>1){n>>=1;++widthLog;}}
+-    auto table=scratch.ReinterpretCast<uint64_t>();
+-    uint64_t term=uint64_t(1)<<61,total=term;
+-    uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
+-    uint64_t v=uint64_t(1)<<61;
+-    for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
+     for(uint32_t col=0;col<count;++col) {
+         uint32_t i=start+col;
+         uint32_t result=0x3f800000u;
+@@ -535,19 +571,8 @@
+                 exponent=int64_t(mant<<(30-shift));
+             }
+             uint64_t pm=0;int32_t e=0;
+-            if(!TryFrequencyPowerQ31(log31,numerator,denominatorLog,table,pm,e)) {
+-            int64_t x=SignedMultiplyQ53(log,exponent);
+-            int64_t ki=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<48));
+-            if(x<0)ki=-ki;
+-            int64_t r=x-ki*int64_t(uint64_t(1)<<48);
+-            int64_t p=int64_t(9007199254740992LL)+SignedMultiplyQ53(r,
+-                int64_t(6243314769351382LL)+SignedMultiplyQ53(r,
+-                int64_t(2163785536024893LL)+SignedMultiplyQ53(r,int64_t(499932125008441LL))));
+-            uint64_t center=RoundDivide(table.GetValue(uint32_t(ki&31)),256);
+-            uint64_t power=MultiplyQ53(center,uint64_t(p));e=int32_t(ki>>5);
+-            if(power<(uint64_t(1)<<53)){power<<=1;--e;}
+-            else if(power>=(uint64_t(1)<<54)){power>>=1;++e;}
+-            pm=RoundDivide(power,uint64_t(1)<<30);
++            if(!TryExp2PowerQ31(log31,numerator,denominatorLog,pm,e)) {
++                Exp2PowerQ53(SignedMultiplyQ53(log,exponent),pm,e);
+             }
+             if(pm>=(uint64_t(1)<<24)){pm>>=1;++e;}
+             int32_t fe;uint64_t fm;
+@@ -666,7 +691,6 @@
+         pipe_.InitBuffer(freq_, (width_>256?512:pitch_) * sizeof(float));
+         auto f = freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,f,frequencies,width_,pitch_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+ 
+     __aicore__ inline void Process() {
+@@ -802,7 +826,6 @@
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+         auto freq=trig_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -929,7 +952,6 @@
+         pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
+         auto freq=freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,(half_+7)/8*8,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint64_t n=tokens_-job*tile_;return n<tile_?n:tile_;
+@@ -1030,7 +1052,6 @@
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+         auto freq=trig_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -1411,7 +1432,6 @@
+         auto freq=trig_.Get<float>();
+         auto scratch=out_.AllocTensor<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,scratch);
+-        PipeBarrier<PIPE_ALL>();
+         out_.FreeTensor(scratch);
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+@@ -1520,7 +1540,6 @@
+         pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
+         auto freq=freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,(half_+7)/8*8,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint64_t n=tokens_-job*tile_;return n<tile_?n:tile_;

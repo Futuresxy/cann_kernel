@@ -1,0 +1,380 @@
+--- a/kernel.asc
++++ b/kernel.asc
+@@ -26,7 +26,16 @@
+     uint64_t high=wide/denominator,remainder=wide-high*denominator;
+     uint64_t z=(high<<15)+((remainder<<15)/denominator);
+     uint64_t zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++term=MultiplyQ53(term,zz);sum+=term/5u;
++term=MultiplyQ53(term,zz);sum+=term/7u;
++term=MultiplyQ53(term,zz);sum+=term/9u;
++term=MultiplyQ53(term,zz);sum+=term/11u;
++term=MultiplyQ53(term,zz);sum+=term/13u;
++term=MultiplyQ53(term,zz);sum+=term/15u;
++term=MultiplyQ53(term,zz);sum+=term/17u;
++term=MultiplyQ53(term,zz);sum+=term/19u;
++term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(sum<<1);
+     if(signedNumerator<0)value=-value;
+     value=int64_t(MultiplyQ53(uint64_t(value<0?-value:value),uint64_t(12994641697113596ULL)))*(value<0?-1:1);
+@@ -57,6 +66,14 @@
+     auto v14=scratch[14*stride];
+     auto v15=scratch[15*stride];
+     auto v16=scratch[16*stride];
++    // Integer indices divided by a power of two are exactly representable.
++    // Preserve the general compensated division for other widths.
++    if((width&(width-1))==0) {
++        uint32_t shift=0;for(uint32_t w=width;w>1;w>>=1)++shift;
++        FloatBits scale;scale.bits=(127u-shift)<<23;
++        CreateVecIndex(v7,static_cast<float>(static_cast<int32_t>(start)),n);
++        Muls(v7,v7,scale.value,n);
++    } else {
+     CreateVecIndex(v0,static_cast<float>(static_cast<int32_t>(start)),n);
+     Duplicate(v1,static_cast<float>(static_cast<int32_t>(width)),n);
+     Div(v2,v0,v1,n);
+@@ -95,6 +112,7 @@
+     Sub(v7,v5,v3,n);
+     Add(v3,v8,v7,n);
+     Add(v7,v1,v3,n);
++    }
+     Duplicate(v3,logHi,n);
+     Duplicate(v1,logLo,n);
+     Mul(v8,v7,v3,n);
+@@ -326,29 +344,62 @@
+     uint64_t denominator=uint64_t(sig)+16777216,wide=numerator<<38;
+     uint64_t h=wide/denominator,r=wide-h*denominator;
+     uint64_t z=(h<<15)+((r<<15)/denominator),zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++term=MultiplyQ53(term,zz);sum+=term/5u;
++term=MultiplyQ53(term,zz);sum+=term/7u;
++term=MultiplyQ53(term,zz);sum+=term/9u;
++term=MultiplyQ53(term,zz);sum+=term/11u;
++term=MultiplyQ53(term,zz);sum+=term/13u;
++term=MultiplyQ53(term,zz);sum+=term/15u;
++term=MultiplyQ53(term,zz);sum+=term/17u;
++term=MultiplyQ53(term,zz);sum+=term/19u;
++term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(MultiplyQ53(sum<<1,uint64_t(12994641697113596ULL)));
+     if(signedNumerator<0)value=-value;
+     return value+int64_t(exponent)*int64_t(9007199254740992LL);
+ }
+-// This computes the same FP32-rounded power as the protected path. Q31 error
+-// after normalization is bounded by 32 units. Only results farther than this
+-// bound from an FP32 halfway point are accepted; other values use Q53 below.
+-// The table is generic exp2 range reduction generated in this invocation.
+-__aicore__ inline bool TryFrequencyPowerQ31(int64_t log31,uint32_t numerator,uint32_t denominatorLog,
+-    const LocalTensor<uint64_t>& table,uint64_t& mantissa,int32_t& exponent) {
++// Build generic exp2 root powers only if guard-bit evaluation is needed.
++// The five values live in this invocation's UB and depend on no RoPE data.
++__aicore__ inline void BuildExp2Roots(const LocalTensor<uint64_t>& roots) {
++    uint64_t term=uint64_t(1)<<61,total=term;
++    uint64_t step=uint64_t(1598288580650331957ULL)>>5;
++    term=MultiplyQ61(term,step)/1u;total+=term;
++    term=MultiplyQ61(term,step)/2u;total+=term;
++    term=MultiplyQ61(term,step)/3u;total+=term;
++    term=MultiplyQ61(term,step)/4u;total+=term;
++    term=MultiplyQ61(term,step)/5u;total+=term;
++    term=MultiplyQ61(term,step)/6u;total+=term;
++    term=MultiplyQ61(term,step)/7u;total+=term;
++    term=MultiplyQ61(term,step)/8u;total+=term;
++    term=MultiplyQ61(term,step)/9u;total+=term;
++    roots.SetValue(0,total);
++    for(uint32_t i=1;i<5;++i){total=MultiplyQ61(total,total);roots.SetValue(i,total);}
++}
++__aicore__ inline uint64_t Exp2Center(const LocalTensor<uint64_t>& roots,uint32_t index) {
++    uint64_t value=uint64_t(1)<<61;
++    for(uint32_t i=0;i<5;++i)if(index&(1u<<i))value=MultiplyQ61(value,roots.GetValue(i));
++    return value;
++}
++__aicore__ inline bool TryExp2PowerQ31(int64_t log31,uint32_t numerator,uint32_t denominatorLog,
++    uint64_t& mantissa,int32_t& exponent) {
+     int64_t x=(log31*int64_t(numerator))>>denominatorLog;
+-    int64_t k=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<26));if(x<0)k=-k;
+-    int64_t r=x-k*int64_t(uint64_t(1)<<26);
+-    int64_t p=int64_t(2147483648LL)+((r*(int64_t(1488522236LL)+
+-        ((r*(int64_t(515886673LL)+((r*int64_t(119193107LL))>>31)))>>31)))>>31);
+-    uint64_t center=RoundDivide(table.GetValue(uint32_t(k&31)),uint64_t(1)<<30);
+-    uint64_t v=(center*uint64_t(p))>>31;exponent=int32_t(k>>5);
+-    if(v<(uint64_t(1)<<31)){v<<=1;--exponent;}
+-    else if(v>=(uint64_t(1)<<32)){v>>=1;++exponent;}
+-    uint32_t remainder=uint32_t(v&255);
+-    if(remainder>=96 && remainder<=160)return false;
+-    mantissa=(v+128)>>8;return true;
++    int64_t k=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<31));if(x<0)k=-k;
++    int64_t r=x-k*int64_t(uint64_t(1)<<31);
++    int64_t p=32864LL;
++    p=332210LL+((r*p)>>31);
++    p=2863343LL+((r*p)>>31);
++    p=20654553LL+((r*p)>>31);
++    p=119194167LL+((r*p)>>31);
++    p=515882507LL+((r*p)>>31);
++    p=1488522236LL+((r*p)>>31);
++    p=2147483648LL+((r*p)>>31);
++    uint64_t power=uint64_t(p);exponent=int32_t(k);
++    if(power<(uint64_t(1)<<31)){power<<=1;--exponent;}
++    else if(power>=(uint64_t(1)<<32)){power>>=1;++exponent;}
++    // 16 Q31 units cover coefficient, evaluation and log truncation error.
++    uint32_t remainder=uint32_t(power&255);
++    if(remainder>=112 && remainder<=144)return false;
++    mantissa=(power+128)>>8;return true;
+ }
+ 
+ __aicore__ inline void ScalarFrequencies(const LocalTensor<float>& dst,float theta,
+@@ -357,11 +408,7 @@
+     bool binaryWidth=(width&(width-1))==0;uint32_t widthLog=0;
+     if(binaryWidth){uint32_t n=width;while(n>1){n>>=1;++widthLog;}}
+     auto table=scratch.ReinterpretCast<uint64_t>();
+-    uint64_t term=uint64_t(1)<<61,total=term;
+-    uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
+-    uint64_t v=uint64_t(1)<<61;
+-    for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
++    bool rootsReady=false;
+     for(uint32_t i=0;i<width;++i) {
+         uint32_t result=0x3f800000u;
+         if(i!=0) {
+@@ -379,7 +426,8 @@
+                 exponent=int64_t(mant<<(30-shift));
+             }
+             uint64_t pm=0;int32_t e=0;
+-            if(!TryFrequencyPowerQ31(log31,numerator,denominatorLog,table,pm,e)) {
++            if(!TryExp2PowerQ31(log31,numerator,denominatorLog,pm,e)) {
++                if(!rootsReady){BuildExp2Roots(table);rootsReady=true;}
+             int64_t x=SignedMultiplyQ53(log,exponent);
+             int64_t ki=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<48));
+             if(x<0)ki=-ki;
+@@ -387,7 +435,7 @@
+             int64_t p=int64_t(9007199254740992LL)+SignedMultiplyQ53(r,
+                 int64_t(6243314769351382LL)+SignedMultiplyQ53(r,
+                 int64_t(2163785536024893LL)+SignedMultiplyQ53(r,int64_t(499932125008441LL))));
+-            uint64_t center=RoundDivide(table.GetValue(uint32_t(ki&31)),256);
++            uint64_t center=RoundDivide(Exp2Center(table,uint32_t(ki&31)),256);
+             uint64_t power=MultiplyQ53(center,uint64_t(p));e=int32_t(ki>>5);
+             if(power<(uint64_t(1)<<53)){power<<=1;--e;}
+             else if(power>=(uint64_t(1)<<54)){power>>=1;++e;}
+@@ -410,7 +458,15 @@
+ __aicore__ inline void DeviceExp2Table(const LocalTensor<float>& table,const LocalTensor<float>& scratch,uint32_t stride) {
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    term=MultiplyQ61(term,step)/1u;total+=term;
++term=MultiplyQ61(term,step)/2u;total+=term;
++term=MultiplyQ61(term,step)/3u;total+=term;
++term=MultiplyQ61(term,step)/4u;total+=term;
++term=MultiplyQ61(term,step)/5u;total+=term;
++term=MultiplyQ61(term,step)/6u;total+=term;
++term=MultiplyQ61(term,step)/7u;total+=term;
++term=MultiplyQ61(term,step)/8u;total+=term;
++term=MultiplyQ61(term,step)/9u;total+=term;
+     uint64_t v=uint64_t(1)<<61;
+     for(uint32_t j=0;j<32;++j) {
+         float hi=static_cast<float>(int32_t(v>>38))*0x1p-23f;
+@@ -422,9 +478,17 @@
+     PipeBarrier<PIPE_ALL>();
+ }
+ 
++// Near log(theta)=0, power values can lie closer to an FP32 halfway
++// point than the double-float vector approximation can resolve. Use the
++// integer guard-bit algorithm for this numerical conditioning window.
++__aicore__ inline bool ScalarFrequencyMode(uint32_t width,float theta) {
++    bool nearUnity=theta!=1.0f && theta>=1.0f-0x1p-20f && theta<=1.0f+0x1p-20f;
++    return (width<=32 || nearUnity) && theta>=0x1p-64f && theta<=0x1p64f;
++}
++
+ __aicore__ inline void FillFrequencies(const LocalTensor<float>& dst,const Frequencies& f,
+     uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+-    if(width<=32 && f.theta>=0x1p-64f && f.theta<=0x1p64f){ScalarFrequencies(dst,f.theta,width,pitch,scratch);return;}
++    if(ScalarFrequencyMode(width,f.theta)){ScalarFrequencies(dst,f.theta,width,pitch,scratch);return;}
+     FloatBits bits;bits.value=f.theta;
+     int32_t exponent=int32_t((bits.bits>>23)&255)-127;
+     if(exponent==-127){bits.value=f.theta*8388608.0f;exponent=int32_t((bits.bits>>23)&255)-127-23;}
+@@ -442,14 +506,14 @@
+         uint32_t count=pitch-start<stride?pitch-start:stride;
+         DeviceFrequencyChunk(dst[start],table,scratch,start,width,count,stride,logHi,logLo,shift,finish);
+     }
++    for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+     PipeBarrier<PIPE_ALL>();
+-    for(uint32_t i=width;i<pitch;++i)dst.SetValue(i,0.0f);
+ }
+ 
+ __aicore__ inline void FillDeviceFrequencies(TPipe& pipe,TBuf<TPosition::VECCALC>& fallback,
+     const LocalTensor<float>& dst,const Frequencies& f,uint32_t width,uint32_t pitch,const LocalTensor<float>& scratch) {
+-    bool scalar=width<=32 && f.theta>=0x1p-64f && f.theta<=0x1p64f;
+-    uint32_t full=scalar?64:FREQUENCY_MATH_SLOTS*(pitch<32?32:pitch)+64;
++    bool scalar=ScalarFrequencyMode(width,f.theta);
++    uint32_t full=scalar?16:FREQUENCY_MATH_SLOTS*(pitch<32?32:pitch)+64;
+     // In these kernels, a reusable region <=24 KiB implies less than 140 KiB
+     // of live UB. Even a full 512-lane math region keeps the total below 192 KiB.
+     if(scratch.GetSize()>=full || scratch.GetSize()>6144)
+@@ -512,11 +576,7 @@
+     bool binaryWidth=(width&(width-1))==0;uint32_t widthLog=0;
+     if(binaryWidth){uint32_t n=width;while(n>1){n>>=1;++widthLog;}}
+     auto table=scratch.ReinterpretCast<uint64_t>();
+-    uint64_t term=uint64_t(1)<<61,total=term;
+-    uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
+-    uint64_t v=uint64_t(1)<<61;
+-    for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
++    bool rootsReady=false;
+     for(uint32_t col=0;col<count;++col) {
+         uint32_t i=start+col;
+         uint32_t result=0x3f800000u;
+@@ -535,7 +595,8 @@
+                 exponent=int64_t(mant<<(30-shift));
+             }
+             uint64_t pm=0;int32_t e=0;
+-            if(!TryFrequencyPowerQ31(log31,numerator,denominatorLog,table,pm,e)) {
++            if(!TryExp2PowerQ31(log31,numerator,denominatorLog,pm,e)) {
++                if(!rootsReady){BuildExp2Roots(table);rootsReady=true;}
+             int64_t x=SignedMultiplyQ53(log,exponent);
+             int64_t ki=int64_t(RoundDivide(uint64_t(x<0?-x:x),uint64_t(1)<<48));
+             if(x<0)ki=-ki;
+@@ -543,7 +604,7 @@
+             int64_t p=int64_t(9007199254740992LL)+SignedMultiplyQ53(r,
+                 int64_t(6243314769351382LL)+SignedMultiplyQ53(r,
+                 int64_t(2163785536024893LL)+SignedMultiplyQ53(r,int64_t(499932125008441LL))));
+-            uint64_t center=RoundDivide(table.GetValue(uint32_t(ki&31)),256);
++            uint64_t center=RoundDivide(Exp2Center(table,uint32_t(ki&31)),256);
+             uint64_t power=MultiplyQ53(center,uint64_t(p));e=int32_t(ki>>5);
+             if(power<(uint64_t(1)<<53)){power<<=1;--e;}
+             else if(power>=(uint64_t(1)<<54)){power>>=1;++e;}
+@@ -579,7 +640,7 @@
+         groups_=(heads_+tile_-1)/tile_;
+         pipe_.InitBuffer(in_,1,2*capacity_*sizeof(T));
+         pipe_.InitBuffer(out_,1,2*capacity_*sizeof(T));
+-        uint32_t workCount=5*capacity_;if(workCount<64)workCount=64;
++        uint32_t workCount=5*capacity_;if(workCount<16)workCount=16;
+         pipe_.InitBuffer(work_,workCount*sizeof(float));
+         pipe_.InitBuffer(trig_,4*pitch_*sizeof(float));
+         ScalarFrequencyRange(trig_.Get<float>(),theta,half_,start_,width_,pitch_,work_.Get<float>());
+@@ -666,7 +727,6 @@
+         pipe_.InitBuffer(freq_, (width_>256?512:pitch_) * sizeof(float));
+         auto f = freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,f,frequencies,width_,pitch_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+ 
+     __aicore__ inline void Process() {
+@@ -800,9 +860,7 @@
+         fullCos_=(dim_<=64 && tileHeads_>=16);
+         if(fullCos_)pipe_.InitBuffer(cosFull_,2*cacheSize_*sizeof(float));
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+-        auto freq=trig_.Get<float>();
+-        FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
++        theta_=f.theta;
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -839,6 +897,9 @@
+         uint64_t end=jobs*(GetBlockIdx()+1)/GetBlockNum();
+         if(begin==end)return;
+         Prefetch(begin);
++        Frequencies frequencyParameters{theta_};
++        FillDeviceFrequencies(pipe_,frequencyMath_,trig_.Get<float>(),frequencyParameters,half_,freqSize_,work_.Get<float>());
++
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
+         auto z=work_.Get<float>();auto r=z[size_];
+@@ -891,6 +952,7 @@
+         PipeBarrier<PIPE_ALL>();
+     }
+ private:
++    float theta_;
+     TPipe pipe_; TBuf<TPosition::VECCALC> frequencyMath_;
+     TQue<QuePosition::VECIN,2> in_;
+     TQue<QuePosition::VECOUT,2> out_;
+@@ -929,7 +991,6 @@
+         pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
+         auto freq=freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,(half_+7)/8*8,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint64_t n=tokens_-job*tile_;return n<tile_?n:tile_;
+@@ -1028,9 +1089,7 @@
+         if (batch_ < 1) batch_ = 1;
+         cacheSize_ = batch_ * freqSize_;
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+-        auto freq=trig_.Get<float>();
+-        FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
++        theta_=f.theta;
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -1062,6 +1121,9 @@
+         uint64_t end=jobs*(GetBlockIdx()+1)/GetBlockNum();
+         if(begin==end)return;
+         Prefetch(begin);
++        Frequencies frequencyParameters{theta_};
++        FillDeviceFrequencies(pipe_,frequencyMath_,trig_.Get<float>(),frequencyParameters,half_,freqSize_,work_.Get<float>());
++
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
+         auto z=work_.Get<float>();auto r=z[workStride_];
+@@ -1097,8 +1159,11 @@
+                 
+                 for(uint32_t col=0;col<half_;col+=64) {
+                     uint64_t mask=half_-col<64?half_-col:64;
+-                    MulAddDst(r[col],z[half_+col],negs[col],mask,rows,broadcast);
+-                    MulAddDst(r[half_+col],z[col],s[col],mask,rows,broadcast);
++                    // Use two-read instructions and reuse input work lanes.
++                    Mul(z[half_+col],z[half_+col],negs[col],mask,rows,broadcast);
++                    Mul(z[col],z[col],s[col],mask,rows,broadcast);
++                    Add(r[col],r[col],z[half_+col],mask,rows,paired);
++                    Add(r[half_+col],r[half_+col],z[col],mask,rows,paired);
+                 }
+                 
+                 output=out_.AllocTensor<T>();
+@@ -1111,6 +1176,7 @@
+         PipeBarrier<PIPE_ALL>();
+     }
+ private:
++    float theta_;
+     TPipe pipe_; TBuf<TPosition::VECCALC> frequencyMath_;
+     TQue<QuePosition::VECIN,2> in_;
+     TQue<QuePosition::VECOUT,2> out_;
+@@ -1408,11 +1474,7 @@
+         if (batch_ < 1) batch_ = 1;
+         cacheSize_ = batch_ * freqSize_;
+         pipe_.InitBuffer(trig_,(freqSize_ + 3*cacheSize_)*sizeof(float));
+-        auto freq=trig_.Get<float>();
+-        auto scratch=out_.AllocTensor<float>();
+-        FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,freqSize_,scratch);
+-        PipeBarrier<PIPE_ALL>();
+-        out_.FreeTensor(scratch);
++        theta_=f.theta;
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint32_t n=heads_-(job%groups_)*tileHeads_;
+@@ -1444,6 +1506,11 @@
+         uint64_t end=jobs*(GetBlockIdx()+1)/GetBlockNum();
+         if(begin==end)return;
+         Prefetch(begin);
++        Frequencies frequencyParameters{theta_};
++        auto frequencyScratch=out_.AllocTensor<float>();
++        FillDeviceFrequencies(pipe_,frequencyMath_,trig_.Get<float>(),frequencyParameters,half_,freqSize_,frequencyScratch);
++        out_.FreeTensor(frequencyScratch);
++
+         uint64_t cached=static_cast<uint64_t>(-1);
+         uint32_t cachedCount=0;
+         auto cosCache=trig_.Get<float>()[freqSize_];auto sinCache=cosCache[cacheSize_];
+@@ -1489,6 +1556,7 @@
+         PipeBarrier<PIPE_ALL>();
+     }
+ private:
++    float theta_;
+     TPipe pipe_; TBuf<TPosition::VECCALC> frequencyMath_;
+     TQue<QuePosition::VECIN,2> in_;
+     TQue<QuePosition::VECOUT,2> out_;
+@@ -1520,7 +1588,6 @@
+         pipe_.InitBuffer(freq_,(half_>256?512:((half_+7)/8*8))*sizeof(float));
+         auto freq=freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,freq,f,half_,(half_+7)/8*8,work_.Get<float>());
+-        PipeBarrier<PIPE_ALL>();
+     }
+     __aicore__ inline uint32_t Rows(uint64_t job) {
+         uint64_t n=tokens_-job*tile_;return n<tile_?n:tile_;

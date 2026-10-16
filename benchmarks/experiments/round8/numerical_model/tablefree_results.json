@@ -1,0 +1,7 @@
+{
+  "checked": 90684,
+  "accepted": 79384,
+  "unsafe_fast_acceptances": 0,
+  "differences_from_numpy": 25,
+  "reference": "NumPy FP32 power+reciprocal; CPU model only"
+}

@@ -8,7 +8,7 @@ Mac：GitHub 拉取候选 → 本地 Chrome 提交 → 精度/15点耗时记录
 Mac：导出精简结果 → GitHub → Ascend910 分析并继续优化
 ```
 
-当前候选为 Device 完整计算、按并行度分派小输入的 V8；本地验证与测量见 [V8 报告](profiled_v8.md)。发布状态以 GitHub 的 `submissions/rotary_pos_emb/latest.json` 为准，只有 ready 候选才能同步提交。V4/V6 的 Host 频率表保留为历史对照。真实 Mac Chrome/平台页面仍需首次登录校准。
+当前候选为 Device 完整计算、频率路径独立编译的 V9；本地验证与测量见 [V9 报告](profiled_v9.md)。发布状态以 GitHub 的 `submissions/rotary_pos_emb/latest.json` 为准，只有 ready 候选才能同步提交。V4/V6 的 Host 频率表保留为历史对照。真实 Mac Chrome/平台页面仍需首次登录校准。
 
 ## Mac 首次准备
 

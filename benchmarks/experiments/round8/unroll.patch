@@ -1,0 +1,89 @@
+--- a/kernel.asc
++++ b/kernel.asc
+@@ -26,7 +26,16 @@
+     uint64_t high=wide/denominator,remainder=wide-high*denominator;
+     uint64_t z=(high<<15)+((remainder<<15)/denominator);
+     uint64_t zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++term=MultiplyQ53(term,zz);sum+=term/5u;
++term=MultiplyQ53(term,zz);sum+=term/7u;
++term=MultiplyQ53(term,zz);sum+=term/9u;
++term=MultiplyQ53(term,zz);sum+=term/11u;
++term=MultiplyQ53(term,zz);sum+=term/13u;
++term=MultiplyQ53(term,zz);sum+=term/15u;
++term=MultiplyQ53(term,zz);sum+=term/17u;
++term=MultiplyQ53(term,zz);sum+=term/19u;
++term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(sum<<1);
+     if(signedNumerator<0)value=-value;
+     value=int64_t(MultiplyQ53(uint64_t(value<0?-value:value),uint64_t(12994641697113596ULL)))*(value<0?-1:1);
+@@ -326,7 +335,16 @@
+     uint64_t denominator=uint64_t(sig)+16777216,wide=numerator<<38;
+     uint64_t h=wide/denominator,r=wide-h*denominator;
+     uint64_t z=(h<<15)+((r<<15)/denominator),zz=MultiplyQ53(z,z),term=z,sum=z;
+-    for(uint32_t odd=3;odd<=21;odd+=2){term=MultiplyQ53(term,zz);sum+=term/odd;}
++    term=MultiplyQ53(term,zz);sum+=term/3u;
++term=MultiplyQ53(term,zz);sum+=term/5u;
++term=MultiplyQ53(term,zz);sum+=term/7u;
++term=MultiplyQ53(term,zz);sum+=term/9u;
++term=MultiplyQ53(term,zz);sum+=term/11u;
++term=MultiplyQ53(term,zz);sum+=term/13u;
++term=MultiplyQ53(term,zz);sum+=term/15u;
++term=MultiplyQ53(term,zz);sum+=term/17u;
++term=MultiplyQ53(term,zz);sum+=term/19u;
++term=MultiplyQ53(term,zz);sum+=term/21u;
+     int64_t value=int64_t(MultiplyQ53(sum<<1,uint64_t(12994641697113596ULL)));
+     if(signedNumerator<0)value=-value;
+     return value+int64_t(exponent)*int64_t(9007199254740992LL);
+@@ -359,7 +377,15 @@
+     auto table=scratch.ReinterpretCast<uint64_t>();
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    term=MultiplyQ61(term,step)/1u;total+=term;
++term=MultiplyQ61(term,step)/2u;total+=term;
++term=MultiplyQ61(term,step)/3u;total+=term;
++term=MultiplyQ61(term,step)/4u;total+=term;
++term=MultiplyQ61(term,step)/5u;total+=term;
++term=MultiplyQ61(term,step)/6u;total+=term;
++term=MultiplyQ61(term,step)/7u;total+=term;
++term=MultiplyQ61(term,step)/8u;total+=term;
++term=MultiplyQ61(term,step)/9u;total+=term;
+     uint64_t v=uint64_t(1)<<61;
+     for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
+     for(uint32_t i=0;i<width;++i) {
+@@ -410,7 +436,15 @@
+ __aicore__ inline void DeviceExp2Table(const LocalTensor<float>& table,const LocalTensor<float>& scratch,uint32_t stride) {
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    term=MultiplyQ61(term,step)/1u;total+=term;
++term=MultiplyQ61(term,step)/2u;total+=term;
++term=MultiplyQ61(term,step)/3u;total+=term;
++term=MultiplyQ61(term,step)/4u;total+=term;
++term=MultiplyQ61(term,step)/5u;total+=term;
++term=MultiplyQ61(term,step)/6u;total+=term;
++term=MultiplyQ61(term,step)/7u;total+=term;
++term=MultiplyQ61(term,step)/8u;total+=term;
++term=MultiplyQ61(term,step)/9u;total+=term;
+     uint64_t v=uint64_t(1)<<61;
+     for(uint32_t j=0;j<32;++j) {
+         float hi=static_cast<float>(int32_t(v>>38))*0x1p-23f;
+@@ -514,7 +548,15 @@
+     auto table=scratch.ReinterpretCast<uint64_t>();
+     uint64_t term=uint64_t(1)<<61,total=term;
+     uint64_t step=uint64_t(1598288580650331957ULL)>>5;
+-    for(uint32_t k=1;k<=9;++k){term=MultiplyQ61(term,step)/k;total+=term;}
++    term=MultiplyQ61(term,step)/1u;total+=term;
++term=MultiplyQ61(term,step)/2u;total+=term;
++term=MultiplyQ61(term,step)/3u;total+=term;
++term=MultiplyQ61(term,step)/4u;total+=term;
++term=MultiplyQ61(term,step)/5u;total+=term;
++term=MultiplyQ61(term,step)/6u;total+=term;
++term=MultiplyQ61(term,step)/7u;total+=term;
++term=MultiplyQ61(term,step)/8u;total+=term;
++term=MultiplyQ61(term,step)/9u;total+=term;
+     uint64_t v=uint64_t(1)<<61;
+     for(uint32_t j=0;j<32;++j){table.SetValue(j,v);v=MultiplyQ61(v,total);}
+     for(uint32_t col=0;col<count;++col) {

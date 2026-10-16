@@ -1,0 +1,25 @@
+--- a/kernel.asc
++++ b/kernel.asc
+@@ -57,6 +57,14 @@
+     auto v14=scratch[14*stride];
+     auto v15=scratch[15*stride];
+     auto v16=scratch[16*stride];
++    // Integer indices divided by a power of two are exactly representable.
++    // Preserve the general compensated division for other widths.
++    if((width&(width-1))==0) {
++        uint32_t shift=0;for(uint32_t w=width;w>1;w>>=1)++shift;
++        FloatBits scale;scale.bits=(127u-shift)<<23;
++        CreateVecIndex(v7,static_cast<float>(static_cast<int32_t>(start)),n);
++        Muls(v7,v7,scale.value,n);
++    } else {
+     CreateVecIndex(v0,static_cast<float>(static_cast<int32_t>(start)),n);
+     Duplicate(v1,static_cast<float>(static_cast<int32_t>(width)),n);
+     Div(v2,v0,v1,n);
+@@ -95,6 +103,7 @@
+     Sub(v7,v5,v3,n);
+     Add(v3,v8,v7,n);
+     Add(v7,v1,v3,n);
++    }
+     Duplicate(v3,logHi,n);
+     Duplicate(v1,logLo,n);
+     Mul(v8,v7,v3,n);

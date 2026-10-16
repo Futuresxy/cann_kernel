@@ -1,0 +1,219 @@
+{
+  "baseline_revision": "df1d1e5ca47c24d288ed87f370caf842e8901625",
+  "baseline_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
+  "baseline_submission_eligible": true,
+  "normal_runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+  "candidates": [
+    {
+      "name": "unroll",
+      "source_sha256": "1e55aa75d6285a29b0279a2b1dd7d166e1839a0ba2635f97c406c8b61645235d",
+      "patch": "unroll.patch",
+      "status": "experimental-not-for-submission",
+      "result_labels": [
+        "round8_unroll",
+        "round8_unroll_math"
+      ]
+    },
+    {
+      "name": "ratio",
+      "source_sha256": "049955b4173f8aed48885361fb3b29f2cb6421e9546023643c3b8b5cb5639939",
+      "patch": "ratio.patch",
+      "status": "experimental-not-for-submission",
+      "result_labels": [
+        "round8_ratio",
+        "round8_ratio_math"
+      ]
+    },
+    {
+      "name": "recip",
+      "source_sha256": "0aedf80de7366dbdb06ca449645fd11b0ee740ff429897551a502866d4c1a72e",
+      "patch": "recip.patch",
+      "status": "not-selected",
+      "result_labels": [
+        "round8_recip",
+        "round8_recip_math"
+      ],
+      "decision": "All 8,388,608 significands proved exact; initial profile did not show a performance gain."
+    },
+    {
+      "name": "combined",
+      "source_sha256": "81091098582b1c9f868dd94fafbfe34dc6819bdc9e9a4f8e04082c702700c510",
+      "patch": "combined.patch",
+      "status": "experimental-not-for-submission",
+      "result_labels": [
+        "round8_combined",
+        "round8_combined_math",
+        "round8_combined_shared"
+      ]
+    },
+    {
+      "name": "cos_poly",
+      "source_sha256": "28053ae0a94d119fbf610daaa51cd3196bfc5fc831d65ce07b570c6e9fbc7d74",
+      "patch": "cos_poly.patch",
+      "status": "rejected-accuracy",
+      "result_labels": [
+        "round8_cos_base"
+      ],
+      "decision": "51/52; half_overflow max error=4.0 exceeds 0.1; no relaxed precision gate."
+    },
+    {
+      "name": "fences",
+      "source_sha256": "29d82b7d32a3c56987dc64d7efda64c9510affef464e8e6a1110288210c3fd28",
+      "patch": "fences.patch",
+      "status": "experimental-not-for-submission",
+      "result_labels": [
+        "round8_fences",
+        "round8_fences_math",
+        "round8_fences_shared"
+      ]
+    },
+    {
+      "name": "tablefree",
+      "source_sha256": "dd461b858f4e1e8916c5b9eee52b35c0742adbfe63bd122ebcc78709c10fc5ea",
+      "patch": "tablefree.patch",
+      "status": "cpu-only-not-selected",
+      "result_labels": [],
+      "decision": "True high-degree exp2 changed some frequency rounding from the previously validated power approximation; replaced by lazy original guard path."
+    },
+    {
+      "name": "lazy_center",
+      "source_sha256": "87beb7eed64c52dfe543f6363c9aae4092aae4d37e1f72442ae4d6971198a3ce",
+      "patch": "lazy_center.patch",
+      "status": "experimental-not-for-submission",
+      "result_labels": [
+        "round8_lazy_base",
+        "round8_lazy_math",
+        "round8_lazy_small",
+        "round8_lazy_shared"
+      ]
+    },
+    {
+      "name": "lean",
+      "source_sha256": "3f3a23e0021172c341663ac4bb8b063961a40217a3e9f1bb7b45bbd049c3b986",
+      "patch": "lean.patch",
+      "status": "experimental-not-for-submission",
+      "result_labels": [
+        "round8_lean_base",
+        "round8_lean_math",
+        "round8_lean_small"
+      ]
+    },
+    {
+      "name": "overlap",
+      "source_sha256": "d54a5ad425c0a2892c22b1e812a2ff455e318200c47552a19f0d60d8b8ef4bc4",
+      "patch": "overlap.patch",
+      "status": "experimental-not-for-submission",
+      "result_labels": [
+        "round8_overlap_base",
+        "round8_overlap_math",
+        "round8_overlap_small"
+      ]
+    },
+    {
+      "name": "conditioned",
+      "source_sha256": "f4d3f793a101c5953f06788457689301192e1ad33d985ccf47d3254421570af0",
+      "patch": "conditioned.patch",
+      "status": "control-precision-passed",
+      "result_labels": [
+        "round8_conditioned_new_precision"
+      ],
+      "decision": "640/640 new reference cases passed; refined by leaving exact theta=1 on the already-correct vector algorithm."
+    },
+    {
+      "name": "conditioned_v2",
+      "source_sha256": "018973b8cfe020ba501a25c7cf0d12fe0bea9fe867c40608e6811d9449e7aa8a",
+      "patch": "conditioned_v2.patch",
+      "status": "selected-as-final-basis",
+      "result_labels": [],
+      "decision": "Numerical conditioning for nonzero log(theta) near zero; preserves exact theta=1 vector performance. Final includes only version marker changes."
+    },
+    {
+      "name": "two_read",
+      "source_sha256": "346b168092c2da3298da6fc65e5ceaa5a578a2d02927078f751b8dd313ae6807",
+      "patch": "two_read.patch",
+      "status": "rejected-target-performance",
+      "result_labels": [
+        "round8_two_read",
+        "round8_two_read_shared"
+      ],
+      "decision": "The targeted FP16 D1024 path regressed by about 18% in the exploratory forward paired run. Unrelated apparent gains are not accepted without balanced confirmation."
+    },
+    {
+      "name": "pre_typed_final",
+      "source_sha256": "a4f5c20d76438272300cf78a8d932dbbdf4a4d4f94ca99d65318bc4619c9ec77",
+      "patch": "pre_typed_final.patch",
+      "status": "superseded",
+      "result_labels": [],
+      "decision": "Pre-typed source validation retained in pre_typed_validation; final separates scalar/vector code generation."
+    },
+    {
+      "name": "coalesced",
+      "source_sha256": "f2163e159f04029961928ced2c1b404d48c78756c36e90816825cd49b90b764c",
+      "patch": "coalesced.patch",
+      "status": "not-selected-as-monolithic-kernel",
+      "result_labels": [
+        "round8_coalesced_base",
+        "round8_coalesced_math",
+        "round8_coalesced_small",
+        "round8_coalesced_new",
+        "round8_coalesced_shared"
+      ],
+      "decision": "Scalar reuse improved conditioned-frequency cost but the exploratory fixed33 profile showed wide-kernel regressions. Separate compile-time frequency strategies in typed_v2 remove that coupling."
+    },
+    {
+      "name": "typed",
+      "source_sha256": "ad676f8e14d2767f8a7e619f351b3b78ae6093056f7b7c7064ac763cf7bd0e22",
+      "patch": "typed.patch",
+      "status": "not-selected",
+      "result_labels": [],
+      "decision": "The moved Process initially erased frequency type for three classes; corrected by templating Process in typed_v2. No submission used this prototype."
+    },
+    {
+      "name": "typed_v2",
+      "source_sha256": "129c50a631d0d93f67c04ca50c96cfca5d2b4842e388f98530597cbb08ac4fa2",
+      "patch": "typed_v2.patch",
+      "status": "selected-as-final-basis",
+      "result_labels": [
+        "round8_typed_v2_base",
+        "round8_typed_v2_new",
+        "round8_typed_v2_dispatch",
+        "round8_typed_v2_shared"
+      ]
+    },
+    {
+      "name": "final",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "patch": "final.patch",
+      "status": "selected-full-device-validation-passed",
+      "result_labels": [
+        "profiled_v9",
+        "profiled_v9_audit",
+        "profiled_v9_math",
+        "profiled_v9_small",
+        "profiled_v9_new_math",
+        "profiled_v9_dispatch",
+        "profiled_v9_sweep",
+        "profiled_v9_packed_sweep",
+        "profiled_v9_path_sweep",
+        "profiled_v9_aligned_audit",
+        "profiled_v9_bits",
+        "profiled_v9_extended_bits",
+        "profiled_v9_balanced",
+        "profiled_v9_extended_balanced"
+      ],
+      "profile_labels": [
+        "profiled_v9_launches",
+        "profiled_v9_tiny",
+        "profiled_v9_prefill_h32_d1024_half"
+      ]
+    }
+  ],
+  "baseline_extra_precision_result": "round8_v8_new_precision",
+  "baseline_extra_precision_passed": 630,
+  "baseline_extra_precision_cases": 640,
+  "profile_collection_note": "A six-process screen hit the 60-second reservation cap during the already-rejected cos_poly candidate; only five complete strict-count profiles are used. No incomplete profile was promoted.",
+  "fixed_performance_case_file": "tests/round6_performance_cases.json",
+  "fixed_performance_case_count": 33,
+  "fixed_performance_result": "profiled_v9_balanced",
+  "supplemental_performance_result": "profiled_v9_extended_balanced"
+}
