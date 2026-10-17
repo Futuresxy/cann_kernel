@@ -47,6 +47,22 @@ delta_phi ≈ p*delta_f + angle_rounding_error
 
 下一步固定原始输入与哈希，用单独诊断副本导出 Device 各阶段结果，定位频率、角度、三角值、旋转或 cast 的第一处差异；再与当前 FP32 参考以及独立高精度数学计算对照，报告 ULP、绝对误差、舍入中点距离。诊断副本不计入性能、不提交；正式实现仍只输出 y。本地 `tools/suite.py` 的 golden 不是平台 golden 的证明：两种参考的差别应记录为未知项，不能改参考或阈值把失败变为通过。
 
+### 已完成的分阶段归因
+
+诊断导出最终半精度输出与原 V9 的2384896个元素逐位一致，且绑定同一输入及源码。主控的只读交叉检查见 [结果](../benchmarks/analysis/v9_stage_crosscheck.json)、[脚本](../tools/analyze_rope_stages.py)：48核全部频率和70144个角度均与当前FP32参考逐位相同；用导出的Device sin/cos重算后，有限FP32旋转、有限FP16输出均零位差。当前失败的第一处差异在三角求值链，不能归咎于频率、旋转指令舍入或写回。
+
+59392个非零位置三角元素中，cos/sin最大绝对误差约5.36e-7/4.40e-7；最终817个输出绝对差超过0.1。原模板 [RotaryPosEmb.py](../templates/rotaryposemb_1743/scripts/RotaryPosEmb.py) 使用NumPy FP32中间链。这里还存在参考敏感性：保持同一FP32角度和分离FP32旋转，仅以FP64三角计算后舍入FP32作诊断，输出相对原参考仍有115个超过0.1、最大差32。此结果与远端80位十进制高精度分析一致；“更准确的实数函数”不自动等于“复现原FP32库的舍入”。没有替换验收golden或调整阈值。
+
+后续数值研究先区分三个目标：复现当前FP32参考、满足数学误差界、符合真实平台golden。首先建立实际参考库的范围缩减/多项式模型，并证明设备可实现的舍入语义；不盲目追求更多多项式项或更高精度后宣称修复。NumPy 2.2.6 的[官方实现](https://raw.githubusercontent.com/numpy/numpy/v2.2.6/numpy/_core/src/umath/loops_trigonometric.dispatch.cpp)在有原生FMA支持时采用分区求值及范围缩减，超范围转标量库；这也说明库和硬件路径是参考行为的一部分。不能在当前NPU上把名称含FMA的API直接当作等价实现。
+
+复现主控交叉检查时，用已有服务器Python/NumPy运行下面的CPU命令（需先生成冻结输入和阶段导出，不申请NPU、不修改输入）：
+
+```bash
+python3 tools/analyze_rope_stages.py \
+  --data-dir build/rope_v9_system \
+  --manifest benchmarks/diagnostics/rope_v9_system/input_manifest.json --cores 48
+```
+
 位置 0 按规格保持原输入位模式，包括有符号零及非有限值。一般旋转路径仍需覆盖 NaN/Inf、溢出、抵消和尾块；不能用降低 FP16 中间精度来掩盖成本。历史 FP16 直接旋转曾导致平台精度回退，见 [回退记录](rollback_v4_round4.md)。
 
 ## 3. V9 已经实现了什么，以及哪里仍有成本
