@@ -721,7 +721,8 @@
       "experiment_log": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69.json",
       "candidate_source_sha256": "587ebd035ffd2b21c51ae0e1a322eea1ca979d98d46fc5c3484ea5d6071be632",
       "native_speedup": 0.9954930385856202,
-      "reason": "Fixed-input balanced native timing regressed; do not spend a platform submission on this candidate."
+      "reason": "Fixed-input balanced native timing regressed; do not spend a platform submission on this candidate.",
+      "score_analysis": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69/score_analysis.json"
     }
   ]
 }

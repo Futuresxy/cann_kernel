@@ -829,5 +829,13 @@
       "binary_sha256": "f35a21ab096eb48df8c4e163af5bd92a03a2ba4efa48418946368318f2da8a80",
       "source_and_binary_verified": true
     }
+  },
+  "coordinator_supplement": {
+    "recorded_at": "2026-10-17T04:14:06.061306+00:00",
+    "analysis_path": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69/score_analysis.json",
+    "same_request": true,
+    "new_round_started": false,
+    "decision_unchanged": true,
+    "summary": "Rounded score sensitivity confirms that broad path improvements are needed for 70. Exact-log pruning remains rejected; no new safe performance improvement has been validated."
   }
 }
