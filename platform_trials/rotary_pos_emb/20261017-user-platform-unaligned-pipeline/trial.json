@@ -47,5 +47,25 @@
   },
   "platform_submissions_authorized_for_this_source": 1,
   "poll_seconds": 60,
-  "created_at": "2026-10-17T06:42:31.086782+00:00"
+  "created_at": "2026-10-17T06:42:31.086782+00:00",
+  "source_git_commit": "127b6812b82c583fc1bb4d051b3c9af863124c44",
+  "platform_run_id": "20261017T064335554773Z-f32e9651514d",
+  "platform_submission_id": "885584",
+  "platform_result_url": "https://cannjudge.cn/public/op_challenge_jingdong_prelim/rotaryposemb/submission/6ad3191b193e507d8e651425",
+  "platform_state_at_capture": "pending",
+  "editor_readback": {
+    "adapter": "keyboard",
+    "readback_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+    "bytes": 95480,
+    "lines": 2002,
+    "readonly_files": [
+      "scripts/gen_data.py",
+      "scripts/RotaryPosEmb.py",
+      "scripts/verify_result.py",
+      "CMakeLists.txt",
+      "data_utils.h",
+      "main.asc",
+      "run.sh"
+    ]
+  }
 }
