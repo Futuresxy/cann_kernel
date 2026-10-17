@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "update_id": "20261017T050513-trig-internals",
+  "kind": "diagnostic_extension",
+  "parent_request_id": "20261017T043301397944Z-wide-rotation",
+  "baseline_run_id": "20261017T032204914387Z-5917d3aaeb69",
+  "parent_kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "official_score": 48.45,
+  "target_official_score": ">70",
+  "state": "ready_for_diagnosis",
+  "reviewed_report": "benchmarks/diagnostics/rope_v9_system/diagnosis.json",
+  "independent_crosscheck": "benchmarks/analysis/v9_stage_crosscheck.json",
+  "strategy": "docs/rope_optimization_strategy.md",
+  "review_conclusion": "The frozen probe reproduces every saved V9 output bit. Frequency/angle match the current reference; rotation and finite casts match conditional on Device trig. The first difference is within SinCosFp32. Current NumPy FP32 trig itself differs from high-precision rounded trig, so greater mathematical accuracy alone is not an acceptance proof.",
+  "hypothesis": "Differences between unchanged V9 Device SinCos and a separately rounded FP32 source replay arise after range reduction, in polynomial evaluation, sqrt or double-angle reconstruction. Isolating the earliest arithmetic divergence will distinguish a hardware-semantic issue from approximation error and avoid repeating failed cosine substitutions.",
+  "work": [
+    "Preserve existing reports and raw artifacts; use a new diagnostic directory for the extension",
+    "Export quarter-angle sine polynomial, sqrt argument/result and each double-angle intermediate from the unchanged V9 algorithm",
+    "Use the same frozen input, source snapshot and tile/cache layout; require final output bit identity to V9 before trusting new stages",
+    "Compare Device stages to both independently rounded FP32 source replay and 80-digit mathematical diagnostics; track absolute/ULP errors and final FP16 midpoint crossings",
+    "Correlate the 817 current max-error failures with the first divergent stage; do not attribute all error to sqrt without measurement",
+    "Read the original template NumPy golden. Record NumPy version and relevant runtime math path; use the pinned NumPy 2.2.6 primary source only as a numerical-model reference, not as a claim about hidden backend versions",
+    "After attribution, propose one general numerical repair with an explicit error/rounding argument and estimated instruction/UB costs; do not implement or publish an optimization candidate in this extension"
+  ],
+  "expected_information": [
+    "Which existing operations first differ between Device and a correct FP32 replay, and how much each amplifies trig/output error",
+    "Whether a repair can satisfy the unchanged reference contract rather than merely reduce mean trig error",
+    "Which remaining questions require mathematical modeling versus new profiling, before changing production code"
+  ],
+  "reference_source": "https://raw.githubusercontent.com/numpy/numpy/v2.2.6/numpy/_core/src/umath/loops_trigonometric.dispatch.cpp",
+  "constraints": [
+    "No changes to the competition kernel, golden, thresholds or timing",
+    "No ready candidate or new platform submission",
+    "Existing environment only; no installation, system, driver or queue configuration changes",
+    "At most one new serial auto-assigned single-card task-submit diagnostic reservation, max-time60; CPU preparation/analysis outside NPU tasks",
+    "Exactly one diagnostic kernel launch; instrumented timing is not performance evidence",
+    "Do not use vmadd/vmla as true IEEE single-rounding FMA; the previous device probe disproved that assumption",
+    "Do not rerun recorded negative experiments or already completed stage comparisons without new evidence"
+  ],
+  "required_output": {
+    "report": "benchmarks/diagnostics/rope_v9_trig_internal/diagnosis.json",
+    "fields": ["update_id", "source_and_input_hashes", "probe_output_identity", "stage_comparisons", "fp16_boundary_attribution", "repair_proposal", "uncertainties", "task_evidence", "decision"],
+    "publication": "Commit and non-force push diagnostic sources and sanitized reports; preserve original artifacts; then stop for coordinator review"
+  }
+}
