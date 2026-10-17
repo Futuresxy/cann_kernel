@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "unaligned_h128_d30_float",
+    "shape": [
+      2,
+      1024,
+      128,
+      30
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/review_20261017_unaligned_h128_d30_float",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r2wide/candidate_runner --device 0 --shape 2 1024 128 30 --dtype float32 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/unaligned_h128_d30_float --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60"
+}

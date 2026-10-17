@@ -1,0 +1,20 @@
+{
+  "case": {
+    "name": "prefill_h3_d24_half",
+    "shape": [
+      2,
+      512,
+      3,
+      24
+    ],
+    "dtype": "float16",
+    "pmax": 131073
+  },
+  "input_sha256": {
+    "x.bin": "390ad93857dc563cfd4dbd515369e76681a42d3bc11fb4d7c98ea38015f09f1d",
+    "positions.bin": "e4c107e05d0e9eaef9725f2e312d2ab1cd8316afddc44ad4396d618a735fd8b1"
+  },
+  "kernel_modified": false,
+  "binary": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r2wide/candidate_runner",
+  "collected_at_utc": "2026-10-17T07:05:23Z"
+}

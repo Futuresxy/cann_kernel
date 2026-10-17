@@ -1,0 +1,45 @@
+任务已提交: task_20261017_000439_298205711985 (断开后可用 task-submit --wait task_20261017_000439_298205711985 重连)
+等待任务执行: task_20261017_000439_298205711985 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=2982168)
+2026-10-17 00:04:40 [WARN]  The option "--application" will be deprecated in future version. It is recommended to specify <app> [arguments] instead.
+2026-10-17 00:04:40 [INFO]  Op profiling analysis start.
+2026-10-17 00:04:40 [INFO]  Running device task: DeviceProf
+soc=Ascend910_9392 device=0 vector_cores=48
+[INFO] <ProfData> Start profiling on device 0, kernel: _ZN8rope174319direct_float_kernelINS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT_
+[INFO] <WarmUp> Warm Up enabled. times:2
+{"event_us":458.410004,"min_event_us":458.410004,"host_us":554.225000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+2026-10-17 00:04:45 [INFO]  Profiling running finished. All task success.
+2026-10-17 00:04:45 [INFO]  Start analyze kernel on device: device0, kernel: _ZN8rope174319direct_float_kernelINS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT_, name is: 0
+2026-10-17 00:04:45 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-10-17 00:04:45 [INFO]  Save profiling data with metric [Memory] success.
+2026-10-17 00:04:45 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-10-17 00:04:46 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+
+2026-10-17 00:04:46 [INFO]  Operator Basic Information:
+
+	Op Name: _ZN8rope174319direct_float_kernelINS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT_
+	Op Type: vector
+	Task Duration(us): 27.300547
+	Block Dim: 48
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 2982386
+	Current Freq: 1850
+	Rated Freq: 1850
+
+2026-10-17 00:04:46 [INFO]  Profiling results saved in /data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/review_20261017_deepseek_float/OPPROF_20261017000440_TUXMAVRXLDUEDWNT
+2026-10-17 00:04:46 [INFO]  Profiling data parse finished.
+2026-10-17 00:04:46 [INFO]  Op profiling finish. Welcome to next use.
+{
+  "label": "review_20261017_deepseek_float",
+  "task_us": 27.300547,
+  "vec_ratio": 0.5004477083333333,
+  "mte2_active_gbs": 32.9001688125,
+  "mte3_active_gbs": 52.674352
+}
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

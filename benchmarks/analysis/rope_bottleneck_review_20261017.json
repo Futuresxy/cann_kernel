@@ -1,0 +1,482 @@
+{
+  "schema_version": 1,
+  "purpose": "Profiling diagnosis only; no kernel implementation changes or additional platform submissions",
+  "comparison_baseline": {
+    "submission_id": "883390",
+    "historical_score": "48.78",
+    "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556"
+  },
+  "latest_trial": {
+    "submission_id": "885584",
+    "score": "48.44",
+    "source_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0"
+  },
+  "profiling": [
+    {
+      "label": "agentic_r1_v9_tiny",
+      "case": {
+        "name": "tiny",
+        "shape": [
+          1,
+          8,
+          1,
+          16
+        ],
+        "dtype": "float32",
+        "pmax": 8,
+        "seed": 42
+      },
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "profile_summary": "benchmarks/profiles/agentic_r1_v9_tiny/summary.json",
+      "profile_summary_sha256": "888deb76c9a5f29e5c56737916da7ace9adc8fbac04571cfa1d9d22ac087dfe6",
+      "replay_task_us": 2.880058,
+      "mean_core_aiv_us": 2.089054375,
+      "block_dim": 8.0,
+      "busy_ratios": {
+        "vec": 0.1902135,
+        "scalar": 0.7645755000000001,
+        "mte2": 0.085593625,
+        "mte3": 0.056814125
+      }
+    },
+    {
+      "label": "agentic_r1_v9_deepseek",
+      "case": {
+        "name": "deepseek_half",
+        "shape": [
+          2,
+          512,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "pmax": 8192,
+        "seed": 44
+      },
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "profile_summary": "benchmarks/profiles/agentic_r1_v9_deepseek/summary.json",
+      "profile_summary_sha256": "6ef85c245ee20491e31b3a5918bff6ad4cc03a1a1486b5b9c0c4be309a4a3bbc",
+      "replay_task_us": 18.060362,
+      "mean_core_aiv_us": 16.10352470833333,
+      "block_dim": 48.0,
+      "busy_ratios": {
+        "vec": 0.709791875,
+        "scalar": 0.5947293541666666,
+        "mte2": 0.610685125,
+        "mte3": 0.28781677083333335
+      }
+    },
+    {
+      "label": "agentic_r2_wide_pmu_fma",
+      "case": {
+        "name": "r2wide_perf_d1024_float16_h32",
+        "shape": [
+          1,
+          256,
+          32,
+          1024
+        ],
+        "dtype": "float16",
+        "theta": 10000.0,
+        "pmax": 131073,
+        "seed": 174346
+      },
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60",
+      "profile_summary": "benchmarks/profiles/agentic_r2_wide_pmu_fma/summary.json",
+      "profile_summary_sha256": "69839dfc82829b9ad0122459e53656cd05fda161bb890c09b8e2b723bcdd6f4c",
+      "replay_task_us": 29.940599,
+      "mean_core_aiv_us": 27.943941541666668,
+      "block_dim": 48.0,
+      "busy_ratios": {
+        "vec": 0.8471620416666666,
+        "scalar": 0.354573625,
+        "mte2": 0.286020375,
+        "mte3": 0.15825764583333332
+      }
+    },
+    {
+      "label": "agentic_r1_v9_stream",
+      "case": {
+        "name": "large_stream_half",
+        "shape": [
+          4,
+          8192,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "pmax": 131073,
+        "seed": 69
+      },
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "profile_summary": "benchmarks/profiles/agentic_r1_v9_stream/summary.json",
+      "profile_summary_sha256": "841ba6e55a304d93fa56263dcc4b74751d706aebc542ac0ac5a0ad7e35884d0a",
+      "replay_task_us": 765.035278,
+      "mean_core_aiv_us": 757.8453840416666,
+      "block_dim": 48.0,
+      "busy_ratios": {
+        "vec": 0.4713145625,
+        "scalar": 0.29442104166666666,
+        "mte2": 0.9371762083333334,
+        "mte3": 0.6388040208333333
+      }
+    },
+    {
+      "label": "review_20261017_deepseek_float",
+      "case": {
+        "name": "deepseek_float",
+        "shape": [
+          2,
+          512,
+          128,
+          64
+        ],
+        "dtype": "float32",
+        "pmax": 8192
+      },
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60",
+      "profile_summary": "benchmarks/profiles/review_20261017_deepseek_float/summary.json",
+      "profile_summary_sha256": "43537d90eb9d641927a4094b0125850244f0f55c6b0dd8d0ed355ebe3a9fb827",
+      "replay_task_us": 27.300547,
+      "mean_core_aiv_us": 24.696970604166665,
+      "block_dim": 48.0,
+      "busy_ratios": {
+        "vec": 0.5004477083333333,
+        "scalar": 0.3479899166666667,
+        "mte2": 0.8031393958333334,
+        "mte3": 0.5051775625
+      },
+      "native_baseline_us": 18.34,
+      "native_timing_source": "benchmarks/results/agentic_r5_pipeline_parent.json",
+      "native_input_hashes_match": true
+    },
+    {
+      "label": "review_20261017_prefill_h3_d24_half",
+      "case": {
+        "name": "prefill_h3_d24_half",
+        "shape": [
+          2,
+          512,
+          3,
+          24
+        ],
+        "dtype": "float16",
+        "pmax": 131073
+      },
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60",
+      "profile_summary": "benchmarks/profiles/review_20261017_prefill_h3_d24_half/summary.json",
+      "profile_summary_sha256": "09637eb79b7bdbb70a410983e8137a314db28f49147560e00430cc0432606472",
+      "replay_task_us": 7.640153,
+      "mean_core_aiv_us": 6.35662712,
+      "block_dim": 25.0,
+      "busy_ratios": {
+        "vec": 0.47455643999999997,
+        "scalar": 0.60856872,
+        "mte2": 0.05267924,
+        "mte3": 0.04245784
+      },
+      "native_baseline_us": 7.24,
+      "native_timing_source": "benchmarks/results/agentic_r5_pipeline_parent.json",
+      "native_input_hashes_match": true
+    },
+    {
+      "label": "review_20261017_sequence8192",
+      "case": {
+        "name": "sequence8192",
+        "shape": [
+          1,
+          8192,
+          1,
+          64
+        ],
+        "dtype": "float32",
+        "pmax": 131073
+      },
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60",
+      "profile_summary": "benchmarks/profiles/review_20261017_sequence8192/summary.json",
+      "profile_summary_sha256": "63d7a0e3e82301b03bc9537ddbb80d3a578a656719fed19d6f4c75513254d8d6",
+      "replay_task_us": 11.880238,
+      "mean_core_aiv_us": 9.594481979166666,
+      "block_dim": 48.0,
+      "busy_ratios": {
+        "vec": 0.5554385625,
+        "scalar": 0.47865335416666666,
+        "mte2": 0.091145,
+        "mte3": 0.05314841666666667
+      },
+      "native_baseline_us": 11.59,
+      "native_timing_source": "benchmarks/results/agentic_r5_pipeline_parent.json",
+      "native_input_hashes_match": true
+    },
+    {
+      "label": "review_20261017_sequence_d1024_float",
+      "case": {
+        "name": "sequence_d1024_float",
+        "shape": [
+          1,
+          8192,
+          1,
+          1024
+        ],
+        "dtype": "float32",
+        "pmax": 131073
+      },
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60",
+      "profile_summary": "benchmarks/profiles/review_20261017_sequence_d1024_float/summary.json",
+      "profile_summary_sha256": "0a5fe58c1e5f7cf1c4f9fcd6798ca7e18f91bf9466dd3ebb78904974253a3621",
+      "replay_task_us": 95.161903,
+      "mean_core_aiv_us": 91.384752375,
+      "block_dim": 48.0,
+      "busy_ratios": {
+        "vec": 0.8940962083333334,
+        "scalar": 0.263373875,
+        "mte2": 0.15821875,
+        "mte3": 0.09364322916666666
+      },
+      "native_baseline_us": 94.522,
+      "native_timing_source": "benchmarks/results/agentic_r5_pipeline_parent.json",
+      "native_input_hashes_match": true
+    },
+    {
+      "label": "review_20261017_unaligned_h128_d30_float",
+      "case": {
+        "name": "unaligned_h128_d30_float",
+        "shape": [
+          2,
+          1024,
+          128,
+          30
+        ],
+        "dtype": "float32",
+        "pmax": 131073
+      },
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60",
+      "profile_summary": "benchmarks/profiles/review_20261017_unaligned_h128_d30_float/summary.json",
+      "profile_summary_sha256": "b6467864daa990fb1837e4433474e96aac496640064b408da9d71156ec6d0268",
+      "replay_task_us": 100.66201,
+      "mean_core_aiv_us": 98.2124208125,
+      "block_dim": 48.0,
+      "busy_ratios": {
+        "vec": 0.9059535833333333,
+        "scalar": 0.17769525,
+        "mte2": 0.16726272916666668,
+        "mte3": 0.08793466666666666
+      },
+      "native_baseline_us": 100.092,
+      "native_timing_source": "benchmarks/results/agentic_r5_pipeline_parent.json",
+      "native_input_hashes_match": true
+    },
+    {
+      "label": "review_20261017_unaligned_h128_d30_half",
+      "case": {
+        "name": "unaligned_h128_d30_half",
+        "shape": [
+          2,
+          1024,
+          128,
+          30
+        ],
+        "dtype": "float16",
+        "pmax": 131073
+      },
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60",
+      "profile_summary": "benchmarks/profiles/review_20261017_unaligned_h128_d30_half/summary.json",
+      "profile_summary_sha256": "37122dbec411c225138de5189f50fbeaa85efd2ecfc30bb99f1ca7a1a275ef5c",
+      "replay_task_us": 100.202003,
+      "mean_core_aiv_us": 97.8901580625,
+      "block_dim": 48.0,
+      "busy_ratios": {
+        "vec": 0.9063479375,
+        "scalar": 0.187733875,
+        "mte2": 0.1414639375,
+        "mte3": 0.06732589583333333
+      },
+      "native_baseline_us": 99.942,
+      "native_timing_source": "benchmarks/results/agentic_r5_pipeline_parent.json",
+      "native_input_hashes_match": true
+    }
+  ],
+  "platform_opportunity": [
+    {
+      "id": 9,
+      "latency_us": 53.89,
+      "displayed_best_us": 15.92,
+      "ratio": 3.3850502512562817,
+      "estimated_case_score": 24.954250288621218,
+      "estimated_overall_points_if_reaches_best": 5.003049980758586
+    },
+    {
+      "id": 5,
+      "latency_us": 19.57,
+      "displayed_best_us": 6.68,
+      "ratio": 2.9296407185628746,
+      "estimated_case_score": 27.389908092988463,
+      "estimated_overall_points_if_reaches_best": 4.840672793800769
+    },
+    {
+      "id": 6,
+      "latency_us": 17.7,
+      "displayed_best_us": 8.44,
+      "ratio": 2.0971563981042656,
+      "estimated_case_score": 35.379434941508705,
+      "estimated_overall_points_if_reaches_best": 4.308037670566086
+    },
+    {
+      "id": 4,
+      "latency_us": 10.84,
+      "displayed_best_us": 5.46,
+      "ratio": 1.9853479853479854,
+      "estimated_case_score": 37.15570651004263,
+      "estimated_overall_points_if_reaches_best": 4.189619565997158
+    },
+    {
+      "id": 7,
+      "latency_us": 20.47,
+      "displayed_best_us": 10.51,
+      "ratio": 1.9476688867745005,
+      "estimated_case_score": 37.819768900880895,
+      "estimated_overall_points_if_reaches_best": 4.145348739941274
+    },
+    {
+      "id": 2,
+      "latency_us": 5.62,
+      "displayed_best_us": 3.13,
+      "ratio": 1.7955271565495208,
+      "estimated_case_score": 40.92449900009465,
+      "estimated_overall_points_if_reaches_best": 3.9383667333270234
+    },
+    {
+      "id": 1,
+      "latency_us": 3.86,
+      "displayed_best_us": 2.15,
+      "ratio": 1.7953488372093023,
+      "estimated_case_score": 40.92860184244848,
+      "estimated_overall_points_if_reaches_best": 3.9380932105034345
+    },
+    {
+      "id": 3,
+      "latency_us": 6.82,
+      "displayed_best_us": 3.88,
+      "ratio": 1.7577319587628868,
+      "estimated_case_score": 41.82254051431384,
+      "estimated_overall_points_if_reaches_best": 3.8784972990457436
+    },
+    {
+      "id": 8,
+      "latency_us": 12.92,
+      "displayed_best_us": 7.72,
+      "ratio": 1.6735751295336787,
+      "estimated_case_score": 44.0518369534017,
+      "estimated_overall_points_if_reaches_best": 3.729877536439887
+    },
+    {
+      "id": 15,
+      "latency_us": 270.89,
+      "displayed_best_us": 171.0,
+      "ratio": 1.5841520467836256,
+      "estimated_case_score": 46.846720823487274,
+      "estimated_overall_points_if_reaches_best": 3.5435519451008486
+    },
+    {
+      "id": 13,
+      "latency_us": 339.52,
+      "displayed_best_us": 236.22,
+      "ratio": 1.437304207941749,
+      "estimated_case_score": 52.778828145298704,
+      "estimated_overall_points_if_reaches_best": 3.148078123646753
+    },
+    {
+      "id": 12,
+      "latency_us": 48.97,
+      "displayed_best_us": 41.4,
+      "ratio": 1.1828502415458937,
+      "estimated_case_score": 70.71341113077445,
+      "estimated_overall_points_if_reaches_best": 1.9524392579483703
+    },
+    {
+      "id": 14,
+      "latency_us": 859.7,
+      "displayed_best_us": 734.12,
+      "ratio": 1.1710619517245138,
+      "estimated_case_score": 71.97059136379868,
+      "estimated_overall_points_if_reaches_best": 1.8686272424134216
+    },
+    {
+      "id": 11,
+      "latency_us": 40.04,
+      "displayed_best_us": 35.73,
+      "ratio": 1.1206269241533726,
+      "estimated_case_score": 78.07113913366372,
+      "estimated_overall_points_if_reaches_best": 1.461924057755752
+    },
+    {
+      "id": 10,
+      "latency_us": 3370.0,
+      "displayed_best_us": 3060.0,
+      "ratio": 1.1013071895424837,
+      "estimated_case_score": 80.77590567318407,
+      "estimated_overall_points_if_reaches_best": 1.2816062884543953
+    }
+  ],
+  "counterfactuals": {
+    "scope": "Rounded timings from submission883390; fixed best times, cap per-case score100; hypothetical, not predictions",
+    "top5_case_ids": [
+      9,
+      5,
+      6,
+      4,
+      7
+    ],
+    "score_if_top5_latency_halved": 63.56248712647183,
+    "score_if_top5_reach_best": 71.25893830536437
+  },
+  "limitations": [
+    "Replay counters and native task durations are different experiments; do not divide or add their times into stage fractions.",
+    "Busy ratios overlap and are mean per-core statistics, not useful SIMD lane utilization or arithmetic efficiency.",
+    "High VEC time does not isolate Gather, trig, arithmetic, UB conflicts or dependency barriers.",
+    "No platform case shape/dtype/path mapping is available; no specialized hidden-case dispatch is inferred.",
+    "Existing inherited extreme-amplitude FP16 local failure remains; platform15Pass does not prove all legal inputs."
+  ],
+  "priorities": [
+    {
+      "priority": 1,
+      "family": "HeadTile short nonaligned many-head",
+      "evidence": "FP16/FP32 native ~100us, replay VEC~90.6%, MTE2~14/17%; five Gather operations plus padded intermediates",
+      "next_diagnostic": "Attribute Gather/layout, arithmetic, explicit barriers and index initialization separately before implementing geometry-period coefficient expansion."
+    },
+    {
+      "priority": 2,
+      "family": "H1 wide sequence",
+      "evidence": "D1024 FP32 VEC89.4%, MTE2 15.8%; no across-head trig amortization",
+      "next_diagnostic": "Separate range-reduction/polynomial/Sqrt from rotation and UB passes; inspect true vector instructions and dependencies. Preserve FP32 and precision rules."
+    },
+    {
+      "priority": 3,
+      "family": "Small/short packed workloads",
+      "evidence": "tiny scalar76.5%; packed3head scalar60.9% with only25blocks",
+      "next_diagnostic": "Measure frequency/index setup versus steady loop, then choose general tiling/parallellism changes based on setup/transfer tradeoff."
+    },
+    {
+      "priority": 4,
+      "family": "Aligned/streaming bandwidth paths",
+      "evidence": "aligned FP32 MTE2~80.3%, large stream93.7%; mixed overlap",
+      "next_diagnostic": "Check transfer granularity, actual memory/cache traffic and critical path before tile/buffer changes."
+    },
+    {
+      "priority": 5,
+      "family": "Generic unaligned pipeline",
+      "evidence": "Native1.68-1.73x but official48.78->48.44; local fixed33 geometric mean1.033x",
+      "next_diagnostic": "Archive causal gain; deprioritize further tuning until workload relevance is established."
+    }
+  ]
+}

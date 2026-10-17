@@ -1,0 +1,449 @@
+{
+  "cpu_model_only": true,
+  "device_or_environment_changes": false,
+  "model": "benchmarks/experiments/round8/numerical_model/lazy.py",
+  "scope": "Scalar frequency widths only. No timing prediction; count actual guard outcomes before proposing a wider fixed-point Horner scheme.",
+  "rows": [
+    {
+      "theta": 0.009999999776482582,
+      "width": 8,
+      "nonzero_frequencies": 7,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 0.009999999776482582,
+      "width": 12,
+      "nonzero_frequencies": 11,
+      "q31_fallback_columns": [
+        5
+      ],
+      "root_table_needed_columns": [
+        5
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 0.009999999776482582,
+      "width": 15,
+      "nonzero_frequencies": 14,
+      "q31_fallback_columns": [
+        13,
+        14
+      ],
+      "root_table_needed_columns": [
+        13,
+        14
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 0.009999999776482582,
+      "width": 16,
+      "nonzero_frequencies": 15,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 0.009999999776482582,
+      "width": 24,
+      "nonzero_frequencies": 23,
+      "q31_fallback_columns": [
+        10
+      ],
+      "root_table_needed_columns": [
+        10
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 0.009999999776482582,
+      "width": 32,
+      "nonzero_frequencies": 31,
+      "q31_fallback_columns": [
+        1,
+        9
+      ],
+      "root_table_needed_columns": [
+        1,
+        9
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 1.0,
+      "width": 8,
+      "nonzero_frequencies": 7,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 1.0,
+      "width": 12,
+      "nonzero_frequencies": 11,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 1.0,
+      "width": 15,
+      "nonzero_frequencies": 14,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 1.0,
+      "width": 16,
+      "nonzero_frequencies": 15,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 1.0,
+      "width": 24,
+      "nonzero_frequencies": 23,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 1.0,
+      "width": 32,
+      "nonzero_frequencies": 31,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 2.0,
+      "width": 8,
+      "nonzero_frequencies": 7,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 2.0,
+      "width": 12,
+      "nonzero_frequencies": 11,
+      "q31_fallback_columns": [
+        7,
+        11
+      ],
+      "root_table_needed_columns": [
+        7,
+        11
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 2.0,
+      "width": 15,
+      "nonzero_frequencies": 14,
+      "q31_fallback_columns": [
+        4,
+        7,
+        8
+      ],
+      "root_table_needed_columns": [
+        4,
+        7,
+        8
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 2.0,
+      "width": 16,
+      "nonzero_frequencies": 15,
+      "q31_fallback_columns": [
+        3
+      ],
+      "root_table_needed_columns": [
+        3
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 2.0,
+      "width": 24,
+      "nonzero_frequencies": 23,
+      "q31_fallback_columns": [
+        14,
+        22
+      ],
+      "root_table_needed_columns": [
+        14,
+        22
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 2.0,
+      "width": 32,
+      "nonzero_frequencies": 31,
+      "q31_fallback_columns": [
+        3,
+        5,
+        6,
+        15,
+        21
+      ],
+      "root_table_needed_columns": [
+        3,
+        5,
+        6,
+        15,
+        21
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 100.0,
+      "width": 8,
+      "nonzero_frequencies": 7,
+      "q31_fallback_columns": [
+        5
+      ],
+      "root_table_needed_columns": [
+        5
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 100.0,
+      "width": 12,
+      "nonzero_frequencies": 11,
+      "q31_fallback_columns": [
+        7,
+        10
+      ],
+      "root_table_needed_columns": [
+        7,
+        10
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 100.0,
+      "width": 15,
+      "nonzero_frequencies": 14,
+      "q31_fallback_columns": [
+        3,
+        9
+      ],
+      "root_table_needed_columns": [
+        3
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 100.0,
+      "width": 16,
+      "nonzero_frequencies": 15,
+      "q31_fallback_columns": [
+        1,
+        10
+      ],
+      "root_table_needed_columns": [
+        1,
+        10
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 100.0,
+      "width": 24,
+      "nonzero_frequencies": 23,
+      "q31_fallback_columns": [
+        14,
+        15,
+        20
+      ],
+      "root_table_needed_columns": [
+        14,
+        15,
+        20
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 100.0,
+      "width": 32,
+      "nonzero_frequencies": 31,
+      "q31_fallback_columns": [
+        2,
+        20,
+        23,
+        27
+      ],
+      "root_table_needed_columns": [
+        2,
+        20,
+        23,
+        27
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 10000.0,
+      "width": 8,
+      "nonzero_frequencies": 7,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 10000.0,
+      "width": 12,
+      "nonzero_frequencies": 11,
+      "q31_fallback_columns": [
+        5
+      ],
+      "root_table_needed_columns": [
+        5
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 10000.0,
+      "width": 15,
+      "nonzero_frequencies": 14,
+      "q31_fallback_columns": [
+        9,
+        12
+      ],
+      "root_table_needed_columns": [
+        9,
+        12
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 10000.0,
+      "width": 16,
+      "nonzero_frequencies": 15,
+      "q31_fallback_columns": [
+        5
+      ],
+      "root_table_needed_columns": [
+        5
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 10000.0,
+      "width": 24,
+      "nonzero_frequencies": 23,
+      "q31_fallback_columns": [
+        7,
+        10
+      ],
+      "root_table_needed_columns": [
+        7,
+        10
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 10000.0,
+      "width": 32,
+      "nonzero_frequencies": 31,
+      "q31_fallback_columns": [
+        1,
+        10
+      ],
+      "root_table_needed_columns": [
+        1,
+        10
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 500000.0,
+      "width": 8,
+      "nonzero_frequencies": 7,
+      "q31_fallback_columns": [
+        4
+      ],
+      "root_table_needed_columns": [
+        4
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 500000.0,
+      "width": 12,
+      "nonzero_frequencies": 11,
+      "q31_fallback_columns": [
+        6,
+        10,
+        11
+      ],
+      "root_table_needed_columns": [
+        6,
+        10,
+        11
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 500000.0,
+      "width": 15,
+      "nonzero_frequencies": 14,
+      "q31_fallback_columns": [],
+      "root_table_needed_columns": [],
+      "root_build_required": false
+    },
+    {
+      "theta": 500000.0,
+      "width": 16,
+      "nonzero_frequencies": 15,
+      "q31_fallback_columns": [
+        8
+      ],
+      "root_table_needed_columns": [
+        8
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 500000.0,
+      "width": 24,
+      "nonzero_frequencies": 23,
+      "q31_fallback_columns": [
+        12,
+        20,
+        22,
+        23
+      ],
+      "root_table_needed_columns": [
+        12,
+        20,
+        22,
+        23
+      ],
+      "root_build_required": true
+    },
+    {
+      "theta": 500000.0,
+      "width": 32,
+      "nonzero_frequencies": 31,
+      "q31_fallback_columns": [
+        3,
+        16
+      ],
+      "root_table_needed_columns": [
+        3,
+        16
+      ],
+      "root_build_required": true
+    }
+  ]
+}

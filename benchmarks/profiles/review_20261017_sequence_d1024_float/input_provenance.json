@@ -1,0 +1,20 @@
+{
+  "case": {
+    "name": "sequence_d1024_float",
+    "shape": [
+      1,
+      8192,
+      1,
+      1024
+    ],
+    "dtype": "float32",
+    "pmax": 131073
+  },
+  "input_sha256": {
+    "x.bin": "2a959a7db8a71c20fbca2b0e00715a5eadde3584016abb01b96ceca7104489d2",
+    "positions.bin": "baf900077a8770b9f5472722917b945698c1959724876c49b9ea2e867c2dfc27"
+  },
+  "kernel_modified": false,
+  "binary": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r2wide/candidate_runner",
+  "collected_at_utc": "2026-10-17T07:05:01Z"
+}

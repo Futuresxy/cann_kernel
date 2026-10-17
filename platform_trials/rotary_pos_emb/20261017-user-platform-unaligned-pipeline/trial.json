@@ -52,7 +52,7 @@
   "platform_run_id": "20261017T064335554773Z-f32e9651514d",
   "platform_submission_id": "885584",
   "platform_result_url": "https://cannjudge.cn/public/op_challenge_jingdong_prelim/rotaryposemb/submission/6ad3191b193e507d8e651425",
-  "platform_state_at_capture": "pending",
+  "platform_state_at_capture": "accepted",
   "editor_readback": {
     "adapter": "keyboard",
     "readback_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
@@ -67,5 +67,10 @@
       "main.asc",
       "run.sh"
     ]
-  }
+  },
+  "platform_status": "Pass",
+  "platform_score_raw": "48.44",
+  "platform_rank_at_capture": 66,
+  "platform_passed_cases": 15,
+  "official_score_delta_from_parent": -0.34
 }
