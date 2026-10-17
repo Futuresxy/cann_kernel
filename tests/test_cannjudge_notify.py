@@ -29,6 +29,8 @@ class NotifyTests(unittest.TestCase):
             self.assertEqual(command[-2], 'Ascend910')
             self.assertIn(thread, command[-1])
             self.assertIn('a' * 64, command[-1])
+            self.assertIn('AGENTIC.md', command[-1])
+            self.assertIn('profiling', command[-1])
             self.assertNotIn('dangerously-bypass', command[-1])
 
     def test_timeout_is_durable_and_is_not_automatically_resent(self):

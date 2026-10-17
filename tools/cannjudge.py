@@ -13,7 +13,7 @@ import time
 
 from judge_workflow.core import (ROOT, Journal, check_origin, check_review, compare_results,
                            digest, read_json, static_audit, utcnow, validate_candidate, write_json)
-from judge_workflow.repository import export_result, publish_candidate, sync_candidate
+from judge_workflow.repository import export_result, publish_candidate, sync_candidate, share_result
 
 
 @contextmanager
@@ -130,8 +130,36 @@ async def browser_command(args):
             if args.url:
                 check_origin(args.url, config['allowed_origin'])
                 config = dict(config, submit_url=args.url)
-            await inspect(context, config, args.output)
+            if args.interactive:
+                page = await page_for(context, config['submit_url'])
+                print('请在浏览器中切换到要检查的面板，完成后按 Enter。', flush=True)
+                await asyncio.to_thread(input)
+                check_origin(page.url, config['allowed_origin'])
+                config = dict(config, submit_url=page.url)
+            structure = await inspect(context, config, args.output)
             print(args.output.resolve(), flush=True)
+            if args.share:
+                kind = 'result' if '/submission/' in config['submit_url'] else 'editor'
+                destination = ROOT / 'platform_inspections/rotary_pos_emb' / (kind + '.json')
+                write_json(destination, structure)
+                print(destination.resolve(), flush=True)
+        elif args.command == 'calibrate-result':
+            from judge_workflow.site import calibrate_result
+            check_origin(args.result_url, config['allowed_origin'])
+            page = await page_for(context, args.result_url)
+            calibrated, summary = await calibrate_result(page, config)
+            write_json(args.config, calibrated)
+            print(json.dumps(summary, ensure_ascii=False, indent=2), flush=True)
+        elif args.command == 'check-editor':
+            from judge_workflow.editor import read_kernel
+            validate_config(dict(config, calibrated=True))
+            page = await page_for(context, config['submit_url'])
+            data = await read_editor(page, config) if config.get('editor_adapter') == 'keyboard' else await read_kernel(page, config, activate=True)
+            if not data:
+                raise ValueError('The configured kernel editor is empty')
+            config.update(calibrated=True, editor_checked_at=utcnow())
+            write_json(args.config, config)
+            print(json.dumps({'bytes': len(data), 'readback_sha256': digest(data), 'calibrated': True}), flush=True)
         elif args.command == 'login':
             if args.headless:
                 raise ValueError('Interactive login requires a visible browser on a desktop')
@@ -200,6 +228,8 @@ def parser():
     sync.add_argument('--ref', default='origin/main', help='Used only with --no-fetch')
     export = commands.add_parser('export-result', help='Write a small platform result summary for Git sharing')
     export.add_argument('--run', type=Path, required=True)
+    share = commands.add_parser('share-result', help='Publish one result through the compatible isolated-index publisher')
+    share.add_argument('--run', type=Path, required=True)
     comparison = commands.add_parser('compare', help='Compare two accepted platform run.json records')
     comparison.add_argument('--baseline', type=Path, required=True)
     comparison.add_argument('--candidate', type=Path, required=True)
@@ -213,7 +243,7 @@ def parser():
     incoming.add_argument('--wait', action='store_true')
     incoming.add_argument('--interval', type=int, default=60)
     incoming.add_argument('--timeout', type=int, default=1800)
-    for command in ('login', 'inspect', 'submit', 'resume', 'run', 'watch', 'preflight'):
+    for command in ('login', 'inspect', 'submit', 'resume', 'run', 'watch', 'preflight', 'calibrate-result', 'check-editor'):
         sub = commands.add_parser(command)
         sub.add_argument('--config', type=Path, default=ROOT / 'tools/judge_workflow/cannjudge.example.json')
         sub.add_argument('--cdp', help='Chrome debug endpoint reachable from this process, e.g. http://127.0.0.1:9222')
@@ -225,6 +255,7 @@ def parser():
             sub.add_argument('--runs', type=Path, default=ROOT / 'benchmarks/platform/runs')
             sub.add_argument('--publish-feedback', action='store_true', help='Publish sanitized result and next-round request using an isolated Git clone')
             sub.add_argument('--notify-config', type=Path, help='Mac-local SSH host and fixed Codex thread UUID; notify only after publication')
+            sub.add_argument('--publish-result', action='store_true', help='Compatibility alias for publishing structured feedback')
         if command == 'submit':
             sub.add_argument('--candidate', type=Path, required=True)
             sub.add_argument('--repeat-source', action='store_true', help='Explicitly submit an already recorded source once; never bypasses an outstanding submission')
@@ -244,11 +275,17 @@ def parser():
         elif command == 'inspect':
             sub.add_argument('--url', help='Read-only inspect a previous submission detail URL on the same origin')
             sub.add_argument('--output', type=Path, default=ROOT / '.local/cannjudge/inspection')
+            sub.add_argument('--share', action='store_true', help='Save a sanitized shareable DOM structure report')
+            sub.add_argument('--interactive', action='store_true')
+        elif command == 'calibrate-result':
+            sub.add_argument('--result-url', required=True)
     return ap
 
 
 def main():
     args = parser().parse_args()
+    if getattr(args, 'publish_result', False):
+        args.publish_feedback = True
     if args.command == 'audit':
         report = static_audit(args.source.read_bytes())
         if args.output:
@@ -264,6 +301,8 @@ def main():
         print(json.dumps({'candidate': str(destination.resolve()), 'fetched_commit': tip}, indent=2))
     elif args.command == 'export-result':
         print(export_result(args.run))
+    elif args.command == 'share-result':
+        print(json.dumps(share_result(args.run), ensure_ascii=False, indent=2))
     elif args.command == 'compare':
         write_json(args.output, compare_results(read_json(args.baseline), read_json(args.candidate)))
         print(args.output.resolve())

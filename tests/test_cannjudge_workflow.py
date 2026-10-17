@@ -323,6 +323,18 @@ class BrowserTests(unittest.IsolatedAsyncioTestCase):
         await self.page.locator('.case').last.evaluate('e=>e.remove()')
         self.assertEqual((await read_result(self.page, config, record))['waiting_for'], 'all_case_rows')
 
+    async def test_pass_allows_error_ratio_within_the_user_match_threshold(self):
+        config, record = await self.live_result_fixture()
+        config.update(case_error_selector='.error', case_max_error_percent=1.0)
+        await self.page.locator('.case').evaluate_all('''rows=>rows.forEach(row=>{
+            const cell=document.createElement('td');cell.className='error';cell.textContent='0.5%';row.append(cell);
+        })''')
+        result = await read_result(self.page, config, record)
+        self.assertEqual(result['state'], 'accepted')
+        self.assertEqual(result['cases'][0]['output_error_percent'], .5)
+        await self.page.locator('.error').first.evaluate("e=>e.textContent='1.5%'")
+        with self.assertRaises(ValueError): await read_result(self.page, config, record)
+
     async def test_pipeline_submits_once_exports_feedback_and_reuses_completed_record(self):
         root = Path(self.temporary.name)
         candidate = root / 'candidate'; candidate.mkdir(); fixture_candidate(candidate)

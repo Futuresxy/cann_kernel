@@ -21,6 +21,7 @@
   "case_id_selector": "td:nth-child(1)",
   "case_status_selector": "td:nth-child(2)",
   "case_error_selector": "td:nth-child(3)",
+  "case_max_error_percent": 1.0,
   "case_latency_selector": "td:nth-child(4)",
   "case_best_latency_selector": "td:nth-child(5)",
   "log_selector": "#submission-status-msg-content",

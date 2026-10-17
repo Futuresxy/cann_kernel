@@ -25,6 +25,10 @@ Mac：watch 读取新 ready 候选 → 全文核对 → 一次提交
 
 任务按 request_id 冻结。候选的 manifest 与 latest.json 中的 tuning_request_id 必须一致；结果继续保留该 ID，下一轮任务用 responds_to 连接上一轮。源码变化后必须重新取得证据，不能改标签复用旧证据。
 
+每轮先阅读用户在服务器 `~/cann_kernel/project/AGENTIC.md` 中指定的 `kernel_requirement.md`、`forbidden.md`，保留这些可能尚未提交的文件。缓存的网页摘录只作为当时信息，不能覆盖用户更新后的规则。当前用户规则要求逐元素 `atol + rtol * abs(golden)`，同时满足 matched_ratio >=0.99 和 max_abs_error 上限；网站的 Pass 可以伴随不超过 1% 的输出错误占比，因此采集器不再误要求 0%。它仍以平台状态为准，不修改 golden、计时或精度校验。
+
+远端会话先梳理 docs/profiled_v*.md、docs/tuning_workflow.md 和 benchmarks/experiments 中已有尝试，维护 `benchmarks/experiments/agentic/history.json` 及每个 request_id 的实验 JSON。记录假设、PMU/profiling 瓶颈证据、父/候选源码 SHA、改动、精度与单启动检查、本地配对耗时、保留/放弃原因和下一步。已被否定的方案只有出现新证据时才能重试。平台测试点差距用于定优先级，本地 profiling 决定具体算法与搬运优化。
+
 ## Mac 端
 
 ```bash

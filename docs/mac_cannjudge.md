@@ -97,6 +97,8 @@ bash tools/mac_cannjudge.sh inspect --url '一条真实历史提交的详情URL'
 
 目前真实站点字段已记录在 `cannjudge.live.json`；站点改版时重新检查提交详情链接、提交编号、整体状态、15 点耗时与错误信息后再更新配置。通用 `cannjudge.example.json` 仍保持未校准，不能直接提交。
 
+保留远端会话新增的兼容接口：`inspect --interactive --share` 导出不含源码、账号、输入值的 DOM 结构；`calibrate-result --result-url URL` 校准通用表格适配器；`check-editor` 只读检查编辑器；`share-result --run ...` 只发布结果。`editor_mode` 支持公共 Monaco、键盘和 iframe 适配，Mac live 的 `editor_adapter=keyboard` 使用已实测的网站复制按钮。
+
 ## 日常提交
 
 服务端发布 ready 版本后，Mac 执行：

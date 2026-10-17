@@ -1,0 +1,45 @@
+{
+  "checked_at": "2026-10-17T03:29:30.286909+00:00",
+  "base_git_commit": "85a5a2b685a75e7c0cf3f02bd114a400405502f5",
+  "source_sha256": {
+    "tools/cannjudge.py": "d6c837074f1cc45cefaaac1dabe54be237ebf0380da4c2d156d2b1becf735d53",
+    "tools/mac_cannjudge.sh": "0cc3a3e4023da2963e243b6cf21be355d75c02066833c0aaa2c7ab5ac8ce60a4",
+    "tools/judge_workflow/__init__.py": "c5474cc6e46fd96d5fe040790af5de716f589f24e604ed6f95bf86d24181a3f6",
+    "tools/judge_workflow/browser.py": "ad40a055a06dc239a8195b4eceee454b885584e313196078c8dd4d420a947d03",
+    "tools/judge_workflow/core.py": "ef71c5451653ec648221e83359c5af4158b0aabcce091ae47829aed83668815b",
+    "tools/judge_workflow/discovery.py": "5c5837799e559e9f7db3eac5588ba5aca8f40f6d34bea4e04eada2d807c960ec",
+    "tools/judge_workflow/editor.py": "6cf8974275043bde9ccfb395d415e952d935d7da15fb90b87ffe853b3daeff26",
+    "tools/judge_workflow/repository.py": "a5d8b36920676f0542b18d6bf4976b9f1bb837dadf7ee7930aca9b77b8210b53",
+    "tools/judge_workflow/site.py": "2300e77347d01b4395386f08a58adb82cde0589cf39e36b4a5c2a9ce952e4793",
+    "tools/judge_workflow/cannjudge.example.json": "fe116499e3871e779c24532f4805f7c39547b17eb572cf598a4f50e84646c824",
+    "tests/test_cannjudge_workflow.py": "e5879caba7bd64060a7aca825c060ccad7fad6fd2667d863c351c8b436f0730e",
+    "tests/test_cannjudge_repository.py": "4d3efea8f4665f582b3af4b481d477376d5ee64e11b05ef88691499b3b5f6860"
+  },
+  "test_suites": [
+    {
+      "name": "browser_and_core",
+      "tests": 31,
+      "passed": true
+    },
+    {
+      "name": "git_exchange",
+      "tests": 10,
+      "passed": true
+    }
+  ],
+  "total_tests": 41,
+  "browser": "Real Linux Chromium, local UI fixtures with native clipboard and screenshot-derived result layout",
+  "npu_used": false,
+  "kernel_or_template_changed": false,
+  "candidate_kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "real_mac_login": "Reported completed by user",
+  "real_site_automatic_submission_verified": false,
+  "remaining_live_calibration": [
+    "Mac editor/file-tab DOM selectors",
+    "Validate actual metadata/table DOM and perform one real submission"
+  ],
+  "limitations": [
+    "Keyboard adapter audits the active file and complete clipboard content; it cannot enumerate unavailable editor models.",
+    "Each optimization round still needs one Mac submit command; no background watcher or autonomous code-modification service."
+  ]
+}

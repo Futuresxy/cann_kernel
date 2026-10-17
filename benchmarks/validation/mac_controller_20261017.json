@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-17",
+  "tests": {
+    "command": "CANNJUDGE_TEST_CHANNEL=chrome python -m unittest discover -s tests -p 'test_cannjudge*.py'",
+    "count": 58,
+    "result": "passed",
+    "includes_remote_adapter_and_exchange_tests": true
+  },
+  "live_mac_validation": {
+    "kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+    "editor_readback_bytes": 89328,
+    "editor_readback_lines": 1889,
+    "non_kernel_files_readonly": 7,
+    "new_submission_id": "879119",
+    "status": "Pass",
+    "passed_cases": 15,
+    "official_score_raw": "48.45",
+    "score_binding": "submitter, exact submission time and all 15 timings",
+    "error_details_checked_on_existing_compile_error": true
+  },
+  "controller": {
+    "poll_seconds": 60,
+    "result_timeout_seconds": 1800,
+    "max_new_optimization_rounds": 2,
+    "existing_remote_codex_version": "0.162.1",
+    "queue_command_verified": true,
+    "user_rules_read": ["AGENTIC.md", "kernel_requirement.md", "forbidden.md"],
+    "remote_environment_modified": false,
+    "new_tuning_performance_improvement_claimed": false
+  }
+}

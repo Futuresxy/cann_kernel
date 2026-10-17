@@ -9,6 +9,8 @@ import uuid
 from urllib.parse import urljoin, urlparse
 
 from .core import check_origin, digest, latency_us, utcnow, write_json
+from .discovery import structure_report
+from .editor import read_kernel, verify_kernel, replace_kernel as replace_configured_kernel
 
 
 MODELS = """() => {
@@ -67,6 +69,8 @@ async def inspect(context, config, output):
     await page.wait_for_function(
         "() => !document.body.innerText.includes('正在加载代码编辑器')", timeout=60000)
     await snapshot(page, output, 'inspect')
+    structure = await structure_report(page)
+    write_json(output / 'structure.json', structure)
     models = await page.evaluate(MODELS)
     links = await page.locator('a[href]').evaluate_all(
         '(nodes) => nodes.map(n => ({text:n.innerText,href:n.href}))')
@@ -81,14 +85,22 @@ async def inspect(context, config, output):
         status = page.locator(config['result_status_selector'])
         if await status.count() == 1 and (await status.inner_text()).strip() in config['failure_statuses']:
             await capture_diagnostics(page, config, output)
+    return structure
 
 
 def validate_config(config):
     if config.get('calibrated') is not True:
         raise ValueError('Live selectors are not calibrated; run inspect before enabling submission')
-    for key in ('submit_url', 'allowed_origin', 'submit_button_name', 'result_link_selector',
-                'result_url_pattern', 'result_id_selector', 'result_status_selector',
-                'case_row_selector', 'case_id_selector', 'case_latency_selector', 'case_status_selector'):
+    fields = ['submit_url', 'allowed_origin', 'submit_button_name', 'result_link_selector', 'result_url_pattern']
+    adapter = config.get('result_adapter', 'selectors')
+    if adapter == 'cannjudge-table':
+        fields += ['result_metadata_selector', 'result_table_selector']
+    elif adapter == 'selectors':
+        fields += ['result_id_selector', 'result_status_selector', 'case_row_selector',
+                   'case_id_selector', 'case_latency_selector', 'case_status_selector']
+    else:
+        raise ValueError('Unknown result_adapter: ' + str(adapter))
+    for key in fields:
         if not config.get(key):
             raise ValueError('Missing calibrated browser field: ' + key)
     check_origin(config['submit_url'], config['allowed_origin'])
@@ -133,6 +145,8 @@ def kernel_model(models, config):
 async def replace_kernel(page, config, data):
     if config.get('editor_adapter') == 'keyboard':
         return await replace_keyboard_kernel(page, config, data)
+    if 'editor_mode' in config:
+        return await replace_configured_kernel(page, config, data)
     before = await models_ready(page)
     target = kernel_model(before, config)
     text = data.decode('utf-8')
@@ -199,6 +213,8 @@ async def copy_editor(page, config):
 
 async def read_editor(page, config):
     if config.get('editor_adapter') != 'keyboard':
+        if 'editor_mode' in config:
+            return await read_kernel(page, config)
         return kernel_model(await models_ready(page), config)['text'].encode('utf-8')
     await keyboard_editor(page, config)
     previous = await clipboard_text(page)
@@ -369,6 +385,9 @@ async def capture_diagnostics(page, config, directory):
 
 
 async def read_result(page, config, record):
+    if config.get('result_adapter') == 'cannjudge-table' and config.get('result_identity') != 'source_and_url':
+        from .site import read_cannjudge_result
+        return await read_cannjudge_result(page, config, record)
     # The result page must display the record ID that the URL identifies.
     submission_id = await unique_text(page, config['result_id_selector'])
     if config.get('result_id_pattern'):
@@ -427,9 +446,12 @@ async def read_result(page, config, record):
         case = {'id': int(match[1]), 'latency_us': latency_us(raw), 'raw_latency': raw, 'status': status}
         if config.get('case_error_selector'):
             error = (await row.locator(config['case_error_selector']).inner_text()).strip()
-            if not re.fullmatch(r'0(?:\.0+)?%', error):
-                raise ValueError('Pass status disagrees with the output error percentage: ' + error)
-            case['output_error_percent'] = 0.0
+            if not re.fullmatch(r'\d+(?:\.\d+)?\s*%', error):
+                raise ValueError('Unrecognized output error percentage: ' + error)
+            percent = float(error.rstrip('%').strip())
+            if not 0 <= percent <= config.get('case_max_error_percent', 100):
+                raise ValueError('Pass status disagrees with the allowed output error percentage: ' + error)
+            case['output_error_percent'] = percent
         if config.get('case_best_latency_selector'):
             best = (await row.locator(config['case_best_latency_selector']).inner_text()).strip()
             if config.get('allow_partial_results') and best in ('', '-', '--'):
