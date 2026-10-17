@@ -1,0 +1,161 @@
+{
+  "status": "partially_identified_public_metadata_only",
+  "source": "https://cannjudge.cn/api/problems/6a9a9befbf41025d60143218",
+  "method": "Normal authenticated problem page response; only selected problem/case metadata captured, no request headers/cookies/private judge endpoints.",
+  "count": 15,
+  "cases": [
+    {
+      "platform_row": 1,
+      "case_ID": 11471,
+      "case_object_id": "6a9a9befbf41025d6014321d",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 2,
+      "case_ID": 11472,
+      "case_object_id": "6a9a9befbf41025d60143221",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 3,
+      "case_ID": 11473,
+      "case_object_id": "6a9a9befbf41025d60143225",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 4,
+      "case_ID": 11474,
+      "case_object_id": "6a9a9befbf41025d60143229",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 5,
+      "case_ID": 11475,
+      "case_object_id": "6a9a9befbf41025d6014322d",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 6,
+      "case_ID": 11476,
+      "case_object_id": "6a9a9befbf41025d60143231",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 7,
+      "case_ID": 11477,
+      "case_object_id": "6a9a9befbf41025d60143235",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 8,
+      "case_ID": 11478,
+      "case_object_id": "6a9a9befbf41025d60143239",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 9,
+      "case_ID": 11479,
+      "case_object_id": "6a9a9befbf41025d6014323d",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 10,
+      "case_ID": 11480,
+      "case_object_id": "6a9a9befbf41025d60143241",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 11,
+      "case_ID": 11481,
+      "case_object_id": "6a9a9befbf41025d60143245",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 12,
+      "case_ID": 11482,
+      "case_object_id": "6a9a9befbf41025d60143249",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 13,
+      "case_ID": 11483,
+      "case_object_id": "6a9a9befbf41025d6014324d",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 14,
+      "case_ID": 11484,
+      "case_object_id": "6a9a9befbf41025d60143251",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    },
+    {
+      "platform_row": 15,
+      "case_ID": 11485,
+      "case_object_id": "6a9a9befbf41025d60143255",
+      "type": "default",
+      "shape": null,
+      "dtype": null,
+      "theta": null,
+      "positions": null
+    }
+  ],
+  "unknown": "Public response gives ordered IDs11471..11485, not shapes/dtypes/theta/input distributions. Not a reconstruction of15 concrete inputs.",
+  "template_evidence": "Original ZIP and current submitted readonly main/gen_data/reference match; local generator has one case0, reference demo one alternate example despite stale15-case comment.",
+  "resume_priority": "Inspect existing failure details and other official public metadata; retain hypotheses as uncertain, no testcase-specific implementation or induced errors."
+}
