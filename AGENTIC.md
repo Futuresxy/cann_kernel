@@ -1,0 +1,3 @@
+比赛要求在cann_kernel/project/kernel_requirement.md
+
+比赛规则明确禁止的行为在cann_kernel/project/forbidden.md
