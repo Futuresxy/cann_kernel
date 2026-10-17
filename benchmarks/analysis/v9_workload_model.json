@@ -1,0 +1,1216 @@
+{
+  "schema_version": 1,
+  "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "scope": "Public local workloads only; no mapping to hidden platform shapes",
+  "definitions": {
+    "N": "B*S",
+    "K": "D/2",
+    "rotation": "6 FLOPs per pair; frequency/trig cost excluded",
+    "traffic": "Logical compulsory X read + Y write; positions listed separately; not a measured DRAM bandwidth or a hardware peak"
+  },
+  "workloads": [
+    {
+      "name": "tiny",
+      "shape": [
+        1,
+        8,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "tokens": 8,
+      "frequency_elements_ideal": 8,
+      "angle_pairs_ideal": 64,
+      "rotation_pairs": 64,
+      "head_reuse_factor": 1,
+      "rotation_flops": 384,
+      "x_read_y_write_bytes_min": 1024,
+      "positions_read_bytes_min": 32,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 2.6500000000000004,
+      "effective_x_y_GB_s": 0.3864150943396226,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "unaligned_half",
+      "shape": [
+        2,
+        16,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "tokens": 32,
+      "frequency_elements_ideal": 12,
+      "angle_pairs_ideal": 384,
+      "rotation_pairs": 1152,
+      "head_reuse_factor": 3,
+      "rotation_flops": 6912,
+      "x_read_y_write_bytes_min": 9216,
+      "positions_read_bytes_min": 128,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 5.07,
+      "effective_x_y_GB_s": 1.8177514792899407,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "deepseek_half",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "tokens": 1024,
+      "frequency_elements_ideal": 32,
+      "angle_pairs_ideal": 32768,
+      "rotation_pairs": 4194304,
+      "head_reuse_factor": 128,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes_min": 33554432,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 17.509999999999998,
+      "effective_x_y_GB_s": 1916.3010850942321,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "deepseek_float",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float32",
+      "tokens": 1024,
+      "frequency_elements_ideal": 32,
+      "angle_pairs_ideal": 32768,
+      "rotation_pairs": 4194304,
+      "head_reuse_factor": 128,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes_min": 67108864,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 18.441000000000003,
+      "effective_x_y_GB_s": 3639.1119787430175,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "sequence8192",
+      "shape": [
+        1,
+        8192,
+        1,
+        64
+      ],
+      "dtype": "float32",
+      "tokens": 8192,
+      "frequency_elements_ideal": 32,
+      "angle_pairs_ideal": 262144,
+      "rotation_pairs": 262144,
+      "head_reuse_factor": 1,
+      "rotation_flops": 1572864,
+      "x_read_y_write_bytes_min": 4194304,
+      "positions_read_bytes_min": 32768,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 11.6205,
+      "effective_x_y_GB_s": 360.94006282001635,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "large_half",
+      "shape": [
+        4,
+        1024,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "tokens": 4096,
+      "frequency_elements_ideal": 32,
+      "angle_pairs_ideal": 131072,
+      "rotation_pairs": 16777216,
+      "head_reuse_factor": 128,
+      "rotation_flops": 100663296,
+      "x_read_y_write_bytes_min": 134217728,
+      "positions_read_bytes_min": 16384,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 52.061,
+      "effective_x_y_GB_s": 2578.0858608171184,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "heads256",
+      "shape": [
+        1,
+        32,
+        256,
+        128
+      ],
+      "dtype": "float16",
+      "tokens": 32,
+      "frequency_elements_ideal": 64,
+      "angle_pairs_ideal": 2048,
+      "rotation_pairs": 524288,
+      "head_reuse_factor": 256,
+      "rotation_flops": 3145728,
+      "x_read_y_write_bytes_min": 4194304,
+      "positions_read_bytes_min": 128,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 8.739999999999998,
+      "effective_x_y_GB_s": 479.8974828375287,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "aligned_d512_half",
+      "shape": [
+        1,
+        7,
+        17,
+        512
+      ],
+      "dtype": "float16",
+      "tokens": 7,
+      "frequency_elements_ideal": 256,
+      "angle_pairs_ideal": 1792,
+      "rotation_pairs": 30464,
+      "head_reuse_factor": 17,
+      "rotation_flops": 182784,
+      "x_read_y_write_bytes_min": 243712,
+      "positions_read_bytes_min": 28,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 8.6005,
+      "effective_x_y_GB_s": 28.336957153653856,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "wide_half",
+      "shape": [
+        1,
+        7,
+        17,
+        1024
+      ],
+      "dtype": "float16",
+      "tokens": 7,
+      "frequency_elements_ideal": 512,
+      "angle_pairs_ideal": 3584,
+      "rotation_pairs": 60928,
+      "head_reuse_factor": 17,
+      "rotation_flops": 365568,
+      "x_read_y_write_bytes_min": 487424,
+      "positions_read_bytes_min": 28,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 9.440000000000001,
+      "effective_x_y_GB_s": 51.63389830508474,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_h32_d128_half",
+      "shape": [
+        2,
+        512,
+        32,
+        128
+      ],
+      "dtype": "float16",
+      "tokens": 1024,
+      "frequency_elements_ideal": 64,
+      "angle_pairs_ideal": 65536,
+      "rotation_pairs": 2097152,
+      "head_reuse_factor": 32,
+      "rotation_flops": 12582912,
+      "x_read_y_write_bytes_min": 16777216,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 15.990499999999999,
+      "effective_x_y_GB_s": 1049.1989618836185,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_h32_d128_float",
+      "shape": [
+        2,
+        512,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "tokens": 1024,
+      "frequency_elements_ideal": 64,
+      "angle_pairs_ideal": 65536,
+      "rotation_pairs": 2097152,
+      "head_reuse_factor": 32,
+      "rotation_flops": 12582912,
+      "x_read_y_write_bytes_min": 33554432,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 14.51,
+      "effective_x_y_GB_s": 2312.503928325293,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_h32_d256_half",
+      "shape": [
+        2,
+        512,
+        32,
+        256
+      ],
+      "dtype": "float16",
+      "tokens": 1024,
+      "frequency_elements_ideal": 128,
+      "angle_pairs_ideal": 131072,
+      "rotation_pairs": 4194304,
+      "head_reuse_factor": 32,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes_min": 33554432,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 26.610999999999997,
+      "effective_x_y_GB_s": 1260.923377550637,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_h8_d64_half",
+      "shape": [
+        2,
+        512,
+        8,
+        64
+      ],
+      "dtype": "float16",
+      "tokens": 1024,
+      "frequency_elements_ideal": 32,
+      "angle_pairs_ideal": 32768,
+      "rotation_pairs": 262144,
+      "head_reuse_factor": 8,
+      "rotation_flops": 1572864,
+      "x_read_y_write_bytes_min": 2097152,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 10.7105,
+      "effective_x_y_GB_s": 195.80337052425193,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_h3_d24_half",
+      "shape": [
+        2,
+        512,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "tokens": 1024,
+      "frequency_elements_ideal": 12,
+      "angle_pairs_ideal": 12288,
+      "rotation_pairs": 36864,
+      "head_reuse_factor": 3,
+      "rotation_flops": 221184,
+      "x_read_y_write_bytes_min": 294912,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 7.24,
+      "effective_x_y_GB_s": 40.73370165745857,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_h32_d30_float",
+      "shape": [
+        2,
+        512,
+        32,
+        30
+      ],
+      "dtype": "float32",
+      "tokens": 1024,
+      "frequency_elements_ideal": 15,
+      "angle_pairs_ideal": 15360,
+      "rotation_pairs": 491520,
+      "head_reuse_factor": 32,
+      "rotation_flops": 2949120,
+      "x_read_y_write_bytes_min": 7864320,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 20.0505,
+      "effective_x_y_GB_s": 392.2256302835341,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_h32_d96_half",
+      "shape": [
+        2,
+        512,
+        32,
+        96
+      ],
+      "dtype": "float16",
+      "tokens": 1024,
+      "frequency_elements_ideal": 48,
+      "angle_pairs_ideal": 49152,
+      "rotation_pairs": 1572864,
+      "head_reuse_factor": 32,
+      "rotation_flops": 9437184,
+      "x_read_y_write_bytes_min": 12582912,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 15.919999999999998,
+      "effective_x_y_GB_s": 790.38391959799,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_h32_d1024_half",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float16",
+      "tokens": 256,
+      "frequency_elements_ideal": 512,
+      "angle_pairs_ideal": 131072,
+      "rotation_pairs": 4194304,
+      "head_reuse_factor": 32,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes_min": 33554432,
+      "positions_read_bytes_min": 1024,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 31.971,
+      "effective_x_y_GB_s": 1049.5271339651558,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_h32_d1024_float",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float32",
+      "tokens": 256,
+      "frequency_elements_ideal": 512,
+      "angle_pairs_ideal": 131072,
+      "rotation_pairs": 4194304,
+      "head_reuse_factor": 32,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes_min": 67108864,
+      "positions_read_bytes_min": 1024,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 33.101,
+      "effective_x_y_GB_s": 2027.3968762273043,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "stream_h128_d64_half",
+      "shape": [
+        2,
+        4096,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "tokens": 8192,
+      "frequency_elements_ideal": 32,
+      "angle_pairs_ideal": 262144,
+      "rotation_pairs": 33554432,
+      "head_reuse_factor": 128,
+      "rotation_flops": 201326592,
+      "x_read_y_write_bytes_min": 268435456,
+      "positions_read_bytes_min": 32768,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 214.80450000000002,
+      "effective_x_y_GB_s": 1249.6733355213692,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "stream_h32_d128_float",
+      "shape": [
+        2,
+        4096,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "tokens": 8192,
+      "frequency_elements_ideal": 64,
+      "angle_pairs_ideal": 524288,
+      "rotation_pairs": 16777216,
+      "head_reuse_factor": 32,
+      "rotation_flops": 100663296,
+      "x_read_y_write_bytes_min": 268435456,
+      "positions_read_bytes_min": 32768,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 215.0145,
+      "effective_x_y_GB_s": 1248.452806671178,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "single_token_many_heads",
+      "shape": [
+        1,
+        1,
+        256,
+        128
+      ],
+      "dtype": "float16",
+      "tokens": 1,
+      "frequency_elements_ideal": 64,
+      "angle_pairs_ideal": 64,
+      "rotation_pairs": 16384,
+      "head_reuse_factor": 256,
+      "rotation_flops": 98304,
+      "x_read_y_write_bytes_min": 131072,
+      "positions_read_bytes_min": 4,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 5.529999999999999,
+      "effective_x_y_GB_s": 23.70198915009042,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "short_s16_h32",
+      "shape": [
+        1,
+        16,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "tokens": 16,
+      "frequency_elements_ideal": 64,
+      "angle_pairs_ideal": 1024,
+      "rotation_pairs": 32768,
+      "head_reuse_factor": 32,
+      "rotation_flops": 196608,
+      "x_read_y_write_bytes_min": 524288,
+      "positions_read_bytes_min": 64,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 6.88,
+      "effective_x_y_GB_s": 76.2046511627907,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "narrow_head_long",
+      "shape": [
+        1,
+        8192,
+        4,
+        16
+      ],
+      "dtype": "float16",
+      "tokens": 8192,
+      "frequency_elements_ideal": 8,
+      "angle_pairs_ideal": 65536,
+      "rotation_pairs": 262144,
+      "head_reuse_factor": 4,
+      "rotation_flops": 1572864,
+      "x_read_y_write_bytes_min": 2097152,
+      "positions_read_bytes_min": 32768,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 20.750500000000002,
+      "effective_x_y_GB_s": 101.06513096069972,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "unaligned_h128_d30_half",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float16",
+      "tokens": 2048,
+      "frequency_elements_ideal": 15,
+      "angle_pairs_ideal": 30720,
+      "rotation_pairs": 3932160,
+      "head_reuse_factor": 128,
+      "rotation_flops": 23592960,
+      "x_read_y_write_bytes_min": 31457280,
+      "positions_read_bytes_min": 8192,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 100.062,
+      "effective_x_y_GB_s": 314.3778857108593,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "unaligned_h128_d30_float",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float32",
+      "tokens": 2048,
+      "frequency_elements_ideal": 15,
+      "angle_pairs_ideal": 30720,
+      "rotation_pairs": 3932160,
+      "head_reuse_factor": 128,
+      "rotation_flops": 23592960,
+      "x_read_y_write_bytes_min": 62914560,
+      "positions_read_bytes_min": 8192,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 100.22200000000001,
+      "effective_x_y_GB_s": 627.7519905809104,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_d192_half",
+      "shape": [
+        2,
+        512,
+        32,
+        192
+      ],
+      "dtype": "float16",
+      "tokens": 1024,
+      "frequency_elements_ideal": 96,
+      "angle_pairs_ideal": 98304,
+      "rotation_pairs": 3145728,
+      "head_reuse_factor": 32,
+      "rotation_flops": 18874368,
+      "x_read_y_write_bytes_min": 25165824,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 20.66,
+      "effective_x_y_GB_s": 1218.0940948693126,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "prefill_d384_float",
+      "shape": [
+        2,
+        512,
+        32,
+        384
+      ],
+      "dtype": "float32",
+      "tokens": 1024,
+      "frequency_elements_ideal": 192,
+      "angle_pairs_ideal": 196608,
+      "rotation_pairs": 6291456,
+      "head_reuse_factor": 32,
+      "rotation_flops": 37748736,
+      "x_read_y_write_bytes_min": 100663296,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 30.4405,
+      "effective_x_y_GB_s": 3306.8870747852366,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "large_stream_half",
+      "shape": [
+        4,
+        8192,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "tokens": 32768,
+      "frequency_elements_ideal": 32,
+      "angle_pairs_ideal": 1048576,
+      "rotation_pairs": 134217728,
+      "head_reuse_factor": 128,
+      "rotation_flops": 805306368,
+      "x_read_y_write_bytes_min": 1073741824,
+      "positions_read_bytes_min": 131072,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 842.7864999999999,
+      "effective_x_y_GB_s": 1274.0377592664336,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "large_stream_float",
+      "shape": [
+        2,
+        8192,
+        64,
+        128
+      ],
+      "dtype": "float32",
+      "tokens": 16384,
+      "frequency_elements_ideal": 64,
+      "angle_pairs_ideal": 1048576,
+      "rotation_pairs": 67108864,
+      "head_reuse_factor": 64,
+      "rotation_flops": 402653184,
+      "x_read_y_write_bytes_min": 1073741824,
+      "positions_read_bytes_min": 65536,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 840.7165,
+      "effective_x_y_GB_s": 1277.174676600257,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "sequence_d1024_half",
+      "shape": [
+        1,
+        8192,
+        1,
+        1024
+      ],
+      "dtype": "float16",
+      "tokens": 8192,
+      "frequency_elements_ideal": 512,
+      "angle_pairs_ideal": 4194304,
+      "rotation_pairs": 4194304,
+      "head_reuse_factor": 1,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes_min": 33554432,
+      "positions_read_bytes_min": 32768,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 87.3315,
+      "effective_x_y_GB_s": 384.21911910364526,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "unaligned_h64_d126_half",
+      "shape": [
+        2,
+        512,
+        64,
+        126
+      ],
+      "dtype": "float16",
+      "tokens": 1024,
+      "frequency_elements_ideal": 63,
+      "angle_pairs_ideal": 64512,
+      "rotation_pairs": 4128768,
+      "head_reuse_factor": 64,
+      "rotation_flops": 24772608,
+      "x_read_y_write_bytes_min": 33030144,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.75,
+      "local_native_us": 108.94200000000001,
+      "effective_x_y_GB_s": 303.190174588313,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "unaligned_h64_d254_float",
+      "shape": [
+        2,
+        512,
+        64,
+        254
+      ],
+      "dtype": "float32",
+      "tokens": 1024,
+      "frequency_elements_ideal": 127,
+      "angle_pairs_ideal": 130048,
+      "rotation_pairs": 8323072,
+      "head_reuse_factor": 64,
+      "rotation_flops": 49938432,
+      "x_read_y_write_bytes_min": 133169152,
+      "positions_read_bytes_min": 4096,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 154.293,
+      "effective_x_y_GB_s": 863.0926354403634,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    },
+    {
+      "name": "sequence_d1024_float",
+      "shape": [
+        1,
+        8192,
+        1,
+        1024
+      ],
+      "dtype": "float32",
+      "tokens": 8192,
+      "frequency_elements_ideal": 512,
+      "angle_pairs_ideal": 4194304,
+      "rotation_pairs": 4194304,
+      "head_reuse_factor": 1,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes_min": 67108864,
+      "positions_read_bytes_min": 32768,
+      "rotation_flops_per_x_y_byte": 0.375,
+      "local_native_us": 94.412,
+      "effective_x_y_GB_s": 710.8086260221158,
+      "timing_source": "benchmarks/results/profiled_v9_balanced.json"
+    }
+  ],
+  "wide_fp16_worked_layout": {
+    "case": "prefill_h32_d1024_half",
+    "shape": [
+      1,
+      256,
+      32,
+      1024
+    ],
+    "tile_heads": 11,
+    "head_groups": 3,
+    "jobs": 768,
+    "blocks": 48,
+    "frequency_elements_generated_across_cores": 24576,
+    "work_size_elements": 11264,
+    "work_stride_elements": 11272,
+    "io_and_work_bytes": 157760,
+    "trig_batch_tokens": 5,
+    "frequency_and_trig_bytes": 32768,
+    "subtotal_ub_bytes_excluding_frequency_math_and_allocator": 190528,
+    "nonzero_token_visits_across_cores": 288,
+    "ideal_token_visits": 256,
+    "token_visits_per_core": [
+      6
+    ],
+    "note": "Structural model; position-zero branches can avoid trig work. Cache capacity, per-core boundary overlap, scratch and queues must be considered together; these counts are not cycle estimates."
+  },
+  "profiles": [
+    {
+      "family": "tiny",
+      "case": {
+        "name": "tiny",
+        "shape": [
+          1,
+          8,
+          1,
+          16
+        ],
+        "dtype": "float32",
+        "pmax": 8,
+        "seed": 42
+      },
+      "path": "benchmarks/profiles/agentic_r1_v9_tiny",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "replay_diagnostic_only": true,
+      "metrics": {
+        "PipeUtilization": {
+          "block_id": 3.5,
+          "aiv_time(us)": 2.089054375,
+          "aiv_total_cycles": 3864.75,
+          "aiv_vec_time(us)": 0.408580875,
+          "aiv_vec_ratio": 0.1902135,
+          "aiv_mte2_time(us)": 0.1755405,
+          "aiv_mte2_ratio": 0.085593625,
+          "aiv_mte2_active_bw(GB/s)": 0.7369735,
+          "aiv_mte3_time(us)": 0.1191215,
+          "aiv_mte3_ratio": 0.056814125,
+          "aiv_mte3_active_bw(GB/s)": 1.0316565,
+          "aiv_icache_miss_rate": 0.0,
+          "aiv_scalar_time(us)": 1.585945875,
+          "aiv_scalar_ratio": 0.7645755000000001,
+          "aiv_scalar_single_time(us)": 0.255473,
+          "aiv_scalar_dual_time(us)": 0.437973,
+          "aiv_scalar_mte2_stall_time(us)": 0.0,
+          "aiv_scalar_mte3_stall_time(us)": 0.0,
+          "aiv_scalar_stall_by_ub_time(us)": 0.0,
+          "aiv_scalar_vector_stall_time(us)": 0.0,
+          "aiv_scalar_wait_ib_time(us)": 0.13263525,
+          "aiv_scalar_wait_time(us)": 0.0
+        },
+        "Memory": {
+          "block_id": 3.5,
+          "aiv_time(us)": 2.089054375,
+          "aiv_total_cycles": 3864.75,
+          "aiv_ub_to_gm_bw(GB/s)": 0.05761175,
+          "aiv_gm_to_ub_bw(GB/s)": 0.05761175,
+          "aiv_main_mem_read_bw(GB/s)": 0.273689375,
+          "aiv_main_mem_write_bw(GB/s)": 0.1152235,
+          "aiv_mte2_instructions": 2.0,
+          "aiv_mte2_ratio": 0.085593625,
+          "aiv_mte3_instructions": 2.0,
+          "aiv_mte3_ratio": 0.056814125,
+          "read_main_memory_datas(KB)": 0.59375,
+          "write_main_memory_datas(KB)": 0.25,
+          "GM_to_UB_datas(KB)": 0.125,
+          "GM_to_UB_bw_usage_rate(%)": 0.02617975,
+          "UB_to_GM_datas(KB)": 0.125,
+          "UB_to_GM_bw_usage_rate(%)": 0.030841375
+        },
+        "OpBasicInfo": {
+          "Task Duration(us)": 2.880058,
+          "Block Dim": 8.0,
+          "Device Id": 0.0,
+          "Pid": 1179195.0,
+          "Current Freq": 1850.0,
+          "Rated Freq": 1850.0
+        },
+        "MemoryUB": {
+          "block_id": 3.5,
+          "aiv_time(us)": 2.089054375,
+          "aiv_total_cycles": 3864.75,
+          "aiv_ub_read_bw_vector(GB/s)": 3.8931442499999998,
+          "aiv_ub_write_bw_vector(GB/s)": 3.8931442499999998,
+          "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+          "aiv_ub_write_bw_scalar(GB/s)": 0.05761175
+        }
+      }
+    },
+    {
+      "family": "deepseek",
+      "case": {
+        "name": "deepseek_half",
+        "shape": [
+          2,
+          512,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "pmax": 8192,
+        "seed": 44
+      },
+      "path": "benchmarks/profiles/agentic_r1_v9_deepseek",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "replay_diagnostic_only": true,
+      "metrics": {
+        "PipeUtilization": {
+          "block_id": 23.5,
+          "aiv_time(us)": 16.10352470833333,
+          "aiv_total_cycles": 29791.520833333332,
+          "aiv_vec_time(us)": 11.423829020833333,
+          "aiv_vec_ratio": 0.709791875,
+          "aiv_mte2_time(us)": 9.830450395833333,
+          "aiv_mte2_ratio": 0.610685125,
+          "aiv_mte2_active_bw(GB/s)": 33.16255808333333,
+          "aiv_mte3_time(us)": 4.631396395833334,
+          "aiv_mte3_ratio": 0.28781677083333335,
+          "aiv_mte3_active_bw(GB/s)": 70.92547358333333,
+          "aiv_icache_miss_rate": 0.0,
+          "aiv_scalar_time(us)": 9.578502291666666,
+          "aiv_scalar_ratio": 0.5947293541666666,
+          "aiv_scalar_single_time(us)": 2.15130625,
+          "aiv_scalar_dual_time(us)": 2.7761485833333333,
+          "aiv_scalar_mte2_stall_time(us)": 0.0,
+          "aiv_scalar_mte3_stall_time(us)": 0.0,
+          "aiv_scalar_stall_by_ub_time(us)": 0.0,
+          "aiv_scalar_vector_stall_time(us)": 6.070022520833334,
+          "aiv_scalar_wait_ib_time(us)": 0.1851801875,
+          "aiv_scalar_wait_time(us)": 0.0
+        },
+        "Memory": {
+          "block_id": 23.5,
+          "aiv_time(us)": 16.10352470833333,
+          "aiv_total_cycles": 29791.520833333332,
+          "aiv_ub_to_gm_bw(GB/s)": 20.224894854166667,
+          "aiv_gm_to_ub_bw(GB/s)": 20.224894854166667,
+          "aiv_main_mem_read_bw(GB/s)": 20.254530604166668,
+          "aiv_main_mem_write_bw(GB/s)": 20.232303458333334,
+          "aiv_mte2_instructions": 22.333333333333332,
+          "aiv_mte2_ratio": 0.610685125,
+          "aiv_mte3_instructions": 22.333333333333332,
+          "aiv_mte3_ratio": 0.28781677083333335,
+          "read_main_memory_datas(KB)": 341.8333333333333,
+          "write_main_memory_datas(KB)": 341.4583333333333,
+          "GM_to_UB_datas(KB)": 341.3333333333333,
+          "GM_to_UB_bw_usage_rate(%)": 9.190627604166666,
+          "UB_to_GM_datas(KB)": 341.3333333333333,
+          "UB_to_GM_bw_usage_rate(%)": 10.827031270833332
+        },
+        "OpBasicInfo": {
+          "Task Duration(us)": 18.060362,
+          "Block Dim": 48.0,
+          "Device Id": 0.0,
+          "Pid": 1184095.0,
+          "Current Freq": 1850.0,
+          "Rated Freq": 1850.0
+        },
+        "MemoryUB": {
+          "block_id": 23.5,
+          "aiv_time(us)": 16.10352470833333,
+          "aiv_total_cycles": 29791.520833333332,
+          "aiv_ub_read_bw_vector(GB/s)": 250.91177147916667,
+          "aiv_ub_write_bw_vector(GB/s)": 188.8299939375,
+          "aiv_ub_read_bw_scalar(GB/s)": 0.0046305625,
+          "aiv_ub_write_bw_scalar(GB/s)": 0.0342663125
+        }
+      }
+    },
+    {
+      "family": "wide",
+      "case": {
+        "name": "prefill_h32_d1024_half",
+        "shape": [
+          1,
+          256,
+          32,
+          1024
+        ],
+        "dtype": "float16",
+        "pmax": 131073,
+        "seed": 58
+      },
+      "path": "benchmarks/profiles/agentic_r1_v9_wide",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "replay_diagnostic_only": true,
+      "metrics": {
+        "PipeUtilization": {
+          "block_id": 23.5,
+          "aiv_time(us)": 30.523310833333333,
+          "aiv_total_cycles": 56468.125,
+          "aiv_vec_time(us)": 26.344391375,
+          "aiv_vec_ratio": 0.863221125,
+          "aiv_mte2_time(us)": 7.65190325,
+          "aiv_mte2_ratio": 0.2507430625,
+          "aiv_mte2_active_bw(GB/s)": 42.827500375,
+          "aiv_mte3_time(us)": 4.255033770833333,
+          "aiv_mte3_ratio": 0.13941695833333334,
+          "aiv_mte3_active_bw(GB/s)": 77.97815025,
+          "aiv_icache_miss_rate": 0.0,
+          "aiv_scalar_time(us)": 9.5722635625,
+          "aiv_scalar_ratio": 0.31349485416666667,
+          "aiv_scalar_single_time(us)": 1.9051915833333333,
+          "aiv_scalar_dual_time(us)": 3.9464074166666667,
+          "aiv_scalar_mte2_stall_time(us)": 0.0,
+          "aiv_scalar_mte3_stall_time(us)": 0.0,
+          "aiv_scalar_stall_by_ub_time(us)": 0.0,
+          "aiv_scalar_vector_stall_time(us)": 20.276644083333334,
+          "aiv_scalar_wait_ib_time(us)": 0.13860360416666667,
+          "aiv_scalar_wait_time(us)": 0.0002028125
+        },
+        "Memory": {
+          "block_id": 23.5,
+          "aiv_time(us)": 30.523310833333333,
+          "aiv_total_cycles": 56468.125,
+          "aiv_ub_to_gm_bw(GB/s)": 10.666252395833334,
+          "aiv_gm_to_ub_bw(GB/s)": 10.666252395833334,
+          "aiv_main_mem_read_bw(GB/s)": 10.677971,
+          "aiv_main_mem_write_bw(GB/s)": 10.67015825,
+          "aiv_mte2_instructions": 17.0,
+          "aiv_mte2_ratio": 0.2507430625,
+          "aiv_mte3_instructions": 17.0,
+          "aiv_mte3_ratio": 0.13941695833333334,
+          "read_main_memory_datas(KB)": 341.7083333333333,
+          "write_main_memory_datas(KB)": 341.4583333333333,
+          "GM_to_UB_datas(KB)": 341.3333333333333,
+          "GM_to_UB_bw_usage_rate(%)": 4.846974708333334,
+          "UB_to_GM_datas(KB)": 341.3333333333333,
+          "UB_to_GM_bw_usage_rate(%)": 5.709985166666667
+        },
+        "OpBasicInfo": {
+          "Task Duration(us)": 32.500648,
+          "Block Dim": 48.0,
+          "Device Id": 0.0,
+          "Pid": 1191976.0,
+          "Current Freq": 1850.0,
+          "Rated Freq": 1850.0
+        },
+        "MemoryUB": {
+          "block_id": 23.5,
+          "aiv_time(us)": 30.523310833333333,
+          "aiv_total_cycles": 56468.125,
+          "aiv_ub_read_bw_vector(GB/s)": 244.5010801875,
+          "aiv_ub_write_bw_vector(GB/s)": 123.60467529166667,
+          "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+          "aiv_ub_write_bw_scalar(GB/s)": 0.03417841666666667
+        }
+      }
+    },
+    {
+      "family": "stream",
+      "case": {
+        "name": "large_stream_half",
+        "shape": [
+          4,
+          8192,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "pmax": 131073,
+        "seed": 69
+      },
+      "path": "benchmarks/profiles/agentic_r1_v9_stream",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "replay_diagnostic_only": true,
+      "metrics": {
+        "PipeUtilization": {
+          "block_id": 23.5,
+          "aiv_time(us)": 757.8453840416666,
+          "aiv_total_cycles": 1402013.9583333333,
+          "aiv_vec_time(us)": 357.1148999166667,
+          "aiv_vec_ratio": 0.4713145625,
+          "aiv_mte2_time(us)": 710.2466863333333,
+          "aiv_mte2_ratio": 0.9371762083333334,
+          "aiv_mte2_active_bw(GB/s)": 14.670489395833334,
+          "aiv_mte3_time(us)": 484.160800875,
+          "aiv_mte3_ratio": 0.6388040208333333,
+          "aiv_mte3_active_bw(GB/s)": 21.528976979166668,
+          "aiv_icache_miss_rate": 0.0,
+          "aiv_scalar_time(us)": 223.0870605625,
+          "aiv_scalar_ratio": 0.29442104166666666,
+          "aiv_scalar_single_time(us)": 54.764189208333335,
+          "aiv_scalar_dual_time(us)": 53.014729708333334,
+          "aiv_scalar_mte2_stall_time(us)": 0.0,
+          "aiv_scalar_mte3_stall_time(us)": 0.0,
+          "aiv_scalar_stall_by_ub_time(us)": 0.0,
+          "aiv_scalar_vector_stall_time(us)": 592.2984911666666,
+          "aiv_scalar_wait_ib_time(us)": 1.1819707708333334,
+          "aiv_scalar_wait_time(us)": 0.0
+        },
+        "Memory": {
+          "block_id": 23.5,
+          "aiv_time(us)": 757.8453840416666,
+          "aiv_total_cycles": 1402013.9583333333,
+          "aiv_ub_to_gm_bw(GB/s)": 13.74774725,
+          "aiv_gm_to_ub_bw(GB/s)": 13.74774725,
+          "aiv_main_mem_read_bw(GB/s)": 13.75487925,
+          "aiv_main_mem_write_bw(GB/s)": 13.747904645833334,
+          "aiv_mte2_instructions": 683.6666666666666,
+          "aiv_mte2_ratio": 0.9371762083333334,
+          "aiv_mte3_instructions": 683.6666666666666,
+          "aiv_mte3_ratio": 0.6388040208333333,
+          "read_main_memory_datas(KB)": 10928.333333333334,
+          "write_main_memory_datas(KB)": 10922.791666666666,
+          "GM_to_UB_datas(KB)": 10922.666666666666,
+          "GM_to_UB_bw_usage_rate(%)": 6.247272333333333,
+          "UB_to_GM_datas(KB)": 10922.666666666666,
+          "UB_to_GM_bw_usage_rate(%)": 7.3596076041666665
+        },
+        "OpBasicInfo": {
+          "Task Duration(us)": 765.035278,
+          "Block Dim": 48.0,
+          "Device Id": 0.0,
+          "Pid": 1197515.0,
+          "Current Freq": 1850.0,
+          "Rated Freq": 1850.0
+        },
+        "MemoryUB": {
+          "block_id": 23.5,
+          "aiv_time(us)": 757.8453840416666,
+          "aiv_total_cycles": 1402013.9583333333,
+          "aiv_ub_read_bw_vector(GB/s)": 170.4538295,
+          "aiv_ub_write_bw_vector(GB/s)": 128.24426845833332,
+          "aiv_ub_read_bw_scalar(GB/s)": 9.837499999999999e-05,
+          "aiv_ub_write_bw_scalar(GB/s)": 0.0007276458333333333
+        }
+      }
+    }
+  ],
+  "official_submission_id": "879119",
+  "official_score": 48.45,
+  "platform_opportunities": [
+    {
+      "id": 9,
+      "latency_us": 54.1,
+      "best_us": 15.92,
+      "ratio_to_best": 3.398241206030151,
+      "estimated_point_score": 24.894661636243814,
+      "mean_score_gain_if_reaches_best": 5.007022557583746
+    },
+    {
+      "id": 5,
+      "latency_us": 19.82,
+      "best_us": 6.68,
+      "ratio_to_best": 2.9670658682634734,
+      "estimated_point_score": 27.157040325407387,
+      "mean_score_gain_if_reaches_best": 4.856197311639507
+    },
+    {
+      "id": 6,
+      "latency_us": 18.0,
+      "best_us": 8.44,
+      "ratio_to_best": 2.132701421800948,
+      "estimated_point_score": 34.868084364390995,
+      "mean_score_gain_if_reaches_best": 4.3421277090406
+    },
+    {
+      "id": 4,
+      "latency_us": 11.08,
+      "best_us": 5.46,
+      "ratio_to_best": 2.029304029304029,
+      "estimated_point_score": 36.42475805125491,
+      "mean_score_gain_if_reaches_best": 4.238349463249673
+    },
+    {
+      "id": 7,
+      "latency_us": 20.55,
+      "best_us": 10.51,
+      "ratio_to_best": 1.955280685061846,
+      "estimated_point_score": 37.68267064334825,
+      "mean_score_gain_if_reaches_best": 4.154488623776783
+    },
+    {
+      "id": 1,
+      "latency_us": 4.07,
+      "best_us": 2.15,
+      "ratio_to_best": 1.8930232558139537,
+      "estimated_point_score": 38.85104106670194,
+      "mean_score_gain_if_reaches_best": 4.076597262219871
+    },
+    {
+      "id": 2,
+      "latency_us": 5.76,
+      "best_us": 3.13,
+      "ratio_to_best": 1.840255591054313,
+      "estimated_point_score": 39.93276111358743,
+      "mean_score_gain_if_reaches_best": 4.004482592427505
+    },
+    {
+      "id": 3,
+      "latency_us": 6.92,
+      "best_us": 3.88,
+      "ratio_to_best": 1.7835051546391754,
+      "estimated_point_score": 41.20388902435853,
+      "mean_score_gain_if_reaches_best": 3.9197407317094313
+    },
+    {
+      "id": 8,
+      "latency_us": 12.74,
+      "best_us": 7.72,
+      "ratio_to_best": 1.650259067357513,
+      "estimated_point_score": 44.7337018724664,
+      "mean_score_gain_if_reaches_best": 3.684419875168907
+    },
+    {
+      "id": 15,
+      "latency_us": 271.06,
+      "best_us": 171.0,
+      "ratio_to_best": 1.5851461988304094,
+      "estimated_point_score": 46.81278878632053,
+      "mean_score_gain_if_reaches_best": 3.5458140809119647
+    },
+    {
+      "id": 13,
+      "latency_us": 339.58,
+      "best_us": 236.22,
+      "ratio_to_best": 1.4375582084497502,
+      "estimated_point_score": 52.766691081530915,
+      "mean_score_gain_if_reaches_best": 3.1488872612312724
+    },
+    {
+      "id": 12,
+      "latency_us": 49.21,
+      "best_us": 41.4,
+      "ratio_to_best": 1.1886473429951692,
+      "estimated_point_score": 70.11557538720204,
+      "mean_score_gain_if_reaches_best": 1.9922949741865306
+    },
+    {
+      "id": 14,
+      "latency_us": 858.95,
+      "best_us": 734.12,
+      "ratio_to_best": 1.1700403203835885,
+      "estimated_point_score": 72.08226067227527,
+      "mean_score_gain_if_reaches_best": 1.8611826218483154
+    },
+    {
+      "id": 11,
+      "latency_us": 40.01,
+      "best_us": 35.73,
+      "ratio_to_best": 1.1197872935908202,
+      "estimated_point_score": 78.18397436057627,
+      "mean_score_gain_if_reaches_best": 1.4544017092949153
+    },
+    {
+      "id": 10,
+      "latency_us": 3370.0,
+      "best_us": 3060.0,
+      "ratio_to_best": 1.1013071895424837,
+      "estimated_point_score": 80.77590567318407,
+      "mean_score_gain_if_reaches_best": 1.2816062884543953
+    }
+  ],
+  "score_note": "Point estimates use rounded page timings. Only the platform supplies the official score."
+}
