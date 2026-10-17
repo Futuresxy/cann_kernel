@@ -39,3 +39,7 @@
 下一步只等待Mac主控从正常可见页面/原始下载项目取得明确的配置、编号和出处；若有新原件，先核对下载时间/哈希与该旧ZIP差异，再追加已证实字段。不能从48.78分或15点耗时唯一反推出形状；不得据此做用例专属dispatch、标记、故意错误或计时干预。
 
 [诊断归档与暂停状态](../benchmarks/analysis/public_case_metadata_20261017/diagnostic_hold.json)记录全部既有任务已结束、继承FP16 max_abs_error32未修复、当前无新增测量/候选。本次核查的结论是公开元数据已分类，15点完整配置仍待可验证来源。
+
+## 主控交叉核对补充
+
+合并主控提交`7873d81`后，已读取[正常题目页元数据导出](../benchmarks/analysis/platform_case_metadata_partial.json)：15行按序case_ID为11471–11485，shape/dtype/theta/positions均为空。该身份映射来自Mac正常已登录题目页响应，本端只读取Git归档，没有自行请求其接口。机器可读矩阵已追加case_ID与出处，同时继续保留全部输入配置未知。Mac核对的下载ZIP SHA与本端附件完全一致。主控暂停交接已保留，不启动后续任务或自动化监听。

@@ -1,4 +1,6 @@
 {
+  "state": "partial_public_metadata_only",
+  "official_15_configuration_reconstruction_complete": false,
   "audit_kind": "CPU_only_read_only_original_artifacts",
   "zip_path": "/data/pyptouser/songxiaoyou/.codex/attachments/4af3b995-8b5b-48d9-bd4d-7a83a5b92822/rotaryposemb_problem_1743_template.zip",
   "zip_sha256": "8fcc24c896aa275deb35a8c1a6ef65bb4a9e20842b5ead80d88671c64e9ce94e",
@@ -239,6 +241,9 @@
   "platform_15_matrix": [
     {
       "platform_case_ordinal": 1,
+      "case_ID_from_Mac_normal_page": 11471,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d6014321d",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -252,6 +257,9 @@
     },
     {
       "platform_case_ordinal": 2,
+      "case_ID_from_Mac_normal_page": 11472,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143221",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -265,6 +273,9 @@
     },
     {
       "platform_case_ordinal": 3,
+      "case_ID_from_Mac_normal_page": 11473,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143225",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -278,6 +289,9 @@
     },
     {
       "platform_case_ordinal": 4,
+      "case_ID_from_Mac_normal_page": 11474,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143229",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -291,6 +305,9 @@
     },
     {
       "platform_case_ordinal": 5,
+      "case_ID_from_Mac_normal_page": 11475,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d6014322d",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -304,6 +321,9 @@
     },
     {
       "platform_case_ordinal": 6,
+      "case_ID_from_Mac_normal_page": 11476,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143231",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -317,6 +337,9 @@
     },
     {
       "platform_case_ordinal": 7,
+      "case_ID_from_Mac_normal_page": 11477,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143235",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -330,6 +353,9 @@
     },
     {
       "platform_case_ordinal": 8,
+      "case_ID_from_Mac_normal_page": 11478,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143239",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -343,6 +369,9 @@
     },
     {
       "platform_case_ordinal": 9,
+      "case_ID_from_Mac_normal_page": 11479,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d6014323d",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -356,6 +385,9 @@
     },
     {
       "platform_case_ordinal": 10,
+      "case_ID_from_Mac_normal_page": 11480,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143241",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -369,6 +401,9 @@
     },
     {
       "platform_case_ordinal": 11,
+      "case_ID_from_Mac_normal_page": 11481,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143245",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -382,6 +417,9 @@
     },
     {
       "platform_case_ordinal": 12,
+      "case_ID_from_Mac_normal_page": 11482,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143249",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -395,6 +433,9 @@
     },
     {
       "platform_case_ordinal": 13,
+      "case_ID_from_Mac_normal_page": 11483,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d6014324d",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -408,6 +449,9 @@
     },
     {
       "platform_case_ordinal": 14,
+      "case_ID_from_Mac_normal_page": 11484,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143251",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -421,6 +465,9 @@
     },
     {
       "platform_case_ordinal": 15,
+      "case_ID_from_Mac_normal_page": 11485,
+      "case_object_id_from_Mac_normal_page": "6a9a9befbf41025d60143255",
+      "identifier_provenance": "benchmarks/analysis/platform_case_metadata_partial.json",
       "shape": null,
       "x_dtype": null,
       "theta": null,
@@ -444,6 +491,13 @@
     "status"
   ],
   "normal_result_export_sha256": "562e26662106ef2c671e9498ae50ad47d8258e3b4feeda4a3a4beac5ed650695",
+  "Mac_normal_problem_metadata": {
+    "path": "benchmarks/analysis/platform_case_metadata_partial.json",
+    "sha256": "89b1aa176ca8fa364208efbe1f23cc31a3b20e90f1ffe8c85b6b065835ad3568",
+    "method": "Normal authenticated problem page response; only selected problem/case metadata captured, no request headers/cookies/private judge endpoints.",
+    "source": "https://cannjudge.cn/api/problems/6a9a9befbf41025d60143218",
+    "identity_only_not_input_configs": true
+  },
   "no_original_scripts_executed": true,
   "new_NPU_tasks": 0,
   "no_candidate_created": true,
@@ -460,7 +514,5 @@
     "Old exported normal results contain timings/status only; no shape/dtype/theta.",
     "Local tests/*.json are agent-authored workload/validation matrices and cannot reconstruct hidden platform metadata.",
     "No intentional errors, output markers, timing/correctness interference or hidden-case routing."
-  ],
-  "state": "partial_public_metadata_only",
-  "official_15_configuration_reconstruction_complete": false
+  ]
 }
