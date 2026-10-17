@@ -1,0 +1,46 @@
+{
+  "state": "paused_by_user",
+  "paused": true,
+  "reason": "User explicitly requests pause because network will disconnect",
+  "saved_at_utc": "2026-10-17T08:23:15.575135+00:00",
+  "resume_requires_explicit_user_request": true,
+  "queued_old_requests_must_not_resume": true,
+  "current_request_id": "20261017-shared-math-diagnosis",
+  "current_request_state": "complete_with_limitations",
+  "priority_on_resume": "Reconstruct15platform cases from public/template/normalUI metadata before optimization",
+  "handoff": "docs/server_pause_handoff_20261017.md",
+  "all_thread_NPU_tasks_terminal_and_released": true,
+  "pending_thread_NPU_jobs": [],
+  "running_thread_NPU_jobs": [],
+  "completed_jobs": [
+    {
+      "task_id": "task_20261017_004741_35852268361",
+      "device": 1,
+      "exit_code": 0,
+      "lock_released": true
+    },
+    {
+      "task_id": "task_20261017_005306_37109977053",
+      "device": 1,
+      "exit_code": 0,
+      "lock_released": true
+    },
+    {
+      "task_id": "task_20261017_011041_389484217601",
+      "device": 0,
+      "exit_code": 0,
+      "lock_released": true
+    },
+    {
+      "task_id": "task_20261017_011342_39528598540",
+      "device": 0,
+      "exit_code": 0,
+      "lock_released": true
+    }
+  ],
+  "new_jobs_builds_experiments_candidates_started_this_pause_turn": 0,
+  "jobs_cancelled_restarted_or_duplicated": 0,
+  "environment_changed": false,
+  "evidence_before_pause_commit": "66bf733",
+  "shared_math_evidence_commit": "3e4b1f6"
+}
