@@ -1,0 +1,98 @@
+{
+  "diagnostic_only": true,
+  "acceptance_golden_or_thresholds_changed": false,
+  "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "numpy_version": "2.2.6",
+  "shape": [
+    1,
+    137,
+    17,
+    1024
+  ],
+  "input_sha256": {
+    "x.bin": "1f7f48c43ce98bbafc1ea3cd72a4454170ba22aafc0168313bbe9b19adbb337a",
+    "positions.bin": "6440650f7929ae325dea035aa3603e4ab3f2aff805932f02b77e9726ffa579cc"
+  },
+  "stages_sha256": "482320ccb9ee3a0abe349c08bd875be812bff551c94e2b9ec48472e7b5e26c3a",
+  "probe_and_baseline_output_sha256": "248cf74c43ad2df74183f34549bce956ec72a37082a4c91e7eb2a0d357a80663",
+  "frequency_different_bits_per_core": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "angle_different_bits": 0,
+  "trig_vs_original_fp32_reference": {
+    "cos": {
+      "different_bits": 39356,
+      "elements": 59392,
+      "max_abs_error": 5.364418029785156e-07
+    },
+    "sin": {
+      "different_bits": 37622,
+      "elements": 59392,
+      "max_abs_error": 4.3958425521850586e-07
+    }
+  },
+  "finite_fp32_rotation_different_bits_using_device_trig": 0,
+  "finite_fp16_output_different_bits_using_device_trig": 0,
+  "baseline_vs_original_fp32_reference": {
+    "finite_elements_above_0_1": 817,
+    "max_abs_difference": 32.0
+  },
+  "range_reduction_max_abs_error_vs_fp64_subtraction": 1.46013917401433e-07,
+  "reference_sensitivity": {
+    "comparison": "Same FP32 angle and separate FP32 rotation; replace only trig with FP64 trig rounded to FP32 for diagnosis",
+    "cos_different_bits": 9088,
+    "sin_different_bits": 9338,
+    "fp16_outputs": {
+      "finite_elements_above_0_1": 115,
+      "max_abs_difference": 32.0
+    },
+    "interpretation": "A more accurate trig approximation need not reproduce the current FP32 library oracle. This is not evidence about the unknown platform golden or permission to alter acceptance."
+  }
+}

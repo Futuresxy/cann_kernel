@@ -64,6 +64,7 @@ def notify_remote(record, request, publication, config_path, directory):
         'Account for frequency/trigonometry initialization, scalar overhead, MTE2/MTE3, vector instructions, '
         'UB traffic/capacity and within-invocation reuse where relevant. '
         'Inherited precision failures must be attributed without changing the golden or thresholds before ready publication. '
+        'Do not publish ready while a known valid-input precision failure remains unresolved; preserve the evidence and report it. '
         'Use paired native Task Duration measurements, not replay timing, to decide what to publish.')
     if request.get('requested_focus'):
         message += ' New coordinator direction: ' + request['requested_focus']
