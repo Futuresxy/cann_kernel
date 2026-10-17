@@ -731,6 +731,17 @@
       "decision": "Wide FP16 dataflow improves native D1024 H32 timing by about 9.2%, but an added valid high-amplitude FP16 stress fails the unchanged max_abs_error gate (32.0 > 0.1) in both V9 and candidate with byte-identical outputs. The inherited precision issue needs independent math/reference diagnosis; the authorized rotation-only trial cannot be called fully validated.",
       "experiment_log": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json",
       "explicit_scope_update": "tuning_updates/rotary_pos_emb/20261017T041419176110Z-vector-fma-wide.json"
+    },
+    {
+      "round": "wide-rotation-request-evidence-binding",
+      "request_id": "20261017T043301397944Z-wide-rotation",
+      "name": "reuse_two_workspace_wide_fmadd",
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "status": "performance-supported-precision-blocked",
+      "decision": "Reused source-matched wide-rotation evidence supports a targeted FP16 performance gain, but the unchanged strict max-absolute-error gate fails on high-amplitude FP16 input: max_abs_error=32.0 exceeds 0.1. V9 fails the same case with byte-identical outputs. Independent diagnosis of the inherited math/reference/rounding issue is required; this request authorizes only the specified wide rotation dataflow and cannot yield a fully validated ready candidate while that failure remains.",
+      "experiment_log": "benchmarks/experiments/agentic/20261017T043301397944Z-wide-rotation.json",
+      "measurement_origin": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json",
+      "new_measurements": false
     }
   ],
   "requests": [
@@ -752,6 +763,16 @@
       "reason": "Wide FP16 dataflow improves native D1024 H32 timing by about 9.2%, but an added valid high-amplitude FP16 stress fails the unchanged max_abs_error gate (32.0 > 0.1) in both V9 and candidate with byte-identical outputs. The inherited precision issue needs independent math/reference diagnosis; the authorized rotation-only trial cannot be called fully validated.",
       "scope_extension_log": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json",
       "prior_frequency_snapshot": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/prior_frequency_experiment.json"
+    },
+    {
+      "request_id": "20261017T043301397944Z-wide-rotation",
+      "state": "blocked",
+      "experiment_log": "benchmarks/experiments/agentic/20261017T043301397944Z-wide-rotation.json",
+      "candidate_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "measurements_reused_from_request_id": "20261017T041419176110Z-vector-fma",
+      "native_speedup": 1.0063637305248743,
+      "new_npu_tasks": 0,
+      "reason": "Reused source-matched wide-rotation evidence supports a targeted FP16 performance gain, but the unchanged strict max-absolute-error gate fails on high-amplitude FP16 input: max_abs_error=32.0 exceeds 0.1. V9 fails the same case with byte-identical outputs. Independent diagnosis of the inherited math/reference/rounding issue is required; this request authorizes only the specified wide rotation dataflow and cannot yield a fully validated ready candidate while that failure remains."
     }
   ]
 }

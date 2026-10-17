@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T043301397944Z-wide-rotation",
+  "state": "blocked",
+  "reason": "Reused source-matched wide-rotation evidence supports a targeted FP16 performance gain, but the unchanged strict max-absolute-error gate fails on high-amplitude FP16 input: max_abs_error=32.0 exceeds 0.1. V9 fails the same case with byte-identical outputs. Independent diagnosis of the inherited math/reference/rounding issue is required; this request authorizes only the specified wide rotation dataflow and cannot yield a fully validated ready candidate while that failure remains.",
+  "parent_kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "candidate_kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "official_baseline_score": 48.45,
+  "target_score": 70,
+  "target_achieved": false,
+  "new_ready_candidates_published": 0,
+  "measurements_reused_from_request_id": "20261017T041419176110Z-vector-fma",
+  "new_npu_tasks": 0,
+  "evidence_paths": [
+    "benchmarks/experiments/agentic/20261017T043301397944Z-wide-rotation.json",
+    "benchmarks/experiments/agentic/history.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/candidate_patch.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/amplitude_comparison.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/amplitude_diagnostic.json",
+    "benchmarks/results/agentic_r2_wide_extra.json",
+    "benchmarks/results/agentic_r2_wide_amplitude_v9.json",
+    "benchmarks/results/agentic_r2_wide_target.json",
+    "benchmarks/results/agentic_r2_wide_fixed.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/pmu_comparison.json",
+    "benchmarks/profiles/agentic_r2_wide_launches/launch_count.json"
+  ],
+  "completed_at": "2026-10-17T04:48:48.578898+00:00"
+}
