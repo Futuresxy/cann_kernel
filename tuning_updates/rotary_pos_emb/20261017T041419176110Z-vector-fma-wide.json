@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T041419176110Z-vector-fma",
+  "kind": "coordinator_hypothesis_update",
+  "reason": "Device residual probe rejects a true single-rounding TwoProd replacement. Review a distinct wide-rotation use of the measured separate-rounding instructions.",
+  "scope_update": "Supersede the original keep-rotation-unchanged restriction for this narrowly defined wide-path experiment; retain all competition and validation constraints.",
+  "historical_coverage_evidence": {
+    "source_revision": "b32d3a657a9e94ce9fbff6b78e6800d6de0eb75f",
+    "old_aligned_dispatch": "aligned = dim % 16 == 0 && dim <= 512",
+    "old_patch": "benchmarks/experiments/round2/cache_fmadd.patch",
+    "old_patch_scope": "AlignedRotary only, with three work arrays; D1024 used the separate Rotary wide kernel",
+    "known_negative_result": "D64 FusedMulAdd replacement did not improve; do not repeat that small-dimension change"
+  },
+  "new_evidence": {
+    "current_wide_path": "V9 LargeAlignedRotary, two FP32 work arrays, full Device frequency initialization",
+    "pmu_summary": "benchmarks/profiles/agentic_r1_v9_wide/summary.json",
+    "wide_vec_ratio": 0.863221125,
+    "rounding_probe": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/fma_semantics.json"
+  },
+  "hypothesis": "On the current aligned wide path, replace two Mul plus two MulAddDst with two cross-product Mul plus two in-place FusedMulAdd, using existing z and r arrays. This preserves four arithmetic instructions and separate product rounding while changing the memory/operand dataflow; it is distinct from the rejected six-instruction Mul/Add replacement and from the old small/mid-D aligned dispatch.",
+  "candidate_dataflow": [
+    "rLo = round(zHi * negSin)",
+    "rHi = round(zLo * sin)",
+    "zLo = round(round(zLo * cos) + rLo) using FusedMulAdd",
+    "zHi = round(round(zHi * cos) + rHi) using FusedMulAdd",
+    "Store z instead of r; keep zero-position identity handling unchanged"
+  ],
+  "implementation_checks": [
+    "Confirm nonfused general-operation results match separate Mul+Add and original MulAddDst",
+    "FusedMulAdd uses dst*src0+src1: cosine must be the broadcast source, with the cross-product source carrying the row stride",
+    "Keep the two-array work allocation; do not accidentally restore an unused third array",
+    "First isolate aligned many-head dim>512, such as 1024; retain existing small/mid-D paths",
+    "Check near-unity theta, long positions, FP16 large amplitudes, nonfinite values, zero positions, tails and single-launch evidence",
+    "Use fixed inputs, paired native measurements and PMU; do not infer hidden test shapes or assume theoretical throughput is realized"
+  ],
+  "primary_source": "https://asc.gitcode.com/api/appendix/vector_instruction_theoretical_perf_summary.html",
+  "publication_limit": "At most one validated improving candidate for the existing request ID; otherwise preserve all new negative evidence"
+}
