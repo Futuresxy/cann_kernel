@@ -1,0 +1,58 @@
+{
+  "coordinator_model_commit": "1edff50",
+  "model": "benchmarks/analysis/shared_math_work_model.json",
+  "rows": [
+    {
+      "name": "tiny",
+      "nominal_trig": 64,
+      "actual_trig": 56,
+      "logical_GM_and_rotation_and_input_hash_match": true
+    },
+    {
+      "name": "deepseek_half",
+      "nominal_trig": 32768,
+      "actual_trig": 32768,
+      "logical_GM_and_rotation_and_input_hash_match": true
+    },
+    {
+      "name": "deepseek_float",
+      "nominal_trig": 32768,
+      "actual_trig": 32768,
+      "logical_GM_and_rotation_and_input_hash_match": true
+    },
+    {
+      "name": "sequence8192",
+      "nominal_trig": 262144,
+      "actual_trig": 262144,
+      "logical_GM_and_rotation_and_input_hash_match": true
+    },
+    {
+      "name": "prefill_h32_d1024_half",
+      "nominal_trig": 131072,
+      "actual_trig": 147456,
+      "logical_GM_and_rotation_and_input_hash_match": true
+    },
+    {
+      "name": "prefill_h32_d1024_float",
+      "nominal_trig": 131072,
+      "actual_trig": 147456,
+      "logical_GM_and_rotation_and_input_hash_match": true
+    },
+    {
+      "name": "sequence_d1024_half",
+      "nominal_trig": 4194304,
+      "actual_trig": 4194304,
+      "logical_GM_and_rotation_and_input_hash_match": true
+    },
+    {
+      "name": "sequence_d1024_float",
+      "nominal_trig": 4194304,
+      "actual_trig": 4194304,
+      "logical_GM_and_rotation_and_input_hash_match": true
+    }
+  ],
+  "nominal_h1_h32_trig_ratio": 32.0,
+  "actual_h1_h32_trig_ratio": 28.444444444444443,
+  "wide_manyhead_actual_token_visits": 288,
+  "interpretation": "Actual per-core boundary repetition raises H32angles from131072 to147456; H1counts4194304. Shared IO/FLOPs do not isolate trig time because layouts, queue copies and rotation instruction forms differ."
+}

@@ -10,5 +10,7 @@
     "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/calibration.json",
     "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/tasks.json"
   ],
-  "auto_generic_request_consumed": false
+  "auto_generic_request_consumed": false,
+  "tuning_request_id": "20261017-shared-math-diagnosis",
+  "coordinator_model_crosscheck": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/coordinator_model_crosscheck.json"
 }

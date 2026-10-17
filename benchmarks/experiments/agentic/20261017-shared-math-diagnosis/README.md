@@ -69,6 +69,8 @@ Init与Process是inclusive总量：Batched/Bulk的Init包含频率；Aligned/Lar
 
 D1024/H32 FP16 tile11、3group、trig batch5；FP32 tile8、4group、batch8。二者本次核分区均触及288个token（理想256），共147456个angle，边界重算仍存在，但没有在本任务改tiling。FP32 DirectFloat频率scratch8200float，按17槽+64结构得到472-lane stride，形成472+40两个块；H1/FP16足够大scratch为512一块。该区别来自源模型与实际尺寸，未量出每块独立耗时，不能把频率差异全部归给它。
 
+主控1edff50的等IO模型已合并并逐项核对：GM字节、旋转FLOP和输入哈希全部一致。H32与H1的名义角度比32倍，加入实测核边界重复后为28.444倍（4194304/147456）。两shape还有H1 FP32显式UB拷贝、分离旋转算术、队列和tile差异，不能把约3倍原生时间差全归给trig。见coordinator_model_crosscheck.json。
+
 原队列/工作区/trig生命周期均保留。H1没有H倍trig摊薄，8192个token共4194304个角度，每核频率512个另算一次。批量trig跨head复用时，对齐路径只缓存当前核访问的token，出调用后失效。没有新跨核共享、全局屏障或结果缓存。
 
 ## 排序与下一实验的预期指标

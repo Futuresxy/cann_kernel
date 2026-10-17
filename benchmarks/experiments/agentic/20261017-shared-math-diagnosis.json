@@ -209,5 +209,7 @@
     }
   ],
   "decision": "Diagnostic report complete; preserve known failure, canonical/latest, environment and old evidence; wait for coordinator review.",
-  "next_steps": "No implementation or additional NPU tasks authorized by this completed diagnosis. Proposal needs a new explicit reviewed task."
+  "next_steps": "No implementation or additional NPU tasks authorized by this completed diagnosis. Proposal needs a new explicit reviewed task.",
+  "tuning_request_id": "20261017-shared-math-diagnosis",
+  "coordinator_model_crosscheck": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/coordinator_model_crosscheck.json"
 }
