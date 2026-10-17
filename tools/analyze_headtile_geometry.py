@@ -43,8 +43,9 @@ def examine(dim, heads):
         groups.append(dict(
             rows=rows, logical_output_elements=count, padded_output_elements=aligned,
             old_gather_elements=4 * pairs + aligned,
-            proposed_gather_elements=aligned + 2 * prefix_used,
-            proposed_regular_copy_elements=2 * (aligned - prefix_used),
+            proposal_short_tail_gather_elements=aligned + 2 * prefix_used,
+            implemented_full_prefix_gather_elements=aligned + 2 * prefix,
+            regular_copy_elements=2 * (aligned - prefix_used),
         ))
     return dict(dim=dim, heads=heads, pitch=pitch, tile_heads=tile,
                 period_heads=period, prefix_elements=prefix, groups=groups)
@@ -63,6 +64,10 @@ def main():
     result = dict(
         schema_version=1, task_id='20261017-headtile-attribution',
         state='geometry_model_only_not_implemented',
+        implementation_comparison=dict(
+            source_sha256='8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea',
+            note='R6 always gathers the full prefix, including tiny tail groups. The smaller short-tail prefix is an unimplemented proposal, not a measured candidate feature.',
+        ),
         baseline_source_sha256=hashlib.sha256(SOURCE.read_bytes()).hexdigest(),
         method='Exhaustive public HeadTile D/H domain; every head group and valid flat element',
         checked_shapes=shapes, checked_groups=groups, checked_valid_elements=elements,

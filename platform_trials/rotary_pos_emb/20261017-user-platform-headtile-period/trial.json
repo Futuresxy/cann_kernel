@@ -1,0 +1,52 @@
+{
+  "trial_id": "20261017-user-platform-headtile-period",
+  "mode": "user_authorized_platform_trial",
+  "production_ready": false,
+  "user_authorization": "针对有较大加速效果的实现方案，可以进行一次平台的提交查看性能分数；当前实现可传输平台一次测试15项。",
+  "kernel_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea",
+  "parent_kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "source_path": "platform_trials/rotary_pos_emb/20261017-user-platform-headtile-period/kernel.asc",
+  "source_experiment": "benchmarks/experiments/agentic/20261017-headtile-attribution.json",
+  "template_diff": {
+    "changed": [
+      "kernel.asc"
+    ],
+    "added": [],
+    "removed": [],
+    "unchanged": [
+      "CMakeLists.txt",
+      "data_utils.h",
+      "main.asc",
+      "run.sh",
+      "scripts/RotaryPosEmb.py",
+      "scripts/gen_data.py",
+      "scripts/verify_result.py"
+    ],
+    "kernel_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea"
+  },
+  "original_template_compile_passed": true,
+  "new_payload_dependencies": false,
+  "known_local_validation": {
+    "normal_passed": 52,
+    "standard_audit_passed": 52,
+    "full_audit_cases": 1765,
+    "full_audit_bit_identical_to_parent": 1765,
+    "full_reference_passed": 1764,
+    "inherited_reference_failures": 1,
+    "inherited_fp16_max_abs_error": 32.0,
+    "inherited_fp16_limit": 0.1,
+    "profile_calls": 75,
+    "profile_device_tasks": 75
+  },
+  "local_native_performance": {
+    "fp16_D30_H128_speedup": 1.525556411801958,
+    "fp32_D30_H128_speedup": 1.5245266912594126,
+    "fixed33_geomean": 1.028365675648823,
+    "family12_geomean": 1.3415005798222046,
+    "note": "Local native evidence only; no forecast of platform score"
+  },
+  "platform_submissions_authorized_for_this_source": 1,
+  "poll_seconds": 60,
+  "created_at": "2026-10-17T07:33:17.672803+00:00",
+  "measurement_exception": "One overlapped device1 timing was excluded and recollected serially ondevice0; final timing CSVs verified device0."
+}

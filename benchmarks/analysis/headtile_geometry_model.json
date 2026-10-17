@@ -2,6 +2,10 @@
   "schema_version": 1,
   "task_id": "20261017-headtile-attribution",
   "state": "geometry_model_only_not_implemented",
+  "implementation_comparison": {
+    "source_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea",
+    "note": "R6 always gathers the full prefix, including tiny tail groups. The smaller short-tail prefix is an unimplemented proposal, not a measured candidate feature."
+  },
   "baseline_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
   "method": "Exhaustive public HeadTile D/H domain; every head group and valid flat element",
   "checked_shapes": 4704,
@@ -27,8 +31,9 @@
           "logical_output_elements": 3840,
           "padded_output_elements": 3840,
           "old_gather_elements": 12032,
-          "proposed_gather_elements": 4080,
-          "proposed_regular_copy_elements": 7440
+          "proposal_short_tail_gather_elements": 4080,
+          "implemented_full_prefix_gather_elements": 4080,
+          "regular_copy_elements": 7440
         }
       ]
     },
@@ -45,16 +50,18 @@
           "logical_output_elements": 3840,
           "padded_output_elements": 3840,
           "old_gather_elements": 12032,
-          "proposed_gather_elements": 4080,
-          "proposed_regular_copy_elements": 7440
+          "proposal_short_tail_gather_elements": 4080,
+          "implemented_full_prefix_gather_elements": 4080,
+          "regular_copy_elements": 7440
         },
         {
           "rows": 1,
           "logical_output_elements": 30,
           "padded_output_elements": 32,
           "old_gather_elements": 96,
-          "proposed_gather_elements": 96,
-          "proposed_regular_copy_elements": 0
+          "proposal_short_tail_gather_elements": 96,
+          "implemented_full_prefix_gather_elements": 272,
+          "regular_copy_elements": 0
         }
       ]
     },
@@ -71,8 +78,9 @@
           "logical_output_elements": 1560,
           "padded_output_elements": 1560,
           "old_gather_elements": 5720,
-          "proposed_gather_elements": 1608,
-          "proposed_regular_copy_elements": 3072
+          "proposal_short_tail_gather_elements": 1608,
+          "implemented_full_prefix_gather_elements": 1608,
+          "regular_copy_elements": 3072
         }
       ]
     },
@@ -89,32 +97,36 @@
           "logical_output_elements": 3968,
           "padded_output_elements": 3968,
           "old_gather_elements": 12160,
-          "proposed_gather_elements": 4464,
-          "proposed_regular_copy_elements": 7440
+          "proposal_short_tail_gather_elements": 4464,
+          "implemented_full_prefix_gather_elements": 4464,
+          "regular_copy_elements": 7440
         },
         {
           "rows": 64,
           "logical_output_elements": 3968,
           "padded_output_elements": 3968,
           "old_gather_elements": 12160,
-          "proposed_gather_elements": 4464,
-          "proposed_regular_copy_elements": 7440
+          "proposal_short_tail_gather_elements": 4464,
+          "implemented_full_prefix_gather_elements": 4464,
+          "regular_copy_elements": 7440
         },
         {
           "rows": 64,
           "logical_output_elements": 3968,
           "padded_output_elements": 3968,
           "old_gather_elements": 12160,
-          "proposed_gather_elements": 4464,
-          "proposed_regular_copy_elements": 7440
+          "proposal_short_tail_gather_elements": 4464,
+          "implemented_full_prefix_gather_elements": 4464,
+          "regular_copy_elements": 7440
         },
         {
           "rows": 63,
           "logical_output_elements": 3906,
           "padded_output_elements": 3912,
           "old_gather_elements": 11976,
-          "proposed_gather_elements": 4408,
-          "proposed_regular_copy_elements": 7328
+          "proposal_short_tail_gather_elements": 4408,
+          "implemented_full_prefix_gather_elements": 4408,
+          "regular_copy_elements": 7328
         }
       ]
     }

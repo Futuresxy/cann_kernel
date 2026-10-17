@@ -1,0 +1,21 @@
+{
+  "kernel_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea",
+  "reviewer": "Mac coordinator / source-reviewed experimental trial",
+  "reviewed_at": "2026-10-17T07:33:17.672803+00:00",
+  "assertions": {
+    "host_only_validation_shape_tiling_launch": true,
+    "no_host_tensor_read_or_reorder": true,
+    "all_frequency_angle_trig_rotation_on_device": true,
+    "no_precomputed_results_or_host_vectors": true,
+    "no_testcase_or_data_pattern_shortcuts": true,
+    "no_markers_stale_output_or_uninitialized_memory": true,
+    "no_judge_precision_or_timing_changes": true,
+    "no_empty_kernel_or_warmup_detection": true,
+    "no_cross_invocation_cache": true,
+    "exactly_one_device_kernel_per_invocation": true,
+    "kernel_asc_is_only_template_change": true
+  },
+  "device_math_notes": "Only HeadTileRotary changes: Device-generated alignment-period C/signedS prefixes expand with supported Copy repeats, one flat rotate-half Gather, separately rounded FP32 products and Add. Host dispatch, FP32 frequency/trig helpers, GM traffic and existing queue ownership unchanged. Valid outputs read valid paired input; padding remains allocated and does not feed valid outputs. Source/UB/geometry and original-template review completed, 1765 full outputs identical to parent, normal52/audit52/launch75 pass. One inherited high-amplitude FP16 max_abs32 failure remains explicitly archived; this user-authorized trial is not production-ready. No extra dependencies, additional kernels, cross-call state or judge interference.",
+  "trial_only": true,
+  "known_precision_failure": "benchmarks/experiments/agentic/20261017-headtile-attribution.json"
+}
