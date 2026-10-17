@@ -83,12 +83,20 @@ def unaligned_layout(dtype, d):
     coefficient_copies = 2 * (tile - 1) * visits
     old_ub = (4 * e + 20) * capacity + 4 * pitch
     new_ub = (4 * e + 20) * capacity + 16 * pitch
+    observation = read('benchmarks/results/agentic_r4_unaligned_fixed33.json')
+    measured = next(c for c in observation['cases'] if c['dtype'] == dtype and
+                    c['shape'] == [2, 512, h, d])
     return {
         'shape': [2, 512, h, d], 'dtype': dtype, 'pitch': pitch,
         'tile_heads': tile, 'groups': groups, 'jobs': jobs,
         'all_nonzero_token_visits_across_cores': visits,
         'existing_ub_bytes': old_ub, 'proposed_ub_bytes': new_ub,
         'proposed_additional_ub_bytes': new_ub - old_ub,
+        'implemented_candidate_ub_bytes': (4 * e + 20) * capacity + 12 * pitch,
+        'implemented_candidate_liveness_note': 'The first prototype reuses the '
+            'free input work vector as the angle scratch before loading x, so '
+            'only two extra coefficient rows are needed, rather than the '
+            'three extra rows in the conservative proposal above.',
         'coefficient_copy_calls_removed': coefficient_copies,
         'coefficient_copy_operand_bytes_removed': coefficient_copies * pitch * 8,
         'repeated_half_load_calls_removed': jobs,
@@ -96,6 +104,15 @@ def unaligned_layout(dtype, d):
         'existing_arithmetic_api_calls_per_job': 6,
         'proposed_arithmetic_api_calls_per_job': 6 * math.ceil(k / 64),
         'minimum_x_y_gm_bytes_unchanged': 2 * n * h * d * e,
+        'paired_native_observation': {
+            'source_sha256': observation['source_sha256'],
+            'baseline_us': measured['baseline_us'],
+            'candidate_us': measured['candidate_us'],
+            'speedup': measured['speedup'],
+            'evidence': 'benchmarks/results/agentic_r4_unaligned_fixed33.json',
+            'decision': 'Mixed result; archived, not promoted or submitted. '
+                        'FP16 benefit does not generalize to FP32.',
+        },
         'assumptions': 'Keep both input halves, two result vectors and a temporary '
                        'within the existing five capacity-sized FP32 work vectors. '
                        'Add separate pitch-sized frequency/angle/cos/sin storage. '
