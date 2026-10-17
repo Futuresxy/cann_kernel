@@ -17,7 +17,7 @@
     "wide_vec_ratio": 0.863221125,
     "rounding_probe": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/fma_semantics.json"
   },
-  "hypothesis": "On the current aligned wide path, replace two Mul plus two MulAddDst with two cross-product Mul plus two in-place FusedMulAdd, using existing z and r arrays. This preserves four arithmetic instructions and separate product rounding while changing the memory/operand dataflow; it is distinct from the rejected six-instruction Mul/Add replacement and from the old D64-only affected dispatch.",
+  "hypothesis": "On the current aligned wide path, replace two Mul plus two MulAddDst with two cross-product Mul plus two in-place FusedMulAdd, using existing z and r arrays. This preserves four arithmetic instructions and separate product rounding while changing the memory/operand dataflow; it is distinct from the rejected six-instruction Mul/Add replacement and from the old small/mid-D aligned dispatch.",
   "candidate_dataflow": [
     "rLo = round(zHi * negSin)",
     "rHi = round(zLo * sin)",
@@ -29,7 +29,7 @@
     "Confirm nonfused general-operation results match separate Mul+Add and original MulAddDst",
     "FusedMulAdd uses dst*src0+src1: cosine must be the broadcast source, with the cross-product source carrying the row stride",
     "Keep the two-array work allocation; do not accidentally restore an unused third array",
-    "First isolate aligned many-head dim>=512/1024; retain existing small-D paths",
+    "First isolate aligned many-head dim>512, such as 1024; retain existing small/mid-D paths",
     "Check near-unity theta, long positions, FP16 large amplitudes, nonfinite values, zero positions, tails and single-launch evidence",
     "Use fixed inputs, paired native measurements and PMU; do not infer hidden test shapes or assume theoretical throughput is realized"
   ],
