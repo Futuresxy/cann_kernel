@@ -742,6 +742,15 @@
       "experiment_log": "benchmarks/experiments/agentic/20261017T043301397944Z-wide-rotation.json",
       "measurement_origin": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json",
       "new_measurements": false
+    },
+    {
+      "round": "agentic-request-4",
+      "request_id": "20261017T053637875276Z-817f8364de18",
+      "name": "unaligned_broadcast_input_retention",
+      "source_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+      "status": "archived-not-promoted",
+      "decision": "Generic unaligned broadcast/input-retention improves FP16 D126 by 1.09960x but regresses FP32 D254 latency 6.07% in both source orders. Fixed33 geomean 1.001942x does not support a general promotion. The valid-input inherited amplitude failure remains max32 >0.1 with byte-identical outputs. Archive one experimental source only; no production-ready publication or platform trial.",
+      "experiment_log": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18.json"
     }
   ],
   "requests": [
@@ -773,6 +782,14 @@
       "native_speedup": 1.0063637305248743,
       "new_npu_tasks": 0,
       "reason": "Reused source-matched wide-rotation evidence supports a targeted FP16 performance gain, but the unchanged strict max-absolute-error gate fails on high-amplitude FP16 input: max_abs_error=32.0 exceeds 0.1. V9 fails the same case with byte-identical outputs. Independent diagnosis of the inherited math/reference/rounding issue is required; this request authorizes only the specified wide rotation dataflow and cannot yield a fully validated ready candidate while that failure remains."
+    },
+    {
+      "request_id": "20261017T053637875276Z-817f8364de18",
+      "state": "no_improvement",
+      "experiment_log": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18.json",
+      "candidate_source_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+      "native_speedup": 1.0019423652508972,
+      "reason": "Generic unaligned broadcast/input-retention improves FP16 D126 by 1.09960x but regresses FP32 D254 latency 6.07% in both source orders. Fixed33 geomean 1.001942x does not support a general promotion. The valid-input inherited amplitude failure remains max32 >0.1 with byte-identical outputs. Archive one experimental source only; no production-ready publication or platform trial."
     }
   ],
   "diagnostics": [
@@ -798,6 +815,14 @@
       "new_performance_measurements": 0,
       "ready_published": false,
       "decision": "Device sqrt differs by one ULP on 5224/59392 angles, but sqrt-only correction leaves 802/817 max-error failures. Local reference FMA/rounding model reproduces trig and outputs. General repair is a proposal only, pending proof/cost review."
+    }
+  ],
+  "terminology_corrections": [
+    {
+      "applies_to_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "recorded_by_request_id": "20261017T053637875276Z-817f8364de18",
+      "prior_description": "about9.2% improvement",
+      "precise_interpretation": "31.981 to29.2805us is1.09223x speedup and8.44% latency reduction; prior logs remain intact."
     }
   ]
 }

@@ -1,0 +1,38 @@
+{
+  "source_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+  "only_class_changed": "Rotary",
+  "outside_class_byte_identical": true,
+  "original_template_files": [
+    "CMakeLists.txt",
+    "data_utils.h",
+    "main.asc",
+    "run.sh",
+    "kernel.asc",
+    "scripts/RotaryPosEmb.py",
+    "scripts/gen_data.py",
+    "scripts/verify_result.py"
+  ],
+  "changed": [
+    "kernel.asc"
+  ],
+  "cxx_standard": 14,
+  "dependencies_added": false,
+  "device_math": true,
+  "rotation": "four Mul plus separate Sub/Add",
+  "DMA_dispatch_queue_trig_frequency_unchanged": true,
+  "constraint_hashes": {
+    "AGENTIC.md": "862d0edaaa828090de007b5c35abe80be2a19d79c00de6b16e23f2e199b6a157",
+    "kernel_requirement.md": "8af6ec98cd04b0d0105a5f35d24a3fa1b8b128c348f97c644f7458b5deaf5e4f",
+    "forbidden.md": "b6adc24318ecd1b7a4915b8dfd9fb560abb26d9da3e11239a5683b56aa197219"
+  },
+  "local_reference_threshold_tool_sha256": "a88d26387860a8d25c6299a5d977d602d81bbc9bae6527387631deb774d375b4",
+  "original_template_support_hashes": {
+    "CMakeLists.txt": "9212022b702d292af324a51394901950ff3032b43b014f1a3071a8f80e0b154b",
+    "data_utils.h": "1bdaae93c09b65e2615691a39bfd611122c09668d90e21809c52516f443bfd84",
+    "main.asc": "0e8746b7f81013970705766c853097a200906129e0bcd90b9d92cfc78dc130d0",
+    "run.sh": "6a293a38d60d56e416d0515732847eb86aa6d464fa15448b1ec5a36a9636c21a",
+    "scripts/RotaryPosEmb.py": "7d05b220d60dbd788a32b3208e6fcdc4226551224020511f4f999c309b9d058a",
+    "scripts/gen_data.py": "23becb4ffbbbedabcba2cf27cb876be81c4c4f31307bea11e410179bb1a9457e",
+    "scripts/verify_result.py": "023ea57bfefe6701c8ec8a0aa50696cd9ba228890b8e1cbfd9f6f8ae38b5d371"
+  }
+}

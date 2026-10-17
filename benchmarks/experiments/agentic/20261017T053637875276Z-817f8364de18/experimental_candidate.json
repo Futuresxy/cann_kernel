@@ -1,0 +1,19 @@
+{
+  "request_id": "20261017T053637875276Z-817f8364de18",
+  "state": "experimental_not_ready",
+  "parent_kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "kernel_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+  "source": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/kernel.asc",
+  "patch": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/candidate.patch",
+  "production_ready": false,
+  "platform_submission_recommended": false,
+  "known_precision_failures": [
+    {
+      "name": "frozen_amplitude",
+      "parent": 32.0,
+      "experiment": 32.0
+    }
+  ],
+  "performance_limitations": "FP32 representative regresses 6.07%; full33 geomean only1.00194x",
+  "evidence": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18.json"
+}

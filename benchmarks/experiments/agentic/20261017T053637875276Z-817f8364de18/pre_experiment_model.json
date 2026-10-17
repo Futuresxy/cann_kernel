@@ -1,0 +1,321 @@
+{
+  "algorithm": "N*K frequencies/angles amortized across H; rotation 3*N*H*D FLOPs; no Host math",
+  "error_chain": "Identical Device frequency/FP32 angle/trig and 4 rounded products then rounded Sub/Add, identical final cast. p0 bypass unchanged. Preserve inherited trig-related FP16 midpoint failures.",
+  "baseline_pmu": {
+    "half": {
+      "summary": {
+        "PipeUtilization": {
+          "block_id": 23.5,
+          "aiv_time(us)": 122.85170079166667,
+          "aiv_total_cycles": 227275.64583333334,
+          "aiv_vec_time(us)": 39.169189,
+          "aiv_vec_ratio": 0.3191392708333333,
+          "aiv_mte2_time(us)": 36.415146479166665,
+          "aiv_mte2_ratio": 0.29619720833333335,
+          "aiv_mte2_active_bw(GB/s)": 8.9759968125,
+          "aiv_mte3_time(us)": 36.514471020833334,
+          "aiv_mte3_ratio": 0.2973576041666667,
+          "aiv_mte3_active_bw(GB/s)": 17.608906625,
+          "aiv_icache_miss_rate": 0.0,
+          "aiv_scalar_time(us)": 16.194346875,
+          "aiv_scalar_ratio": 0.13197229166666666,
+          "aiv_scalar_single_time(us)": 5.1895161666666665,
+          "aiv_scalar_dual_time(us)": 5.590799416666667,
+          "aiv_scalar_mte2_stall_time(us)": 0.0,
+          "aiv_scalar_mte3_stall_time(us)": 0.0,
+          "aiv_scalar_stall_by_ub_time(us)": 0.0,
+          "aiv_scalar_vector_stall_time(us)": 30.698851395833334,
+          "aiv_scalar_wait_ib_time(us)": 0.21531524999999999,
+          "aiv_scalar_wait_time(us)": 0.004042583333333333
+        },
+        "Memory": {
+          "block_id": 23.5,
+          "aiv_time(us)": 122.85170079166667,
+          "aiv_total_cycles": 227275.64583333334,
+          "aiv_ub_to_gm_bw(GB/s)": 5.221833604166666,
+          "aiv_gm_to_ub_bw(GB/s)": 2.652359875,
+          "aiv_main_mem_read_bw(GB/s)": 5.225719395833333,
+          "aiv_main_mem_write_bw(GB/s)": 5.222805,
+          "aiv_mte2_instructions": 86.33333333333333,
+          "aiv_mte2_ratio": 0.29619720833333335,
+          "aiv_mte3_instructions": 86.33333333333333,
+          "aiv_mte3_ratio": 0.2973576041666667,
+          "read_main_memory_datas(KB)": 672.5,
+          "write_main_memory_datas(KB)": 672.125,
+          "GM_to_UB_datas(KB)": 341.3333333333333,
+          "GM_to_UB_bw_usage_rate(%)": 1.2052894375,
+          "UB_to_GM_datas(KB)": 672.0,
+          "UB_to_GM_bw_usage_rate(%)": 2.7954140625
+        },
+        "OpBasicInfo": {
+          "Task Duration(us)": 132.102646,
+          "Block Dim": 48.0,
+          "Device Id": 0.0,
+          "Pid": 1753078.0,
+          "Current Freq": 1850.0,
+          "Rated Freq": 1850.0
+        },
+        "MemoryUB": {
+          "block_id": 23.5,
+          "aiv_time(us)": 122.85170079166667,
+          "aiv_total_cycles": 227275.64583333334,
+          "aiv_ub_read_bw_vector(GB/s)": 48.11830852083333,
+          "aiv_ub_write_bw_vector(GB/s)": 31.159028,
+          "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+          "aiv_ub_write_bw_scalar(GB/s)": 0.0086214375
+        }
+      },
+      "core_ranges": {
+        "aiv_time(us)": {
+          "min": 112.408646,
+          "max": 131.157303
+        },
+        "aiv_vec_time(us)": {
+          "min": 38.320541,
+          "max": 39.593513
+        },
+        "aiv_mte2_time(us)": {
+          "min": 31.203243,
+          "max": 41.742161
+        },
+        "aiv_mte3_time(us)": {
+          "min": 32.376759,
+          "max": 40.91946
+        }
+      }
+    },
+    "float": {
+      "summary": {
+        "PipeUtilization": {
+          "block_id": 23.5,
+          "aiv_time(us)": 202.43543947916666,
+          "aiv_total_cycles": 374505.5625,
+          "aiv_vec_time(us)": 52.96360266666667,
+          "aiv_vec_ratio": 0.2626824166666667,
+          "aiv_mte2_time(us)": 77.14585541666666,
+          "aiv_mte2_ratio": 0.38047766666666666,
+          "aiv_mte2_active_bw(GB/s)": 17.0190303125,
+          "aiv_mte3_time(us)": 61.127578666666665,
+          "aiv_mte3_ratio": 0.3012519791666667,
+          "aiv_mte3_active_bw(GB/s)": 35.99942025,
+          "aiv_icache_miss_rate": 0.0,
+          "aiv_scalar_time(us)": 16.0375449375,
+          "aiv_scalar_ratio": 0.07953545833333334,
+          "aiv_scalar_single_time(us)": 4.8621058125,
+          "aiv_scalar_dual_time(us)": 5.668919000000001,
+          "aiv_scalar_mte2_stall_time(us)": 0.0,
+          "aiv_scalar_mte3_stall_time(us)": 0.0,
+          "aiv_scalar_stall_by_ub_time(us)": 0.0,
+          "aiv_scalar_vector_stall_time(us)": 51.125473,
+          "aiv_scalar_wait_ib_time(us)": 0.20617114583333332,
+          "aiv_scalar_wait_time(us)": 0.003952541666666667
+        },
+        "Memory": {
+          "block_id": 23.5,
+          "aiv_time(us)": 202.43543947916666,
+          "aiv_total_cycles": 374505.5625,
+          "aiv_ub_to_gm_bw(GB/s)": 10.796600354166667,
+          "aiv_gm_to_ub_bw(GB/s)": 6.4577796875,
+          "aiv_main_mem_read_bw(GB/s)": 7.973686791666666,
+          "aiv_main_mem_write_bw(GB/s)": 7.971913,
+          "aiv_mte2_instructions": 86.33333333333333,
+          "aiv_mte2_ratio": 0.38047766666666666,
+          "aiv_mte3_instructions": 86.33333333333333,
+          "aiv_mte3_ratio": 0.3012519791666667,
+          "read_main_memory_datas(KB)": 1685.8333333333333,
+          "write_main_memory_datas(KB)": 1685.4583333333333,
+          "GM_to_UB_datas(KB)": 1365.3333333333333,
+          "GM_to_UB_bw_usage_rate(%)": 2.9345540625,
+          "UB_to_GM_datas(KB)": 2282.6666666666665,
+          "UB_to_GM_bw_usage_rate(%)": 5.7797645625000005
+        },
+        "OpBasicInfo": {
+          "Task Duration(us)": 227.164551,
+          "Block Dim": 48.0,
+          "Device Id": 0.0,
+          "Pid": 1754638.0,
+          "Current Freq": 1850.0,
+          "Rated Freq": 1850.0
+        },
+        "MemoryUB": {
+          "block_id": 23.5,
+          "aiv_time(us)": 202.43543947916666,
+          "aiv_total_cycles": 374505.5625,
+          "aiv_ub_read_bw_vector(GB/s)": 61.439459937500004,
+          "aiv_ub_write_bw_vector(GB/s)": 41.1544459375,
+          "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+          "aiv_ub_write_bw_scalar(GB/s)": 0.005246770833333333
+        }
+      },
+      "core_ranges": {
+        "aiv_time(us)": {
+          "min": 187.18486,
+          "max": 226.325409
+        },
+        "aiv_vec_time(us)": {
+          "min": 51.885406,
+          "max": 53.502701
+        },
+        "aiv_mte2_time(us)": {
+          "min": 68.80703,
+          "max": 89.164864
+        },
+        "aiv_mte3_time(us)": {
+          "min": 52.341621,
+          "max": 74.385406
+        }
+      }
+    }
+  },
+  "ub_model": {
+    "formula": "4*cap*sizeof(T)+5*cap*4+(freqStorage+2*pitch)*4+optionalFrequencyFallback",
+    "max_by_element_bytes": {
+      "2": [
+        120832,
+        1024,
+        256,
+        8,
+        512,
+        0
+      ],
+      "4": [
+        153600,
+        1024,
+        256,
+        8,
+        512,
+        0
+      ]
+    },
+    "budget_bytes": 196608
+  },
+  "layouts": {
+    "baseline": "work a,b,c[cap],s[cap],tmp; coefficient expansion per new token; input first half reloaded after a overwrite",
+    "candidate": "work a,b,rLo,rHi,tmp; compact c,s at tail of frequency buffer; a,b live unchanged until both results; trig uses a,b,tmp before input load"
+  },
+  "traffic": {
+    "GM": "unchanged 2*N*H*D*sizeof(T)+4*N minimum; identical 2 load and 2 store strided DataCopyPad per job",
+    "per_new_token_UB_copies_removed": "2*(tileHeads-1)*pitch*4 bytes read and same bytes written",
+    "per_job_conversion_removed": "rows*pitch elements; FP16 Cast or FP32 UB DataCopy",
+    "expected": "less vector UB traffic and scalar copy instruction issue; no promise of MTE reduction; broadcast mask/repeat setup may offset benefit"
+  },
+  "hypothesis_decision": "supported for one dataflow experiment, not a claim of dominant memory-bandwidth bottleneck",
+  "previous_negatives": [
+    {
+      "paths": [
+        "benchmarks/experiments/round3/layout_copy.patch",
+        "benchmarks/experiments/round3/head_tile.patch",
+        "docs/profiled_v5.md",
+        "docs/profiled_v6.md"
+      ],
+      "finding": "Whole-row CopyRotary/Gather changes input representation and DMA/queue strategy; Gather retained only short D<=64. D126/D254 not improved by broadening prior layout. This trial retains strided two-half DMA and uses no Gather."
+    },
+    {
+      "paths": [
+        "benchmarks/experiments/round8/two_read.patch",
+        "benchmarks/experiments/agentic/history.json"
+      ],
+      "finding": "Wide two-read rotation ~18% slower; current target generic Rotary already holds both halves in queue and removes redundant UB cast/copy, not a second GM pass."
+    },
+    {
+      "paths": [
+        "benchmarks/experiments/round3/mask_trig.patch",
+        "benchmarks/experiments/round3/mask_all.patch"
+      ],
+      "finding": "No trig/mask-hoisting/precision modification in this trial."
+    }
+  ],
+  "assembly_limit": "Installed disassembler cannot decode HiIPU; earlier probes preserved. API counts and embedded entry bytes are source/code-generation evidence, not decoded instruction counts.",
+  "representatives": [
+    {
+      "dtype": "float16",
+      "shape": [
+        2,
+        512,
+        64,
+        126
+      ],
+      "N": 1024,
+      "K": 63,
+      "pitch": 64,
+      "tileHeads": 32,
+      "groups": 2,
+      "jobs": 2048,
+      "core_jobs_range": [
+        42,
+        43
+      ],
+      "actual_trig_token_visits": 1040,
+      "ideal_trig_token_visits": 1024,
+      "trig_elements": 66560,
+      "frequency_elements_total": 3024,
+      "rotation_logical_FLOPs": 24772608,
+      "rotation_padded_FLOPs": 25165824,
+      "minimum_XY_bytes": 33030144,
+      "logical_rotation_intensity_FLOPs_per_byte": 0.75,
+      "queue_slots": {
+        "input": 1,
+        "output": 1
+      },
+      "UB_bytes_baseline": 57600,
+      "UB_bytes_candidate": 58112,
+      "coefficient_copy_calls_removed": 64480,
+      "coefficient_copy_read_bytes_removed": 16506880,
+      "coefficient_copy_write_bytes_removed": 16506880,
+      "input_half_conversion_elements_removed": 4194304,
+      "input_half_conversion_read_bytes_removed": 8388608,
+      "input_half_conversion_write_bytes_removed": 16777216,
+      "rotation_API_calls_per_full_job_candidate": 6,
+      "note": "API calls, repeat bodies and hardware instructions are different quantities. Baseline count APIs already use hardware repeats. No arithmetic instruction-count saving is claimed. Broadcast retains arithmetic element work. Traffic removal model assumes nonzero positions; PIPE_ALL and strided DMA unchanged.",
+      "rotation_API_calls_per_full_job_baseline": 6,
+      "arithmetic_repeat_bodies_per_full_job_baseline": 192,
+      "arithmetic_repeat_bodies_per_full_job_candidate": 192,
+      "frozen_input_zero_positions": 0
+    },
+    {
+      "dtype": "float32",
+      "shape": [
+        2,
+        512,
+        64,
+        254
+      ],
+      "N": 1024,
+      "K": 127,
+      "pitch": 128,
+      "tileHeads": 32,
+      "groups": 2,
+      "jobs": 2048,
+      "core_jobs_range": [
+        42,
+        43
+      ],
+      "actual_trig_token_visits": 1040,
+      "ideal_trig_token_visits": 1024,
+      "trig_elements": 133120,
+      "frequency_elements_total": 6096,
+      "rotation_logical_FLOPs": 49938432,
+      "rotation_padded_FLOPs": 50331648,
+      "minimum_XY_bytes": 133169152,
+      "logical_rotation_intensity_FLOPs_per_byte": 0.375,
+      "queue_slots": {
+        "input": 1,
+        "output": 1
+      },
+      "UB_bytes_baseline": 147968,
+      "UB_bytes_candidate": 148992,
+      "coefficient_copy_calls_removed": 64480,
+      "coefficient_copy_read_bytes_removed": 33013760,
+      "coefficient_copy_write_bytes_removed": 33013760,
+      "input_half_conversion_elements_removed": 8388608,
+      "input_half_conversion_read_bytes_removed": 33554432,
+      "input_half_conversion_write_bytes_removed": 33554432,
+      "rotation_API_calls_per_full_job_candidate": 12,
+      "note": "API calls, repeat bodies and hardware instructions are different quantities. Baseline count APIs already use hardware repeats. No arithmetic instruction-count saving is claimed. Broadcast retains arithmetic element work. Traffic removal model assumes nonzero positions; PIPE_ALL and strided DMA unchanged.",
+      "rotation_API_calls_per_full_job_baseline": 6,
+      "arithmetic_repeat_bodies_per_full_job_baseline": 384,
+      "arithmetic_repeat_bodies_per_full_job_candidate": 384,
+      "frozen_input_zero_positions": 0
+    }
+  ]
+}
