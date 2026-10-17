@@ -1,0 +1,73 @@
+{
+  "numpy_version": "2.2.6",
+  "python": "3.10.9",
+  "machine": "aarch64",
+  "glibc": [
+    "glibc",
+    "2.36"
+  ],
+  "binary_sha256": "3652e2422976aeefa7d6be767202268b75e25cc14d5c37299fa128a2e1ff782b",
+  "binary_path": "/usr/local/lib64/python3.10/site-packages/numpy/_core/_multiarray_umath.cpython-310-aarch64-linux-gnu.so",
+  "dispatch": {
+    "cos": {
+      "ff": {
+        "current": "baseline(NEON NEON_FP16 NEON_VFPV4 ASIMD)",
+        "available": "baseline(NEON NEON_FP16 NEON_VFPV4 ASIMD)"
+      }
+    },
+    "sin": {
+      "ff": {
+        "current": "baseline(NEON NEON_FP16 NEON_VFPV4 ASIMD)",
+        "available": "baseline(NEON NEON_FP16 NEON_VFPV4 ASIMD)"
+      }
+    }
+  },
+  "relevant_local_symbols": [
+    "00000000002c3a20 t simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)",
+    "00000000002c40f4 t simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]"
+  ],
+  "host_asm": "benchmarks/diagnostics/rope_v9_trig_internal/numpy_host_asm.txt",
+  "decoded_host_evidence": {
+    "quadrant_multiply_add": "0x2c3b98: fmla v6.4s, v4.4s, v0.4s",
+    "quadrant_subtract_magic": "0x2c3ba4: fadd v6.4s, v6.4s, v4.4s",
+    "initial_accumulator": {
+      "rodata": "0x3aaeb0",
+      "bits": "0x4b400000",
+      "value": 12582912.0
+    },
+    "scale": {
+      "rodata": "0x3aaec0",
+      "bits": "0x3f22f983",
+      "value": 0.6366197466850281
+    },
+    "subtract_constant": {
+      "rodata": "0x3aaed0",
+      "bits": "0xcb400000",
+      "value": -12582912.0
+    },
+    "conclusion": "The installed AArch64 NumPy binary contracts the quadrant multiply/add into FMLA before subtracting the magic constant. The exact CPU fmaf model reproduces all active reference trig values on the frozen input."
+  },
+  "pinned_upstream_source": {
+    "url": "https://raw.githubusercontent.com/numpy/numpy/v2.2.6/numpy/_core/src/umath/loops_trigonometric.dispatch.cpp",
+    "sha256": "fb1ca5adef328d6ac9fa645f1642bcefea86188b385f4984eb8d8338aa1cebac",
+    "use": "Numerical model reference. The installed binary is separately inspected; no assertion is made about the hidden platform version/compiler/CPU.",
+    "scalar_fallback_limits": {
+      "cosine": 71476.0625,
+      "sine": 117435.9921875
+    }
+  },
+  "sqrt_sdk_header": {
+    "path": "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/dav_c220/kernel_operator_vec_unary_impl.h",
+    "sha256": "7c47167631eaee901107ff9df604471d785409fbda8ac59c3534d4f148ef19d4",
+    "source_lines": [
+      98,
+      351
+    ],
+    "intrinsic": "vsqrt"
+  },
+  "limitations": [
+    "Addresses/constants bind to the recorded binary; inspect a new binary before reusing address-based extraction.",
+    "Host AArch64 instructions are decoded here. The existing HiIPU disassembler limitation for Device remains unchanged.",
+    "CPU libm fmaf is a mathematical diagnostic primitive; it is not invoked by the competition Host or presumed available on Device."
+  ]
+}

@@ -1,0 +1,695 @@
+
+/usr/local/lib64/python3.10/site-packages/numpy/_core/_multiarray_umath.cpython-310-aarch64-linux-gnu.so:     file format elf64-littleaarch64
+
+
+Disassembly of section .text:
+
+00000000002c3a20 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)>:
+  2c3a20:	a9af7bfd 	stp	x29, x30, [sp, #-272]!
+  2c3a24:	710004bf 	cmp	w5, #0x1
+  2c3a28:	528bbfe6 	mov	w6, #0x5dff                	// #24063
+  2c3a2c:	910003fd 	mov	x29, sp
+  2c3a30:	a90153f3 	stp	x19, x20, [sp, #16]
+  2c3a34:	2a0503f4 	mov	w20, w5
+  2c3a38:	52934105 	mov	w5, #0x9a08                	// #39432
+  2c3a3c:	72a8fca6 	movk	w6, #0x47e5, lsl #16
+  2c3a40:	72a8f165 	movk	w5, #0x478b, lsl #16
+  2c3a44:	1e2700c1 	fmov	s1, w6
+  2c3a48:	1e2700a0 	fmov	s0, w5
+  2c3a4c:	a9025bf5 	stp	x21, x22, [sp, #32]
+  2c3a50:	aa0103f5 	mov	x21, x1
+  2c3a54:	1e201c21 	fcsel	s1, s1, s0, ne  // ne = any
+  2c3a58:	90000501 	adrp	x1, 363000 <CSWTCH.195+0x1828>
+  2c3a5c:	1e270062 	fmov	s2, w3
+  2c3a60:	3dc32820 	ldr	q0, [x1, #3232]
+  2c3a64:	4e040421 	dup	v1.4s, v1.s[0]
+  2c3a68:	3d801be1 	str	q1, [sp, #96]
+  2c3a6c:	1e2702a1 	fmov	s1, w21
+  2c3a70:	4f818001 	mul	v1.4s, v0.4s, v1.s[0]
+  2c3a74:	4f828000 	mul	v0.4s, v0.4s, v2.s[0]
+  2c3a78:	f100009f 	cmp	x4, #0x0
+  2c3a7c:	540029ad 	b.le	2c3fb0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x590>
+  2c3a80:	a90363f7 	stp	x23, x24, [sp, #48]
+  2c3a84:	0e043c37 	mov	w23, v1.s[0]
+  2c3a88:	aa0303f3 	mov	x19, x3
+  2c3a8c:	0e0c3c38 	mov	w24, v1.s[1]
+  2c3a90:	a9046bf9 	stp	x25, x26, [sp, #64]
+  2c3a94:	0e143c39 	mov	w25, v1.s[2]
+  2c3a98:	0e1c3c36 	mov	w22, v1.s[3]
+  2c3a9c:	a90573fb 	stp	x27, x28, [sp, #80]
+  2c3aa0:	aa0003fc 	mov	x28, x0
+  2c3aa4:	d37ef660 	lsl	x0, x19, #2
+  2c3aa8:	0e043c05 	mov	w5, v0.s[0]
+  2c3aac:	f90057e0 	str	x0, [sp, #168]
+  2c3ab0:	93407ee0 	sxtw	x0, w23
+  2c3ab4:	f90053e0 	str	x0, [sp, #160]
+  2c3ab8:	937e7ee0 	sbfiz	x0, x23, #2, #32
+  2c3abc:	0e0c3c07 	mov	w7, v0.s[1]
+  2c3ac0:	f9004be0 	str	x0, [sp, #144]
+  2c3ac4:	93407f00 	sxtw	x0, w24
+  2c3ac8:	0e143c06 	mov	w6, v0.s[2]
+  2c3acc:	f9006fe0 	str	x0, [sp, #216]
+  2c3ad0:	93407f20 	sxtw	x0, w25
+  2c3ad4:	0e1c3c01 	mov	w1, v0.s[3]
+  2c3ad8:	f90073e0 	str	x0, [sp, #224]
+  2c3adc:	937e7ec0 	sbfiz	x0, x22, #2, #32
+  2c3ae0:	f9004fe0 	str	x0, [sp, #152]
+  2c3ae4:	93407ca0 	sxtw	x0, w5
+  2c3ae8:	f9006be0 	str	x0, [sp, #208]
+  2c3aec:	937e7ca0 	sbfiz	x0, x5, #2, #32
+  2c3af0:	f90063e0 	str	x0, [sp, #192]
+  2c3af4:	937e7ce0 	sbfiz	x0, x7, #2, #32
+  2c3af8:	8b030463 	add	x3, x3, x3, lsl #1
+  2c3afc:	f9005be0 	str	x0, [sp, #176]
+  2c3b00:	937e7cc0 	sbfiz	x0, x6, #2, #32
+  2c3b04:	f9005fe0 	str	x0, [sp, #184]
+  2c3b08:	937e7c20 	sbfiz	x0, x1, #2, #32
+  2c3b0c:	f90067e0 	str	x0, [sp, #200]
+  2c3b10:	d37ef460 	lsl	x0, x3, #2
+  2c3b14:	f90047e0 	str	x0, [sp, #136]
+  2c3b18:	d37df260 	lsl	x0, x19, #3
+  2c3b1c:	f90043e0 	str	x0, [sp, #128]
+  2c3b20:	d37ceea0 	lsl	x0, x21, #4
+  2c3b24:	f9003be0 	str	x0, [sp, #112]
+  2c3b28:	d37cee60 	lsl	x0, x19, #4
+  2c3b2c:	f9003fe0 	str	x0, [sp, #120]
+  2c3b30:	aa0403fb 	mov	x27, x4
+  2c3b34:	aa0203fa 	mov	x26, x2
+  2c3b38:	937e7f18 	sbfiz	x24, x24, #2, #32
+  2c3b3c:	937e7f39 	sbfiz	x25, x25, #2, #32
+  2c3b40:	f1000c9f 	cmp	x4, #0x3
+  2c3b44:	5400104d 	b.le	2c3d4c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x32c>
+  2c3b48:	f0000736 	adrp	x22, 3aa000 <vecmat_signatures+0xeb0>
+  2c3b4c:	f10006bf 	cmp	x21, #0x1
+  2c3b50:	54001121 	b.ne	2c3d74 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x354>  // b.any
+  2c3b54:	3dc00380 	ldr	q0, [x28]
+  2c3b58:	4e20e405 	fcmeq	v5.4s, v0.4s, v0.4s
+  2c3b5c:	4e201ca1 	and	v1.16b, v5.16b, v0.16b
+  2c3b60:	3dc01be0 	ldr	q0, [sp, #96]
+  2c3b64:	4ea0f822 	fabs	v2.4s, v1.4s
+  2c3b68:	6e22e402 	fcmge	v2.4s, v0.4s, v2.4s
+  2c3b6c:	0f0c8440 	shrn	v0.8b, v2.8h, #4
+  2c3b70:	9e660000 	fmov	x0, d0
+  2c3b74:	4ea21c43 	mov	v3.16b, v2.16b
+  2c3b78:	b40009c0 	cbz	x0, 2c3cb0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x290>
+  2c3b7c:	4e251c40 	and	v0.16b, v2.16b, v5.16b
+  2c3b80:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3b84:	3dc3ac06 	ldr	q6, [x0, #3760]
+  2c3b88:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3b8c:	4e211c00 	and	v0.16b, v0.16b, v1.16b
+  2c3b90:	3dc3b004 	ldr	q4, [x0, #3776]
+  2c3b94:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3b98:	4e20cc86 	fmla	v6.4s, v4.4s, v0.4s
+  2c3b9c:	3dc3b404 	ldr	q4, [x0, #3792]
+  2c3ba0:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3ba4:	4e24d4c6 	fadd	v6.4s, v6.4s, v4.4s
+  2c3ba8:	3dc3b804 	ldr	q4, [x0, #3808]
+  2c3bac:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3bb0:	3dc3bc07 	ldr	q7, [x0, #3824]
+  2c3bb4:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3bb8:	4e24ccc0 	fmla	v0.4s, v6.4s, v4.4s
+  2c3bbc:	4e21a8c4 	fcvtns	v4.4s, v6.4s
+  2c3bc0:	4e27ccc0 	fmla	v0.4s, v6.4s, v7.4s
+  2c3bc4:	3dc3c007 	ldr	q7, [x0, #3840]
+  2c3bc8:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3bcc:	3dc3c410 	ldr	q16, [x0, #3856]
+  2c3bd0:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3bd4:	4e27ccc0 	fmla	v0.4s, v6.4s, v7.4s
+  2c3bd8:	3dc3c807 	ldr	q7, [x0, #3872]
+  2c3bdc:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3be0:	6e20dc06 	fmul	v6.4s, v0.4s, v0.4s
+  2c3be4:	4e26ccf0 	fmla	v16.4s, v7.4s, v6.4s
+  2c3be8:	3dc3cc07 	ldr	q7, [x0, #3888]
+  2c3bec:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3bf0:	3dc3d011 	ldr	q17, [x0, #3904]
+  2c3bf4:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3bf8:	4e26ce27 	fmla	v7.4s, v17.4s, v6.4s
+  2c3bfc:	3dc3d411 	ldr	q17, [x0, #3920]
+  2c3c00:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3c04:	4e26ce11 	fmla	v17.4s, v16.4s, v6.4s
+  2c3c08:	3dc3d810 	ldr	q16, [x0, #3936]
+  2c3c0c:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3c10:	4e26ccf0 	fmla	v16.4s, v7.4s, v6.4s
+  2c3c14:	3dc3dc07 	ldr	q7, [x0, #3952]
+  2c3c18:	4e26ce27 	fmla	v7.4s, v17.4s, v6.4s
+  2c3c1c:	4f07f411 	fmov	v17.4s, #-5.000000000000000000e-01
+  2c3c20:	4e26ce11 	fmla	v17.4s, v16.4s, v6.4s
+  2c3c24:	4f000410 	movi	v16.4s, #0x0
+  2c3c28:	4e26ccf0 	fmla	v16.4s, v7.4s, v6.4s
+  2c3c2c:	4f03f607 	fmov	v7.4s, #1.000000000000000000e+00
+  2c3c30:	4e20ce00 	fmla	v0.4s, v16.4s, v0.4s
+  2c3c34:	4e26ce27 	fmla	v7.4s, v17.4s, v6.4s
+  2c3c38:	7100069f 	cmp	w20, #0x1
+  2c3c3c:	54000061 	b.ne	2c3c48 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x228>  // b.any
+  2c3c40:	4f000426 	movi	v6.4s, #0x1
+  2c3c44:	4ea68484 	add	v4.4s, v4.4s, v6.4s
+  2c3c48:	4f000426 	movi	v6.4s, #0x1
+  2c3c4c:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3c50:	4f000450 	movi	v16.4s, #0x2
+  2c3c54:	4e261c86 	and	v6.16b, v4.16b, v6.16b
+  2c3c58:	4e301c84 	and	v4.16b, v4.16b, v16.16b
+  2c3c5c:	4ea098c6 	cmeq	v6.4s, v6.4s, #0
+  2c3c60:	6eb08c84 	cmeq	v4.4s, v4.4s, v16.4s
+  2c3c64:	6ee61ce0 	bif	v0.16b, v7.16b, v6.16b
+  2c3c68:	4f000406 	movi	v6.4s, #0x0
+  2c3c6c:	4ea0d4c6 	fsub	v6.4s, v6.4s, v0.4s
+  2c3c70:	6ea41cc0 	bit	v0.16b, v6.16b, v4.16b
+  2c3c74:	3dc04004 	ldr	q4, [x0, #256]
+  2c3c78:	6ee51c80 	bif	v0.16b, v4.16b, v5.16b
+  2c3c7c:	f100067f 	cmp	x19, #0x1
+  2c3c80:	540021a0 	b.eq	2c40b4 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x694>  // b.none
+  2c3c84:	f9405be0 	ldr	x0, [sp, #176]
+  2c3c88:	8b000345 	add	x5, x26, x0
+  2c3c8c:	f9405fe0 	ldr	x0, [sp, #184]
+  2c3c90:	8b000343 	add	x3, x26, x0
+  2c3c94:	f94063e0 	ldr	x0, [sp, #192]
+  2c3c98:	bc206b40 	str	s0, [x26, x0]
+  2c3c9c:	f94067e0 	ldr	x0, [sp, #200]
+  2c3ca0:	0d0090a0 	st1	{v0.s}[1], [x5]
+  2c3ca4:	4d008060 	st1	{v0.s}[2], [x3]
+  2c3ca8:	8b000341 	add	x1, x26, x0
+  2c3cac:	4d009020 	st1	{v0.s}[3], [x1]
+  2c3cb0:	0f0c8463 	shrn	v3.8b, v3.8h, #4
+  2c3cb4:	9e660060 	fmov	x0, d3
+  2c3cb8:	b100041f 	cmn	x0, #0x1
+  2c3cbc:	54000380 	b.eq	2c3d2c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x30c>  // b.none
+  2c3cc0:	3dc3e6c0 	ldr	q0, [x22, #3984]
+  2c3cc4:	3d8043e1 	str	q1, [sp, #256]
+  2c3cc8:	4e221c02 	and	v2.16b, v0.16b, v2.16b
+  2c3ccc:	4eb1b842 	addv	s2, v2.4s
+  2c3cd0:	3d03e3e2 	str	b2, [sp, #248]
+  2c3cd4:	7100069f 	cmp	w20, #0x1
+  2c3cd8:	540019e0 	b.eq	2c4014 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x5f4>  // b.none
+  2c3cdc:	f9407ff7 	ldr	x23, [sp, #248]
+  2c3ce0:	37000097 	tbnz	w23, #0, 2c3cf0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x2d0>
+  2c3ce4:	bd4103e0 	ldr	s0, [sp, #256]
+  2c3ce8:	97f5906a 	bl	27e90 <sinf@plt>
+  2c3cec:	bd000340 	str	s0, [x26]
+  2c3cf0:	370800b7 	tbnz	w23, #1, 2c3d04 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x2e4>
+  2c3cf4:	bd4107e0 	ldr	s0, [sp, #260]
+  2c3cf8:	97f59066 	bl	27e90 <sinf@plt>
+  2c3cfc:	f94057e0 	ldr	x0, [sp, #168]
+  2c3d00:	bc206b40 	str	s0, [x26, x0]
+  2c3d04:	371000b7 	tbnz	w23, #2, 2c3d18 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x2f8>
+  2c3d08:	bd410be0 	ldr	s0, [sp, #264]
+  2c3d0c:	97f59061 	bl	27e90 <sinf@plt>
+  2c3d10:	f94043e0 	ldr	x0, [sp, #128]
+  2c3d14:	bc206b40 	str	s0, [x26, x0]
+  2c3d18:	371800b7 	tbnz	w23, #3, 2c3d2c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x30c>
+  2c3d1c:	bd410fe0 	ldr	s0, [sp, #268]
+  2c3d20:	97f5905c 	bl	27e90 <sinf@plt>
+  2c3d24:	f94047e0 	ldr	x0, [sp, #136]
+  2c3d28:	bc206b40 	str	s0, [x26, x0]
+  2c3d2c:	f9403be0 	ldr	x0, [sp, #112]
+  2c3d30:	d100137b 	sub	x27, x27, #0x4
+  2c3d34:	8b00039c 	add	x28, x28, x0
+  2c3d38:	f9403fe0 	ldr	x0, [sp, #120]
+  2c3d3c:	8b00035a 	add	x26, x26, x0
+  2c3d40:	f1000f7f 	cmp	x27, #0x3
+  2c3d44:	54fff04c 	b.gt	2c3b4c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x12c>
+  2c3d48:	b400159b 	cbz	x27, 2c3ff8 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x5d8>
+  2c3d4c:	f10006bf 	cmp	x21, #0x1
+  2c3d50:	540002a1 	b.ne	2c3da4 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x384>  // b.any
+  2c3d54:	f100077f 	cmp	x27, #0x1
+  2c3d58:	54001be0 	b.eq	2c40d4 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x6b4>  // b.none
+  2c3d5c:	fd400380 	ldr	d0, [x28]
+  2c3d60:	f1000b7f 	cmp	x27, #0x2
+  2c3d64:	540003c0 	b.eq	2c3ddc <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x3bc>  // b.none
+  2c3d68:	bd400b81 	ldr	s1, [x28, #8]
+  2c3d6c:	6e140420 	mov	v0.s[2], v1.s[0]
+  2c3d70:	1400001b 	b	2c3ddc <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x3bc>
+  2c3d74:	f9404be0 	ldr	x0, [sp, #144]
+  2c3d78:	4f000400 	movi	v0.4s, #0x0
+  2c3d7c:	bc786b83 	ldr	s3, [x28, x24]
+  2c3d80:	bc796b82 	ldr	s2, [x28, x25]
+  2c3d84:	bc606b84 	ldr	s4, [x28, x0]
+  2c3d88:	f9404fe0 	ldr	x0, [sp, #152]
+  2c3d8c:	6e040480 	mov	v0.s[0], v4.s[0]
+  2c3d90:	bc606b81 	ldr	s1, [x28, x0]
+  2c3d94:	6e0c0460 	mov	v0.s[1], v3.s[0]
+  2c3d98:	6e140440 	mov	v0.s[2], v2.s[0]
+  2c3d9c:	6e1c0420 	mov	v0.s[3], v1.s[0]
+  2c3da0:	17ffff6e 	b	2c3b58 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x138>
+  2c3da4:	f94053e0 	ldr	x0, [sp, #160]
+  2c3da8:	4f000400 	movi	v0.4s, #0x0
+  2c3dac:	bc607b81 	ldr	s1, [x28, x0, lsl #2]
+  2c3db0:	6e040420 	mov	v0.s[0], v1.s[0]
+  2c3db4:	f100077f 	cmp	x27, #0x1
+  2c3db8:	54000120 	b.eq	2c3ddc <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x3bc>  // b.none
+  2c3dbc:	f9406fe0 	ldr	x0, [sp, #216]
+  2c3dc0:	bc607b81 	ldr	s1, [x28, x0, lsl #2]
+  2c3dc4:	6e0c0420 	mov	v0.s[1], v1.s[0]
+  2c3dc8:	f1000f7f 	cmp	x27, #0x3
+  2c3dcc:	54000081 	b.ne	2c3ddc <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x3bc>  // b.any
+  2c3dd0:	f94073e0 	ldr	x0, [sp, #224]
+  2c3dd4:	bc607b81 	ldr	s1, [x28, x0, lsl #2]
+  2c3dd8:	6e140420 	mov	v0.s[2], v1.s[0]
+  2c3ddc:	4e20e410 	fcmeq	v16.4s, v0.4s, v0.4s
+  2c3de0:	4f000405 	movi	v5.4s, #0x0
+  2c3de4:	4e201e02 	and	v2.16b, v16.16b, v0.16b
+  2c3de8:	3dc01be0 	ldr	q0, [sp, #96]
+  2c3dec:	4ea0f843 	fabs	v3.4s, v2.4s
+  2c3df0:	6e23e403 	fcmge	v3.4s, v0.4s, v3.4s
+  2c3df4:	0f0c8464 	shrn	v4.8b, v3.8h, #4
+  2c3df8:	9e660080 	fmov	x0, d4
+  2c3dfc:	4ea31c67 	mov	v7.16b, v3.16b
+  2c3e00:	b4000940 	cbz	x0, 2c3f28 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x508>
+  2c3e04:	4e231e01 	and	v1.16b, v16.16b, v3.16b
+  2c3e08:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e0c:	3dc3b004 	ldr	q4, [x0, #3776]
+  2c3e10:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e14:	4e221c21 	and	v1.16b, v1.16b, v2.16b
+  2c3e18:	3dc3ac00 	ldr	q0, [x0, #3760]
+  2c3e1c:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e20:	3dc3b412 	ldr	q18, [x0, #3792]
+  2c3e24:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e28:	4e21cc80 	fmla	v0.4s, v4.4s, v1.4s
+  2c3e2c:	3dc3b811 	ldr	q17, [x0, #3808]
+  2c3e30:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e34:	4e32d400 	fadd	v0.4s, v0.4s, v18.4s
+  2c3e38:	3dc3bc06 	ldr	q6, [x0, #3824]
+  2c3e3c:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e40:	4e31cc01 	fmla	v1.4s, v0.4s, v17.4s
+  2c3e44:	3dc3c004 	ldr	q4, [x0, #3840]
+  2c3e48:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e4c:	4f07f411 	fmov	v17.4s, #-5.000000000000000000e-01
+  2c3e50:	4e26cc01 	fmla	v1.4s, v0.4s, v6.4s
+  2c3e54:	3dc3c818 	ldr	q24, [x0, #3872]
+  2c3e58:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e5c:	4f03f606 	fmov	v6.4s, #1.000000000000000000e+00
+  2c3e60:	4e24cc01 	fmla	v1.4s, v0.4s, v4.4s
+  2c3e64:	3dc3c416 	ldr	q22, [x0, #3856]
+  2c3e68:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e6c:	4e21a800 	fcvtns	v0.4s, v0.4s
+  2c3e70:	6e21dc24 	fmul	v4.4s, v1.4s, v1.4s
+  2c3e74:	3dc3d414 	ldr	q20, [x0, #3920]
+  2c3e78:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e7c:	3dc3d017 	ldr	q23, [x0, #3904]
+  2c3e80:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e84:	4e24cf16 	fmla	v22.4s, v24.4s, v4.4s
+  2c3e88:	3dc3cc15 	ldr	q21, [x0, #3888]
+  2c3e8c:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e90:	3dc3dc12 	ldr	q18, [x0, #3952]
+  2c3e94:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3e98:	4e24cef5 	fmla	v21.4s, v23.4s, v4.4s
+  2c3e9c:	3dc3d813 	ldr	q19, [x0, #3936]
+  2c3ea0:	4e24ced4 	fmla	v20.4s, v22.4s, v4.4s
+  2c3ea4:	4e24ceb3 	fmla	v19.4s, v21.4s, v4.4s
+  2c3ea8:	4e24ce92 	fmla	v18.4s, v20.4s, v4.4s
+  2c3eac:	4e24ce71 	fmla	v17.4s, v19.4s, v4.4s
+  2c3eb0:	4e24ce45 	fmla	v5.4s, v18.4s, v4.4s
+  2c3eb4:	4e24ce26 	fmla	v6.4s, v17.4s, v4.4s
+  2c3eb8:	4e21cca1 	fmla	v1.4s, v5.4s, v1.4s
+  2c3ebc:	7100069f 	cmp	w20, #0x1
+  2c3ec0:	54000061 	b.ne	2c3ecc <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x4ac>  // b.any
+  2c3ec4:	4f000424 	movi	v4.4s, #0x1
+  2c3ec8:	4ea48400 	add	v0.4s, v0.4s, v4.4s
+  2c3ecc:	4f000424 	movi	v4.4s, #0x1
+  2c3ed0:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3ed4:	4f000452 	movi	v18.4s, #0x2
+  2c3ed8:	4f000405 	movi	v5.4s, #0x0
+  2c3edc:	3dc04011 	ldr	q17, [x0, #256]
+  2c3ee0:	4e241c04 	and	v4.16b, v0.16b, v4.16b
+  2c3ee4:	4e321c00 	and	v0.16b, v0.16b, v18.16b
+  2c3ee8:	4ea09884 	cmeq	v4.4s, v4.4s, #0
+  2c3eec:	6eb28c00 	cmeq	v0.4s, v0.4s, v18.4s
+  2c3ef0:	6ee41cc1 	bif	v1.16b, v6.16b, v4.16b
+  2c3ef4:	4ea1d4a4 	fsub	v4.4s, v5.4s, v1.4s
+  2c3ef8:	6e611c80 	bsl	v0.16b, v4.16b, v1.16b
+  2c3efc:	4eb01e01 	mov	v1.16b, v16.16b
+  2c3f00:	6e711c01 	bsl	v1.16b, v0.16b, v17.16b
+  2c3f04:	f100067f 	cmp	x19, #0x1
+  2c3f08:	54000bc1 	b.ne	2c4080 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x660>  // b.any
+  2c3f0c:	f100077f 	cmp	x27, #0x1
+  2c3f10:	54000ee0 	b.eq	2c40ec <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x6cc>  // b.none
+  2c3f14:	5e080420 	mov	d0, v1.d[0]
+  2c3f18:	fd000340 	str	d0, [x26]
+  2c3f1c:	f1000f7f 	cmp	x27, #0x3
+  2c3f20:	54000d40 	b.eq	2c40c8 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x6a8>  // b.none
+  2c3f24:	d503201f 	nop
+  2c3f28:	0f0c84e0 	shrn	v0.8b, v7.8h, #4
+  2c3f2c:	9e660000 	fmov	x0, d0
+  2c3f30:	b100041f 	cmn	x0, #0x1
+  2c3f34:	54000620 	b.eq	2c3ff8 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x5d8>  // b.none
+  2c3f38:	f0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c3f3c:	3d8043e2 	str	q2, [sp, #256]
+  2c3f40:	7100069f 	cmp	w20, #0x1
+  2c3f44:	3dc3e400 	ldr	q0, [x0, #3984]
+  2c3f48:	4e231c03 	and	v3.16b, v0.16b, v3.16b
+  2c3f4c:	4eb1b863 	addv	s3, v3.4s
+  2c3f50:	3d03e3e3 	str	b3, [sp, #248]
+  2c3f54:	f9407ff4 	ldr	x20, [sp, #248]
+  2c3f58:	54000340 	b.eq	2c3fc0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x5a0>  // b.none
+  2c3f5c:	37000094 	tbnz	w20, #0, 2c3f6c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x54c>
+  2c3f60:	bd4103e0 	ldr	s0, [sp, #256]
+  2c3f64:	97f58fcb 	bl	27e90 <sinf@plt>
+  2c3f68:	bd000340 	str	s0, [x26]
+  2c3f6c:	37080094 	tbnz	w20, #1, 2c3f7c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x55c>
+  2c3f70:	bd4107e0 	ldr	s0, [sp, #260]
+  2c3f74:	97f58fc7 	bl	27e90 <sinf@plt>
+  2c3f78:	bc337b40 	str	s0, [x26, x19, lsl #2]
+  2c3f7c:	371000b4 	tbnz	w20, #2, 2c3f90 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x570>
+  2c3f80:	bd410be0 	ldr	s0, [sp, #264]
+  2c3f84:	97f58fc3 	bl	27e90 <sinf@plt>
+  2c3f88:	f94043e0 	ldr	x0, [sp, #128]
+  2c3f8c:	bc206b40 	str	s0, [x26, x0]
+  2c3f90:	37180354 	tbnz	w20, #3, 2c3ff8 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x5d8>
+  2c3f94:	bd410fe0 	ldr	s0, [sp, #268]
+  2c3f98:	97f58fbe 	bl	27e90 <sinf@plt>
+  2c3f9c:	f94047e0 	ldr	x0, [sp, #136]
+  2c3fa0:	a94363f7 	ldp	x23, x24, [sp, #48]
+  2c3fa4:	a94573fb 	ldp	x27, x28, [sp, #80]
+  2c3fa8:	bc206b40 	str	s0, [x26, x0]
+  2c3fac:	a9446bf9 	ldp	x25, x26, [sp, #64]
+  2c3fb0:	a94153f3 	ldp	x19, x20, [sp, #16]
+  2c3fb4:	a9425bf5 	ldp	x21, x22, [sp, #32]
+  2c3fb8:	a8d17bfd 	ldp	x29, x30, [sp], #272
+  2c3fbc:	d65f03c0 	ret
+  2c3fc0:	37000094 	tbnz	w20, #0, 2c3fd0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x5b0>
+  2c3fc4:	bd4103e0 	ldr	s0, [sp, #256]
+  2c3fc8:	97f590aa 	bl	28270 <cosf@plt>
+  2c3fcc:	bd000340 	str	s0, [x26]
+  2c3fd0:	37080094 	tbnz	w20, #1, 2c3fe0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x5c0>
+  2c3fd4:	bd4107e0 	ldr	s0, [sp, #260]
+  2c3fd8:	97f590a6 	bl	28270 <cosf@plt>
+  2c3fdc:	bc337b40 	str	s0, [x26, x19, lsl #2]
+  2c3fe0:	371000b4 	tbnz	w20, #2, 2c3ff4 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x5d4>
+  2c3fe4:	bd410be0 	ldr	s0, [sp, #264]
+  2c3fe8:	97f590a2 	bl	28270 <cosf@plt>
+  2c3fec:	f94043e0 	ldr	x0, [sp, #128]
+  2c3ff0:	bc206b40 	str	s0, [x26, x0]
+  2c3ff4:	36180654 	tbz	w20, #3, 2c40bc <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x69c>
+  2c3ff8:	a94153f3 	ldp	x19, x20, [sp, #16]
+  2c3ffc:	a9425bf5 	ldp	x21, x22, [sp, #32]
+  2c4000:	a94363f7 	ldp	x23, x24, [sp, #48]
+  2c4004:	a9446bf9 	ldp	x25, x26, [sp, #64]
+  2c4008:	a94573fb 	ldp	x27, x28, [sp, #80]
+  2c400c:	a8d17bfd 	ldp	x29, x30, [sp], #272
+  2c4010:	d65f03c0 	ret
+  2c4014:	f9407fe1 	ldr	x1, [sp, #248]
+  2c4018:	370000c1 	tbnz	w1, #0, 2c4030 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x610>
+  2c401c:	bd4103e0 	ldr	s0, [sp, #256]
+  2c4020:	f90077e1 	str	x1, [sp, #232]
+  2c4024:	97f59093 	bl	28270 <cosf@plt>
+  2c4028:	bd000340 	str	s0, [x26]
+  2c402c:	f94077e1 	ldr	x1, [sp, #232]
+  2c4030:	370800e1 	tbnz	w1, #1, 2c404c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x62c>
+  2c4034:	bd4107e0 	ldr	s0, [sp, #260]
+  2c4038:	f90077e1 	str	x1, [sp, #232]
+  2c403c:	97f5908d 	bl	28270 <cosf@plt>
+  2c4040:	f94057e0 	ldr	x0, [sp, #168]
+  2c4044:	f94077e1 	ldr	x1, [sp, #232]
+  2c4048:	bc206b40 	str	s0, [x26, x0]
+  2c404c:	371000e1 	tbnz	w1, #2, 2c4068 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x648>
+  2c4050:	bd410be0 	ldr	s0, [sp, #264]
+  2c4054:	f90077e1 	str	x1, [sp, #232]
+  2c4058:	97f59086 	bl	28270 <cosf@plt>
+  2c405c:	f94043e0 	ldr	x0, [sp, #128]
+  2c4060:	f94077e1 	ldr	x1, [sp, #232]
+  2c4064:	bc206b40 	str	s0, [x26, x0]
+  2c4068:	371fe621 	tbnz	w1, #3, 2c3d2c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x30c>
+  2c406c:	bd410fe0 	ldr	s0, [sp, #268]
+  2c4070:	97f59080 	bl	28270 <cosf@plt>
+  2c4074:	f94047e0 	ldr	x0, [sp, #136]
+  2c4078:	bc206b40 	str	s0, [x26, x0]
+  2c407c:	17ffff2c 	b	2c3d2c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x30c>
+  2c4080:	f9406be0 	ldr	x0, [sp, #208]
+  2c4084:	bc207b41 	str	s1, [x26, x0, lsl #2]
+  2c4088:	f100077f 	cmp	x27, #0x1
+  2c408c:	54fff4e0 	b.eq	2c3f28 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x508>  // b.none
+  2c4090:	f9405be0 	ldr	x0, [sp, #176]
+  2c4094:	8b000340 	add	x0, x26, x0
+  2c4098:	0d009001 	st1	{v1.s}[1], [x0]
+  2c409c:	f1000f7f 	cmp	x27, #0x3
+  2c40a0:	54fff441 	b.ne	2c3f28 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x508>  // b.any
+  2c40a4:	f9405fe0 	ldr	x0, [sp, #184]
+  2c40a8:	8b000340 	add	x0, x26, x0
+  2c40ac:	4d008001 	st1	{v1.s}[2], [x0]
+  2c40b0:	17ffff9e 	b	2c3f28 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x508>
+  2c40b4:	3d800340 	str	q0, [x26]
+  2c40b8:	17fffefe 	b	2c3cb0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x290>
+  2c40bc:	bd410fe0 	ldr	s0, [sp, #268]
+  2c40c0:	97f5906c 	bl	28270 <cosf@plt>
+  2c40c4:	17ffffb6 	b	2c3f9c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x57c>
+  2c40c8:	5e180421 	mov	d1, v1.d[1]
+  2c40cc:	bd000b41 	str	s1, [x26, #8]
+  2c40d0:	17ffff96 	b	2c3f28 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x508>
+  2c40d4:	0d40cb81 	ld1r	{v1.2s}, [x28]
+  2c40d8:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c40dc:	3dc3e000 	ldr	q0, [x0, #3968]
+  2c40e0:	0ea11c21 	mov	v1.8b, v1.8b
+  2c40e4:	4e211c00 	and	v0.16b, v0.16b, v1.16b
+  2c40e8:	17ffff3d 	b	2c3ddc <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x3bc>
+  2c40ec:	bd000341 	str	s1, [x26]
+  2c40f0:	17ffff8e 	b	2c3f28 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)+0x508>
+
+00000000002c40f4 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]>:
+  2c40f4:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+  2c40f8:	d0000723 	adrp	x3, 3aa000 <vecmat_signatures+0xeb0>
+  2c40fc:	7100045f 	cmp	w2, #0x1
+  2c4100:	910003fd 	mov	x29, sp
+  2c4104:	0d40c803 	ld1r	{v3.2s}, [x0]
+  2c4108:	528bbfe0 	mov	w0, #0x5dff                	// #24063
+  2c410c:	3dc3e061 	ldr	q1, [x3, #3968]
+  2c4110:	52934103 	mov	w3, #0x9a08                	// #39432
+  2c4114:	0ea31c63 	mov	v3.8b, v3.8b
+  2c4118:	72a8fca0 	movk	w0, #0x47e5, lsl #16
+  2c411c:	72a8f163 	movk	w3, #0x478b, lsl #16
+  2c4120:	1e270000 	fmov	s0, w0
+  2c4124:	1e270064 	fmov	s4, w3
+  2c4128:	a90153f3 	stp	x19, x20, [sp, #16]
+  2c412c:	aa0103f3 	mov	x19, x1
+  2c4130:	4e211c63 	and	v3.16b, v3.16b, v1.16b
+  2c4134:	1e241c00 	fcsel	s0, s0, s4, ne  // ne = any
+  2c4138:	4e23e466 	fcmeq	v6.4s, v3.4s, v3.4s
+  2c413c:	4e040400 	dup	v0.4s, v0.s[0]
+  2c4140:	4e231cc3 	and	v3.16b, v6.16b, v3.16b
+  2c4144:	4ea0f864 	fabs	v4.4s, v3.4s
+  2c4148:	6e24e404 	fcmge	v4.4s, v0.4s, v4.4s
+  2c414c:	0f0c8480 	shrn	v0.8b, v4.8h, #4
+  2c4150:	9e660000 	fmov	x0, d0
+  2c4154:	4ea41c85 	mov	v5.16b, v4.16b
+  2c4158:	b4000820 	cbz	x0, 2c425c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x168>
+  2c415c:	4e241cc0 	and	v0.16b, v6.16b, v4.16b
+  2c4160:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c4164:	4f000415 	movi	v21.4s, #0x0
+  2c4168:	3dc3b002 	ldr	q2, [x0, #3776]
+  2c416c:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c4170:	4e231c00 	and	v0.16b, v0.16b, v3.16b
+  2c4174:	3dc3ac01 	ldr	q1, [x0, #3760]
+  2c4178:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c417c:	4f03f616 	fmov	v22.4s, #1.000000000000000000e+00
+  2c4180:	3dc3b411 	ldr	q17, [x0, #3792]
+  2c4184:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c4188:	4e20cc41 	fmla	v1.4s, v2.4s, v0.4s
+  2c418c:	3dc3b810 	ldr	q16, [x0, #3808]
+  2c4190:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c4194:	4e31d421 	fadd	v1.4s, v1.4s, v17.4s
+  2c4198:	3dc3bc07 	ldr	q7, [x0, #3824]
+  2c419c:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c41a0:	4e30cc20 	fmla	v0.4s, v1.4s, v16.4s
+  2c41a4:	3dc3c002 	ldr	q2, [x0, #3840]
+  2c41a8:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c41ac:	4e27cc20 	fmla	v0.4s, v1.4s, v7.4s
+  2c41b0:	3dc3c818 	ldr	q24, [x0, #3872]
+  2c41b4:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c41b8:	4f07f407 	fmov	v7.4s, #-5.000000000000000000e-01
+  2c41bc:	4e22cc20 	fmla	v0.4s, v1.4s, v2.4s
+  2c41c0:	3dc3c414 	ldr	q20, [x0, #3856]
+  2c41c4:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c41c8:	4e21a821 	fcvtns	v1.4s, v1.4s
+  2c41cc:	6e20dc02 	fmul	v2.4s, v0.4s, v0.4s
+  2c41d0:	3dc3d412 	ldr	q18, [x0, #3920]
+  2c41d4:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c41d8:	3dc3d017 	ldr	q23, [x0, #3904]
+  2c41dc:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c41e0:	4e22cf14 	fmla	v20.4s, v24.4s, v2.4s
+  2c41e4:	3dc3cc13 	ldr	q19, [x0, #3888]
+  2c41e8:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c41ec:	3dc3dc10 	ldr	q16, [x0, #3952]
+  2c41f0:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c41f4:	4e22cef3 	fmla	v19.4s, v23.4s, v2.4s
+  2c41f8:	3dc3d811 	ldr	q17, [x0, #3936]
+  2c41fc:	4e22ce92 	fmla	v18.4s, v20.4s, v2.4s
+  2c4200:	4e22ce71 	fmla	v17.4s, v19.4s, v2.4s
+  2c4204:	4e22ce50 	fmla	v16.4s, v18.4s, v2.4s
+  2c4208:	4e22ce27 	fmla	v7.4s, v17.4s, v2.4s
+  2c420c:	4e22ce15 	fmla	v21.4s, v16.4s, v2.4s
+  2c4210:	4e22ccf6 	fmla	v22.4s, v7.4s, v2.4s
+  2c4214:	4e20cea0 	fmla	v0.4s, v21.4s, v0.4s
+  2c4218:	54000061 	b.ne	2c4224 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x130>  // b.any
+  2c421c:	4f000422 	movi	v2.4s, #0x1
+  2c4220:	4ea28421 	add	v1.4s, v1.4s, v2.4s
+  2c4224:	4f000422 	movi	v2.4s, #0x1
+  2c4228:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c422c:	4f000451 	movi	v17.4s, #0x2
+  2c4230:	4f000407 	movi	v7.4s, #0x0
+  2c4234:	3dc04010 	ldr	q16, [x0, #256]
+  2c4238:	4e221c22 	and	v2.16b, v1.16b, v2.16b
+  2c423c:	4e311c21 	and	v1.16b, v1.16b, v17.16b
+  2c4240:	4ea09842 	cmeq	v2.4s, v2.4s, #0
+  2c4244:	6eb18c21 	cmeq	v1.4s, v1.4s, v17.4s
+  2c4248:	6ee21ec0 	bif	v0.16b, v22.16b, v2.16b
+  2c424c:	4ea0d4e2 	fsub	v2.4s, v7.4s, v0.4s
+  2c4250:	6ea11c40 	bit	v0.16b, v2.16b, v1.16b
+  2c4254:	6ee61e00 	bif	v0.16b, v16.16b, v6.16b
+  2c4258:	bd000260 	str	s0, [x19]
+  2c425c:	0f0c84a5 	shrn	v5.8b, v5.8h, #4
+  2c4260:	9e6600a0 	fmov	x0, d5
+  2c4264:	b100041f 	cmn	x0, #0x1
+  2c4268:	54000340 	b.eq	2c42d0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x1dc>  // b.none
+  2c426c:	d0000720 	adrp	x0, 3aa000 <vecmat_signatures+0xeb0>
+  2c4270:	3d800fe3 	str	q3, [sp, #48]
+  2c4274:	3dc3e400 	ldr	q0, [x0, #3984]
+  2c4278:	4e241c00 	and	v0.16b, v0.16b, v4.16b
+  2c427c:	4eb1b800 	addv	s0, v0.4s
+  2c4280:	3d00a3e0 	str	b0, [sp, #40]
+  2c4284:	f94017f4 	ldr	x20, [sp, #40]
+  2c4288:	7100045f 	cmp	w2, #0x1
+  2c428c:	54000280 	b.eq	2c42dc <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x1e8>  // b.none
+  2c4290:	37000094 	tbnz	w20, #0, 2c42a0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x1ac>
+  2c4294:	bd4033e0 	ldr	s0, [sp, #48]
+  2c4298:	97f58efe 	bl	27e90 <sinf@plt>
+  2c429c:	bd000260 	str	s0, [x19]
+  2c42a0:	37080094 	tbnz	w20, #1, 2c42b0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x1bc>
+  2c42a4:	bd4037e0 	ldr	s0, [sp, #52]
+  2c42a8:	97f58efa 	bl	27e90 <sinf@plt>
+  2c42ac:	bd000660 	str	s0, [x19, #4]
+  2c42b0:	37100094 	tbnz	w20, #2, 2c42c0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x1cc>
+  2c42b4:	bd403be0 	ldr	s0, [sp, #56]
+  2c42b8:	97f58ef6 	bl	27e90 <sinf@plt>
+  2c42bc:	bd000a60 	str	s0, [x19, #8]
+  2c42c0:	37180094 	tbnz	w20, #3, 2c42d0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x1dc>
+  2c42c4:	bd403fe0 	ldr	s0, [sp, #60]
+  2c42c8:	97f58ef2 	bl	27e90 <sinf@plt>
+  2c42cc:	bd000e60 	str	s0, [x19, #12]
+  2c42d0:	a94153f3 	ldp	x19, x20, [sp, #16]
+  2c42d4:	a8c47bfd 	ldp	x29, x30, [sp], #64
+  2c42d8:	d65f03c0 	ret
+  2c42dc:	37000094 	tbnz	w20, #0, 2c42ec <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x1f8>
+  2c42e0:	bd4033e0 	ldr	s0, [sp, #48]
+  2c42e4:	97f58fe3 	bl	28270 <cosf@plt>
+  2c42e8:	bd000260 	str	s0, [x19]
+  2c42ec:	37080094 	tbnz	w20, #1, 2c42fc <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x208>
+  2c42f0:	bd4037e0 	ldr	s0, [sp, #52]
+  2c42f4:	97f58fdf 	bl	28270 <cosf@plt>
+  2c42f8:	bd000660 	str	s0, [x19, #4]
+  2c42fc:	37100094 	tbnz	w20, #2, 2c430c <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x218>
+  2c4300:	bd403be0 	ldr	s0, [sp, #56]
+  2c4304:	97f58fdb 	bl	28270 <cosf@plt>
+  2c4308:	bd000a60 	str	s0, [x19, #8]
+  2c430c:	371ffe34 	tbnz	w20, #3, 2c42d0 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]+0x1dc>
+  2c4310:	bd403fe0 	ldr	s0, [sp, #60]
+  2c4314:	97f58fd7 	bl	28270 <cosf@plt>
+  2c4318:	bd000e60 	str	s0, [x19, #12]
+  2c431c:	a94153f3 	ldp	x19, x20, [sp, #16]
+  2c4320:	a8c47bfd 	ldp	x29, x30, [sp], #64
+  2c4324:	d65f03c0 	ret
+  2c4328:	d503201f 	nop
+  2c432c:	d503201f 	nop
+
+00000000002c4330 <DOUBLE_sin>:
+  2c4330:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+  2c4334:	910003fd 	mov	x29, sp
+  2c4338:	a9025bf5 	stp	x21, x22, [sp, #32]
+  2c433c:	f9400036 	ldr	x22, [x1]
+  2c4340:	a90153f3 	stp	x19, x20, [sp, #16]
+  2c4344:	a90363f7 	stp	x23, x24, [sp, #48]
+  2c4348:	a9404c14 	ldp	x20, x19, [x0]
+  2c434c:	a9405c58 	ldp	x24, x23, [x2]
+  2c4350:	f10002df 	cmp	x22, #0x0
+  2c4354:	5400016d 	b.le	2c4380 <DOUBLE_sin+0x50>
+  2c4358:	d2800015 	mov	x21, #0x0                   	// #0
+  2c435c:	d503201f 	nop
+  2c4360:	fd400280 	ldr	d0, [x20]
+  2c4364:	910006b5 	add	x21, x21, #0x1
+  2c4368:	8b180294 	add	x20, x20, x24
+  2c436c:	97f59271 	bl	28d30 <sin@plt>
+  2c4370:	fd000260 	str	d0, [x19]
+  2c4374:	8b170273 	add	x19, x19, x23
+  2c4378:	eb1502df 	cmp	x22, x21
+  2c437c:	54ffff21 	b.ne	2c4360 <DOUBLE_sin+0x30>  // b.any
+  2c4380:	a94153f3 	ldp	x19, x20, [sp, #16]
+  2c4384:	a9425bf5 	ldp	x21, x22, [sp, #32]
+  2c4388:	a94363f7 	ldp	x23, x24, [sp, #48]
+  2c438c:	a8c47bfd 	ldp	x29, x30, [sp], #64
+  2c4390:	d65f03c0 	ret
+
+00000000002c4394 <DOUBLE_cos>:
+  2c4394:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+  2c4398:	910003fd 	mov	x29, sp
+  2c439c:	a9025bf5 	stp	x21, x22, [sp, #32]
+  2c43a0:	f9400036 	ldr	x22, [x1]
+  2c43a4:	a90153f3 	stp	x19, x20, [sp, #16]
+  2c43a8:	a90363f7 	stp	x23, x24, [sp, #48]
+  2c43ac:	a9404c14 	ldp	x20, x19, [x0]
+  2c43b0:	a9405c58 	ldp	x24, x23, [x2]
+  2c43b4:	f10002df 	cmp	x22, #0x0
+  2c43b8:	5400014d 	b.le	2c43e0 <DOUBLE_cos+0x4c>
+  2c43bc:	d2800015 	mov	x21, #0x0                   	// #0
+  2c43c0:	fd400280 	ldr	d0, [x20]
+  2c43c4:	910006b5 	add	x21, x21, #0x1
+  2c43c8:	8b180294 	add	x20, x20, x24
+  2c43cc:	97f58e69 	bl	27d70 <cos@plt>
+  2c43d0:	fd000260 	str	d0, [x19]
+  2c43d4:	8b170273 	add	x19, x19, x23
+  2c43d8:	eb1502df 	cmp	x22, x21
+  2c43dc:	54ffff21 	b.ne	2c43c0 <DOUBLE_cos+0x2c>  // b.any
+  2c43e0:	a94153f3 	ldp	x19, x20, [sp, #16]
+  2c43e4:	a9425bf5 	ldp	x21, x22, [sp, #32]
+  2c43e8:	a94363f7 	ldp	x23, x24, [sp, #48]
+  2c43ec:	a8c47bfd 	ldp	x29, x30, [sp], #64
+  2c43f0:	d65f03c0 	ret
+
+00000000002c43f4 <FLOAT_sin>:
+  2c43f4:	a9bc7bfd 	stp	x29, x30, [sp, #-64]!
+  2c43f8:	910003fd 	mov	x29, sp
+  2c43fc:	a90153f3 	stp	x19, x20, [sp, #16]
+  2c4400:	a9025bf5 	stp	x21, x22, [sp, #32]
+  2c4404:	a90363f7 	stp	x23, x24, [sp, #48]
+  2c4408:	a9405013 	ldp	x19, x20, [x0]
+  2c440c:	a9405c56 	ldp	x22, x23, [x2]
+  2c4410:	f9400038 	ldr	x24, [x1]
+  2c4414:	d1000701 	sub	x1, x24, #0x1
+  2c4418:	f10002df 	cmp	x22, #0x0
+  2c441c:	9b014ec0 	madd	x0, x22, x1, x19
+  2c4420:	9a80b263 	csel	x3, x19, x0, lt  // lt = tstop
+  2c4424:	9a93b002 	csel	x2, x0, x19, lt  // lt = tstop
+  2c4428:	9b0152e0 	madd	x0, x23, x1, x20
+  2c442c:	f10002ff 	cmp	x23, #0x0
+  2c4430:	9a94b001 	csel	x1, x0, x20, lt  // lt = tstop
+  2c4434:	9a80b280 	csel	x0, x20, x0, lt  // lt = tstop
+  2c4438:	eb01005f 	cmp	x2, x1
+  2c443c:	fa400060 	ccmp	x3, x0, #0x0, eq  // eq = none
+  2c4440:	54000181 	b.ne	2c4470 <FLOAT_sin+0x7c>  // b.any
+  2c4444:	aa1803e4 	mov	x4, x24
+  2c4448:	d342fee3 	lsr	x3, x23, #2
+  2c444c:	aa1403e2 	mov	x2, x20
+  2c4450:	d342fec1 	lsr	x1, x22, #2
+  2c4454:	aa1303e0 	mov	x0, x19
+  2c4458:	52800005 	mov	w5, #0x0                   	// #0
+  2c445c:	a94153f3 	ldp	x19, x20, [sp, #16]
+  2c4460:	a9425bf5 	ldp	x21, x22, [sp, #32]
+  2c4464:	a94363f7 	ldp	x23, x24, [sp, #48]
+  2c4468:	a8c47bfd 	ldp	x29, x30, [sp], #64
+  2c446c:	17fffd6d 	b	2c3a20 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP)>
+  2c4470:	eb00005f 	cmp	x2, x0
+  2c4474:	fa439022 	ccmp	x1, x3, #0x2, ls  // ls = plast
+  2c4478:	54fffe68 	b.hi	2c4444 <FLOAT_sin+0x50>  // b.pmore
+  2c447c:	d2800015 	mov	x21, #0x0                   	// #0
+  2c4480:	f100031f 	cmp	x24, #0x0
+  2c4484:	5400014d 	b.le	2c44ac <FLOAT_sin+0xb8>
+  2c4488:	aa1403e1 	mov	x1, x20
+  2c448c:	aa1303e0 	mov	x0, x19
+  2c4490:	52800002 	mov	w2, #0x0                   	// #0
+  2c4494:	910006b5 	add	x21, x21, #0x1
+  2c4498:	97ffff17 	bl	2c40f4 <simd_sincos_f32(float const*, long, float*, long, long, SIMD_TRIG_OP) [clone .constprop.0]>
+  2c449c:	8b170294 	add	x20, x20, x23
+  2c44a0:	8b160273 	add	x19, x19, x22
+  2c44a4:	eb15031f 	cmp	x24, x21
+  2c44a8:	54ffff01 	b.ne	2c4488 <FLOAT_sin+0x94>  // b.any
+  2c44ac:	a94153f3 	ldp	x19, x20, [sp, #16]
+  2c44b0:	a9425bf5 	ldp	x21, x22, [sp, #32]
+  2c44b4:	a94363f7 	ldp	x23, x24, [sp, #48]
+  2c44b8:	a8c47bfd 	ldp	x29, x30, [sp], #64
+  2c44bc:	d65f03c0 	ret

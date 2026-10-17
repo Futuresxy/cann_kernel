@@ -786,6 +786,18 @@
       "new_performance_measurements": 0,
       "ready_published": false,
       "decision": "Preserve wide performance evidence and all negatives; fixed large-amplitude failure localized to trig plus FP16 midpoint crossings. No production kernel or precision rules changed."
+    },
+    {
+      "diagnostic_id": "rope_v9_trig_internal",
+      "update_id": "20261017T050513-trig-internals",
+      "state": "diagnosis_complete_no_ready",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "report": "benchmarks/diagnostics/rope_v9_trig_internal/diagnosis.json",
+      "first_device_arithmetic_divergence": "Sqrt, stage24",
+      "new_npu_diagnostic_tasks": 1,
+      "new_performance_measurements": 0,
+      "ready_published": false,
+      "decision": "Device sqrt differs by one ULP on 5224/59392 angles, but sqrt-only correction leaves 802/817 max-error failures. Local reference FMA/rounding model reproduces trig and outputs. General repair is a proposal only, pending proof/cost review."
     }
   ]
 }

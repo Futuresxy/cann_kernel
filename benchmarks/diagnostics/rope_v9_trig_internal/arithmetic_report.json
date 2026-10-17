@@ -1,0 +1,1624 @@
+{
+  "update_id": "20261017T050513-trig-internals",
+  "diagnostic_only": true,
+  "stage_comparisons": [
+    {
+      "index": 0,
+      "name": "input_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": null,
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 1,
+      "name": "01_Muls_q",
+      "tensor": "q",
+      "dtype": "float32",
+      "operation": "Muls(q,angle,0.15915494309189535f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 2,
+      "name": "02_Cast_temp",
+      "tensor": "temp",
+      "dtype": "int32",
+      "operation": "Cast(temp.ReinterpretCast<int32_t>(),q,RoundMode::CAST_RINT,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0
+      }
+    },
+    {
+      "index": 3,
+      "name": "03_Cast_q",
+      "tensor": "q",
+      "dtype": "float32",
+      "operation": "Cast(q,temp.ReinterpretCast<int32_t>(),RoundMode::CAST_NONE,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 4,
+      "name": "04_Muls_temp",
+      "tensor": "temp",
+      "dtype": "float32",
+      "operation": "Muls(temp,q,6.25f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 5,
+      "name": "05_Sub_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Sub(angle,angle,temp,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 6,
+      "name": "06_Muls_temp",
+      "tensor": "temp",
+      "dtype": "float32",
+      "operation": "Muls(temp,q,0.033203125f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 7,
+      "name": "07_Sub_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Sub(angle,angle,temp,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 8,
+      "name": "08_Muls_temp",
+      "tensor": "temp",
+      "dtype": "float32",
+      "operation": "Muls(temp,q,-0.000017817820413523074f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 9,
+      "name": "09_Sub_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Sub(angle,angle,temp,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 10,
+      "name": "10_Muls_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Muls(angle,angle,0.25f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 11,
+      "name": "11_Mul_q",
+      "tensor": "q",
+      "dtype": "float32",
+      "operation": "Mul(q,angle,angle,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 12,
+      "name": "12_Muls_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Muls(s,q,1.0f/362880.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 13,
+      "name": "13_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,-1.0f/5040.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 14,
+      "name": "14_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,q,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 15,
+      "name": "15_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,1.0f/120.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 16,
+      "name": "16_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,q,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 17,
+      "name": "17_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,-1.0f/6.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 18,
+      "name": "18_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,q,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 19,
+      "name": "19_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,1.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 20,
+      "name": "20_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,angle,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 21,
+      "name": "21_Mul_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Mul(c,s,s,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 22,
+      "name": "22_Muls_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Muls(c,c,-1.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 23,
+      "name": "23_Adds_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Adds(c,c,1.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 24,
+      "name": "24_Sqrt_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Sqrt(c,c,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 5224,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 5.242703803654375e-09,
+        "max_ulp": 1,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 5224,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 5.242703803654375e-09,
+        "max_ulp": 1,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 25,
+      "name": "25_Mul_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Mul(angle,s,c,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 4535,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 2.120987707304925e-09,
+        "max_ulp": 2,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 26,
+      "name": "26_Muls_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Muls(angle,angle,2.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 4535,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 4.24197541460985e-09,
+        "max_ulp": 2,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 27,
+      "name": "27_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,s,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 28,
+      "name": "28_Muls_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Muls(s,s,-2.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 29,
+      "name": "29_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,1.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 30,
+      "name": "30_Mul_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Mul(c,angle,angle,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 4535,
+        "max_abs_error": 2.384185791015625e-07,
+        "mean_abs_error": 6.933592650218327e-09,
+        "max_ulp": 4,
+        "p99_ulp": 3.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 31,
+      "name": "31_Muls_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Muls(c,c,-2.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 4535,
+        "max_abs_error": 4.76837158203125e-07,
+        "mean_abs_error": 1.3867185300436654e-08,
+        "max_ulp": 4,
+        "p99_ulp": 3.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 32,
+      "name": "32_Adds_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Adds(c,c,1.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 3896,
+        "max_abs_error": 4.76837158203125e-07,
+        "mean_abs_error": 1.3863459101011014e-08,
+        "max_ulp": 2048,
+        "p99_ulp": 8.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 33,
+      "name": "33_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,angle,s,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 4064,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 1.9071023381190478e-09,
+        "max_ulp": 2,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    {
+      "index": 34,
+      "name": "34_Muls_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Muls(s,s,2.0f,n);",
+      "vs_full_fp32_source_replay": {
+        "elements": 59392,
+        "bit_differences": 4064,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 3.8142046762380956e-09,
+        "max_ulp": 2,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "conditional_on_device_operands": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    }
+  ],
+  "first_global_divergence": {
+    "0": 54168,
+    "24": 5224
+  },
+  "first_local_rounding_divergence": {
+    "0": 54168,
+    "24": 5224
+  },
+  "duplicate_token_exports": 20,
+  "duplicate_stage_bit_differences": 0,
+  "coverage_nonzero_tokens": 116,
+  "exported_tokens_per_core": [
+    {
+      "core": 0,
+      "begin_job": 0,
+      "end_job": 5,
+      "first_token": 0,
+      "token_limit": 3,
+      "exported_slots": [
+        1,
+        2
+      ]
+    },
+    {
+      "core": 1,
+      "begin_job": 5,
+      "end_job": 11,
+      "first_token": 2,
+      "token_limit": 6,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 2,
+      "begin_job": 11,
+      "end_job": 17,
+      "first_token": 5,
+      "token_limit": 9,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 3,
+      "begin_job": 17,
+      "end_job": 22,
+      "first_token": 8,
+      "token_limit": 11,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 4,
+      "begin_job": 22,
+      "end_job": 28,
+      "first_token": 11,
+      "token_limit": 14,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 5,
+      "begin_job": 28,
+      "end_job": 34,
+      "first_token": 14,
+      "token_limit": 17,
+      "exported_slots": [
+        1,
+        2
+      ]
+    },
+    {
+      "core": 6,
+      "begin_job": 34,
+      "end_job": 39,
+      "first_token": 17,
+      "token_limit": 20,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 7,
+      "begin_job": 39,
+      "end_job": 45,
+      "first_token": 19,
+      "token_limit": 23,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 8,
+      "begin_job": 45,
+      "end_job": 51,
+      "first_token": 22,
+      "token_limit": 26,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 9,
+      "begin_job": 51,
+      "end_job": 57,
+      "first_token": 25,
+      "token_limit": 29,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 10,
+      "begin_job": 57,
+      "end_job": 62,
+      "first_token": 28,
+      "token_limit": 31,
+      "exported_slots": [
+        1,
+        2
+      ]
+    },
+    {
+      "core": 11,
+      "begin_job": 62,
+      "end_job": 68,
+      "first_token": 31,
+      "token_limit": 34,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 12,
+      "begin_job": 68,
+      "end_job": 74,
+      "first_token": 34,
+      "token_limit": 37,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 13,
+      "begin_job": 74,
+      "end_job": 79,
+      "first_token": 37,
+      "token_limit": 40,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 14,
+      "begin_job": 79,
+      "end_job": 85,
+      "first_token": 39,
+      "token_limit": 43,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 15,
+      "begin_job": 85,
+      "end_job": 91,
+      "first_token": 42,
+      "token_limit": 46,
+      "exported_slots": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 16,
+      "begin_job": 91,
+      "end_job": 97,
+      "first_token": 45,
+      "token_limit": 49,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 17,
+      "begin_job": 97,
+      "end_job": 102,
+      "first_token": 48,
+      "token_limit": 51,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 18,
+      "begin_job": 102,
+      "end_job": 108,
+      "first_token": 51,
+      "token_limit": 54,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 19,
+      "begin_job": 108,
+      "end_job": 114,
+      "first_token": 54,
+      "token_limit": 57,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 20,
+      "begin_job": 114,
+      "end_job": 119,
+      "first_token": 57,
+      "token_limit": 60,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 21,
+      "begin_job": 119,
+      "end_job": 125,
+      "first_token": 59,
+      "token_limit": 63,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 22,
+      "begin_job": 125,
+      "end_job": 131,
+      "first_token": 62,
+      "token_limit": 66,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 23,
+      "begin_job": 131,
+      "end_job": 137,
+      "first_token": 65,
+      "token_limit": 69,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 24,
+      "begin_job": 137,
+      "end_job": 142,
+      "first_token": 68,
+      "token_limit": 71,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 25,
+      "begin_job": 142,
+      "end_job": 148,
+      "first_token": 71,
+      "token_limit": 74,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 26,
+      "begin_job": 148,
+      "end_job": 154,
+      "first_token": 74,
+      "token_limit": 77,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 27,
+      "begin_job": 154,
+      "end_job": 159,
+      "first_token": 77,
+      "token_limit": 80,
+      "exported_slots": [
+        1,
+        2
+      ]
+    },
+    {
+      "core": 28,
+      "begin_job": 159,
+      "end_job": 165,
+      "first_token": 79,
+      "token_limit": 83,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 29,
+      "begin_job": 165,
+      "end_job": 171,
+      "first_token": 82,
+      "token_limit": 86,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 30,
+      "begin_job": 171,
+      "end_job": 176,
+      "first_token": 85,
+      "token_limit": 88,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 31,
+      "begin_job": 176,
+      "end_job": 182,
+      "first_token": 88,
+      "token_limit": 91,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 32,
+      "begin_job": 182,
+      "end_job": 188,
+      "first_token": 91,
+      "token_limit": 94,
+      "exported_slots": [
+        1,
+        2
+      ]
+    },
+    {
+      "core": 33,
+      "begin_job": 188,
+      "end_job": 194,
+      "first_token": 94,
+      "token_limit": 97,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 34,
+      "begin_job": 194,
+      "end_job": 199,
+      "first_token": 97,
+      "token_limit": 100,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 35,
+      "begin_job": 199,
+      "end_job": 205,
+      "first_token": 99,
+      "token_limit": 103,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 36,
+      "begin_job": 205,
+      "end_job": 211,
+      "first_token": 102,
+      "token_limit": 106,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 37,
+      "begin_job": 211,
+      "end_job": 216,
+      "first_token": 105,
+      "token_limit": 108,
+      "exported_slots": [
+        1,
+        2
+      ]
+    },
+    {
+      "core": 38,
+      "begin_job": 216,
+      "end_job": 222,
+      "first_token": 108,
+      "token_limit": 111,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 39,
+      "begin_job": 222,
+      "end_job": 228,
+      "first_token": 111,
+      "token_limit": 114,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 40,
+      "begin_job": 228,
+      "end_job": 234,
+      "first_token": 114,
+      "token_limit": 117,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 41,
+      "begin_job": 234,
+      "end_job": 239,
+      "first_token": 117,
+      "token_limit": 120,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 42,
+      "begin_job": 239,
+      "end_job": 245,
+      "first_token": 119,
+      "token_limit": 123,
+      "exported_slots": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 43,
+      "begin_job": 245,
+      "end_job": 251,
+      "first_token": 122,
+      "token_limit": 126,
+      "exported_slots": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "core": 44,
+      "begin_job": 251,
+      "end_job": 256,
+      "first_token": 125,
+      "token_limit": 128,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 45,
+      "begin_job": 256,
+      "end_job": 262,
+      "first_token": 128,
+      "token_limit": 131,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 46,
+      "begin_job": 262,
+      "end_job": 268,
+      "first_token": 131,
+      "token_limit": 134,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "core": 47,
+      "begin_job": 268,
+      "end_job": 274,
+      "first_token": 134,
+      "token_limit": 137,
+      "exported_slots": [
+        0,
+        1,
+        2
+      ]
+    }
+  ],
+  "vs_prior_calibrated_export": {
+    "angle": {
+      "elements": 59392,
+      "bit_differences": 0,
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "max_ulp": 0,
+      "p99_ulp": 0.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+    },
+    "quotient": {
+      "elements": 59392,
+      "bit_differences": 0,
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "max_ulp": 0,
+      "p99_ulp": 0.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+    },
+    "reduced": {
+      "elements": 59392,
+      "bit_differences": 0,
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "max_ulp": 0,
+      "p99_ulp": 0.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+    },
+    "cosine": {
+      "elements": 59392,
+      "bit_differences": 0,
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "max_ulp": 0,
+      "p99_ulp": 0.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+    },
+    "sine": {
+      "elements": 59392,
+      "bit_differences": 0,
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "max_ulp": 0,
+      "p99_ulp": 0.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+    }
+  },
+  "original_template_comparison": {
+    "active_position_half_bit_differences": 0,
+    "zero_position_nonfinite_class_differences": 3,
+    "note": "Original template has no explicit p=0 identity override, so nonfinite values can propagate through multiplication by zero. The user specification requires bit-preserving identity; the existing suite override and production behavior are unchanged. The analyzed 817 failures are all nonzero-position values."
+  },
+  "ablations_cpu_only": {
+    "full_fp32_source_replay": {
+      "passed": false,
+      "matched_ratio": 0.999989517362602,
+      "max_abs_error": 32.0,
+      "finite_elements_above_point_one": 802
+    },
+    "device": {
+      "passed": false,
+      "matched_ratio": 0.9999874208351224,
+      "max_abs_error": 32.0,
+      "finite_elements_above_point_one": 817
+    },
+    "device_trig_with_only_sqrt_correctly_rounded": {
+      "passed": false,
+      "matched_ratio": 0.999989517362602,
+      "max_abs_error": 32.0,
+      "finite_elements_above_point_one": 802
+    }
+  },
+  "numpy_226_cpu_model": {
+    "cos": {
+      "elements": 59392,
+      "bit_differences": 3,
+      "max_abs_error": 5.960464477539063e-08,
+      "mean_abs_error": 3.0107410817310727e-12,
+      "max_ulp": 1,
+      "p99_ulp": 0.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+    },
+    "sin": {
+      "elements": 59392,
+      "bit_differences": 7,
+      "max_abs_error": 5.960464477539063e-08,
+      "mean_abs_error": 7.02506252403917e-12,
+      "max_ulp": 1,
+      "p99_ulp": 0.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+    },
+    "output": {
+      "passed": true,
+      "matched_ratio": 1.0,
+      "max_abs_error": 0.0,
+      "finite_elements_above_point_one": 0
+    },
+    "fused_quadrant_model": {
+      "cos": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "sin": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "output": {
+        "passed": true,
+        "matched_ratio": 1.0,
+        "max_abs_error": 0.0,
+        "finite_elements_above_point_one": 0
+      },
+      "interpretation": "CPU diagnostic of possible multiply/add contraction in quadrant rounding; matches alone do not prove the compiled NumPy instruction sequence."
+    },
+    "true_fmaf_cpu_probe": -1.4210854715202004e-14,
+    "cosine_scalar_fallback_elements": 1144,
+    "sine_scalar_fallback_elements": 47
+  },
+  "local_runtime": {
+    "numpy_version": "2.2.6",
+    "machine": "aarch64",
+    "glibc": [
+      "glibc",
+      "2.36"
+    ],
+    "sin_cos_dispatch": {
+      "cos": {
+        "ff": {
+          "current": "baseline(NEON NEON_FP16 NEON_VFPV4 ASIMD)",
+          "available": "baseline(NEON NEON_FP16 NEON_VFPV4 ASIMD)"
+        }
+      },
+      "sin": {
+        "ff": {
+          "current": "baseline(NEON NEON_FP16 NEON_VFPV4 ASIMD)",
+          "available": "baseline(NEON NEON_FP16 NEON_VFPV4 ASIMD)"
+        }
+      }
+    }
+  },
+  "interpretation": "A conditional comparison substitutes only current Device operands into one FP32 operation. CPU ablations do not modify Device code, the reference, thresholds, or acceptance."
+}

@@ -1,0 +1,8 @@
+
+/usr/local/lib64/python3.10/site-packages/numpy/_core/_multiarray_umath.cpython-310-aarch64-linux-gnu.so:     file format elf64-littleaarch64
+
+Contents of section .rodata:
+ 3aaeb0 0000404b 0000404b 0000404b 0000404b  ..@K..@K..@K..@K
+ 3aaec0 83f9223f 83f9223f 83f9223f 83f9223f  .."?.."?.."?.."?
+ 3aaed0 000040cb 000040cb 000040cb 000040cb  ..@...@...@...@.
+ 3aaee0 d80fc9bf d80fc9bf d80fc9bf d80fc9bf  ................

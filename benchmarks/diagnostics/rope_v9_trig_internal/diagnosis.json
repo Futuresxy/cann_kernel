@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "update_id": "20261017T050513-trig-internals",
+  "state": "diagnosis_complete_awaiting_review",
+  "diagnostic_only": true,
+  "source_and_input_hashes": {
+    "kernel": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+    "input": {
+      "x.bin": "1f7f48c43ce98bbafc1ea3cd72a4454170ba22aafc0168313bbe9b19adbb337a",
+      "positions.bin": "6440650f7929ae325dea035aa3603e4ab3f2aff805932f02b77e9726ffa579cc"
+    },
+    "trace_math": "da3eefddb993f0d9e0272c64dc9b778b3a904b7d120fbce426d9da69a8484225",
+    "raw_internal_trace": "691c3cf038e07adea150a2e26d9806f9f3625204162d46a1801cd7f1f641872b",
+    "baseline_and_probe_output": "248cf74c43ad2df74183f34549bce956ec72a37082a4c91e7eb2a0d357a80663",
+    "probe_binary": "74ecea4dea3926eb725236dae368559b29fab4092815753edb2c89ef1f6b4204",
+    "original_template": "7d05b220d60dbd788a32b3208e6fcdc4226551224020511f4f999c309b9d058a",
+    "unchanged_suite": "a88d26387860a8d25c6299a5d977d602d81bbc9bae6527387631deb774d375b4",
+    "user_rules": {
+      "AGENTIC.md": "862d0edaaa828090de007b5c35abe80be2a19d79c00de6b16e23f2e199b6a157",
+      "kernel_requirement.md": "8af6ec98cd04b0d0105a5f35d24a3fa1b8b128c348f97c644f7458b5deaf5e4f",
+      "forbidden.md": "b6adc24318ecd1b7a4915b8dfd9fb560abb26d9da3e11239a5683b56aa197219"
+    },
+    "strategy": "f7162500a42fc8f06174e323e1bb7c2a137b03e62641d9fb01b1bf3047f04867",
+    "workload_model": "25697384743b583726b8fee533d77255479982d9eb30bc3f01e6d3f79ac57944"
+  },
+  "probe_output_identity": {
+    "elements": 2384896,
+    "bit_differences": 0,
+    "nonzero_tokens": 116,
+    "active_angle_elements": 59392,
+    "duplicated_token_exports": 20,
+    "duplicate_stage_bit_differences": 0,
+    "trace_layout": "[48 cores,35 stages,8 token slots,512 columns], disjoint per core; absent slots explicitly initialized to NaN, excluded by independently reconstructed call coverage.",
+    "layout": "Same work/trig allocations and offsets as the previously calibrated probe, same V9 tileHeads9/trigBatch9 and contiguous job partition; diagnostic input/output TBuf slots. Timing is not used.",
+    "vs_prior_calibrated_export": {
+      "angle": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "quotient": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "reduced": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "cosine": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "sine": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      }
+    },
+    "operation_audit": "All 34 original SinCos operation statements are identical and in identical order; only barriers and GM exports are inserted."
+  },
+  "stage_comparisons": {
+    "arithmetic_report": "benchmarks/diagnostics/rope_v9_trig_internal/arithmetic_report.json",
+    "high_precision_report": "benchmarks/diagnostics/rope_v9_trig_internal/high_precision_report.json",
+    "first_device_arithmetic_divergence": "Stage24 Sqrt(c,c,n); all other operations agree with separate-rounding FP32 conditional on actual Device operands for this input.",
+    "sqrt_comparison": {
+      "elements": 59392,
+      "bit_differences": 5224,
+      "max_abs_error": 5.960464477539063e-08,
+      "mean_abs_error": 5.242703803654375e-09,
+      "max_ulp": 1,
+      "p99_ulp": 1.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+    },
+    "sqrt_signed_ulp": {
+      "-1": 1293,
+      "0": 54168,
+      "1": 3931
+    },
+    "mathematical_function_comparisons": {
+      "range_reduction": {
+        "elements": 59392,
+        "bit_differences": 970,
+        "max_abs_error": 2.384185791015625e-07,
+        "mean_abs_error": 8.825787304054945e-10,
+        "max_ulp": 323,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.4601283515602859e-07,
+        "mean_abs_error_vs_unrounded_oracle": 3.425411304276507e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "quarter_angle": {
+        "elements": 59392,
+        "bit_differences": 970,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 2.2064468260137362e-10,
+        "max_ulp": 323,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 3.6503208789007147e-08,
+        "mean_abs_error_vs_unrounded_oracle": 8.563528260691267e-09,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "quarter_sine_poly": {
+        "elements": 59392,
+        "bit_differences": 17198,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 9.101930029599174e-09,
+        "max_ulp": 323,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 7.328996709521363e-08,
+        "mean_abs_error_vs_unrounded_oracle": 1.1929100295067209e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "quarter_cosine_sqrt": {
+        "elements": 59392,
+        "bit_differences": 13434,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 1.3536291903462904e-08,
+        "max_ulp": 2,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.1089168761024837e-07,
+        "mean_abs_error_vs_unrounded_oracle": 1.992349375283453e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "half_sine_reconstruction": {
+        "elements": 59392,
+        "bit_differences": 24487,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 1.940517613263637e-08,
+        "max_ulp": 323,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.3739103865706426e-07,
+        "mean_abs_error_vs_unrounded_oracle": 2.219354510913689e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "half_cosine_reconstruction": {
+        "elements": 59392,
+        "bit_differences": 24877,
+        "max_abs_error": 2.1979212760925293e-07,
+        "mean_abs_error": 2.4637564754631716e-08,
+        "max_ulp": 56788,
+        "p99_ulp": 45.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 2.1808130194062025e-07,
+        "mean_abs_error_vs_unrounded_oracle": 3.04121582207185e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "full_cosine_reconstruction": {
+        "elements": 59392,
+        "bit_differences": 39299,
+        "max_abs_error": 5.364418029785156e-07,
+        "mean_abs_error": 6.977087879092856e-08,
+        "max_ulp": 9244,
+        "p99_ulp": 55.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 5.302475133417417e-07,
+        "mean_abs_error_vs_unrounded_oracle": 7.268783226044144e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "full_sine_reconstruction": {
+        "elements": 59392,
+        "bit_differences": 37881,
+        "max_abs_error": 4.3213367462158203e-07,
+        "mean_abs_error": 5.102288286892566e-08,
+        "max_ulp": 56789,
+        "p99_ulp": 45.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 4.3551782762107916e-07,
+        "mean_abs_error_vs_unrounded_oracle": 5.264700980977885e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "sqrt_conditional_on_exact_device_argument": {
+        "elements": 59392,
+        "bit_differences": 5224,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 5.242703803654375e-09,
+        "max_ulp": 1,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 5.2052639754052166e-08,
+        "mean_abs_error_vs_unrounded_oracle": 1.567218148040858e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "cosine_conditional_on_exact_device_quarter": {
+        "elements": 59392,
+        "bit_differences": 34710,
+        "max_abs_error": 2.384185791015625e-07,
+        "mean_abs_error": 3.828088926309584e-08,
+        "max_ulp": 6813,
+        "p99_ulp": 35.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.9875057466478552e-07,
+        "mean_abs_error_vs_unrounded_oracle": 4.200344483559359e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      },
+      "sine_conditional_on_exact_device_quarter": {
+        "elements": 59392,
+        "bit_differences": 28773,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 2.4474652496235586e-08,
+        "max_ulp": 17356,
+        "p99_ulp": 12.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.2950774719300284e-07,
+        "mean_abs_error_vs_unrounded_oracle": 2.696492818676187e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    "polynomial_error_separation": {
+      "max_fp32_evaluation_abs_error_same_device_quarter": 5.925138713003264e-08,
+      "max_exact_polynomial_approximation_abs_error_same_device_quarter": 1.1424708956653262e-09,
+      "note": "Exact polynomial retains original FP32 coefficient values; its error includes coefficient and truncation error."
+    },
+    "unit_circle_defect_max_abs": 1.1875292016405581e-07
+  },
+  "fp16_boundary_attribution": {
+    "original_bad": 817,
+    "sqrt_corrected_bad": 802,
+    "original_bad_with_device_sqrt_divergence": 88,
+    "original_bad_without_device_sqrt_divergence": 729,
+    "removed_by_sqrt_correction": 52,
+    "introduced_by_sqrt_correction": 37,
+    "common": 765,
+    "instruction": "CPU counterfactual only. Actual outputs, acceptance golden and thresholds remain unchanged."
+  },
+  "conclusions_zh": [
+    "本轮只补充已有三角求值内部的缺失阶段，不重新计时、调参或发布候选。新增探针输出2384896个半精度元素与V9逐位相同，35个阶段均已导出。",
+    "与逐条FP32重放相比，第一处设备运算差异确定为第24步Sqrt：59392个有效元素中5224个相差1ULP；其中1293个偏低、3931个偏高。其余基本运算在使用设备操作数条件下均一致。",
+    "不能把817个最终超限都归咎于sqrt：729个超限元素对应的sqrt没有这种舍入差异。CPU仅改成正确舍入sqrt会消除52个、引入37个超限，仍有802个超限，max_abs_error仍32。",
+    "原多项式在同一四分之一角上，精确求值的系数/截断误差最大1.14247e-9，FP32求值舍入误差最大5.92514e-8；单纯增加多项式项数不针对当前主要误差。",
+    "相对80位数学计算，范围缩减最大误差1.46013e-7，四分之一角为3.65032e-8；最终倍角恢复后cos/sin误差为5.30248e-7/4.35518e-7。即使后续基本运算逐条正确舍入，算法仍与参考的浮点求值路径不同。",
+    "已从本机NumPy2.2.6的ARM汇编核实象限舍入处及多项式使用真实FMLA。按实际融合顺序的CPU模型复现全部59392个有效cos和sin，且本冻结输入最终输出与当前参考零差异；此为模型验证，不是Device修复。",
+    "参考模型表明需要复现明确的浮点语义，而非仅追求更接近实数函数。NPU vmadd/vmla已证实不具备所需single-rounding语义，不能移植CPU FMA名称来假定等价。",
+    "原模板非零位置输出与当前suite逐位一致；零位置非有限值有3个类别差异，来源是模板没有规格要求的身份分支。现有suite和Device身份行为未改，这与本次817个非零位置失败独立。"
+  ],
+  "reference_model": {
+    "runtime_report": "benchmarks/diagnostics/rope_v9_trig_internal/reference_runtime.json",
+    "primary_source": {
+      "url": "https://raw.githubusercontent.com/numpy/numpy/v2.2.6/numpy/_core/src/umath/loops_trigonometric.dispatch.cpp",
+      "sha256": "fb1ca5adef328d6ac9fa645f1642bcefea86188b385f4984eb8d8338aa1cebac",
+      "use": "Numerical model reference. The installed binary is separately inspected; no assertion is made about the hidden platform version/compiler/CPU.",
+      "scalar_fallback_limits": {
+        "cosine": 71476.0625,
+        "sine": 117435.9921875
+      }
+    },
+    "decoded_local_host_assembly": {
+      "quadrant_multiply_add": "0x2c3b98: fmla v6.4s, v4.4s, v0.4s",
+      "quadrant_subtract_magic": "0x2c3ba4: fadd v6.4s, v6.4s, v4.4s",
+      "initial_accumulator": {
+        "rodata": "0x3aaeb0",
+        "bits": "0x4b400000",
+        "value": 12582912.0
+      },
+      "scale": {
+        "rodata": "0x3aaec0",
+        "bits": "0x3f22f983",
+        "value": 0.6366197466850281
+      },
+      "subtract_constant": {
+        "rodata": "0x3aaed0",
+        "bits": "0xcb400000",
+        "value": -12582912.0
+      },
+      "conclusion": "The installed AArch64 NumPy binary contracts the quadrant multiply/add into FMLA before subtracting the magic constant. The exact CPU fmaf model reproduces all active reference trig values on the frozen input."
+    },
+    "cpu_model_result": {
+      "cos": {
+        "elements": 59392,
+        "bit_differences": 3,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 3.0107410817310727e-12,
+        "max_ulp": 1,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "sin": {
+        "elements": 59392,
+        "bit_differences": 7,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 7.02506252403917e-12,
+        "max_ulp": 1,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+      },
+      "output": {
+        "passed": true,
+        "matched_ratio": 1.0,
+        "max_abs_error": 0.0,
+        "finite_elements_above_point_one": 0
+      },
+      "fused_quadrant_model": {
+        "cos": {
+          "elements": 59392,
+          "bit_differences": 0,
+          "max_abs_error": 0.0,
+          "mean_abs_error": 0.0,
+          "max_ulp": 0,
+          "p99_ulp": 0.0,
+          "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+        },
+        "sin": {
+          "elements": 59392,
+          "bit_differences": 0,
+          "max_abs_error": 0.0,
+          "mean_abs_error": 0.0,
+          "max_ulp": 0,
+          "p99_ulp": 0.0,
+          "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error."
+        },
+        "output": {
+          "passed": true,
+          "matched_ratio": 1.0,
+          "max_abs_error": 0.0,
+          "finite_elements_above_point_one": 0
+        },
+        "interpretation": "CPU diagnostic of possible multiply/add contraction in quadrant rounding; matches alone do not prove the compiled NumPy instruction sequence."
+      },
+      "true_fmaf_cpu_probe": -1.4210854715202004e-14,
+      "cosine_scalar_fallback_elements": 1144,
+      "sine_scalar_fallback_elements": 47
+    },
+    "original_template_comparison": {
+      "active_position_half_bit_differences": 0,
+      "zero_position_nonfinite_class_differences": 3,
+      "note": "Original template has no explicit p=0 identity override, so nonfinite values can propagate through multiplication by zero. The user specification requires bit-preserving identity; the existing suite override and production behavior are unchanged. The analyzed 817 failures are all nonzero-position values."
+    },
+    "acceptance_note": "The original template, current local golden/thresholds and official judge are unchanged. High-precision and software libm models are diagnostic, never substitute golden."
+  },
+  "repair_proposal": {
+    "name": "Reference-compatible quadrant reduction and direct sin/cos, using a proven software RN-FMA primitive",
+    "state": "proposal_only_not_implemented_not_ready",
+    "evidence": "The fused-quadrant CPU model is bit-identical to the local reference trig on the fixed active input. Increasing V9 degree or correcting sqrt alone is unsupported by the attribution.",
+    "algorithm": "Generate frequencies and FP32 angle as V9. Reduce by pi/2 with compensated split constants, evaluate direct sine/cosine on [-pi/4,pi/4], select quadrant/sign. All math would execute on Device, one invocation/one kernel, current-call UB only.",
+    "payload_dependency_contract": "Any future implementation must be self-contained in kernel.asc, compile with the original template C++/CANN settings and existing dav-2201 APIs, and require no packages, generated headers, libraries or link/build changes. NumPy/mpmath/libm models and standalone CMake here are development-only.",
+    "installed_api_constraints": "Read benchmarks/analysis/cann9_api_compatibility.json: joint SDK SinCos and SqrtConfig overloads are not exposed for dav-2201. Do not try these as drop-in repairs or modify the environment; the proposal uses no unsupported API.",
+    "rounding_argument": "Matching the local model requires each genuine fused operation to produce RN32(a*b+c), including contracted quadrant rounding. A Device implementation must first prove a software FP32 high/low product and sum with a rounding-boundary guard; ordinary compensated accumulation alone is not a proof. Final FP32 products/addition and FP16 RINT must retain the reference order.",
+    "full_domain": "For angles outside the reference fast range, derive and validate a general Device reduction/function path equivalent to the scalar reference behavior; no Host/libm calls or stored generated results. Theta<1 can produce angles above the position bound; exceptional/subnormal/overflow cases need explicit treatment.",
+    "estimated_source_operation_cost": {
+      "current_trig_API_calls": 34,
+      "modeled_true_fma_sites": 13,
+      "nontrivial_fused_sites_after_fma_with_zero_as_mul": 12,
+      "illustrative_unoptimized_software_fma_ops": "~17 for split TwoProd + ~6 for TwoSum + ~2 for tail folding = ~25 basic FP32 operations, before correct-rounding guard/exception handling.",
+      "illustrative_total": "~300 basic operations for 12 sites, plus ordinary multiply, masks/casts/selects and full-domain fallback; not a measured machine instruction count or timing forecast.",
+      "implication": "A direct port can be much slower than V9. Mathematical/rounding proof and branch PMU are needed before spending an optimization or platform round."
+    },
+    "estimated_UB": "A preliminary design needs roughly 8 FP32 temporary vectors per chunk in addition to live angle/results; liveness is not proven. D1024/H32 FP16 work region 90176B fits 8*2560*4=81920B for trig batch5, but H17 batch9 and DirectFloat output scratch cannot assume that capacity. Chunking or new liveness proof is mandatory; do not increase allocations blindly.",
+    "old_negative_difference": "round8 cos_poly only replaced sqrt with a quarter-angle Taylor cosine and retained V9 double-angle structure; it failed 51/52 with half_overflow max4.0. The proposal instead studies reference reduction, direct quadrant selection and genuine rounding semantics. No old patch is rerun.",
+    "entry_gates": [
+      "Prove or reject software RN-FMA semantics before coding a production replacement; audit normal, subnormal, underflow, overflow, ties and cancellation.",
+      "Validate the CPU model beyond this one trace without altering the golden; establish limits of reference/architecture compatibility.",
+      "If later authorized, Device full precision/dispatch/large-amplitude/nonfinite/zero-identity/single-launch gates must pass before native paired timing.",
+      "Reject if full-domain precision cannot be proven or modeled costs outweigh plausible family benefit. No performance claim follows from current CPU success."
+    ]
+  },
+  "p1_after_coordinator_review": {
+    "state": "not_started_no_new_PMU_in_this_extension",
+    "families": [
+      {
+        "family": "aligned FP32",
+        "entry": "DirectFloatRotary",
+        "focus": "queue-direct computation, output scratch liveness, broadcast/VEC operands; no nonexistent FP32 cast traffic"
+      },
+      {
+        "family": "H1",
+        "entry": "BatchedRotary / BulkPositionRotary",
+        "focus": "trig/rotation separation, positions MTE/broadcast, casts and token-tail imbalance"
+      },
+      {
+        "family": "nonaligned",
+        "entry": "Rotary / PackedRotary / HeadTileRotary",
+        "focus": "short DMA transactions, padding/Gather, coefficient copies, extra input-half cast, PIPE_ALL and tail cores"
+      }
+    ],
+    "metrics": [
+      "per-core min/max critical time and jobs/bytes",
+      "MTE2/MTE3 payload and instructions",
+      "VEC/UB read/write and effective masks",
+      "Cast/Gather/mask/barrier source or decoded instructions when supported",
+      "queue and scalar-vector wait dependencies"
+    ],
+    "assembly_limit": "Device HiIPU decoder limitation is already recorded. Do not repeat failing disassembly or invent counts; host NumPy decoding here does not remove that limitation.",
+    "tiling": "D1024/H32 FP16 tileHeads11,3groups,batch5,288 token visits vs256 remains a future model hypothesis; no tiling change is made.",
+    "negative_history": [
+      "benchmarks/experiments/round3/mask_trig.patch",
+      "benchmarks/experiments/round3/mask_all.patch",
+      "benchmarks/experiments/round8/cos_poly.patch",
+      "benchmarks/experiments/agentic/history.json"
+    ]
+  },
+  "uncertainties": [
+    "Only the frozen theta10000/H17/D1024 amplitude input was newly traced on Device; no global arithmetic-accuracy claim.",
+    "The CPU oracle model is validated against the installed NumPy/ARM binary, not the inaccessible official backend version.",
+    "Correctly rounded real trig still differs from the current FP32 reference near FP16 midpoints; universal acceptance is not established by a small absolute trig error bound.",
+    "Device sqrt cause is identified as the measured Sqrt/vsqrt path, without decoded Device instructions; its vendor accuracy contract is not claimed violated.",
+    "No Device RN-FMA primitive, full-domain scalar-reference equivalent or optimized scratch liveness has been implemented/proven.",
+    "Instrumented stage timing cannot be used for performance attribution; no new native or replay timing is measured."
+  ],
+  "task_evidence": {
+    "task_id": "task_20261016_221300_15262429357",
+    "metadata": {
+      "device": 0,
+      "soc": "Ascend910_9392",
+      "cores": 48,
+      "tokens": 137,
+      "heads": 17,
+      "dim": 1024,
+      "tile_heads": 9,
+      "trig_batch": 9,
+      "trace_slots": 8,
+      "trace_stage_count": 35,
+      "float_count": 6881280,
+      "device_kernel_launches": 1,
+      "diagnostic_only": true
+    },
+    "max_time_seconds": 60,
+    "new_serial_single_card_diagnostic_tasks": 1,
+    "device_launches": 1,
+    "exit_code": 0,
+    "lock_released": true,
+    "new_performance_measurements": 0,
+    "new_platform_submissions": 0,
+    "environment_changed": false,
+    "cpu_workload_reproduction": {
+      "workloads": 33,
+      "profiles": 4,
+      "byte_identical": true
+    },
+    "operational_note": "Initial CPU-only generated function signature had an extra closing parenthesis; fixed before the sole Device run. No runtime retry or performance trial."
+  },
+  "decision": {
+    "status": "diagnosis_complete_no_ready",
+    "production_kernel_changed": false,
+    "reference_or_thresholds_changed": false,
+    "candidate_implemented": false,
+    "ready_published": false,
+    "reason": "The first hardware arithmetic divergence is sqrt, but the dominant acceptance gap also reflects the FP32 algorithm/reference rounding path. Keep the source-matched 1.092x wide speedup (8.44% latency reduction) and all negatives; defer any production math or tiling change to coordinator review."
+  },
+  "reproduction": [
+    "python3 benchmarks/diagnostics/rope_v9_trig_internal/prepare.py",
+    "source /usr/local/Ascend/ascend-toolkit/latest/set_env.sh && cmake -S benchmarks/diagnostics/rope_v9_trig_internal -B build/rope_v9_trig_internal/probe_build -DROPE_DIAG_MATH_DIR=\"$PWD/build/rope_v9_trig_internal\" && cmake --build build/rope_v9_trig_internal/probe_build -j4",
+    "Only if a fresh trace is required: task-submit --device auto --timeout 0 --max-time 60 --run 'cd /data/pyptouser/songxiaoyou/cann_kernel/project && source /usr/local/Ascend/ascend-toolkit/latest/set_env.sh && build/rope_v9_trig_internal/probe_build/trig_internal_probe build/rope_v9_system/input build/rope_v9_trig_internal/stages.bin build/rope_v9_trig_internal/probe_half.bin'",
+    "python3 benchmarks/diagnostics/rope_v9_trig_internal/analyze.py",
+    "python3 benchmarks/diagnostics/rope_v9_trig_internal/high_precision.py",
+    "python3 benchmarks/diagnostics/rope_v9_trig_internal/reference_runtime.py",
+    "python3 benchmarks/diagnostics/rope_v9_trig_internal/finalize_report.py"
+  ],
+  "raw_artifacts": "Preserved under ignored build/rope_v9_trig_internal; previous build/rope_v9_system remains untouched except read access.",
+  "evidence_hashes": {
+    "benchmarks/diagnostics/rope_v9_trig_internal/CMakeLists.txt": "32f33f3d1b3abc49f232935923b2abab8b25f3e9dfc8d7ce7bc6240c4678d459",
+    "benchmarks/diagnostics/rope_v9_trig_internal/analyze.py": "3f2f9a3e5730abf159a570409d196a3cd056c3435f6baaf88d5000d7be4f7ec1",
+    "benchmarks/diagnostics/rope_v9_trig_internal/arithmetic_report.json": "0b80e2ce56fd5c811090c4492b035ce3e05fc11f6d377ee0c3d5e3306ad7a32a",
+    "benchmarks/diagnostics/rope_v9_trig_internal/boundary_attribution.csv": "daee06ce0462e354d5931aa170bb30603c283bc8d4a1eb916b8dd0789354df1e",
+    "benchmarks/diagnostics/rope_v9_trig_internal/finalize_report.py": "0bb28e42992165c547a8080adef84bca2eb5722945da6e20f3ca5eca2d6005f6",
+    "benchmarks/diagnostics/rope_v9_trig_internal/high_precision.py": "ffee5c4b948664996fe826562a8ef708eaa6030f494cb959192c21d6ea2d5f8d",
+    "benchmarks/diagnostics/rope_v9_trig_internal/high_precision_report.json": "64159b1252334aac93ae956fe477371c4ff512909e7b542efbb0cc357ce50a61",
+    "benchmarks/diagnostics/rope_v9_trig_internal/models.py": "dcdf2d281fc35db614676d49adca233c34072e7f1848d723e03874b3f8e193ef",
+    "benchmarks/diagnostics/rope_v9_trig_internal/numpy_host_asm.txt": "a99d169efa6dd30ea31c61af38b7d560c833bad3da96b79527abda559c38e307",
+    "benchmarks/diagnostics/rope_v9_trig_internal/numpy_host_quadrant_constants.txt": "89095dcb8bec353348cd8364fd3f5da694ae02ea7292bd02037c856822a41e6d",
+    "benchmarks/diagnostics/rope_v9_trig_internal/prepare.py": "ebd61533273479c18e4ac7e9d05f1d54c1523542cca82fe9024145b0ac5c2917",
+    "benchmarks/diagnostics/rope_v9_trig_internal/reference_runtime.json": "2101b553d8558a40e539c8b6f7141d1b14547be980ed6e5190e880d281172897",
+    "benchmarks/diagnostics/rope_v9_trig_internal/reference_runtime.py": "64402e5d1fe763ccd8b5479ec638a88218aa292a6008aa9b803395f6cf94cfba",
+    "benchmarks/diagnostics/rope_v9_trig_internal/task.log": "b1854b2469c7186d182dedcc17086c4607c0fadb1859af957ba3d9c69f53f378",
+    "benchmarks/diagnostics/rope_v9_trig_internal/trace_schema.json": "c07a1ddb55621038cf058181b0f3ad0abb0e8bb1e60554e25897f9b87c7d88ed",
+    "benchmarks/diagnostics/rope_v9_trig_internal/trig_internal_probe.asc": "e2c82d79fde18ac8e2c64f19a4ae956c13b312e8cd32f4a236fa861877d0d6f9"
+  }
+}

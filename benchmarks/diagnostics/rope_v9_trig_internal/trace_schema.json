@@ -1,0 +1,263 @@
+{
+  "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "previous_input_manifest_sha256": "1c3b1f4cf36da5bb6c8dc63a2fd3c2360140a1a1f3ea2e599fa23e5b850a781a",
+  "input_sha256": {
+    "x.bin": "1f7f48c43ce98bbafc1ea3cd72a4454170ba22aafc0168313bbe9b19adbb337a",
+    "positions.bin": "6440650f7929ae325dea035aa3603e4ab3f2aff805932f02b77e9726ffa579cc"
+  },
+  "baseline_output_sha256": "248cf74c43ad2df74183f34549bce956ec72a37082a4c91e7eb2a0d357a80663",
+  "traced_math_sha256": "da3eefddb993f0d9e0272c64dc9b778b3a904b7d120fbce426d9da69a8484225",
+  "math_statement_identity": true,
+  "trace_slots": 8,
+  "trace_width": 512,
+  "trace_stage_count": 35,
+  "stages": [
+    {
+      "index": 0,
+      "name": "input_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": null
+    },
+    {
+      "index": 1,
+      "name": "01_Muls_q",
+      "tensor": "q",
+      "dtype": "float32",
+      "operation": "Muls(q,angle,0.15915494309189535f,n);"
+    },
+    {
+      "index": 2,
+      "name": "02_Cast_temp",
+      "tensor": "temp",
+      "dtype": "int32",
+      "operation": "Cast(temp.ReinterpretCast<int32_t>(),q,RoundMode::CAST_RINT,n);"
+    },
+    {
+      "index": 3,
+      "name": "03_Cast_q",
+      "tensor": "q",
+      "dtype": "float32",
+      "operation": "Cast(q,temp.ReinterpretCast<int32_t>(),RoundMode::CAST_NONE,n);"
+    },
+    {
+      "index": 4,
+      "name": "04_Muls_temp",
+      "tensor": "temp",
+      "dtype": "float32",
+      "operation": "Muls(temp,q,6.25f,n);"
+    },
+    {
+      "index": 5,
+      "name": "05_Sub_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Sub(angle,angle,temp,n);"
+    },
+    {
+      "index": 6,
+      "name": "06_Muls_temp",
+      "tensor": "temp",
+      "dtype": "float32",
+      "operation": "Muls(temp,q,0.033203125f,n);"
+    },
+    {
+      "index": 7,
+      "name": "07_Sub_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Sub(angle,angle,temp,n);"
+    },
+    {
+      "index": 8,
+      "name": "08_Muls_temp",
+      "tensor": "temp",
+      "dtype": "float32",
+      "operation": "Muls(temp,q,-0.000017817820413523074f,n);"
+    },
+    {
+      "index": 9,
+      "name": "09_Sub_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Sub(angle,angle,temp,n);"
+    },
+    {
+      "index": 10,
+      "name": "10_Muls_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Muls(angle,angle,0.25f,n);"
+    },
+    {
+      "index": 11,
+      "name": "11_Mul_q",
+      "tensor": "q",
+      "dtype": "float32",
+      "operation": "Mul(q,angle,angle,n);"
+    },
+    {
+      "index": 12,
+      "name": "12_Muls_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Muls(s,q,1.0f/362880.0f,n);"
+    },
+    {
+      "index": 13,
+      "name": "13_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,-1.0f/5040.0f,n);"
+    },
+    {
+      "index": 14,
+      "name": "14_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,q,n);"
+    },
+    {
+      "index": 15,
+      "name": "15_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,1.0f/120.0f,n);"
+    },
+    {
+      "index": 16,
+      "name": "16_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,q,n);"
+    },
+    {
+      "index": 17,
+      "name": "17_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,-1.0f/6.0f,n);"
+    },
+    {
+      "index": 18,
+      "name": "18_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,q,n);"
+    },
+    {
+      "index": 19,
+      "name": "19_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,1.0f,n);"
+    },
+    {
+      "index": 20,
+      "name": "20_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,angle,n);"
+    },
+    {
+      "index": 21,
+      "name": "21_Mul_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Mul(c,s,s,n);"
+    },
+    {
+      "index": 22,
+      "name": "22_Muls_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Muls(c,c,-1.0f,n);"
+    },
+    {
+      "index": 23,
+      "name": "23_Adds_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Adds(c,c,1.0f,n);"
+    },
+    {
+      "index": 24,
+      "name": "24_Sqrt_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Sqrt(c,c,n);"
+    },
+    {
+      "index": 25,
+      "name": "25_Mul_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Mul(angle,s,c,n);"
+    },
+    {
+      "index": 26,
+      "name": "26_Muls_angle",
+      "tensor": "angle",
+      "dtype": "float32",
+      "operation": "Muls(angle,angle,2.0f,n);"
+    },
+    {
+      "index": 27,
+      "name": "27_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,s,s,n);"
+    },
+    {
+      "index": 28,
+      "name": "28_Muls_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Muls(s,s,-2.0f,n);"
+    },
+    {
+      "index": 29,
+      "name": "29_Adds_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Adds(s,s,1.0f,n);"
+    },
+    {
+      "index": 30,
+      "name": "30_Mul_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Mul(c,angle,angle,n);"
+    },
+    {
+      "index": 31,
+      "name": "31_Muls_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Muls(c,c,-2.0f,n);"
+    },
+    {
+      "index": 32,
+      "name": "32_Adds_c",
+      "tensor": "c",
+      "dtype": "float32",
+      "operation": "Adds(c,c,1.0f,n);"
+    },
+    {
+      "index": 33,
+      "name": "33_Mul_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Mul(s,angle,s,n);"
+    },
+    {
+      "index": 34,
+      "name": "34_Muls_s",
+      "tensor": "s",
+      "dtype": "float32",
+      "operation": "Muls(s,s,2.0f,n);"
+    }
+  ],
+  "diagnostic_only": true,
+  "update_id": "20261017T050513-trig-internals"
+}

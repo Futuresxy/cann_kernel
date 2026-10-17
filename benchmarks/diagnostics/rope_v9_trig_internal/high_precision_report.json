@@ -1,0 +1,716 @@
+{
+  "mp_decimal_digits": 80,
+  "stage_comparisons": [
+    {
+      "index": 0,
+      "name": "input_angle",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 0.0,
+        "mean_abs_error_vs_unrounded_oracle": 0.0,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 1,
+      "name": "01_Muls_q",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 0.000975977978669107,
+        "mean_abs_error_vs_unrounded_oracle": 2.571530704800698e-05,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 2,
+      "name": "02_Cast_temp",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0
+      }
+    },
+    {
+      "index": 3,
+      "name": "03_Cast_q",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 0.0,
+        "mean_abs_error_vs_unrounded_oracle": 0.0,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 4,
+      "name": "04_Muls_temp",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 0.0,
+        "mean_abs_error_vs_unrounded_oracle": 0.0,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 5,
+      "name": "05_Sub_angle",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 0.0,
+        "mean_abs_error_vs_unrounded_oracle": 0.0,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 6,
+      "name": "06_Muls_temp",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 0.0,
+        "mean_abs_error_vs_unrounded_oracle": 0.0,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 7,
+      "name": "07_Sub_angle",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 0,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 0.0,
+        "mean_abs_error_vs_unrounded_oracle": 0.0,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 8,
+      "name": "08_Muls_temp",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 1553,
+        "max_abs_error": 0.0,
+        "mean_abs_error": 0.0,
+        "max_ulp": 0,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.4744728105142713e-08,
+        "mean_abs_error_vs_unrounded_oracle": 4.679567691200332e-10,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 9,
+      "name": "09_Sub_angle",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 857,
+        "max_abs_error": 2.384185791015625e-07,
+        "mean_abs_error": 9.053426820487246e-10,
+        "max_ulp": 98,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.3368480722419918e-07,
+        "mean_abs_error_vs_unrounded_oracle": 3.420278668715645e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 10,
+      "name": "10_Muls_angle",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 857,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 2.2633567051218115e-10,
+        "max_ulp": 98,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 3.3421201806049794e-08,
+        "mean_abs_error_vs_unrounded_oracle": 8.550696671789112e-09,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 11,
+      "name": "11_Mul_q",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 29640,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 8.94056184324801e-09,
+        "max_ulp": 191,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 7.333218854377321e-08,
+        "mean_abs_error_vs_unrounded_oracle": 9.776452235720625e-09,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 12,
+      "name": "12_Muls_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 31264,
+        "max_abs_error": 2.2737367544323206e-13,
+        "mean_abs_error": 2.697269023854169e-14,
+        "max_ulp": 138,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 2.4846183989663646e-13,
+        "mean_abs_error_vs_unrounded_oracle": 2.898709340609755e-14,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 13,
+      "name": "13_Adds_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 141,
+        "max_abs_error": 1.4551915228366852e-11,
+        "mean_abs_error": 3.454707784212901e-14,
+        "max_ulp": 1,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 7.456579461957019e-12,
+        "mean_abs_error_vs_unrounded_oracle": 3.638561780346732e-12,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 14,
+      "name": "14_Mul_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 32314,
+        "max_abs_error": 2.1827872842550278e-11,
+        "mean_abs_error": 2.0232762579648984e-12,
+        "max_ulp": 155,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 2.0084163905543725e-11,
+        "mean_abs_error_vs_unrounded_oracle": 2.1560111054354087e-12,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 15,
+      "name": "15_Adds_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 154,
+        "max_abs_error": 9.313225746154785e-10,
+        "mean_abs_error": 2.414865242638465e-12,
+        "max_ulp": 1,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 4.821081537459415e-10,
+        "mean_abs_error_vs_unrounded_oracle": 2.3226031282717333e-10,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 16,
+      "name": "16_Mul_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 33338,
+        "max_abs_error": 9.313225746154785e-10,
+        "mean_abs_error": 9.091022892739966e-11,
+        "max_ulp": 204,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 9.750786237466835e-10,
+        "mean_abs_error_vs_unrounded_oracle": 9.712408794358746e-11,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 17,
+      "name": "17_Adds_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 459,
+        "max_abs_error": 1.4901161193847656e-08,
+        "mean_abs_error": 1.1516084637621353e-10,
+        "max_ulp": 1,
+        "p99_ulp": 0.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 8.136974483097248e-09,
+        "mean_abs_error_vs_unrounded_oracle": 3.72580436143039e-09,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 18,
+      "name": "18_Mul_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 32332,
+        "max_abs_error": 1.4901161193847656e-08,
+        "mean_abs_error": 1.7031827764396751e-09,
+        "max_ulp": 128,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.7062980750548462e-08,
+        "mean_abs_error_vs_unrounded_oracle": 1.8324716086063309e-09,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 19,
+      "name": "19_Adds_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 2056,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 2.063361221346362e-09,
+        "max_ulp": 1,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 4.289000177237767e-08,
+        "mean_abs_error_vs_unrounded_oracle": 1.5092165504474215e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 20,
+      "name": "20_Mul_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 17095,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 9.089131470451823e-09,
+        "max_ulp": 98,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 7.386743805515295e-08,
+        "mean_abs_error_vs_unrounded_oracle": 1.191718000227005e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 21,
+      "name": "21_Mul_c",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 37261,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 1.1607839341973416e-08,
+        "max_ulp": 191,
+        "p99_ulp": 3.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.0891988921901685e-07,
+        "mean_abs_error_vs_unrounded_oracle": 1.2081354430701253e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 22,
+      "name": "22_Muls_c",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 37261,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 1.1607839341973416e-08,
+        "max_ulp": 191,
+        "p99_ulp": 3.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.0891988921901685e-07,
+        "mean_abs_error_vs_unrounded_oracle": 1.2081354430701253e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 23,
+      "name": "23_Adds_c",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 12689,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 1.3028480241010928e-08,
+        "max_ulp": 2,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.3107545471235937e-07,
+        "mean_abs_error_vs_unrounded_oracle": 2.1092748154269404e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 24,
+      "name": "24_Sqrt_c",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 13438,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 1.353729548382348e-08,
+        "max_ulp": 2,
+        "p99_ulp": 1.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.099301858431545e-07,
+        "mean_abs_error_vs_unrounded_oracle": 1.9899265079756434e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 25,
+      "name": "25_Mul_angle",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 24428,
+        "max_abs_error": 5.960464477539063e-08,
+        "mean_abs_error": 9.705838952468497e-09,
+        "max_ulp": 98,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 6.974089450384469e-08,
+        "mean_abs_error_vs_unrounded_oracle": 1.1101902058928573e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 26,
+      "name": "26_Muls_angle",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 24428,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 1.9411677904936995e-08,
+        "max_ulp": 98,
+        "p99_ulp": 2.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.3948178900768937e-07,
+        "mean_abs_error_vs_unrounded_oracle": 2.2203804117857146e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 27,
+      "name": "27_Mul_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 37261,
+        "max_abs_error": 1.1920928955078125e-07,
+        "mean_abs_error": 1.1607839341973416e-08,
+        "max_ulp": 191,
+        "p99_ulp": 3.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 1.0891988921901685e-07,
+        "mean_abs_error_vs_unrounded_oracle": 1.2081354430701253e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 28,
+      "name": "28_Muls_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 37261,
+        "max_abs_error": 2.384185791015625e-07,
+        "mean_abs_error": 2.3215678683946832e-08,
+        "max_ulp": 191,
+        "p99_ulp": 3.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 2.178397784380337e-07,
+        "mean_abs_error_vs_unrounded_oracle": 2.4162708861402506e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 29,
+      "name": "29_Adds_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 24924,
+        "max_abs_error": 2.1606683731079102e-07,
+        "mean_abs_error": 2.4686991255837767e-08,
+        "max_ulp": 58427,
+        "p99_ulp": 45.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 2.1783977847966707e-07,
+        "mean_abs_error_vs_unrounded_oracle": 3.04039504153496e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 30,
+      "name": "30_Mul_c",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 40350,
+        "max_abs_error": 2.384185791015625e-07,
+        "mean_abs_error": 3.3846784206559786e-08,
+        "max_ulp": 191,
+        "p99_ulp": 3.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 2.6664421515221193e-07,
+        "mean_abs_error_vs_unrounded_oracle": 3.494347209532442e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 31,
+      "name": "31_Muls_c",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 40350,
+        "max_abs_error": 4.76837158203125e-07,
+        "mean_abs_error": 6.769356841311957e-08,
+        "max_ulp": 191,
+        "p99_ulp": 3.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 5.332884303044239e-07,
+        "mean_abs_error_vs_unrounded_oracle": 6.988694419064884e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 32,
+      "name": "32_Adds_c",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 39311,
+        "max_abs_error": 5.364418029785156e-07,
+        "mean_abs_error": 6.982202132940858e-08,
+        "max_ulp": 9161,
+        "p99_ulp": 55.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 5.332884303044239e-07,
+        "mean_abs_error_vs_unrounded_oracle": 7.274263419253077e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 33,
+      "name": "33_Mul_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 37906,
+        "max_abs_error": 2.1606683731079102e-07,
+        "mean_abs_error": 2.5512372230133257e-08,
+        "max_ulp": 58428,
+        "p99_ulp": 45.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 2.1751791543650478e-07,
+        "mean_abs_error_vs_unrounded_oracle": 2.6304351769838422e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    },
+    {
+      "index": 34,
+      "name": "34_Muls_s",
+      "vs_unrounded_original_algorithm": {
+        "elements": 59392,
+        "bit_differences": 37906,
+        "max_abs_error": 4.3213367462158203e-07,
+        "mean_abs_error": 5.102474446026651e-08,
+        "max_ulp": 58428,
+        "p99_ulp": 45.0,
+        "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+        "max_abs_error_vs_unrounded_oracle": 4.3503583087300957e-07,
+        "mean_abs_error_vs_unrounded_oracle": 5.2608703539676844e-08,
+        "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+      }
+    }
+  ],
+  "mathematical_function_comparisons": {
+    "range_reduction": {
+      "elements": 59392,
+      "bit_differences": 970,
+      "max_abs_error": 2.384185791015625e-07,
+      "mean_abs_error": 8.825787304054945e-10,
+      "max_ulp": 323,
+      "p99_ulp": 1.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 1.4601283515602859e-07,
+      "mean_abs_error_vs_unrounded_oracle": 3.425411304276507e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "quarter_angle": {
+      "elements": 59392,
+      "bit_differences": 970,
+      "max_abs_error": 5.960464477539063e-08,
+      "mean_abs_error": 2.2064468260137362e-10,
+      "max_ulp": 323,
+      "p99_ulp": 1.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 3.6503208789007147e-08,
+      "mean_abs_error_vs_unrounded_oracle": 8.563528260691267e-09,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "quarter_sine_poly": {
+      "elements": 59392,
+      "bit_differences": 17198,
+      "max_abs_error": 5.960464477539063e-08,
+      "mean_abs_error": 9.101930029599174e-09,
+      "max_ulp": 323,
+      "p99_ulp": 1.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 7.328996709521363e-08,
+      "mean_abs_error_vs_unrounded_oracle": 1.1929100295067209e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "quarter_cosine_sqrt": {
+      "elements": 59392,
+      "bit_differences": 13434,
+      "max_abs_error": 1.1920928955078125e-07,
+      "mean_abs_error": 1.3536291903462904e-08,
+      "max_ulp": 2,
+      "p99_ulp": 1.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 1.1089168761024837e-07,
+      "mean_abs_error_vs_unrounded_oracle": 1.992349375283453e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "half_sine_reconstruction": {
+      "elements": 59392,
+      "bit_differences": 24487,
+      "max_abs_error": 1.1920928955078125e-07,
+      "mean_abs_error": 1.940517613263637e-08,
+      "max_ulp": 323,
+      "p99_ulp": 2.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 1.3739103865706426e-07,
+      "mean_abs_error_vs_unrounded_oracle": 2.219354510913689e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "half_cosine_reconstruction": {
+      "elements": 59392,
+      "bit_differences": 24877,
+      "max_abs_error": 2.1979212760925293e-07,
+      "mean_abs_error": 2.4637564754631716e-08,
+      "max_ulp": 56788,
+      "p99_ulp": 45.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 2.1808130194062025e-07,
+      "mean_abs_error_vs_unrounded_oracle": 3.04121582207185e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "full_cosine_reconstruction": {
+      "elements": 59392,
+      "bit_differences": 39299,
+      "max_abs_error": 5.364418029785156e-07,
+      "mean_abs_error": 6.977087879092856e-08,
+      "max_ulp": 9244,
+      "p99_ulp": 55.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 5.302475133417417e-07,
+      "mean_abs_error_vs_unrounded_oracle": 7.268783226044144e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "full_sine_reconstruction": {
+      "elements": 59392,
+      "bit_differences": 37881,
+      "max_abs_error": 4.3213367462158203e-07,
+      "mean_abs_error": 5.102288286892566e-08,
+      "max_ulp": 56789,
+      "p99_ulp": 45.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 4.3551782762107916e-07,
+      "mean_abs_error_vs_unrounded_oracle": 5.264700980977885e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "sqrt_conditional_on_exact_device_argument": {
+      "elements": 59392,
+      "bit_differences": 5224,
+      "max_abs_error": 5.960464477539063e-08,
+      "mean_abs_error": 5.242703803654375e-09,
+      "max_ulp": 1,
+      "p99_ulp": 1.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 5.2052639754052166e-08,
+      "mean_abs_error_vs_unrounded_oracle": 1.567218148040858e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "cosine_conditional_on_exact_device_quarter": {
+      "elements": 59392,
+      "bit_differences": 34710,
+      "max_abs_error": 2.384185791015625e-07,
+      "mean_abs_error": 3.828088926309584e-08,
+      "max_ulp": 6813,
+      "p99_ulp": 35.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 1.9875057466478552e-07,
+      "mean_abs_error_vs_unrounded_oracle": 4.200344483559359e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    },
+    "sine_conditional_on_exact_device_quarter": {
+      "elements": 59392,
+      "bit_differences": 28773,
+      "max_abs_error": 1.1920928955078125e-07,
+      "mean_abs_error": 2.4474652496235586e-08,
+      "max_ulp": 17356,
+      "p99_ulp": 12.0,
+      "ulp_caveat": "Ordered FP32 bit distance; interpret near-zero ULP together with absolute error.",
+      "max_abs_error_vs_unrounded_oracle": 1.2950774719300284e-07,
+      "mean_abs_error_vs_unrounded_oracle": 2.696492818676187e-08,
+      "oracle_note": "80-digit computation saved as FP64; bit/ULP metrics compare its FP32 rounding, unrounded absolute error is separate."
+    }
+  },
+  "polynomial_separation": {
+    "max_fp32_evaluation_abs_error_same_device_quarter": 5.925138713003264e-08,
+    "max_exact_polynomial_approximation_abs_error_same_device_quarter": 1.1424708956653262e-09,
+    "note": "Exact polynomial retains original FP32 coefficient values; its error includes coefficient and truncation error."
+  },
+  "device_sqrt_signed_ulp_histogram": {
+    "-1": 1293,
+    "0": 54168,
+    "1": 3931
+  },
+  "sqrt_cpu_vs_80_digit_rounding_bit_differences": 0,
+  "unit_circle_defect_max_abs": 1.1875292016405581e-07,
+  "fp16_boundary_attribution": {
+    "original_bad": 817,
+    "sqrt_corrected_bad": 802,
+    "original_bad_with_device_sqrt_divergence": 88,
+    "original_bad_without_device_sqrt_divergence": 729,
+    "removed_by_sqrt_correction": 52,
+    "introduced_by_sqrt_correction": 37,
+    "common": 765,
+    "instruction": "CPU counterfactual only. Actual outputs, acceptance golden and thresholds remain unchanged."
+  },
+  "caveat": "The unrounded-algorithm oracle fixes the Device integer quotient, retains original FP32 constants, and removes subsequent arithmetic rounding. Mathematical-function oracles separately use exact 2*pi and real sin/cos of the exported FP32 angle."
+}
