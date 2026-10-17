@@ -1,0 +1,113 @@
+{
+  "baseline_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "candidate_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "cases": [
+    {
+      "id": 1,
+      "baseline_us": 4.07,
+      "candidate_us": 3.86,
+      "speedup": 1.0544041450777204,
+      "change_percent": -5.159705159705174
+    },
+    {
+      "id": 2,
+      "baseline_us": 5.76,
+      "candidate_us": 5.62,
+      "speedup": 1.0249110320284698,
+      "change_percent": -2.430555555555547
+    },
+    {
+      "id": 3,
+      "baseline_us": 6.92,
+      "candidate_us": 6.82,
+      "speedup": 1.0146627565982405,
+      "change_percent": -1.445086705202303
+    },
+    {
+      "id": 4,
+      "baseline_us": 11.08,
+      "candidate_us": 10.84,
+      "speedup": 1.022140221402214,
+      "change_percent": -2.166064981949456
+    },
+    {
+      "id": 5,
+      "baseline_us": 19.82,
+      "candidate_us": 19.57,
+      "speedup": 1.0127746550843126,
+      "change_percent": -1.2613521695257313
+    },
+    {
+      "id": 6,
+      "baseline_us": 18.0,
+      "candidate_us": 17.7,
+      "speedup": 1.0169491525423728,
+      "change_percent": -1.6666666666666718
+    },
+    {
+      "id": 7,
+      "baseline_us": 20.55,
+      "candidate_us": 20.47,
+      "speedup": 1.0039081582804104,
+      "change_percent": -0.389294403892948
+    },
+    {
+      "id": 8,
+      "baseline_us": 12.74,
+      "candidate_us": 12.92,
+      "speedup": 0.9860681114551084,
+      "change_percent": 1.4128728414442682
+    },
+    {
+      "id": 9,
+      "baseline_us": 54.1,
+      "candidate_us": 53.89,
+      "speedup": 1.0038968268695492,
+      "change_percent": -0.3881700554528633
+    },
+    {
+      "id": 10,
+      "baseline_us": 3370.0,
+      "candidate_us": 3370.0,
+      "speedup": 1.0,
+      "change_percent": 0.0
+    },
+    {
+      "id": 11,
+      "baseline_us": 40.01,
+      "candidate_us": 40.04,
+      "speedup": 0.9992507492507492,
+      "change_percent": 0.07498125468632377
+    },
+    {
+      "id": 12,
+      "baseline_us": 49.21,
+      "candidate_us": 48.97,
+      "speedup": 1.0049009597712886,
+      "change_percent": -0.487705750863654
+    },
+    {
+      "id": 13,
+      "baseline_us": 339.58,
+      "candidate_us": 339.52,
+      "speedup": 1.0001767200754006,
+      "change_percent": -0.017668885093347075
+    },
+    {
+      "id": 14,
+      "baseline_us": 858.95,
+      "candidate_us": 859.7,
+      "speedup": 0.9991276026520879,
+      "change_percent": 0.0873159089586073
+    },
+    {
+      "id": 15,
+      "baseline_us": 271.06,
+      "candidate_us": 270.89,
+      "speedup": 1.000627561002621,
+      "change_percent": -0.06271674168081276
+    }
+  ],
+  "geometric_mean_speedup": 1.0094690955852081,
+  "note": "Descriptive timing comparison; this is not an assumed official scoring formula."
+}

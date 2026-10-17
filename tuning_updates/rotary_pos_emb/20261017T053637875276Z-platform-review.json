@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T053637875276Z-817f8364de18",
+  "kind": "official_feedback_and_next_experiment",
+  "platform_submission_id": "883390",
+  "platform_status": "Pass",
+  "passed_cases": 15,
+  "official_score": 48.78,
+  "rank_at_capture": 65,
+  "target_official_score": ">70",
+  "kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "source_git_commit": "7c23980023adc6e5b628af1cbf0a4bdbbc14aeaa",
+  "source_git_path": "platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc",
+  "canonical_source_note": "The archived trial source is the official 48.78 performance baseline. The canonical operators file remains V9; reconstruct/check the exact archived SHA before developing, rather than assuming HEAD's canonical file matches this result.",
+  "result_path": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+  "comparison_path": "platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/comparison.json",
+  "trial_record": "platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/trial.json",
+  "comparison": {
+    "old_official_score": 48.45,
+    "new_official_score": 48.78,
+    "score_delta": 0.33,
+    "observed_geometric_mean_timing_speedup": 1.0094690955852081,
+    "interpretation": "One platform trial per source, not a balanced noise-controlled experiment. The local 1.092x wide-family gain did not become a comparable aggregate platform gain. Do not infer hidden shapes or attribute every timing change to the patch."
+  },
+  "precision_decision": "Platform 15/15 Pass is now proven. The inherited local large-amplitude FP16 failure remains archived and unresolved; this trial is not a universal-correctness claim. Do not delete failing data, change thresholds, or mark it passed. Keep the reference-compatible numerical model as offline evidence, without making NumPy/libm/mpmath payload dependencies.",
+  "previous_tasks": {
+    "guarded_trig_and_r2": "Deferred and never notified. Do not start either pending guarded-trig request automatically.",
+    "trig_internals": "Completed and reviewed. An unconditional ~300-operation RN-FMA reference port is not justified as a performance optimization over the existing 34-operation routine. Preserve the model/proposal without installing libraries or blindly implementing it."
+  },
+  "next_hypothesis": "Investigate the generic unaligned Rotary dataflow: eliminate per-head cos/sin expansion and the repeated first-half LoadFp32 by retaining both input halves and using broadcast coefficients with separate result/temp storage. Keep the original four multiplications and two separate add/sub operations, trig, frequency, dispatch, DMA policy and queue depth unchanged in the first comparison.",
+  "evidence_for_selection": [
+    "V9/accepted-wide source Rotary::Process expands cos/sin with two DataCopy calls per extra head and reloads the original first half after overwriting a.",
+    "The existing public fixed33 unaligned H64/D126 FP16 representative takes about 109us for roughly 33MB logical X/Y traffic; a source/PMU diagnosis is needed to distinguish scalar-copy overhead, vector work and strided DMA.",
+    "This is a general dataflow change for the existing public-parameter dispatch family, not a hidden-case-specific implementation. It preserves arithmetic semantics, unlike the rejected low-precision or FMA changes."
+  ],
+  "work": [
+    "First obtain missing source-bound representative PMU for unaligned FP16 D126/H64 and FP32 D254/H64, reusing existing runner/inputs/tools. Use serial one-card task-submit max-time60, no environment changes.",
+    "Write the algorithm/dataflow/UB model and expected counter changes. Review all existing unaligned/Gather/copy negatives before coding. If evidence contradicts the hypothesis, report it instead of forcing the patch.",
+    "If supported, prototype only this dataflow/layout change. Preserve original operands until both outputs are computed, handle padded pitch/tails, and prove buffer liveness. Do not combine prefetch/double-buffer/DMA rewrites into the first experiment.",
+    "Compare complete outputs bitwise with the exact 48.78 archived baseline, alongside unchanged original precision/guard/zero/nonfinite/launch checks. Preserve and explicitly report inherited failures separately; do not claim them passed.",
+    "Measure paired native Task Duration and controls across both dtypes and the full fixed33 set. Use replay PMU for diagnosis only. Require meaningful family benefit without broad regressions before proposing another platform trial.",
+    "Archive at most one experimental candidate source/patch with exact source/binary/input hashes, compliance, base/audit/launch evidence, full known limitations and paired performance. This round does not publish production ready or alter the global latest pointer; coordinator reviews the evidence and handles any authorized browser trial."
+  ],
+  "deployment_constraints": "Only kernel.asc changes in the competition payload; existing original-template C++/CANN dav-2201 APIs, no external packages, generated helper files or build/link changes. All required math stays on Device in one kernel; no precomputed results, hidden-case shortcuts or cross-invocation caches.",
+  "recording": "Use benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18.json and preserve all prior records. Commit/push reports and experimental source normally, then stop for coordinator review."
+}
