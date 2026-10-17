@@ -1,0 +1,13 @@
+-- System processer: aarch64
+-- CMAKE_ASC_COMPILER: /usr/local/Ascend/cann-9.0.0/bin/bisheng
+-- ASCEND_CANN_PACKAGE_LINUX_PATH: /usr/local/Ascend/cann-9.0.0/aarch64-linux
+-- CMAKE_ASC_LLD_LINKER: /usr/local/Ascend/cann-9.0.0/aarch64-linux/ccec_compiler/bin/ld.lld
+-- The CXX compiler identification is GNU 10.3.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/lib64/ccache/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r7_frequency_scalar/compile

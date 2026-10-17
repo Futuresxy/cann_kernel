@@ -1,0 +1,10 @@
+任务已提交: task_20261017_011342_39528598540 (断开后可用 task-submit --wait task_20261017_011342_39528598540 重连)
+等待任务执行: task_20261017_011342_39528598540 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=3952953)
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+{"event_us":37.020000,"min_event_us":37.020000,"host_us":176.752000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":23.119999,"min_event_us":23.119999,"host_us":72.741000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

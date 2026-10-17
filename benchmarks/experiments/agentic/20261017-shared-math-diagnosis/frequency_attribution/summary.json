@@ -1,0 +1,88 @@
+{
+  "request_id": "20261017-shared-math-diagnosis",
+  "scope": "Coordinator frequency attribution refinement, diagnostic-only, same request/no new candidate",
+  "state": "diagnosis_complete",
+  "parent_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "fine_source_sha256": "ee0ccc6cac88193236ca674857ac90a7115bd90c95d5c5516bf719fb7f66638e",
+  "scalar_control_source_sha256": "533106e59665b24389175675c28253b33de6aea80719e005815a21cd085c4c71",
+  "new_tasks": [
+    {
+      "task_id": "task_20261017_011041_389484217601",
+      "device": 0,
+      "max_time_seconds": 60,
+      "exit_code": 0,
+      "lock_released": true,
+      "audited_invocations": 16,
+      "one_kernel_per_invocation": true,
+      "no_overlap": true,
+      "previous_task_terminal_and_release_checked_before_submit": true,
+      "raw_log_sha256": "01835bda6d5e727daec3eaa183a0c87d19baa22632098cdabcf6f9985a8a6f7d",
+      "new_task_count": 1
+    },
+    {
+      "task_id": "task_20261017_011342_39528598540",
+      "device": 0,
+      "max_time_seconds": 60,
+      "exit_code": 0,
+      "lock_released": true,
+      "no_overlap": true,
+      "predecessor_task_id": "task_20261017_011041_389484217601",
+      "predecessor_terminal_and_release_verified": true,
+      "audited_invocations": 4,
+      "one_kernel_per_invocation": true,
+      "raw_log_sha256": "05fcd47e0b4e1209ab1d2d77b282c2d77904561058004f3ecf6d0b586929a47e"
+    }
+  ],
+  "new_NPU_tasks": 2,
+  "new_actual_launch_audits": 20,
+  "all_outputs_bitwise817_and8d": true,
+  "original_precision_checks_pass": 10,
+  "trace_output_guards_and_disjoint_rows": true,
+  "full_inherited_failure": "../known_failure.json (unchanged,max_abs_error32)",
+  "reused_source_bound_evidence": "reused_evidence_and_math_proof.json",
+  "conclusions": [
+    {
+      "rank": 1,
+      "family": "Tiny FP32 K8 scalar initialization",
+      "evidence": "Device confirms7Q31 attempts/core,0fallback,0root build. Dependency-anchored log47.75[min40,max53]tick versus remaining loop45.0[min40,max49]; inclusive102.375. Old unanchored fine log11 not a reliable isolated latency.",
+      "decision": "A cheaper same-result log setup / delayed high-precision-log hypothesis is worth CPU numerical-bound investigation for small work only, not implementation in this task. Root/fallback optimization cannot help this frozen case.",
+      "expected_metric_direction": "If legally/equivalently achieved, anchored setup and independent native tiny duration should decrease without added loop cost. Must preserve Q31 guard guarantees and all legal theta; no score or percentage forecast."
+    },
+    {
+      "rank": 2,
+      "family": "K32 scalar DeepSeek/H1D64",
+      "evidence": "31Q31 attempts,2ambiguity fallbacks and1root build/core,0power reuse. Fine Q31 totals33.6\u201334.6, reciprocal/pack31.1\u201332.1, fallback inclusive12.6\u201313.5 with nestedroots2.2\u20132.4ticks. Severe instrumentation amplification prevents original fractions. Anchored Aligned control log6.33 and remaining105.44,inclusive116.77.",
+      "decision": "Do not prioritize root table: it is already built lazily once. Remaining per-column power/reciprocal/store/control is a stronger family target than uniform log pruning. No interpretation that2/31fallbacks dominate the entire initialization.",
+      "expected_metric_direction": "Reduce validated scalar per-column/control/store work without changing the rounded pow-then-reciprocal semantics; require native small controls because prior frequency folding/tail pruning failed."
+    },
+    {
+      "rank": 3,
+      "family": "K512 vector frequency initialization",
+      "evidence": "Full512 chunk234.8\u2013235.0ticks;472+40chunks380.08. Largest subchain is polynomial+compensation+2Gather+power reconstruction143.0\u2013143.1 vs230.63. Log-product/range41.9/68.7; reciprocal24API25.3/39.8; destination copy1.0/1.88. Exp2Table22.1\u201324.6. Mode is vector: scalar Q31/root fallback counters are0 because that algorithm is not selected.",
+      "decision": "The vector compensated exponential/table/power chain and scratch-caused extra chunk deserve higher priority than an isolated root-table/reciprocal/copy substitution. A lazy per-lane high-precision fallback would be a new algorithm requiring proof and measurement, not justified by scalar guard incidence.",
+      "expected_metric_direction": "Future resource/layout hypothesis should reduce chunk count/dependent VEC/UB work while keeping frequency bits, fixed-input native controls and original UB limit; unchanged math API folding alone has already failed."
+    }
+  ],
+  "limitations": [
+    "One eight-case fine frequency task plus one bounded two-case scalar control; two invocations per case but only last-call trace exported. No independent repeated statistical trial/CI.",
+    "Fine per-column scalar instrumentation expands total frequency times1.823x/3.196\u20133.324x relative to prior coarse, so individual Q31/reciprocal/store numbers are descriptive of the instrumented image, not original time shares.",
+    "Installed GetSystemCycle asm has only its SYS_CNT operand, no theta/log result dependency or memory clobber; PIPE_ALL is a core-local hardware barrier, not a proof of compiler ordering for pure integer arithmetic. Unanchored scalar log11/1.6\u20132.0tick is not accepted as isolated log latency.",
+    "One bounded scalar control anchors start with an opaque read-write theta operand and end with both log/log31 result operands, plus memory clobbers. The MOV leaves numerical operands unchanged; output bit checks pass. Compiler allocation/scheduling, fetch/context and quantified timer overhead still differ from the original.",
+    "Anchored tinylog47.75tick versus Aligned D64log6.33tick shows context sensitivity. No decoded ISA explains this discrepancy; do not claim either is an architecture-independent scalar log latency or infer the cause.",
+    "Vector LogTheta is still an unanchored pure scalar subspan. Report its observed ticks, but do not claim exact log cost, avoidable fraction or lazy-log speedup from that value.",
+    "All vector cases here use binary width512, theta10000 and no frequency fallback allocation; nonbinary ratio compensation, near-unity wide scalar dispatch, extreme theta, subnormal/overflow and allocated fallback behavior are not newly timed.",
+    "Nested fallback includes root-build. Nested chunk includes its five subspans. Do not add overlapping stages; bookkeeping/synchronization lies outside subspans. Empty-marker calibration is not a universal correction.",
+    "SYS_CNT ticks are not AIV cycles/us. Old coarse/fine were device1; refinement is device0. No native performance comparison, platform score prediction, new PMU replay, decoded instruction count or lane-utilization inference.",
+    "Prior short init_wide PMU is a whole1x7x17x1024 operator, not a frequency-only microbenchmark. It is only qualitative evidence despite exact helper identity.",
+    "Eight public theta10000 inputs and the two-case control are not universal validation. Inherited frozen amplitude failure max32 remains; no golden/threshold edit or production-ready claim.",
+    "Axpy header existence is acknowledged from coordinator; no Axpy rounding test, IEEE single-rounding assumption, SinCos replacement or candidate authorization follows."
+  ],
+  "candidate_created": false,
+  "production_ready": false,
+  "latest_changed": false,
+  "canonical_changed": false,
+  "environment_changed": false,
+  "Axpy_or_SinCos_changes": false,
+  "decision": "Bounded refinement complete. Preserve all evidence and stop for coordinator review; no further probing or implementation.",
+  "completed_at": "2026-10-17T08:16:44.256321+00:00"
+}

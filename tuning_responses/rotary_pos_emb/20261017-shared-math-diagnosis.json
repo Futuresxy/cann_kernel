@@ -3,7 +3,7 @@
   "state": "diagnosis_complete",
   "production_ready": false,
   "candidate_created": false,
-  "reason": "Eight calibrated coarse/fine source817 diagnostic cases complete; all outputs bit-identical,32 single-launch audits, ranked evidence and next-metric proposal archived. Inherited FP16max32 failure retained. No performance implementation authorized or performed.",
+  "reason": "Eight coarse/fine public cases plus frequency refinement complete;52 total single-launch audits. All diagnostic outputs bit-identical to817/8d and guard/precision gates pass on frozen ordinary inputs. Tiny log/control are context-sensitive; vector compensation/table/power chain and extra chunk have evidence. Inherited max32 failure retained; no candidate or approximation.",
   "evidence_paths": [
     "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/README.md",
     "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/ranked_hypotheses.json",
@@ -12,5 +12,12 @@
   ],
   "auto_generic_request_consumed": false,
   "tuning_request_id": "20261017-shared-math-diagnosis",
-  "coordinator_model_crosscheck": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/coordinator_model_crosscheck.json"
+  "coordinator_model_crosscheck": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/coordinator_model_crosscheck.json",
+  "frequency_refinement": {
+    "report": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/frequency_attribution/README.md",
+    "new_NPU_tasks": 2,
+    "launch_audits": 20,
+    "outputs_bitwise_equal": true,
+    "production_ready": false
+  }
 }

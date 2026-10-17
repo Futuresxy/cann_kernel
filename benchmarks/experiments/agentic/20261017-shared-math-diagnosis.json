@@ -1,7 +1,7 @@
 {
   "request_id": "20261017-shared-math-diagnosis",
   "state": "diagnosis_complete",
-  "completed_at": "2026-10-17T07:59:58.686583+00:00",
+  "completed_at": "2026-10-17T08:16:44.256321+00:00",
   "parent_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
   "candidate_source_sha256": null,
   "diagnostic_source_sha256": "d0dca9a7724208149500705e46a042f387df9c215c12b0c56f24c271f9676ee1",
@@ -24,7 +24,8 @@
     "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/work_model.json",
     "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/helper_identity_817_8d.json",
     "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/reused_device_identity.json",
-    "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/sdk_limits.json"
+    "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/sdk_limits.json",
+    "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/frequency_attribution/stages.json"
   ],
   "validation": {
     "frozen_public_cases": 8,
@@ -121,7 +122,14 @@
       "precision_internal_report": "benchmarks/diagnostics/rope_v9_trig_internal/diagnosis.json",
       "precision_internal_report_sha256": "811be803c8b73502df5c811e6d0a7c68fb123af2621699318de2a84b85f1a2c7",
       "conclusion": "Inherited source817 and8d output has max32>0.1, same outputSHA; neither current diagnosis nor platform15Pass resolves universal correctness."
-    }
+    },
+    "frequency_refinement": {
+      "source_bound_ordinary_checks": 10,
+      "bitwise_parent_checks": 10,
+      "extra_actual_launch_audits": 20,
+      "trace_guards_and_disjoint_row_padding": true
+    },
+    "total_actual_launch_audits_all_diagnostics": 52
   },
   "local_performance": "No performance candidate/tuning measurement. Reused native817 durations separately; new coarse/detailed timings describe instrumentation, not speedup.",
   "ranking": [
@@ -184,32 +192,79 @@
     "Inherited FP16 amplitude max32 failure and unknown official backend rounding semantics remain. No approximation or fix was implemented.",
     "No hidden platform case mapping;88739348.29 has no observed gain over88339048.78 despite local HeadTile1.525x."
   ],
-  "tasks": [
-    {
-      "mode": "coarse",
-      "task_id": "task_20261017_004741_35852268361",
-      "device": 1,
-      "max_time_seconds": 60,
-      "exit_code": 0,
-      "lock_released": true,
-      "audited_invocations": 16,
-      "predecessor_terminal_and_card_release_checked_before_submit": true,
-      "no_overlap": true
-    },
-    {
-      "mode": "detailed",
-      "task_id": "task_20261017_005306_37109977053",
-      "device": 1,
-      "max_time_seconds": 60,
-      "exit_code": 0,
-      "lock_released": true,
-      "audited_invocations": 16,
-      "predecessor_terminal_and_card_release_checked_before_submit": true,
-      "no_overlap": true
-    }
-  ],
-  "decision": "Diagnostic report complete; preserve known failure, canonical/latest, environment and old evidence; wait for coordinator review.",
+  "tasks": {
+    "tasks": [
+      {
+        "mode": "coarse",
+        "task_id": "task_20261017_004741_35852268361",
+        "device": 1,
+        "max_time_seconds": 60,
+        "exit_code": 0,
+        "lock_released": true,
+        "audited_invocations": 16,
+        "predecessor_terminal_and_card_release_checked_before_submit": true,
+        "no_overlap": true
+      },
+      {
+        "mode": "detailed",
+        "task_id": "task_20261017_005306_37109977053",
+        "device": 1,
+        "max_time_seconds": 60,
+        "exit_code": 0,
+        "lock_released": true,
+        "audited_invocations": 16,
+        "predecessor_terminal_and_card_release_checked_before_submit": true,
+        "no_overlap": true
+      },
+      {
+        "mode": "frequency_refinement",
+        "task_id": "task_20261017_011041_389484217601",
+        "device": 0,
+        "max_time_seconds": 60,
+        "exit_code": 0,
+        "lock_released": true,
+        "audited_invocations": 16,
+        "one_kernel_per_invocation": true,
+        "no_overlap": true,
+        "previous_task_terminal_and_release_checked_before_submit": true,
+        "raw_log_sha256": "01835bda6d5e727daec3eaa183a0c87d19baa22632098cdabcf6f9985a8a6f7d",
+        "new_task_count": 1
+      },
+      {
+        "mode": "anchored_scalar_control",
+        "task_id": "task_20261017_011342_39528598540",
+        "device": 0,
+        "max_time_seconds": 60,
+        "exit_code": 0,
+        "lock_released": true,
+        "no_overlap": true,
+        "predecessor_task_id": "task_20261017_011041_389484217601",
+        "predecessor_terminal_and_release_verified": true,
+        "audited_invocations": 4,
+        "one_kernel_per_invocation": true,
+        "raw_log_sha256": "05fcd47e0b4e1209ab1d2d77b282c2d77904561058004f3ecf6d0b586929a47e"
+      }
+    ],
+    "new_NPU_tasks": 4,
+    "actual_launch_api_calls": 52,
+    "one_kernel_per_invocation": true,
+    "serial_auto_one_card": true,
+    "environment_changed": false,
+    "prior_R6_overlap_evidence_preserved": "benchmarks/experiments/agentic/20261017-headtile-attribution/tasks.json",
+    "prior_excluded_samples_reused": false,
+    "frequency_refinement_tasks": 2,
+    "all_tasks_terminal_and_released": true
+  },
+  "decision": "Shared-math and bounded frequency refinements complete; preserve inherited failure, canonical/latest/environment and stop for coordinator review.",
   "next_steps": "No implementation or additional NPU tasks authorized by this completed diagnosis. Proposal needs a new explicit reviewed task.",
   "tuning_request_id": "20261017-shared-math-diagnosis",
-  "coordinator_model_crosscheck": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/coordinator_model_crosscheck.json"
+  "coordinator_model_crosscheck": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/coordinator_model_crosscheck.json",
+  "frequency_attribution_refinement": {
+    "report": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/frequency_attribution/summary.json",
+    "state": "diagnosis_complete",
+    "new_NPU_tasks": 2,
+    "additional_launch_audits": 20,
+    "all_outputs_bitwise": true,
+    "candidate_created": false
+  }
 }

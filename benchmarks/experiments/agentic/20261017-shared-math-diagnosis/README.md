@@ -102,3 +102,7 @@ D1024/H32 FP16 tile11、3group、trig batch5；FP32 tile8、4group、batch8。�
 先读input_manifest、helper_identity、metadata与logs。CPU入口：work_model.py、analyze.py coarse/detailed、write_report.py。原始trace与输出留在build/agentic_r7；每核计数已导出coarse_stages/detailed_stages和CSV，含SHA。prepare.py用于从817生成诊断副本，含独立trace ABI和runner；严禁将instrumented.asc或diagnostic_runner提交平台。CMake只为离线诊断构建，没有修改原模板/链接/正式payload。
 
 本轮两任务均已退出释放，没有运行中的NPU工作。仅提交诊断报告、source/input/binary绑定及保留的失败证据，不生成experimental_candidate.json，不改canonical/ready/latest，不消费泛化任务、不运行guarded-trig、software RN-FMA或新的HeadTile/generic流水变体。提交推送后停止，等待主控单独授权下一实验。
+
+## 频率归因补充（同一任务，已完成）
+
+主控要求的[频率细分及有依赖标量对照](frequency_attribution/README.md)已追加。新增两项有上限的串行单卡诊断，全20次启动审计及10份输出/trace guard通过，输出与817/8d逐位相同；本任务累计4项诊断任务、52次单启动审计。tiny确认0回退/0root；K32为2回退/1root，表已lazy。受控标量计时表明tiny log与剩余循环同量级，而D64为循环较重；数值强烈依赖编译上下文，不能用未锚定的纯标量span作原始占比。K512向量频率主要工作在补偿多项式/查表/pow恢复，472+40双chunk成本更高。未实现近似、Axpy、候选或新平台提交；继承max32失败不变。先前粗/细trig证据保持原样，更多计量限制见补充报告。

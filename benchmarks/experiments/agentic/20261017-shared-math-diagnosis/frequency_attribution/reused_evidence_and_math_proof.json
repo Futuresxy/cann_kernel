@@ -1,0 +1,64 @@
+{
+  "prior_profile": "benchmarks/profiles/agentic_r2_v9_init_wide",
+  "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "frequency_helpers_byte_identical_to_817": true,
+  "measurement_scope": "Short whole operator shape1x7x17x1024 FP16,14cores; not an isolated frequency-only probe",
+  "native_or_replay": "PMU replay diagnostic only",
+  "valid_use": "Qualitative source-bound setup-amortization evidence and original active-pipeline behavior; no frequency substage time reused",
+  "invalid_use": "Cannot attribute whole replay VEC/scalar intervals to DeviceFrequencyChunk or predict candidate benefit",
+  "proof": {
+    "DeviceLogTheta": {
+      "v9_817_byte_identical": true,
+      "parent_helper_sha256": "ccf390f9b3678a830e7b6cdd970f5ff8160b9550031d2d782641ec42b17c96e2"
+    },
+    "DeviceLog2Q53": {
+      "v9_817_byte_identical": true,
+      "parent_helper_sha256": "a3b503d83acb8edadb79cfb1f8f5cf855b71e37639c6ae588195d4ff65857043"
+    },
+    "BuildExp2Roots": {
+      "v9_817_byte_identical": true,
+      "parent_helper_sha256": "fb8c6651ef4a93080c51461707a28040c7557ed4cfee21093807d471f92296f6"
+    },
+    "TryExp2PowerQ31": {
+      "v9_817_byte_identical": true,
+      "parent_helper_sha256": "e15ff5250d379e0aa5acacf06596134afa7ba43870f006bc98d18be49975aec1"
+    },
+    "ScalarFrequencies": {
+      "v9_817_byte_identical": true,
+      "parent_helper_sha256": "11bed64c0d978db81d117a1460a1bd43e0c97dd39235321201c62baf08491958"
+    },
+    "DeviceFrequencyChunk": {
+      "v9_817_byte_identical": true,
+      "parent_helper_sha256": "f597774e64a3e5a490071465664715d653d97626ad7662fe341239030f22e5b5"
+    },
+    "DeviceExp2Table": {
+      "v9_817_byte_identical": true,
+      "parent_helper_sha256": "c26ea5438dc2959b895fda96d870c990555cf8398ee091e50f32f189de1ae4ce"
+    },
+    "FillFrequencies": {
+      "v9_817_byte_identical": true,
+      "parent_helper_sha256": "5201e7b108f54353fe1bc3f8e57f0d076162cf380a2fbe69d78268575bec778e"
+    },
+    "AlignedRotary": {
+      "all_original_math_queue_and_layout_body_identical_after_only_trace_wrapper_removed": true
+    },
+    "LargeAlignedRotary": {
+      "all_original_math_queue_and_layout_body_identical_after_only_trace_wrapper_removed": true
+    },
+    "DirectFloatRotary": {
+      "all_original_math_queue_and_layout_body_identical_after_only_trace_wrapper_removed": true
+    },
+    "BatchedRotary": {
+      "all_original_math_queue_and_layout_body_identical_after_only_trace_wrapper_removed": true
+    },
+    "BulkPositionRotary": {
+      "all_original_math_queue_and_layout_body_identical_after_only_trace_wrapper_removed": true
+    },
+    "scalar_numerical_helpers": {
+      "call_operand_sequence_identical": true,
+      "count": 13,
+      "branch_rewrite": "if(!Try(...)) becomes bool diagAccepted=Try(...); if(!diagAccepted); same value/branch"
+    }
+  },
+  "extra_NPU_repetitions": 0
+}
