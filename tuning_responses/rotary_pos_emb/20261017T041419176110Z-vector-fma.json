@@ -25,7 +25,8 @@
     "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/pmu_comparison.json",
     "benchmarks/profiles/agentic_r2_wide_launches/launch_count.json",
     "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/prior_frequency_experiment.json",
-    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/prior_frequency_response.json"
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/prior_frequency_response.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/vector_accum_review.json"
   ],
   "completed_at": "2026-10-17T04:44:45.688055+00:00"
 }

@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T041419176110Z-vector-fma",
+  "kind": "source_review_followup",
+  "recorded_at": "2026-10-17T04:47:08.164187+00:00",
+  "reported_issue": "The early square-compensation prototype kept its accumulated low correction in v11, which a later cross-term Mul overwrote.",
+  "confirmed": true,
+  "final_correction": "The independently tested VECTOR_ACCUM version uses v10 as the square low-correction accumulator. v11 remains the cross-term temporary; Add(v11,v10,v12) combines the preserved correction and cross terms. Rounding order is unchanged. This is an alternative to keeping the accumulator in v11 and moving the second cross term into v10.",
+  "corrected_before_first_operator_device_run": true,
+  "prior_record": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/prior_frequency_experiment.json",
+  "tested_vector_accum_source_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
+  "square_corrected_lines": [
+    "Sub(v10,v1,v3,n);",
+    "MulAddDst(v10,v0,v5,n);",
+    "MulAddDst(v10,v5,v0,n);",
+    "MulAddDst(v10,v5,v5,n);",
+    "Mul(v1,v8,v4,n);",
+    "Mul(v11,v4,v8,n);",
+    "Add(v12,v1,v11,n);",
+    "Add(v11,v10,v12,n);"
+  ],
+  "all_chunk_liveness_and_rounding_graphs": {
+    "model": "binary32 rounded Mul followed by binary32 rounded Add for each vmla, based on device probe",
+    "variants": {
+      "binary_width": {
+        "parent": {
+          "output_graph_sha256": "bf638443932a68d935ae523313000f1ca5fb22e23902dbb644f22627064477d0",
+          "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+          "operation_count": 211,
+          "operation_counts": {
+            "CreateVecIndex": 1,
+            "Muls": 33,
+            "Duplicate": 3,
+            "Mul": 33,
+            "Sub": 68,
+            "Add": 54,
+            "Cast": 6,
+            "Adds": 7,
+            "Gather": 2,
+            "ShiftLeft": 1,
+            "Div": 2,
+            "DataCopy": 1
+          },
+          "distinct_graph_nodes": 252
+        },
+        "candidate": {
+          "output_graph_sha256": "bf638443932a68d935ae523313000f1ca5fb22e23902dbb644f22627064477d0",
+          "source_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
+          "operation_count": 196,
+          "operation_counts": {
+            "CreateVecIndex": 1,
+            "Muls": 33,
+            "Duplicate": 3,
+            "Mul": 18,
+            "Sub": 68,
+            "MulAddDst": 15,
+            "Add": 39,
+            "Cast": 6,
+            "Adds": 7,
+            "Gather": 2,
+            "ShiftLeft": 1,
+            "Div": 2,
+            "DataCopy": 1
+          },
+          "distinct_graph_nodes": 252
+        },
+        "identical_output_graph": true
+      },
+      "nonbinary_width": {
+        "parent": {
+          "output_graph_sha256": "db0ddaeb83cdcf38103fcaef0325c7877f394acd6be922f2483e6a3114bf4379",
+          "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+          "operation_count": 247,
+          "operation_counts": {
+            "CreateVecIndex": 1,
+            "Duplicate": 4,
+            "Div": 4,
+            "Mul": 38,
+            "Muls": 36,
+            "Sub": 83,
+            "Add": 64,
+            "Cast": 6,
+            "Adds": 7,
+            "Gather": 2,
+            "ShiftLeft": 1,
+            "DataCopy": 1
+          },
+          "distinct_graph_nodes": 288
+        },
+        "candidate": {
+          "output_graph_sha256": "db0ddaeb83cdcf38103fcaef0325c7877f394acd6be922f2483e6a3114bf4379",
+          "source_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
+          "operation_count": 229,
+          "operation_counts": {
+            "CreateVecIndex": 1,
+            "Duplicate": 4,
+            "Div": 4,
+            "Mul": 20,
+            "Muls": 36,
+            "Sub": 83,
+            "MulAddDst": 18,
+            "Add": 46,
+            "Cast": 6,
+            "Adds": 7,
+            "Gather": 2,
+            "ShiftLeft": 1,
+            "DataCopy": 1
+          },
+          "distinct_graph_nodes": 288
+        },
+        "identical_output_graph": true
+      }
+    }
+  },
+  "source_matched_correctness": {
+    "agentic_r2_accum": {
+      "path": "benchmarks/results/agentic_r2_accum.json",
+      "passed": 52
+    },
+    "agentic_r2_accum_audit": {
+      "path": "benchmarks/results/agentic_r2_accum_audit.json",
+      "passed": 52
+    },
+    "agentic_r2_accum_math": {
+      "path": "benchmarks/results/agentic_r2_accum_math.json",
+      "passed": 256
+    },
+    "agentic_r2_accum_new_math": {
+      "path": "benchmarks/results/agentic_r2_accum_new_math.json",
+      "passed": 640
+    },
+    "agentic_r2_accum_dispatch": {
+      "path": "benchmarks/results/agentic_r2_accum_dispatch.json",
+      "passed": 192
+    }
+  },
+  "validation_case_count": 1192,
+  "vector_accum_decision": "Independent validation completed; no robust performance gain, no publication.",
+  "independent_wide_trial": {
+    "parent_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+    "candidate_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+    "contains_vector_accum_frequency_changes": false,
+    "frequency_prefix_byte_identical_to_v9": true,
+    "state": "blocked",
+    "reason": "Inherited high-amplitude max-absolute-error failure documented separately."
+  },
+  "new_npu_runs": 0,
+  "new_platform_submissions": 0,
+  "ready_candidates_for_request": 0,
+  "current_canonical_source": "V9"
+}

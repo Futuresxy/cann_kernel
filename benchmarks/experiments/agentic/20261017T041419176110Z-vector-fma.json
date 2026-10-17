@@ -1875,5 +1875,6 @@
   "why_not_published": [
     "Performance improved in the targeted wide FP16 path, but the strict inherited high-amplitude precision failure blocks validated publication.",
     "Both old failed frequency hypotheses remain in the immutable prior_frequency_experiment.json snapshot; no data is relabeled as belonging to the wide candidate."
-  ]
+  ],
+  "source_review_followup": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/vector_accum_review.json"
 }
