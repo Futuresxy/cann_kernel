@@ -265,6 +265,7 @@ def parser():
                 sub.add_argument('--interval', type=int, default=60)
                 sub.add_argument('--idle-timeout', type=int, default=1800)
                 sub.add_argument('--max-candidates', type=int, default=3)
+                sub.add_argument('--target-score', type=float, help='Stop when this official platform score is reached')
         elif command == 'preflight':
             sub.add_argument('--candidate', type=Path, required=True)
             sub.add_argument('--output', type=Path, default=ROOT / '.local/cannjudge/preflight')
@@ -319,6 +320,8 @@ def main():
     elif args.command == 'watch':
         if args.interval < 15 or args.idle_timeout < args.interval or not 1 <= args.max_candidates <= 100:
             raise ValueError('watch needs interval >=15, idle-timeout >=interval, max-candidates 1..100')
+        if args.target_score is not None and not 0 < args.target_score <= 100:
+            raise ValueError('target-score must be in (0,100]')
         args.command = 'run'
         seen = set()
         idle_since = time.monotonic()
@@ -333,6 +336,11 @@ def main():
             with exclusive_lock(args.runs / '.workflow.lock'):
                 record = asyncio.run(browser_command(args))
             args.expected_request_id = record['run_id'] if notify_config else None
+            if args.target_score is not None and record['state'] == 'accepted' and float(record.get('platform_score_raw', -1)) >= args.target_score:
+                write_json(controller, {'pid': os.getpid(), 'state': 'target_reached', 'run_id': record['run_id'],
+                                        'official_score_raw': record['platform_score_raw'], 'target_score': args.target_score, 'updated_at': utcnow()})
+                print('Official score target reached: ' + record['platform_score_raw'], flush=True)
+                return 0
             if record['kernel_sha256'] not in seen:
                 seen.add(record['kernel_sha256'])
                 idle_since = time.monotonic()

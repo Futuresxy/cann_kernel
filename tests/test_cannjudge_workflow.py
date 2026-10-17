@@ -62,6 +62,19 @@ def fixture_candidate(directory):
 
 
 class CoreTests(unittest.TestCase):
+    def test_reaching_score_target_does_not_notify_an_extra_tuning_round(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            journal = Journal(root / 'runs')
+            record = {'run_id': 'target-met', 'state': 'accepted', 'submission_id': 'job-1',
+                      'kernel_sha256': digest(SOURCE), 'git_commit': 'fixture', 'created_at': '2026-10-17',
+                      'platform_score_raw': '70.01', 'cases': [{'id': i, 'latency_us': i} for i in range(1,16)]}
+            journal.save(record)
+            with patch('judge_workflow.notify.notify_remote') as notify:
+                result = feedback(journal, record, root, notify_config=root / 'unused.json', target_score=70)
+            self.assertTrue(result['target_reached'])
+            notify.assert_not_called()
+
     def test_host_frequency_table_is_blocked(self):
         source = SOURCE.replace(b'launch_device(theta)', b'frequencies.value[i]=1.0f/std::pow(theta, exponent)')
         report = static_audit(source)

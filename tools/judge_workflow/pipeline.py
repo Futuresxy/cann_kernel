@@ -9,7 +9,7 @@ from .core import Journal, TERMINAL, compare_results, read_json, utcnow, validat
 from .repository import export_result, sync_candidate
 
 
-def feedback(journal, record, repository, publish=False, notify_config=None):
+def feedback(journal, record, repository, publish=False, notify_config=None, target_score=None):
     """Machine-readable feedback is the interface to the next tuning round."""
     directory = journal.root / record['run_id']
     exported = export_result(directory / 'run.json', repository=repository)
@@ -49,7 +49,10 @@ def feedback(journal, record, repository, publish=False, notify_config=None):
         write_json(receipt, {'request_id': record['run_id'], 'git_commit': revision, 'published_at': utcnow()})
     if receipt.exists():
         report['publication'] = read_json(receipt)
-    if notify_config:
+    target_reached = (target_score is not None and record['state'] == 'accepted' and
+                      record.get('platform_score_raw') is not None and float(record['platform_score_raw']) >= target_score)
+    report['target_reached'] = target_reached
+    if notify_config and not target_reached:
         if not receipt.exists():
             raise ValueError('Publish feedback before notifying the remote session')
         from .notify import notify_remote
@@ -81,7 +84,7 @@ async def run_once(context, args, config, repository):
         poll_config = dict(read_json(saved), poll_seconds=config['poll_seconds'],
                            result_timeout_seconds=config['result_timeout_seconds']) if saved.exists() else config
         record = await poll_result(context, poll_config, journal, record)
-        feedback(journal, record, repository, publish=getattr(args, 'publish_feedback', False), notify_config=getattr(args, 'notify_config', None))
+        feedback(journal, record, repository, publish=getattr(args, 'publish_feedback', False), notify_config=getattr(args, 'notify_config', None), target_score=getattr(args, 'target_score', None))
         return record
     if args.candidate:
         candidate = Path(args.candidate)
@@ -91,7 +94,7 @@ async def run_once(context, args, config, repository):
     matches = [r for r in journal.records() if r['kernel_sha256'] == manifest['kernel_sha256']]
     if matches:
         record = matches[-1]
-        feedback(journal, record, repository, publish=getattr(args, 'publish_feedback', False), notify_config=getattr(args, 'notify_config', None))
+        feedback(journal, record, repository, publish=getattr(args, 'publish_feedback', False), notify_config=getattr(args, 'notify_config', None), target_score=getattr(args, 'target_score', None))
         return record
     expected = getattr(args, 'expected_request_id', None)
     if expected:
@@ -117,5 +120,5 @@ async def run_once(context, args, config, repository):
         record['editor_readback'] = readback
         journal.save(record)
     record = await poll_result(context, config, journal, record)
-    feedback(journal, record, repository, publish=getattr(args, 'publish_feedback', False), notify_config=getattr(args, 'notify_config', None))
+    feedback(journal, record, repository, publish=getattr(args, 'publish_feedback', False), notify_config=getattr(args, 'notify_config', None), target_score=getattr(args, 'target_score', None))
     return record

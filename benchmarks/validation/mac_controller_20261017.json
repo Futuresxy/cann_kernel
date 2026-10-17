@@ -2,7 +2,7 @@
   "date": "2026-10-17",
   "tests": {
     "command": "CANNJUDGE_TEST_CHANNEL=chrome python -m unittest discover -s tests -p 'test_cannjudge*.py'",
-    "count": 58,
+    "count": 59,
     "result": "passed",
     "includes_remote_adapter_and_exchange_tests": true
   },
@@ -21,7 +21,8 @@
   "controller": {
     "poll_seconds": 60,
     "result_timeout_seconds": 1800,
-    "max_new_optimization_rounds": 2,
+    "max_new_optimization_rounds": 10,
+    "official_score_target": 70,
     "existing_remote_codex_version": "0.162.1",
     "queue_command_verified": true,
     "user_rules_read": ["AGENTIC.md", "kernel_requirement.md", "forbidden.md"],

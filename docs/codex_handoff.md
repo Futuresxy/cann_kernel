@@ -46,6 +46,8 @@ notify.json 只保存在 Mac 的 Git 忽略目录，包含 `ssh_host` 和 `threa
 
 `max-candidates=3` 包括当前基线，因此最多触发两轮新候选，最后一次结果不会再启动额外一轮。远端无可靠改进或验证受阻时，按通知约定提交 `tuning_responses/rotary_pos_emb/<request_id>.json`（state 为 blocked 或 no_improvement，附 reason 与 evidence 路径），Mac 主控读取后结束本轮。后台状态存于 `.local/cannjudge/controller.json`。
 
+以 V9 官方 48.45 分为基线冲击 70 分时，可使用 `--target-score 70 --max-candidates 11`，本批次最多十轮新候选；notify.json 的 target_score/max_new_rounds 也应设为 70/10。达到目标时发布最终结果并停止，不再触发下一轮。批次、超时与无收益停止条件不等于已经达到目标，只有实际官方分数才是达标依据。
+
 反馈发布使用临时 Git 克隆，只提交两个明确路径：精简结果和对应任务。不会操作 Mac 的索引、切换工作分支、pull/reset 工作区或推送其他未提交文件。非快进冲突会在临时克隆重新读取远端，最多三次；不强推。运行目录记录 feedback-published.json，重复查询同一结果不会重复发布任务。
 
 ## 远端已有会话

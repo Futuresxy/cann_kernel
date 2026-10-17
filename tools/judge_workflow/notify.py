@@ -48,7 +48,11 @@ def notify_remote(record, request, publication, config_path, directory):
         f'commit tuning_responses/rotary_pos_emb/{record["run_id"]}.json with request_id, state="blocked" '
         'or "no_improvement", reason and evidence paths, then stop. After publishing, stop and wait '
         'for the next Mac notification; do not independently loop or submit to the competition. '
-        'The Mac coordinator is limited to two new optimization rounds in this run.')
+        f'The official platform score target is {config.get("target_score", 70)} or higher, '
+        f'from the V9 baseline 48.45; this coordinator batch allows at most {config.get("max_new_rounds", 2)} new candidates. '
+        'Start by measuring the V9 frequency/trigonometry initialization and scalar overhead, '
+        'MTE2/MTE3 and vector pipeline utilization, UB pressure and within-invocation reuse. '
+        'Use paired native Task Duration measurements, not replay timing, to decide what to publish.')
     state = {'request_id': record['run_id'], 'ssh_host': host, 'thread_id': thread,
              'state': 'queue_intent', 'created_at': utcnow(), 'publication': publication['git_commit']}
     write_json(receipt, state)
