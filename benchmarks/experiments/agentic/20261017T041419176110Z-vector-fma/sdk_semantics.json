@@ -1,0 +1,22 @@
+{
+  "sdk_root": "/usr/local/Ascend/cann-9.0.0",
+  "headers": {
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/dav_c220/kernel_operator_vec_binary_impl.h": "b596e9a469ca0663e770d5da54c087664ef677644c0dcbbdbe8fe0b5f7700c84",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/include/basic_api/kernel_operator_vec_binary_intf.h": "68e7ca74c9726385288c003eee7663b39de80bf2c0104ff065585ed7adadf54a"
+  },
+  "device": "Ascend910_9392",
+  "kernel_arch": "dav-2201",
+  "FusedMulAdd_lowering": "vmadd(dst, src0, src1, ...), computes round(round(dst*src0)+src1) for the tested inputs",
+  "MulAddDst_lowering": "vmla(dst, src0, src1, ...), computes round(round(src0*src1)+dst) for the tested inputs",
+  "probe_source_sha256": "05e1f39a120d655626ceb4609981d9a26df1196d288433a7d254986fd3baf9be",
+  "probe_binary_sha256": "6162ec0ab478d0d8be70f2a0a5e9cbf5c6906f588b217e15e99dd300671bf215",
+  "semantics_report": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/fma_semantics_v2.json",
+  "instruction_inspection_limit": "Installed llvm-objdump recognizes the HiIPU object but renders each instruction as <not available>, even with --mcpu=dav-c220-vec. The compiler rejects device -S and -print-after. Header intrinsic mapping, object text size/hash and measured rounding are recorded; no decoded machine-instruction count is claimed.",
+  "source_api_instruction_graph_counts": "binary width: 211 -> 196; nonbinary width: 247 -> 229. These are API operation counts, not decoded machine instructions.",
+  "primary_sources": [
+    "https://asc.gitcode.com/api/SIMD-API/basic_api/memory_vector_compute/composite_compute/FusedMulAdd.html",
+    "https://asc.gitcode.com/api/appendix/vector_instruction_theoretical_perf_summary.html"
+  ],
+  "fp32_true_fma_available_in_tested_apis": false,
+  "scratch_allocation_changed": false
+}

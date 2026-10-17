@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.16)
+find_package(ASC REQUIRED)
+project(rope_fma_semantics LANGUAGES ASC CXX)
+set(CMAKE_CXX_STANDARD 17)
+add_executable(fma_probe fma_probe.asc)
+target_link_libraries(fma_probe PRIVATE ascendcl m)
+target_compile_options(fma_probe PRIVATE $<$<COMPILE_LANGUAGE:ASC>:--npu-arch=dav-2201>)

@@ -1,0 +1,101 @@
+{
+  "cpu_model": "binary64 exact binary32 product and cancellation, then binary32 rounding; signed zero equivalence allowed",
+  "input_sha256": "e1fc43617d4b533f426d82fec2fa8ee987ecbcada7a839d0b3ada0d160f856bf",
+  "output_sha256": "6e71bf96160be3d3cb0648d9272bf4f49fe15fc1be0b44b7c6f14ddb8c224f1f",
+  "groups": [
+    {
+      "name": "normal_frequency_operands",
+      "start": 0,
+      "count": 4096,
+      "product_mismatches": 0,
+      "vmadd_residual_mismatches": 4096,
+      "vmla_residual_mismatches": 4096,
+      "square_product_mismatches": 0,
+      "vmadd_square_alias_mismatches": 4096,
+      "expected_nonzero_residuals": 4096,
+      "observed_vmadd_nonzero_residuals": 0
+    },
+    {
+      "name": "normal_broad_exponents",
+      "start": 4096,
+      "count": 4096,
+      "product_mismatches": 0,
+      "vmadd_residual_mismatches": 4096,
+      "vmla_residual_mismatches": 4096,
+      "square_product_mismatches": 0,
+      "vmadd_square_alias_mismatches": 4096,
+      "expected_nonzero_residuals": 4096,
+      "observed_vmadd_nonzero_residuals": 0
+    },
+    {
+      "name": "near_rounding_and_cancellation",
+      "start": 8192,
+      "count": 1024,
+      "product_mismatches": 0,
+      "vmadd_residual_mismatches": 1023,
+      "vmla_residual_mismatches": 1023,
+      "square_product_mismatches": 0,
+      "vmadd_square_alias_mismatches": 1023,
+      "expected_nonzero_residuals": 1023,
+      "observed_vmadd_nonzero_residuals": 0
+    },
+    {
+      "name": "normal_inputs_subnormal_product",
+      "start": 9216,
+      "count": 1024,
+      "product_mismatches": 0,
+      "vmadd_residual_mismatches": 0,
+      "vmla_residual_mismatches": 0,
+      "square_product_mismatches": 0,
+      "vmadd_square_alias_mismatches": 0,
+      "expected_nonzero_residuals": 0,
+      "observed_vmadd_nonzero_residuals": 0
+    },
+    {
+      "name": "subnormal_inputs",
+      "start": 10240,
+      "count": 1024,
+      "product_mismatches": 0,
+      "vmadd_residual_mismatches": 0,
+      "vmla_residual_mismatches": 0,
+      "square_product_mismatches": 0,
+      "vmadd_square_alias_mismatches": 0,
+      "expected_nonzero_residuals": 0,
+      "observed_vmadd_nonzero_residuals": 0
+    },
+    {
+      "name": "underflow_residual",
+      "start": 11264,
+      "count": 1024,
+      "product_mismatches": 0,
+      "vmadd_residual_mismatches": 1024,
+      "vmla_residual_mismatches": 1024,
+      "square_product_mismatches": 0,
+      "vmadd_square_alias_mismatches": 1024,
+      "expected_nonzero_residuals": 1024,
+      "observed_vmadd_nonzero_residuals": 0
+    },
+    {
+      "name": "distinguishing_example",
+      "start": 12288,
+      "count": 64,
+      "product_mismatches": 0,
+      "vmadd_residual_mismatches": 64,
+      "vmla_residual_mismatches": 64,
+      "square_product_mismatches": 0,
+      "vmadd_square_alias_mismatches": 64,
+      "expected_nonzero_residuals": 64,
+      "observed_vmadd_nonzero_residuals": 0
+    }
+  ],
+  "distinguishing_example": {
+    "a": 1.0000001192092896,
+    "b": 0.9999998807907104,
+    "expected": -1.4210854715202004e-14,
+    "vmadd": 0.0,
+    "vmla": 0.0,
+    "expected_bits": "0xa8800000",
+    "vmadd_bits": "0x0",
+    "vmla_bits": "0x0"
+  }
+}

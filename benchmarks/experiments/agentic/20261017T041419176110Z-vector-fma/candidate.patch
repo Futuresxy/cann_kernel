@@ -1,0 +1,143 @@
+diff --git a/operators/rotary_pos_emb/kernel.asc b/operators/rotary_pos_emb/kernel.asc
+index 8213204..5c8a680 100644
+--- a/operators/rotary_pos_emb/kernel.asc
++++ b/operators/rotary_pos_emb/kernel.asc
+@@ -1,4 +1,4 @@
+-// ROPE1743_PROFILED_V9
++// ROPE1743_PROFILED_V10_VECTOR_ACCUM
+ #include <cmath>
+ #include <cstdint>
+ #include "kernel_operator.h"
+@@ -67,6 +67,9 @@ __aicore__ inline void DeviceFrequencyChunk(const LocalTensor<float>& dst,const
+     auto v14=scratch[14*stride];
+     auto v15=scratch[15*stride];
+     auto v16=scratch[16*stride];
++    // On dav-2201, vmla rounds the FP32 product before addition. Keep the
++    // split-product error algorithm; accumulate its terms in the same order.
++    // This is not an IEEE single-rounding FMA error residual.
+     // Integer indices divided by a power of two are exactly representable.
+     // Preserve the general compensated division for other widths.
+     if((width&(width-1))==0) {
+@@ -89,14 +92,11 @@ __aicore__ inline void DeviceFrequencyChunk(const LocalTensor<float>& dst,const
+     Sub(v7,v2,v8,n);
+     Mul(v4,v6,v8,n);
+     Sub(v9,v4,v3,n);
+-    Mul(v4,v6,v7,n);
+-    Add(v6,v9,v4,n);
+-    Mul(v4,v5,v8,n);
+-    Add(v8,v6,v4,n);
+-    Mul(v4,v5,v7,n);
+-    Add(v7,v8,v4,n);
++    MulAddDst(v9,v6,v7,n);
++    MulAddDst(v9,v5,v8,n);
++    MulAddDst(v9,v5,v7,n);
+     Muls(v4,v3,-1.0f,n);
+-    Muls(v3,v7,-1.0f,n);
++    Muls(v3,v9,-1.0f,n);
+     Add(v7,v0,v4,n);
+     Sub(v8,v7,v0,n);
+     Sub(v5,v7,v8,n);
+@@ -127,14 +127,11 @@ __aicore__ inline void DeviceFrequencyChunk(const LocalTensor<float>& dst,const
+     Sub(v4,v3,v0,n);
+     Mul(v3,v6,v0,n);
+     Sub(v5,v3,v8,n);
+-    Mul(v3,v6,v4,n);
+-    Add(v6,v5,v3,n);
+-    Mul(v3,v2,v0,n);
+-    Add(v0,v6,v3,n);
+-    Mul(v3,v2,v4,n);
+-    Add(v4,v0,v3,n);
++    MulAddDst(v5,v6,v4,n);
++    MulAddDst(v5,v2,v0,n);
++    MulAddDst(v5,v2,v4,n);
+     Mul(v3,v7,v1,n);
+-    Add(v1,v4,v3,n);
++    Add(v1,v5,v3,n);
+     Add(v3,v8,v1,n);
+     Sub(v4,v3,v8,n);
+     Sub(v8,v1,v4,n);
+@@ -188,13 +185,10 @@ __aicore__ inline void DeviceFrequencyChunk(const LocalTensor<float>& dst,const
+     Sub(v9,v1,v3,n);
+     Mul(v3,v8,v8,n);
+     Mul(v1,v0,v0,n);
+-    Sub(v11,v1,v3,n);
+-    Mul(v1,v0,v5,n);
+-    Add(v10,v11,v1,n);
+-    Mul(v1,v5,v0,n);
+-    Add(v11,v10,v1,n);
+-    Mul(v1,v5,v5,n);
+-    Add(v10,v11,v1,n);
++    Sub(v10,v1,v3,n);
++    MulAddDst(v10,v0,v5,n);
++    MulAddDst(v10,v5,v0,n);
++    MulAddDst(v10,v5,v5,n);
+     Mul(v1,v8,v4,n);
+     Mul(v11,v4,v8,n);
+     Add(v12,v1,v11,n);
+@@ -213,16 +207,13 @@ __aicore__ inline void DeviceFrequencyChunk(const LocalTensor<float>& dst,const
+     Sub(v14,v12,v15,n);
+     Mul(v11,v13,v15,n);
+     Sub(v16,v11,v10,n);
+-    Mul(v11,v13,v14,n);
+-    Add(v13,v16,v11,n);
+-    Mul(v11,v1,v15,n);
+-    Add(v15,v13,v11,n);
+-    Mul(v11,v1,v14,n);
+-    Add(v14,v15,v11,n);
++    MulAddDst(v16,v13,v14,n);
++    MulAddDst(v16,v1,v15,n);
++    MulAddDst(v16,v1,v14,n);
+     Mul(v11,v6,v3,n);
+     Mul(v3,v9,v12,n);
+     Add(v12,v11,v3,n);
+-    Add(v3,v14,v12,n);
++    Add(v3,v16,v12,n);
+     Add(v12,v10,v3,n);
+     Sub(v14,v12,v10,n);
+     Sub(v10,v3,v14,n);
+@@ -277,16 +268,13 @@ __aicore__ inline void DeviceFrequencyChunk(const LocalTensor<float>& dst,const
+     Sub(v12,v2,v9,n);
+     Mul(v10,v14,v9,n);
+     Sub(v11,v10,v3,n);
+-    Mul(v10,v14,v12,n);
+-    Add(v14,v11,v10,n);
+-    Mul(v10,v8,v9,n);
+-    Add(v9,v14,v10,n);
+-    Mul(v10,v8,v12,n);
+-    Add(v12,v9,v10,n);
++    MulAddDst(v11,v14,v12,n);
++    MulAddDst(v11,v8,v9,n);
++    MulAddDst(v11,v8,v12,n);
+     Mul(v10,v0,v5,n);
+     Mul(v5,v4,v2,n);
+     Add(v2,v10,v5,n);
+-    Add(v5,v12,v2,n);
++    Add(v5,v11,v2,n);
+     Add(v2,v3,v5,n);
+     Cast(v5.ReinterpretCast<int32_t>(),v7,RoundMode::CAST_RINT,n); Adds(v5.ReinterpretCast<int32_t>(),v5.ReinterpretCast<int32_t>(),int32_t(127+scaleShift),n); ShiftLeft(v5.ReinterpretCast<int32_t>(),v5.ReinterpretCast<int32_t>(),int32_t(23),n);
+     Mul(v7,v2,v5,n);
+@@ -304,14 +292,11 @@ __aicore__ inline void DeviceFrequencyChunk(const LocalTensor<float>& dst,const
+     Sub(v4,v2,v0,n);
+     Mul(v3,v10,v0,n);
+     Sub(v9,v3,v7,n);
+-    Mul(v3,v10,v4,n);
+-    Add(v10,v9,v3,n);
+-    Mul(v3,v12,v0,n);
+-    Add(v0,v10,v3,n);
+-    Mul(v3,v12,v4,n);
+-    Add(v4,v0,v3,n);
++    MulAddDst(v9,v10,v4,n);
++    MulAddDst(v9,v12,v0,n);
++    MulAddDst(v9,v12,v4,n);
+     Muls(v3,v7,-1.0f,n); Adds(v3,v3,1.0f,n);
+-    Sub(v7,v3,v4,n);
++    Sub(v7,v3,v9,n);
+     Div(v4,v7,v5,n);
+     Add(v5,v2,v4,n);
+     DataCopy(dst,v5,n);PipeBarrier<PIPE_ALL>();
+@@ -1886,4 +1871,4 @@ void LaunchFrequencyMode(GM_ADDR x, const TensorGroupInfo& info_x,
+             x, positions, y, tokens, heads, dim, 0, width, tileHeads, frequencies);
+     }
+ }
+-// END_ROPE1743_V9
++// END_ROPE1743_V10_VECTOR_ACCUM

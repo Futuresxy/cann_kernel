@@ -1,0 +1,93 @@
+{
+  "model": "binary32 rounded Mul followed by binary32 rounded Add for each vmla, based on device probe",
+  "variants": {
+    "binary_width": {
+      "parent": {
+        "output_graph_sha256": "bf638443932a68d935ae523313000f1ca5fb22e23902dbb644f22627064477d0",
+        "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+        "operation_count": 211,
+        "operation_counts": {
+          "CreateVecIndex": 1,
+          "Muls": 33,
+          "Duplicate": 3,
+          "Mul": 33,
+          "Sub": 68,
+          "Add": 54,
+          "Cast": 6,
+          "Adds": 7,
+          "Gather": 2,
+          "ShiftLeft": 1,
+          "Div": 2,
+          "DataCopy": 1
+        },
+        "distinct_graph_nodes": 252
+      },
+      "candidate": {
+        "output_graph_sha256": "bf638443932a68d935ae523313000f1ca5fb22e23902dbb644f22627064477d0",
+        "source_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
+        "operation_count": 196,
+        "operation_counts": {
+          "CreateVecIndex": 1,
+          "Muls": 33,
+          "Duplicate": 3,
+          "Mul": 18,
+          "Sub": 68,
+          "MulAddDst": 15,
+          "Add": 39,
+          "Cast": 6,
+          "Adds": 7,
+          "Gather": 2,
+          "ShiftLeft": 1,
+          "Div": 2,
+          "DataCopy": 1
+        },
+        "distinct_graph_nodes": 252
+      },
+      "identical_output_graph": true
+    },
+    "nonbinary_width": {
+      "parent": {
+        "output_graph_sha256": "db0ddaeb83cdcf38103fcaef0325c7877f394acd6be922f2483e6a3114bf4379",
+        "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+        "operation_count": 247,
+        "operation_counts": {
+          "CreateVecIndex": 1,
+          "Duplicate": 4,
+          "Div": 4,
+          "Mul": 38,
+          "Muls": 36,
+          "Sub": 83,
+          "Add": 64,
+          "Cast": 6,
+          "Adds": 7,
+          "Gather": 2,
+          "ShiftLeft": 1,
+          "DataCopy": 1
+        },
+        "distinct_graph_nodes": 288
+      },
+      "candidate": {
+        "output_graph_sha256": "db0ddaeb83cdcf38103fcaef0325c7877f394acd6be922f2483e6a3114bf4379",
+        "source_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
+        "operation_count": 229,
+        "operation_counts": {
+          "CreateVecIndex": 1,
+          "Duplicate": 4,
+          "Div": 4,
+          "Mul": 20,
+          "Muls": 36,
+          "Sub": 83,
+          "MulAddDst": 18,
+          "Add": 46,
+          "Cast": 6,
+          "Adds": 7,
+          "Gather": 2,
+          "ShiftLeft": 1,
+          "DataCopy": 1
+        },
+        "distinct_graph_nodes": 288
+      },
+      "identical_output_graph": true
+    }
+  }
+}

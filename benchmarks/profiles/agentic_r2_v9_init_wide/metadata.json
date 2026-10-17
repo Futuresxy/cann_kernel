@@ -1,0 +1,32 @@
+{
+  "case": {
+    "name": "wide_half",
+    "shape": [
+      1,
+      7,
+      17,
+      1024
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "extreme": true,
+    "seed": 50
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r2_v9_init_wide",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r2/v9_runner --device 0 --shape 1 7 17 1024 --dtype float16 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/wide_half --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+  "input_sha256": {
+    "x.bin": "c900481f5b4e02a61bf3ff5920450381c107414d7f9a9c025a45a90e7be59e49",
+    "positions.bin": "8855019b6cf41ae94871734e29098840e547db0d42b10c8f68ad62b591ee571a"
+  },
+  "input_hashes_verified_after_collection": true
+}

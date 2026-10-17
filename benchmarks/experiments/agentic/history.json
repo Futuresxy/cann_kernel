@@ -712,6 +712,15 @@
       "status": "rejected-native-performance",
       "decision": "0.995493x on balanced fixed33 despite exact integer arithmetic and 52+52 base correctness; branch/code-generation cost remains.",
       "experiment_log": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69.json"
+    },
+    {
+      "round": "agentic-request-2",
+      "request_id": "20261017T041419176110Z-vector-fma",
+      "name": "true_fma_frequency_residual_then_nonfused_compensation_accumulation",
+      "source_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
+      "status": "rejected-no-safe-native-improvement",
+      "decision": "True-FMA residual is unsupported by measured vmadd/vmla behavior; legal same-order vmla fallback has only 1.0016/1.0025x native point estimates, interval spans one and small cases regress.",
+      "experiment_log": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma.json"
     }
   ],
   "requests": [
@@ -723,6 +732,14 @@
       "native_speedup": 0.9954930385856202,
       "reason": "Fixed-input balanced native timing regressed; do not spend a platform submission on this candidate.",
       "score_analysis": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69/score_analysis.json"
+    },
+    {
+      "request_id": "20261017T041419176110Z-vector-fma",
+      "state": "no_improvement",
+      "experiment_log": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma.json",
+      "candidate_source_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
+      "native_speedup": 1.0022317397298193,
+      "reason": "No robust safe overall gain; true-FMA residual unavailable and the legal accumulation fallback has unchanged VEC activity plus repeatable small-case regressions."
     }
   ]
 }

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T041419176110Z-vector-fma",
+  "state": "no_improvement",
+  "reason": "No robust safe overall gain; true-FMA residual unavailable and the legal accumulation fallback has unchanged VEC activity plus repeatable small-case regressions.",
+  "parent_kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "rejected_candidate_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
+  "official_baseline_score": 48.45,
+  "target_score": 70,
+  "target_achieved": false,
+  "new_ready_candidates_published": 0,
+  "evidence_paths": [
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma.json",
+    "benchmarks/experiments/agentic/history.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/sdk_semantics.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/fma_semantics_v2.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/compensation_model.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/native_analysis.json",
+    "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/candidate.patch",
+    "benchmarks/results/agentic_r2_accum_balanced.json",
+    "benchmarks/results/agentic_r2_accum_confirm.json",
+    "benchmarks/results/agentic_r2_accum.json",
+    "benchmarks/results/agentic_r2_accum_audit.json",
+    "benchmarks/results/agentic_r2_accum_math.json",
+    "benchmarks/results/agentic_r2_accum_new_math.json",
+    "benchmarks/results/agentic_r2_accum_dispatch.json",
+    "benchmarks/profiles/agentic_r2_accum_launches/launch_count.json"
+  ],
+  "completed_at": "2026-10-17T04:32:18.913902+00:00"
+}
