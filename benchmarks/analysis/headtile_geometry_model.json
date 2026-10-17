@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "task_id": "20261017-headtile-attribution",
+  "state": "geometry_model_only_not_implemented",
+  "baseline_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "method": "Exhaustive public HeadTile D/H domain; every head group and valid flat element",
+  "checked_shapes": 4704,
+  "checked_groups": 10976,
+  "checked_valid_elements": 27189120,
+  "invariants": [
+    "32-byte aligned FP32 coefficient prefix",
+    "coefficient index and sine sign preserved by prefix repetition",
+    "rotate-half permutation stays within valid input and is an involution",
+    "rounded output count fits existing two-capacity storage"
+  ],
+  "examples": [
+    {
+      "dim": 30,
+      "heads": 128,
+      "pitch": 16,
+      "tile_heads": 128,
+      "period_heads": 4,
+      "prefix_elements": 120,
+      "groups": [
+        {
+          "rows": 128,
+          "logical_output_elements": 3840,
+          "padded_output_elements": 3840,
+          "old_gather_elements": 12032,
+          "proposed_gather_elements": 4080,
+          "proposed_regular_copy_elements": 7440
+        }
+      ]
+    },
+    {
+      "dim": 30,
+      "heads": 129,
+      "pitch": 16,
+      "tile_heads": 128,
+      "period_heads": 4,
+      "prefix_elements": 120,
+      "groups": [
+        {
+          "rows": 128,
+          "logical_output_elements": 3840,
+          "padded_output_elements": 3840,
+          "old_gather_elements": 12032,
+          "proposed_gather_elements": 4080,
+          "proposed_regular_copy_elements": 7440
+        },
+        {
+          "rows": 1,
+          "logical_output_elements": 30,
+          "padded_output_elements": 32,
+          "old_gather_elements": 96,
+          "proposed_gather_elements": 96,
+          "proposed_regular_copy_elements": 0
+        }
+      ]
+    },
+    {
+      "dim": 24,
+      "heads": 65,
+      "pitch": 16,
+      "tile_heads": 65,
+      "period_heads": 1,
+      "prefix_elements": 24,
+      "groups": [
+        {
+          "rows": 65,
+          "logical_output_elements": 1560,
+          "padded_output_elements": 1560,
+          "old_gather_elements": 5720,
+          "proposed_gather_elements": 1608,
+          "proposed_regular_copy_elements": 3072
+        }
+      ]
+    },
+    {
+      "dim": 62,
+      "heads": 255,
+      "pitch": 32,
+      "tile_heads": 64,
+      "period_heads": 4,
+      "prefix_elements": 248,
+      "groups": [
+        {
+          "rows": 64,
+          "logical_output_elements": 3968,
+          "padded_output_elements": 3968,
+          "old_gather_elements": 12160,
+          "proposed_gather_elements": 4464,
+          "proposed_regular_copy_elements": 7440
+        },
+        {
+          "rows": 64,
+          "logical_output_elements": 3968,
+          "padded_output_elements": 3968,
+          "old_gather_elements": 12160,
+          "proposed_gather_elements": 4464,
+          "proposed_regular_copy_elements": 7440
+        },
+        {
+          "rows": 64,
+          "logical_output_elements": 3968,
+          "padded_output_elements": 3968,
+          "old_gather_elements": 12160,
+          "proposed_gather_elements": 4464,
+          "proposed_regular_copy_elements": 7440
+        },
+        {
+          "rows": 63,
+          "logical_output_elements": 3906,
+          "padded_output_elements": 3912,
+          "old_gather_elements": 11976,
+          "proposed_gather_elements": 4408,
+          "proposed_regular_copy_elements": 7328
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Logical element counts are not cycles, DRAM traffic or measured UB transactions.",
+    "Regular Copy API repeat/stride/mask support must be checked in installed dav-2201 headers.",
+    "Padding needs explicit safe indices and masks; only valid elements are checked here.",
+    "Does not prove FP32 sign/rounding, NaN/Inf classes, position0 identity, UB lifetimes or DMA correctness.",
+    "A CPU diagnostic, never submitted or included as a judge dependency."
+  ]
+}
