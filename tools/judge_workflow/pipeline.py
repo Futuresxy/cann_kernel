@@ -1,9 +1,10 @@
 """Mac-only candidate -> browser -> durable performance feedback pipeline."""
 import csv
+import copy
 import json
 from pathlib import Path
 
-from .browser import (click_once, existing_result, page_for, platform_source_digest,
+from .browser import (browser_context, click_once, existing_result, page_for, platform_source_digest,
                       poll_result, read_editor, replace_kernel, snapshot, validate_config)
 from .core import Journal, TERMINAL, compare_results, read_json, utcnow, validate_candidate, write_json
 from .repository import export_result, sync_candidate
@@ -80,6 +81,9 @@ async def run_once(context, args, config, repository):
         record = outstanding[0]
         if not record.get('result_url'):
             raise ValueError('An uncertain click needs resume --result-url after checking history; no new click allowed')
+        if context is None:
+            async with browser_context(args) as opened:
+                return await run_once(opened, args, config, repository)
         saved = journal.root / record['run_id'] / 'browser_config.json'
         poll_config = dict(read_json(saved), poll_seconds=config['poll_seconds'],
                            result_timeout_seconds=config['result_timeout_seconds']) if saved.exists() else config
@@ -101,6 +105,11 @@ async def run_once(context, args, config, repository):
         parents = [r for r in journal.records() if r['run_id'] == expected]
         if len(parents) != 1 or manifest.get('tuning_request_id') != expected or manifest.get('parent_kernel_sha256') != parents[0]['kernel_sha256']:
             raise ValueError('New candidate does not respond to the coordinator current request and parent source')
+    if context is None:
+        prepared = copy.copy(args)
+        prepared.candidate = candidate
+        async with browser_context(args) as opened:
+            return await run_once(opened, prepared, config, repository)
     manifest = dict(manifest, platform_source_expected_sha256=platform_source_digest(data, config))
     url = await existing_result(context, config, data)
     if url:

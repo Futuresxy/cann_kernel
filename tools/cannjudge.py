@@ -104,6 +104,9 @@ async def browser_command(args):
                                   replace_kernel, snapshot, validate_config, click_once, read_editor,
                                   platform_source_digest)
     config = read_json(args.config)
+    if args.command == 'run':
+        from judge_workflow.pipeline import run_once
+        return await run_once(None, args, config, ROOT)
     if args.command == 'submit':
         validate_config(config)  # fail before opening or modifying any browser
         manifest, data = validate_candidate(args.candidate)
@@ -113,10 +116,7 @@ async def browser_command(args):
         if not args.repeat_source and any(r['kernel_sha256'] == manifest['kernel_sha256'] for r in journal.records()):
             raise ValueError('Exact source already submitted; do not duplicate it')
     async with browser_context(args) as context:
-        if args.command == 'run':
-            from judge_workflow.pipeline import run_once
-            return await run_once(context, args, config, ROOT)
-        elif args.command == 'preflight':
+        if args.command == 'preflight':
             validate_config(config)
             manifest, data = validate_candidate(args.candidate)
             page = await page_for(context, config['submit_url'])

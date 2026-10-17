@@ -2,7 +2,7 @@
   "date": "2026-10-17",
   "tests": {
     "command": "CANNJUDGE_TEST_CHANNEL=chrome python -m unittest discover -s tests -p 'test_cannjudge*.py'",
-    "count": 59,
+    "count": 62,
     "result": "passed",
     "includes_remote_adapter_and_exchange_tests": true
   },
@@ -16,7 +16,12 @@
     "passed_cases": 15,
     "official_score_raw": "48.45",
     "score_binding": "submitter, exact submission time and all 15 timings",
-    "error_details_checked_on_existing_compile_error": true
+    "error_details_checked_on_existing_compile_error": true,
+    "mac_chromium_sandbox_enabled": true,
+    "no_sandbox_flag_observed": false,
+    "idle_controller_launches_chrome": false,
+    "actual_result_page_tabs_after_fix": 1,
+    "blank_tabs_after_fix": 0
   },
   "controller": {
     "poll_seconds": 60,

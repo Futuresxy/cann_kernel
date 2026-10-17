@@ -9,6 +9,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
 from argparse import Namespace
+from contextlib import asynccontextmanager
 from pathlib import Path
 import sys
 import tempfile
@@ -359,6 +360,42 @@ class BrowserTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(len((args.runs / record['run_id'] / 'cases.csv').read_text().splitlines()), 16)
         await run_once(self.context, args, self.config, root)
         self.assertEqual(Handler.posts, 1)
+
+    async def test_completed_candidate_does_not_open_an_empty_browser(self):
+        root = Path(self.temporary.name)
+        candidate = root / 'candidate'; candidate.mkdir(); fixture_candidate(candidate)
+        args = Namespace(runs=self.journal.root, candidate=candidate)
+        record = await run_once(self.context, args, self.config, root)
+        with patch('judge_workflow.pipeline.browser_context', side_effect=AssertionError('Idle worker opened Chrome')):
+            reused = await run_once(None, args, self.config, root)
+        self.assertEqual(reused['run_id'], record['run_id'])
+        self.assertEqual(Handler.posts, 1)
+
+    async def test_new_candidate_opens_browser_once_without_pinning_the_watch_candidate(self):
+        root = Path(self.temporary.name)
+        candidate = root / 'candidate'; candidate.mkdir(); fixture_candidate(candidate)
+        args = Namespace(runs=self.journal.root, candidate=None)
+        opened = []
+        @asynccontextmanager
+        async def context(_):
+            opened.append(True)
+            yield self.context
+        with patch('judge_workflow.pipeline.sync_candidate', return_value=(candidate, 'fixture')) as sync, \
+             patch('judge_workflow.pipeline.browser_context', context):
+            result = await run_once(None, args, self.config, root)
+        self.assertEqual(result['state'], 'accepted')
+        self.assertEqual(len(opened), 1)
+        self.assertIsNone(args.candidate)
+        self.assertEqual(sync.call_count, 1)
+        self.assertEqual(Handler.posts, 1)
+
+    async def test_page_navigation_reuses_the_initial_blank_tab(self):
+        from judge_workflow.browser import page_for
+        blank = await self.context.new_page()
+        count = len(self.context.pages)
+        page = await page_for(self.context, self.origin + '/results/job-1')
+        self.assertEqual(page, blank)
+        self.assertEqual(len(self.context.pages), count)
 
     async def test_pipeline_resumes_without_candidate_or_another_click(self):
         record = self.journal.create({'kernel_sha256': digest(SOURCE), 'git_commit': 'fixture'}, self.config)

@@ -5,6 +5,7 @@ from contextlib import asynccontextmanager
 import re
 import math
 import time
+import sys
 import uuid
 from urllib.parse import urljoin, urlparse
 
@@ -34,7 +35,8 @@ async def browser_context(args):
             args.profile.mkdir(parents=True, exist_ok=True, mode=0o700)
             context = await p.chromium.launch_persistent_context(
                 str(args.profile.resolve()), headless=args.headless,
-                channel=getattr(args, 'channel', None))
+                channel=getattr(args, 'channel', None),
+                chromium_sandbox=sys.platform == 'darwin')
             try:
                 yield context
             finally:
@@ -44,9 +46,13 @@ async def browser_context(args):
 async def page_for(context, url):
     for page in context.pages:
         if page.url == url:
+            await page.bring_to_front()
             return page
-    page = await context.new_page()
+    page = next((p for p in context.pages if p.url == 'about:blank'), None)
+    if page is None:
+        page = await context.new_page()
     await page.goto(url, wait_until='domcontentloaded', timeout=30000)
+    await page.bring_to_front()
     return page
 
 
