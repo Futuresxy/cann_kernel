@@ -1,0 +1,558 @@
+{
+  "request_id": "20261017T060621-unaligned-pipeline",
+  "parent_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "state": "experimental_archive_complete",
+  "started_at": "2026-10-17T06:13:03.768152+00:00",
+  "protected_hashes": {
+    "operators/rotary_pos_emb/kernel.asc": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+    "submissions/rotary_pos_emb/latest.json": "a3813c80cfddd81ed838828e908fa4c7b34fdd3074ffa0e9cad1137ed514cec1",
+    "AGENTIC.md": "862d0edaaa828090de007b5c35abe80be2a19d79c00de6b16e23f2e199b6a157",
+    "kernel_requirement.md": "8af6ec98cd04b0d0105a5f35d24a3fa1b8b128c348f97c644f7458b5deaf5e4f",
+    "forbidden.md": "b6adc24318ecd1b7a4915b8dfd9fb560abb26d9da3e11239a5683b56aa197219",
+    "tools/suite.py": "a88d26387860a8d25c6299a5d977d602d81bbc9bae6527387631deb774d375b4",
+    "tuning_responses/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json": "0f68c69e506b83d58e386d091c035aca0fef0c4c40877d0df572f21494670afe"
+  },
+  "algorithm": "N=B*S,K=D/2: 3*N*H*D rotation FLOPs; X/Y minimum2*N*H*D*e bytes; per-core frequency and token-local trig reuse unchanged; int32 positions are exactly representable in FP32 over0..131072",
+  "numerical_chain": "All frequency/trig function source unchanged. Four separate Mul then Sub/Add with the same operands, cast, and p0 bit identity. Known trig/amplitude failure retained; no reference or threshold change.",
+  "causal_plan": [
+    {
+      "name": "direct",
+      "parent": "817f8364",
+      "change": "FP32 direct input/output queues, dense c/s and one cross temporary; depth1 and per-job PIPE_ALL retained; FP16 unchanged"
+    },
+    {
+      "name": "compact",
+      "parent": "direct",
+      "change": "Only FP16 uses the completed d655 compact broadcast, q1, per-job barriers; FP32 direct stays byte-identical"
+    },
+    {
+      "name": "pipeline",
+      "parent": "compact",
+      "change": "Both existing generic dtype paths input/output depth2, prefetch next job and remove only proved per-job PIPE_ALL; final drain retained"
+    }
+  ],
+  "bottleneck_evidence": [
+    "Previous source817 PMU D126half VEC39.169/MTE236.415/MTE336.514us; D254float VEC52.964/MTE277.146/MTE361.128us, all48core means, replaydiagnosis only.",
+    "Previous compact experiment reduced VEC but FP32 native regressed6.07%; retain dense FP32 coefficients and separate copy-removal from overlap.",
+    "Queue1 and per-job PIPE_ALL serialize stages. A pure dataflow/pipeline factor has not been tested by prior Gather, mask, trueFMA, frequency-folding, wide-two-read negatives."
+  ],
+  "expected_metrics": {
+    "direct": "remove3 half input DataCopy and2 half output DataCopy per job in FP32; retain c/s expansion and6 arithmetic APIs",
+    "compact": "reuse measured FP16 reduction; no new FP32 broadcast",
+    "pipeline": "unchanged GM traffic/instructions and arithmetic; overlap independent MTE2/V/MTE3, reduce elapsed critical path, no claim busy ratio is lane utilization"
+  },
+  "queue_dependency": {
+    "input": "GM->UB EnQue sets MTE2_V; DeQue waits. FreeTensor sets V_MTE2; AllocTensor on reused slot waits until all input V reads complete.",
+    "output": "V writes/copy -> EnQue V_MTE3 -> DeQue wait -> DataCopyPad. FreeTensor sets MTE3_V; subsequent AllocTensor waits before vector writes/trig scratch.",
+    "p0": "Copy both valid padded half arrays from input to output via VEC, then normal VECOUT EnQue/DeQue and stores; input is never used directly as MTE3 source.",
+    "scratch": "FP32 c/s/tmp persist in3cap work; angle is output[0:pitch], temp output[cap:cap+pitch], q tmp[0:pitch], only before rotation output writes. FP16 a/b/trig scratch before inputs loaded, then a/b retained while lo/hi/tmp used.",
+    "prefetch": "Prefetch(begin) only when begin<end; after DeQue current, prefetch job+1 only if job+1<end. Max2 live input slots, no unconsumed last prefetch. Output slots max2; final PIPE_ALL drains."
+  },
+  "SDK_protocol_reference": [
+    "AlignedRotary::Process",
+    "DirectFloatRotary::Process"
+  ],
+  "frequency_scratch_caveat": "FP32 work shrinks5cap to3cap. FillDeviceFrequencies function/math unchanged, but scratch-derived vector chunk/fallback can differ for small heads. Large target cap4096 still uses full pitch in either layout. Explicitly verify outputs across all1625; do not claim initialization cost unchanged in smaller families.",
+  "capacity_model": {
+    "formulas": {
+      "parent": "4*cap*e+20*cap+4*freq+fallback",
+      "direct_float": "28*cap+4*freq+fallback",
+      "compact_half_q1": "28*cap+4*(freq+2*pitch)+fallback",
+      "pipeline_half": "36*cap+4*(freq+2*pitch)+fallback",
+      "pipeline_float": "44*cap+4*freq+fallback"
+    },
+    "all_even_D16_1024_H1_256_including_unreachable_geometries": {
+      "direct": {
+        "2": [
+          116736,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ],
+        "4": [
+          116736,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ]
+      },
+      "compact": {
+        "2": [
+          120832,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ],
+        "4": [
+          116736,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ]
+      },
+      "pipeline": {
+        "2": [
+          153600,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ],
+        "4": [
+          182272,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ]
+      }
+    },
+    "budget": 192512
+  },
+  "SDK_files": {
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/include/basic_api/kernel_tpipe.h": "f98e3ce6f1531e5d91f16c8b37dec62737a485302d2237fda69355d334bbbe64",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/kernel_tquebind_impl.h": "72a791e5a60230fb7ca4e84df0e439872e4563dcfbe1125f9c31cc521cc35fda",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/kernel_event.h": "c9d6982034edc83c3c310106eb48181d5e91b252dd7bd7ce6243d7885d9a9f0d"
+  },
+  "production_ready_state": "blocked",
+  "candidate_source_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+  "intermediate_source_sha256": {
+    "direct": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055",
+    "compact": "5128bd8ebb885e5d00bfa0a402aeca3257daa7e09e5ecc78851a47dae6bcdf08"
+  },
+  "implementation_intermediates": 2,
+  "final_experimental_candidates": 1,
+  "official_parent": {
+    "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+    "source_git_path": "platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc",
+    "submission_id": 883390,
+    "status": "Pass",
+    "passed_cases": 15,
+    "score": 48.78
+  },
+  "algorithm_work_model": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/pre_experiment_model.json",
+  "dataflow_model": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/pre_experiment_model.json",
+  "dtype_shape_family": "Existing generic Rotary nonaligned FP16/FP32 only; original Host dispatch/tiling unchanged; int32 positions",
+  "hypothesis": "Remove redundant FP32 queue-to-work copies, retain measured FP16 compact coefficients, then overlap unchanged strided MTE2/VEC/MTE3 work through depth2 queues and next-job prefetch.",
+  "changes": {
+    "direct": "FP32 original dense c/s, queue-direct4Mul/Sub/Add, depths1 and per-job drain",
+    "compact": "Only FP16 reuses compact coefficients/input retention, depths1 and drain; FP32 direct entries unchanged",
+    "pipeline": "Both use depth2 and next-job prefetch; p0 copies via output queue; per-job PIPE_ALL removed, one final drain"
+  },
+  "prior_attempts_reviewed": [
+    "Previous d655 mixed broadcast: FP16 benefit, FP32 6.07% regression; no broad promotion, old response unchanged",
+    "Q53 tail pruning0.995493x; trueFMA residual unsupported; accumulation folding no robust gain; no retries",
+    "Broad Gather, bankpadding, positions UB cache, masks, wide two-read and trig polynomial precision negatives remain preserved"
+  ],
+  "validation": {
+    "paths": {
+      "direct": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/direct_correctness.json",
+      "compact": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/compact_correctness.json",
+      "pipeline": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/pipeline_correctness.json"
+    },
+    "per_variant": {
+      "total": 1723,
+      "bit_identical_to_official_parent": 1723,
+      "original_reference_passed": 1722,
+      "inherited_failures": 1,
+      "guard_zero_identity_and_launch_gates": true,
+      "audited_calls": 1919
+    },
+    "prior1625_parent_outputs_reused": "Verified committed input/golden/output hashes; no duplicate parent NPU measurements. New98 parent cases collected once with3calls each.",
+    "correctness_audit_calls_new_variants": 5757,
+    "additional_parent_long_tail_audited_calls": 294,
+    "known_inherited_failure": {
+      "shape": [
+        1,
+        137,
+        17,
+        1024
+      ],
+      "dtype": "float16",
+      "matched_ratio": 0.9999874208351224,
+      "parent_max_abs_error": 32,
+      "candidate_max_abs_error": 32,
+      "max_abs_error_limit": 0.1,
+      "original_golden_and_thresholds_unchanged": true,
+      "output_bits_identical": true,
+      "diagnosis": "Inherited SinCosFp32/reference-library rounding and FP16 midpoint crossings; prior stage/internal reports retained"
+    },
+    "timed_output_comparison": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/timed_outputs_bitwise.json",
+    "timed_full_outputs_bit_identical": 43,
+    "single_launch_profile": "benchmarks/profiles/agentic_r5_pipeline_launches/launch_count.json",
+    "single_launch_calls": 75,
+    "single_launch_tasks": 75,
+    "paired_native_calls": 11360,
+    "paired_native_tasks": 11360,
+    "original_template_check": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/template_audit.json",
+    "original_template_C14_dav2201_compiled": true,
+    "no_extra_payload_dependencies": true,
+    "audit_normal44_entries_identical": true,
+    "original_template44_entries_identical": true,
+    "original_template_device_comparison": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/template_device_code.json"
+  },
+  "binaries": {
+    "direct_audit/rope_runner": {
+      "path": "build/agentic_r5/direct_audit/rope_runner",
+      "runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+      "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+      "source_sha256": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055",
+      "binary_sha256": "40af5786cd0939f6e2a0db03d903a915e4cac210174f359a61c3e31ce9cf74c7",
+      "git_dirty": true,
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8"
+    },
+    "compact_audit/rope_runner": {
+      "path": "build/agentic_r5/compact_audit/rope_runner",
+      "runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+      "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+      "source_sha256": "5128bd8ebb885e5d00bfa0a402aeca3257daa7e09e5ecc78851a47dae6bcdf08",
+      "binary_sha256": "3a90834e932025364734a72f19e359037404de0e5e1bb71d12c8c49bf94cbed9",
+      "git_dirty": true,
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8"
+    },
+    "pipeline_audit/rope_runner": {
+      "path": "build/agentic_r5/pipeline_audit/rope_runner",
+      "runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+      "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+      "source_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+      "binary_sha256": "f5e0626599a168f2887c1dd8d35341ccbf08969280cce00a3b0be02287f5b494",
+      "git_dirty": true,
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8"
+    },
+    "pipeline_normal/rope_runner": {
+      "path": "build/agentic_r5/pipeline_normal/rope_runner",
+      "runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+      "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+      "source_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+      "binary_sha256": "97e330dafc38e33a081daf8eb4a39366de3bd30ecb0c4247350a4d39f13e6de3",
+      "git_dirty": true,
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8"
+    },
+    "direct_forward/rope_paired_runner": {
+      "path": "build/agentic_r5/direct_forward/rope_paired_runner",
+      "binary_sha256": "d428149a7e6980ad2536e6eb3ba96e7f0e87ccf548b435b29f7e1264108313cc",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/direct/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/direct/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+        "candidate": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055"
+      }
+    },
+    "direct_reverse/rope_paired_runner": {
+      "path": "build/agentic_r5/direct_reverse/rope_paired_runner",
+      "binary_sha256": "601f2baf83f1f7c5d1f14fdd21a7f8a00dee9fe79af40a83357874559e9ef0f4",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/direct/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/direct/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055",
+        "candidate": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556"
+      }
+    },
+    "compact_forward/rope_paired_runner": {
+      "path": "build/agentic_r5/compact_forward/rope_paired_runner",
+      "binary_sha256": "fa8a6e2ac76cf8373a7f350949c721691fb336e55bdca26aa25300a8d8f304d5",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/direct/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/compact/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/direct/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/compact/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055",
+        "candidate": "5128bd8ebb885e5d00bfa0a402aeca3257daa7e09e5ecc78851a47dae6bcdf08"
+      }
+    },
+    "compact_reverse/rope_paired_runner": {
+      "path": "build/agentic_r5/compact_reverse/rope_paired_runner",
+      "binary_sha256": "352d79418df5115fbdb2185faf772c4b53c9c6afc4c05b1271cd1f68ef5889cb",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/compact/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/direct/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/compact/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/direct/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "5128bd8ebb885e5d00bfa0a402aeca3257daa7e09e5ecc78851a47dae6bcdf08",
+        "candidate": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055"
+      }
+    },
+    "pipeline_compact_forward/rope_paired_runner": {
+      "path": "build/agentic_r5/pipeline_compact_forward/rope_paired_runner",
+      "binary_sha256": "32ac996f4ae7b34f87f4023ce07971eef1decebcf9c80f9ce5f870bf74aeca8b",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/compact/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/compact/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "5128bd8ebb885e5d00bfa0a402aeca3257daa7e09e5ecc78851a47dae6bcdf08",
+        "candidate": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0"
+      }
+    },
+    "pipeline_compact_reverse/rope_paired_runner": {
+      "path": "build/agentic_r5/pipeline_compact_reverse/rope_paired_runner",
+      "binary_sha256": "e06d044c81b1f23e6b9d7b2bc94f0f579913f5dd8507fc0c2ccb0b976dab1ed1",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/compact/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/compact/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+        "candidate": "5128bd8ebb885e5d00bfa0a402aeca3257daa7e09e5ecc78851a47dae6bcdf08"
+      }
+    },
+    "pipeline_parent_forward/rope_paired_runner": {
+      "path": "build/agentic_r5/pipeline_parent_forward/rope_paired_runner",
+      "binary_sha256": "6a519f96f37f55598870d7a8af18814e22f359ada7e52c55f0c00d6b49023b67",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+        "candidate": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0"
+      }
+    },
+    "pipeline_parent_reverse/rope_paired_runner": {
+      "path": "build/agentic_r5/pipeline_parent_reverse/rope_paired_runner",
+      "binary_sha256": "b6ddecea0ff12d7dac3b3e503e845fdda28215f7834b7da2073576297d75bfc9",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+        "candidate": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556"
+      }
+    }
+  },
+  "local_performance": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/native_summary.json",
+  "PMU": {
+    "path": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/pmu_comparison.json",
+    "half_intermediate_reuse_proof": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/compact_half_PMU_reuse.json",
+    "timing_decision_uses_replay": false,
+    "interpretation": "Direct FP32 reduces VEC time52.96->43.90us; final pipeline keeps~43.90us while MTE/V overlap cuts elapsed. Three-pipe active-time sum/elapsed grows from~0.94 to1.84 in FP32,~0.93 to1.97 in FP16. Individual MTE active times grow under contention; busy ratios are not SIMD lane or peak-throughput utilization.",
+    "assembly_limit": "Installed disassembler cannot decode this HiIPU; do not invent instruction counts. Entry bytes and unchanged SDK event mapping/source APIs audited."
+  },
+  "tasks": [
+    {
+      "id": "task_20261016_231501_19176333643",
+      "purpose": "direct base52 + parent/new98 + direct/new98",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_231529_192559819899",
+      "purpose": "direct remaining reference/bit/guard gates",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_231603_193276430392",
+      "purpose": "direct/parent native ABBA fixed33",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_231647_193614112951",
+      "purpose": "direct/parent swapped native BAAB fixed33",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_231924_195628115784",
+      "purpose": "compact base52/new98 gates",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_231952_196048322524",
+      "purpose": "compact remaining gates",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232059_197396126485",
+      "purpose": "compact/direct native ABBA fixed33",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232144_197968112601",
+      "purpose": "compact/direct swapped BAAB fixed33",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232210_198578032132",
+      "purpose": "pipeline base52/new98 gates",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232258_199301317034",
+      "purpose": "pipeline remaining gates",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232345_200192614314",
+      "purpose": "pipeline/compact native ABBA fixed33",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232425_201167618021",
+      "purpose": "pipeline/compact swapped BAAB fixed33",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232508_202437914577",
+      "purpose": "pipeline/parent native ABBA fixed33",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232552_203823031593",
+      "purpose": "pipeline/parent swapped BAAB fixed33",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232635_205138812623",
+      "purpose": "pipeline/parent native ABBA extra10",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232707_20646913329",
+      "purpose": "pipeline/parent swapped BAAB extra10",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232756_210998510431",
+      "purpose": "direct FP32 source-bound replay PMU",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232844_211851819855",
+      "purpose": "pipeline FP16 source-bound replay PMU",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_232939_21248891661",
+      "purpose": "pipeline FP32 source-bound replay PMU",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_233013_213037716373",
+      "purpose": "final independent75 device-launch audit",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    }
+  ],
+  "decision": {
+    "archive_experiment": true,
+    "performance_supported": true,
+    "production_ready": false,
+    "stage_invoked": false,
+    "latest_changed": false,
+    "canonical_source_changed": false,
+    "platform_submissions": 0,
+    "reason": "Final unaligned queue pipeline has substantial native benefits (1.7253x FP16 representative,1.6801x FP32,extra10 geomean1.5077x) with all1723 outputs byte-identical to817f8364. Production ready remains blocked by the unchanged inherited valid-input amplitude max32>0.1. Task-specific output is one experimental archive for coordinator review, not production ready/latest. No new platform trial performed.",
+    "coordinator_review_recommended": true,
+    "official_score_target": 70.01,
+    "target_achieved": false,
+    "stop_after_commit_and_push": true
+  },
+  "completed_at": "2026-10-17T06:31:51.628017+00:00",
+  "coordinator_updates_read_before_finalization": [
+    {
+      "commit": "a0af967",
+      "finding": "Reconciles R4 conservative versus actual buffer estimates and retains the mixed-result rejection; no changes to current scope."
+    },
+    {
+      "commit": "51ec346",
+      "path": "benchmarks/analysis/headtile_lcm_hypothesis.json",
+      "finding": "Future hypothesis only; read-only review, no implementation or new PMU under current request. Stop for coordinator review."
+    }
+  ]
+}

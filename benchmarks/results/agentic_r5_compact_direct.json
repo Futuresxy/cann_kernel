@@ -1,0 +1,1208 @@
+{
+  "label": "agentic_r5_compact_direct",
+  "source_sha256": {
+    "baseline": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055",
+    "candidate": "5128bd8ebb885e5d00bfa0a402aeca3257daa7e09e5ecc78851a47dae6bcdf08"
+  },
+  "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+  "metric": "Native non-replay Task Duration; median of four block medians from shared-allocation ABBA and BAAB",
+  "shared_context_and_addresses_within_each_process": true,
+  "source_orders_reversed": true,
+  "run_kernel_calls": 2640,
+  "actual_device_kernel_tasks": 2640,
+  "profile_labels": {
+    "forward": "agentic_r5_compact_direct_forward",
+    "reverse": "agentic_r5_compact_direct_reverse"
+  },
+  "geometric_mean_speedup": 1.0056435707682172,
+  "cases": [
+    {
+      "name": "tiny",
+      "shape": [
+        1,
+        8,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "baseline_us": 2.64,
+      "candidate_us": 2.6305,
+      "speedup": 1.00361148070709,
+      "latency_change_percent": -0.35984848484849064,
+      "block_medians_us": {
+        "baseline": [
+          2.7,
+          2.58,
+          2.84,
+          2.58
+        ],
+        "candidate": [
+          2.62,
+          2.56,
+          3.0,
+          2.641
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "8e5ba49c41b097e33881d8dfff2c5bbee8c923a084ba2390738919d74cac6695",
+        "positions.bin": "f848dcf5d8e8d774bd9e257cc472ddf1e4e976d37a804ca616181d7f06a9b743"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0193050193050195,
+        "reverse": 0.9608225491934054
+      }
+    },
+    {
+      "name": "unaligned_half",
+      "shape": [
+        2,
+        16,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "baseline_us": 5.0605,
+      "candidate_us": 4.960000000000001,
+      "speedup": 1.0202620967741933,
+      "latency_change_percent": -1.9859697658334063,
+      "block_medians_us": {
+        "baseline": [
+          5.0,
+          5.08,
+          5.12,
+          5.041
+        ],
+        "candidate": [
+          5.04,
+          4.98,
+          4.86,
+          4.94
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "639289ae4a5ef08014e9cee5c5bc9ee986d8df459149581b81059da078facb00",
+        "positions.bin": "2b6d8497ef32248a6e23d948891de0c1bc6ded914f702b4f35412555aa2dd388"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.005988023952096,
+        "reverse": 1.0368367346938776
+      }
+    },
+    {
+      "name": "deepseek_half",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "baseline_us": 17.25,
+      "candidate_us": 17.2105,
+      "speedup": 1.0022951105429825,
+      "latency_change_percent": -0.228985507246382,
+      "block_medians_us": {
+        "baseline": [
+          17.16,
+          17.16,
+          17.34,
+          17.4
+        ],
+        "candidate": [
+          17.18,
+          17.12,
+          17.38,
+          17.241
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "c421dbf38804d5337e098dfa1850ab62ab744842534dec00bbf2b3b50cf20c57",
+        "positions.bin": "b3e28c5baf9df5feb3dcb76ee70a486a3c2736bd12261634374dc7726e3daf5c"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.000583090379009,
+        "reverse": 1.0034372201842812
+      }
+    },
+    {
+      "name": "deepseek_float",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float32",
+      "baseline_us": 18.259999999999998,
+      "candidate_us": 18.27,
+      "speedup": 0.9994526546250684,
+      "latency_change_percent": 0.05476451259585069,
+      "block_medians_us": {
+        "baseline": [
+          18.3,
+          18.06,
+          18.48,
+          18.22
+        ],
+        "candidate": [
+          18.24,
+          18.141,
+          18.34,
+          18.3
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "b168bd649469b8bcaa943649e0045e72d8fa2e6fdde3e6b2f581e4305ca1da3b",
+        "positions.bin": "2c730ddf55e8aa5eee5ac8d30bad294792f10b57f456971ba67692a853b3d0e2"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9994227756246392,
+        "reverse": 1.0016375545851528
+      }
+    },
+    {
+      "name": "sequence8192",
+      "shape": [
+        1,
+        8192,
+        1,
+        64
+      ],
+      "dtype": "float32",
+      "baseline_us": 11.46,
+      "candidate_us": 11.440000000000001,
+      "speedup": 1.0017482517482517,
+      "latency_change_percent": -0.17452006980802626,
+      "block_medians_us": {
+        "baseline": [
+          11.38,
+          11.42,
+          11.5,
+          11.52
+        ],
+        "candidate": [
+          11.321,
+          11.4,
+          11.48,
+          11.52
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "e1fff8f820d5cb66633c659d67913f9fc167a17f7a4db497a7d4e5bbc28543dd",
+        "positions.bin": "d18da3d340ff4a46ea7f9f47ef7e0a03cfe4dd30039650e7540fea671764f988"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0034769596408608,
+        "reverse": 1.0008695652173913
+      }
+    },
+    {
+      "name": "large_half",
+      "shape": [
+        4,
+        1024,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "baseline_us": 51.871,
+      "candidate_us": 51.881,
+      "speedup": 0.9998072512094986,
+      "latency_change_percent": 0.019278594975991048,
+      "block_medians_us": {
+        "baseline": [
+          51.841,
+          51.741,
+          52.021,
+          51.901
+        ],
+        "candidate": [
+          51.781,
+          51.781,
+          51.981,
+          52.001
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "c112bbebead9c04f043c709a7e29bad9b49775b3444cdb31beedb6876413291c",
+        "positions.bin": "10e0a00cfce00173169d537069b021acc5da0e1c2eec497057eeb156b7e4c1d4"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0001931210289488,
+        "reverse": 0.9994229770537209
+      }
+    },
+    {
+      "name": "heads256",
+      "shape": [
+        1,
+        32,
+        256,
+        128
+      ],
+      "dtype": "float16",
+      "baseline_us": 8.64,
+      "candidate_us": 8.629999999999999,
+      "speedup": 1.0011587485515645,
+      "latency_change_percent": -0.11574074074075513,
+      "block_medians_us": {
+        "baseline": [
+          8.6,
+          8.6,
+          8.68,
+          8.74
+        ],
+        "candidate": [
+          8.681,
+          8.541,
+          8.62,
+          8.64
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "dfbdfa1fc867b75fdda5c277332f089d288992681d63c41fd6a10f4021fef2c0",
+        "positions.bin": "bed34c196808247755e178b51e0691dcb20f765d687985176ccabe00274b4008"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9987225641621181,
+        "reverse": 1.0092699884125147
+      }
+    },
+    {
+      "name": "aligned_d512_half",
+      "shape": [
+        1,
+        7,
+        17,
+        512
+      ],
+      "dtype": "float16",
+      "baseline_us": 8.38,
+      "candidate_us": 8.19,
+      "speedup": 1.0231990231990233,
+      "latency_change_percent": -2.2673031026253176,
+      "block_medians_us": {
+        "baseline": [
+          8.46,
+          8.3,
+          8.74,
+          7.981
+        ],
+        "candidate": [
+          8.42,
+          7.96,
+          8.54,
+          7.96
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "08ded38694d38c9dc9657f71fc13db4e2284c72bc3b1ca909cb5c6e834cd3940",
+        "positions.bin": "68f8dd6698c7e632df33245fa95018a3ee242da9aad10d7669efb6466ce6d2a0"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0231990231990233,
+        "reverse": 1.0133939393939393
+      }
+    },
+    {
+      "name": "wide_half",
+      "shape": [
+        1,
+        7,
+        17,
+        1024
+      ],
+      "dtype": "float16",
+      "baseline_us": 9.309999999999999,
+      "candidate_us": 9.29,
+      "speedup": 1.0021528525296017,
+      "latency_change_percent": -0.21482277121374072,
+      "block_medians_us": {
+        "baseline": [
+          9.84,
+          8.78,
+          10.14,
+          8.46
+        ],
+        "candidate": [
+          9.8,
+          8.501,
+          10.04,
+          8.78
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "c900481f5b4e02a61bf3ff5920450381c107414d7f9a9c025a45a90e7be59e49",
+        "positions.bin": "8855019b6cf41ae94871734e29098840e547db0d42b10c8f68ad62b591ee571a"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0174307414895358,
+        "reverse": 0.9883103081827843
+      }
+    },
+    {
+      "name": "prefill_h32_d128_half",
+      "shape": [
+        2,
+        512,
+        32,
+        128
+      ],
+      "dtype": "float16",
+      "baseline_us": 15.91,
+      "candidate_us": 15.8,
+      "speedup": 1.0069620253164557,
+      "latency_change_percent": -0.6913890634820841,
+      "block_medians_us": {
+        "baseline": [
+          15.9,
+          15.921,
+          15.92,
+          15.881
+        ],
+        "candidate": [
+          15.8,
+          15.74,
+          15.8,
+          15.901
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "7c65bdc4475660c870cfaf0cb7eb931cd377515e386743685f30cb9d4a293a6c",
+        "positions.bin": "756c434c81818d335b4f9deeb8bc27fe7b32dd1ce85c9176f80de84dcf8221ce"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0089093214965124,
+        "reverse": 1.0031544746222516
+      }
+    },
+    {
+      "name": "prefill_h32_d128_float",
+      "shape": [
+        2,
+        512,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "baseline_us": 14.22,
+      "candidate_us": 14.220500000000001,
+      "speedup": 0.9999648394922822,
+      "latency_change_percent": 0.003516174402262706,
+      "block_medians_us": {
+        "baseline": [
+          14.14,
+          14.081,
+          14.3,
+          14.3
+        ],
+        "candidate": [
+          14.141,
+          14.12,
+          14.3,
+          14.36
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "fcb7ab40ebf3806ff19476c249ca22343cfee71e745ac35b9a3399123f1f93a6",
+        "positions.bin": "65c1582bc7cf322aedd677fc905b78fbfd5ea163509533b2f10fb9ab4203bc9c"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9985846219171296,
+        "reverse": 0.9979064898813678
+      }
+    },
+    {
+      "name": "prefill_h32_d256_half",
+      "shape": [
+        2,
+        512,
+        32,
+        256
+      ],
+      "dtype": "float16",
+      "baseline_us": 26.43,
+      "candidate_us": 26.451,
+      "speedup": 0.999206079165249,
+      "latency_change_percent": 0.07945516458569557,
+      "block_medians_us": {
+        "baseline": [
+          26.36,
+          26.4,
+          26.481,
+          26.46
+        ],
+        "candidate": [
+          26.34,
+          26.421,
+          26.501,
+          26.481
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "563b93eb2ae7878dce75ba6e1fa8f7bbf4d1f4c88105cfde8f62b4a404340b63",
+        "positions.bin": "046654a0d99123e0dfd3bd954413dc244340bac6510eb5b1cc076a86d956b0b5"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.999981046606395,
+        "reverse": 0.9992261522781323
+      }
+    },
+    {
+      "name": "prefill_h8_d64_half",
+      "shape": [
+        2,
+        512,
+        8,
+        64
+      ],
+      "dtype": "float16",
+      "baseline_us": 10.4905,
+      "candidate_us": 10.5205,
+      "speedup": 0.9971484245045388,
+      "latency_change_percent": 0.2859730232114721,
+      "block_medians_us": {
+        "baseline": [
+          10.38,
+          10.421,
+          10.56,
+          10.6
+        ],
+        "candidate": [
+          10.481,
+          10.42,
+          10.62,
+          10.56
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "5e4c9c5a81ba2d3b010fbe5e78b4b2908442b401a2cc29ab2e8c5ead3239748c",
+        "positions.bin": "0df1140e78399ee91073c972dcd7aef6eaac6ddd1370c52270e9bbd6571b128f"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9952155399263194,
+        "reverse": 0.9990557129367328
+      }
+    },
+    {
+      "name": "prefill_h3_d24_half",
+      "shape": [
+        2,
+        512,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "baseline_us": 7.14,
+      "candidate_us": 7.09,
+      "speedup": 1.007052186177715,
+      "latency_change_percent": -0.7002801120448154,
+      "block_medians_us": {
+        "baseline": [
+          7.081,
+          7.1,
+          7.181,
+          7.18
+        ],
+        "candidate": [
+          7.06,
+          7.08,
+          7.24,
+          7.1
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "390ad93857dc563cfd4dbd515369e76681a42d3bc11fb4d7c98ea38015f09f1d",
+        "positions.bin": "e4c107e05d0e9eaef9725f2e312d2ab1cd8316afddc44ad4396d618a735fd8b1"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0028995756718528,
+        "reverse": 1.0014644351464437
+      }
+    },
+    {
+      "name": "prefill_h32_d30_float",
+      "shape": [
+        2,
+        512,
+        32,
+        30
+      ],
+      "dtype": "float32",
+      "baseline_us": 19.781,
+      "candidate_us": 19.7605,
+      "speedup": 1.0010374231421268,
+      "latency_change_percent": -0.10363480107172807,
+      "block_medians_us": {
+        "baseline": [
+          19.721,
+          19.681,
+          19.841,
+          19.881
+        ],
+        "candidate": [
+          19.701,
+          19.68,
+          19.82,
+          19.82
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "df6ee7a24c09dab99ef933813ffaf346947387504fa0dc54232450cb28759df5",
+        "positions.bin": "f12f541ab2b3661b3aa0b6faa59a004d9f171a7bec2175401eb4a4034ddfac66"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.000533252075874,
+        "reverse": 1.0020686175580222
+      }
+    },
+    {
+      "name": "prefill_h32_d96_half",
+      "shape": [
+        2,
+        512,
+        32,
+        96
+      ],
+      "dtype": "float16",
+      "baseline_us": 15.73,
+      "candidate_us": 15.73,
+      "speedup": 1.0,
+      "latency_change_percent": 0.0,
+      "block_medians_us": {
+        "baseline": [
+          15.66,
+          15.68,
+          15.78,
+          15.9
+        ],
+        "candidate": [
+          15.661,
+          15.7,
+          15.76,
+          15.8
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "91ceeeab68bbd6e9e0da66fe28b48065bf3934b85af4dae51ccd1651adfede2e",
+        "positions.bin": "666d6a753176e15ecc3afa9e4b7fcea04a06e307a79ffda895305c29bf03b6d9"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9993303784955838,
+        "reverse": 1.0038022813688212
+      }
+    },
+    {
+      "name": "prefill_h32_d1024_half",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float16",
+      "baseline_us": 29.081,
+      "candidate_us": 29.0705,
+      "speedup": 1.0003611908979895,
+      "latency_change_percent": -0.036106048622808196,
+      "block_medians_us": {
+        "baseline": [
+          28.981,
+          29.021,
+          29.141,
+          29.141
+        ],
+        "candidate": [
+          29.04,
+          28.98,
+          29.2,
+          29.101
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "18d35046421d8cda3701af58dacaacf6da8effd765290cd6cbfa52a3d794e324",
+        "positions.bin": "0a655fb2b854784cd77089c9b1a0e9246a30f8c1d3b900a5c75c478a2933ea5f"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9996897621509825,
+        "reverse": 0.9996741050753846
+      }
+    },
+    {
+      "name": "prefill_h32_d1024_float",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float32",
+      "baseline_us": 32.891,
+      "candidate_us": 32.851,
+      "speedup": 1.0012176189461508,
+      "latency_change_percent": -0.12161381532941329,
+      "block_medians_us": {
+        "baseline": [
+          32.861,
+          32.741,
+          33.001,
+          32.921
+        ],
+        "candidate": [
+          32.801,
+          32.721,
+          32.901,
+          32.941
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "91367b251bbdaa96f6cbc6c1cfc81ead1a6edbba9a272c929e5dead764fa8af4",
+        "positions.bin": "866eeb1702eb89448c1de882f38414848ee7d13349a22089e39a90c905d9ef37"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0012209639510394,
+        "reverse": 1.0012150299201115
+      }
+    },
+    {
+      "name": "stream_h128_d64_half",
+      "shape": [
+        2,
+        4096,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "baseline_us": 214.74450000000002,
+      "candidate_us": 214.935,
+      "speedup": 0.9991136855328355,
+      "latency_change_percent": 0.08871007173640866,
+      "block_medians_us": {
+        "baseline": [
+          215.144,
+          214.505,
+          214.184,
+          214.984
+        ],
+        "candidate": [
+          215.144,
+          214.945,
+          214.925,
+          214.625
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "dff441bc4a51a086652aadbb697e6507fecb1a6645f1762cdc3613eded7c7d97",
+        "positions.bin": "0c64a12c59cc49c670ed5f4a747926cf3664ea47c1bf44c2930421da066ff8d5"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9989769559323768,
+        "reverse": 0.999110697241299
+      }
+    },
+    {
+      "name": "stream_h32_d128_float",
+      "shape": [
+        2,
+        4096,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "baseline_us": 215.7445,
+      "candidate_us": 215.3745,
+      "speedup": 1.00171793782458,
+      "latency_change_percent": -0.17149915756831113,
+      "block_medians_us": {
+        "baseline": [
+          215.605,
+          215.084,
+          215.884,
+          216.404
+        ],
+        "candidate": [
+          215.445,
+          215.304,
+          215.665,
+          215.285
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "1916ce8556899dec2a3637c15eb874fa14fb1b041d894e3eb0ffc462e1a99a5f",
+        "positions.bin": "0fd01c92726223a6d208175d6fc5e1a647b9c5a782cbdbdf3a8b6350847aabcb"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9998607077439529,
+        "reverse": 1.0031047685346328
+      }
+    },
+    {
+      "name": "single_token_many_heads",
+      "shape": [
+        1,
+        1,
+        256,
+        128
+      ],
+      "dtype": "float16",
+      "baseline_us": 5.41,
+      "candidate_us": 5.359999999999999,
+      "speedup": 1.0093283582089554,
+      "latency_change_percent": -0.9242144177449285,
+      "block_medians_us": {
+        "baseline": [
+          6.08,
+          5.26,
+          5.38,
+          5.44
+        ],
+        "candidate": [
+          5.38,
+          5.34,
+          6.32,
+          5.3
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "3ff1d5efe0f4425cb6065bc551cb4837f6f05afc43e3ececc4ceaa3434bf94d2",
+        "positions.bin": "75a2861f5330b32dd09f85cb14ed4dce68d344a286b4f0ba04e3a61de9e2ec04"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0578358208955225,
+        "reverse": 0.9311531841652323
+      }
+    },
+    {
+      "name": "short_s16_h32",
+      "shape": [
+        1,
+        16,
+        32,
+        128
+      ],
+      "dtype": "float32",
+      "baseline_us": 6.8305,
+      "candidate_us": 6.8100000000000005,
+      "speedup": 1.0030102790014683,
+      "latency_change_percent": -0.3001244418417315,
+      "block_medians_us": {
+        "baseline": [
+          7.68,
+          6.0,
+          7.661,
+          6.0
+        ],
+        "candidate": [
+          7.64,
+          5.96,
+          7.641,
+          5.98
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "ed5246de613a21e0b0ec24041feb934a413fe34caff774ed908534203d90ce6c",
+        "positions.bin": "506c98036047e57fa5c3555ccb8b922e26a503ec9afee0403246ecfeadaf880b"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0058823529411764,
+        "reverse": 1.0029366419499302
+      }
+    },
+    {
+      "name": "narrow_head_long",
+      "shape": [
+        1,
+        8192,
+        4,
+        16
+      ],
+      "dtype": "float16",
+      "baseline_us": 20.73,
+      "candidate_us": 20.700000000000003,
+      "speedup": 1.0014492753623188,
+      "latency_change_percent": -0.14471780028942893,
+      "block_medians_us": {
+        "baseline": [
+          20.521,
+          20.7,
+          20.76,
+          20.801
+        ],
+        "candidate": [
+          20.62,
+          20.62,
+          20.78,
+          20.8
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "c36aa69b0a9e107f88df7d473a652455d3d72f380c1182f208396d45eb4180cb",
+        "positions.bin": "4e051244f89aa70f396968ce54d96563d0f872df4bd85daabc15db0bd239b5c9"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9995392822502426,
+        "reverse": 0.9995430495430496
+      }
+    },
+    {
+      "name": "unaligned_h128_d30_half",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float16",
+      "baseline_us": 99.792,
+      "candidate_us": 99.872,
+      "speedup": 0.9991989746876001,
+      "latency_change_percent": 0.08016674683342107,
+      "block_medians_us": {
+        "baseline": [
+          99.762,
+          99.722,
+          99.862,
+          99.822
+        ],
+        "candidate": [
+          99.722,
+          99.882,
+          99.862,
+          99.922
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "c6a237291092fb801de8b0329ac4701f970e41683d0b458f5d3fcf1cbe9ac370",
+        "positions.bin": "78490796833c12939c501b199818233d481327038721f9913bcaa68c1136091a"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9993988096430934,
+        "reverse": 0.9994994594161695
+      }
+    },
+    {
+      "name": "unaligned_h128_d30_float",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float32",
+      "baseline_us": 99.94200000000001,
+      "candidate_us": 99.922,
+      "speedup": 1.000200156121775,
+      "latency_change_percent": -0.02001160673191782,
+      "block_medians_us": {
+        "baseline": [
+          99.822,
+          99.822,
+          100.062,
+          100.162
+        ],
+        "candidate": [
+          99.862,
+          99.842,
+          100.002,
+          99.982
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "3034e37c11548d6bcec9800bbf5c02253a9ebf58ce4815f61bef307de4c06a81",
+        "positions.bin": "b626a8d6d329968f171667a891ff12ea5861649cc6b9af4e81b31a96ea88f4f1"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.999699555341906,
+        "reverse": 1.0012000960076806
+      }
+    },
+    {
+      "name": "prefill_d192_half",
+      "shape": [
+        2,
+        512,
+        32,
+        192
+      ],
+      "dtype": "float16",
+      "baseline_us": 20.441000000000003,
+      "candidate_us": 20.420499999999997,
+      "speedup": 1.0010038931465932,
+      "latency_change_percent": -0.10028863558536605,
+      "block_medians_us": {
+        "baseline": [
+          20.36,
+          20.361,
+          20.58,
+          20.521
+        ],
+        "candidate": [
+          20.28,
+          20.4,
+          20.46,
+          20.441
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "19dda3eca8f1a5866e4923a21afd6ba48979424d6d1c984c3af648db63885e24",
+        "positions.bin": "c119736c6fb310750abc78fc478501be27a383557ddc87a918fb8c37664fc7b4"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.001007866273353,
+        "reverse": 1.0048898559937411
+      }
+    },
+    {
+      "name": "prefill_d384_float",
+      "shape": [
+        2,
+        512,
+        32,
+        384
+      ],
+      "dtype": "float32",
+      "baseline_us": 30.320500000000003,
+      "candidate_us": 30.290999999999997,
+      "speedup": 1.0009738866329936,
+      "latency_change_percent": -0.0972939100608694,
+      "block_medians_us": {
+        "baseline": [
+          30.341,
+          30.161,
+          30.321,
+          30.32
+        ],
+        "candidate": [
+          30.301,
+          30.101,
+          30.321,
+          30.281
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "977a9c23d016e36fad6572f71b4ba1a5e16da87b33a3367b9b6a9ff5d31b1887",
+        "positions.bin": "50314ab727b89e130b0435cece836a5c1bb3e5159cd829ab79913a6777195320"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0016555743187312,
+        "reverse": 1.0006435431173888
+      }
+    },
+    {
+      "name": "large_stream_half",
+      "shape": [
+        4,
+        8192,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "baseline_us": 843.927,
+      "candidate_us": 844.1469999999999,
+      "speedup": 0.9997393818849087,
+      "latency_change_percent": 0.026068605459950156,
+      "block_medians_us": {
+        "baseline": [
+          843.657,
+          843.257,
+          844.376,
+          844.197
+        ],
+        "candidate": [
+          844.197,
+          844.837,
+          844.097,
+          843.437
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "60c6498c0084a2b1d1080375a541998a7699bb51fa352cc60b94b542df264cf0",
+        "positions.bin": "874d497cf66b26cef2540ed23d7036a3c0d21277d6f6e3298fa7162d9743216a"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9987448446863709,
+        "reverse": 1.0006156912986641
+      }
+    },
+    {
+      "name": "large_stream_float",
+      "shape": [
+        2,
+        8192,
+        64,
+        128
+      ],
+      "dtype": "float32",
+      "baseline_us": 841.3565,
+      "candidate_us": 841.387,
+      "speedup": 0.9999637503312983,
+      "latency_change_percent": 0.0036250982787811026,
+      "block_medians_us": {
+        "baseline": [
+          840.097,
+          841.036,
+          841.677,
+          841.756
+        ],
+        "candidate": [
+          841.837,
+          841.037,
+          841.417,
+          841.357
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "28ef6c97a512c1ca65b14563e7608c4d3cbcb1cb4e44b99d248c4f876eff7200",
+        "positions.bin": "734a3ae8f22b2c3042beab6171b81fb52016e5aa2252f6458bc53a56117672dd"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9989654602780718,
+        "reverse": 1.0003916152733523
+      }
+    },
+    {
+      "name": "sequence_d1024_half",
+      "shape": [
+        1,
+        8192,
+        1,
+        1024
+      ],
+      "dtype": "float16",
+      "baseline_us": 87.2715,
+      "candidate_us": 87.2715,
+      "speedup": 1.0,
+      "latency_change_percent": 0.0,
+      "block_medians_us": {
+        "baseline": [
+          87.362,
+          87.202,
+          87.281,
+          87.262
+        ],
+        "candidate": [
+          87.302,
+          87.082,
+          87.302,
+          87.241
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "609135e30693bc21b3c086843e79565a69dc92258ff5bb38b875847d9a138d90",
+        "positions.bin": "ccb114d7c753fa1b4e4a313fb280060ad8c20b1f17b5531f88419d06146bc77b"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.00103220478943,
+        "reverse": 1.0
+      }
+    },
+    {
+      "name": "unaligned_h64_d126_half",
+      "shape": [
+        2,
+        512,
+        64,
+        126
+      ],
+      "dtype": "float16",
+      "baseline_us": 108.542,
+      "candidate_us": 97.7015,
+      "speedup": 1.1109553077486016,
+      "latency_change_percent": -9.987378157763816,
+      "block_medians_us": {
+        "baseline": [
+          108.882,
+          108.363,
+          108.402,
+          108.682
+        ],
+        "candidate": [
+          98.682,
+          97.541,
+          97.862,
+          96.742
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "7c42c1ca8b25c2fa435bcf02f0b9e2d8dc220972a51bc222eebf2c376318ab8b",
+        "positions.bin": "a708d7010207a5acbb9d41bc41689f059117c60915f79252eda07209e652d7e2"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.1071332106837628,
+        "reverse": 1.115516638918008
+      }
+    },
+    {
+      "name": "unaligned_h64_d254_float",
+      "shape": [
+        2,
+        512,
+        64,
+        254
+      ],
+      "dtype": "float32",
+      "baseline_us": 145.233,
+      "candidate_us": 145.15300000000002,
+      "speedup": 1.0005511425874765,
+      "latency_change_percent": -0.055083899664665203,
+      "block_medians_us": {
+        "baseline": [
+          145.383,
+          146.243,
+          144.883,
+          145.083
+        ],
+        "candidate": [
+          145.103,
+          144.543,
+          145.203,
+          145.383
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "4bf5fd4385066fff4c01211c3d5a6a7b0da803fd5fcf01412b4573613fb80b8a",
+        "positions.bin": "3a9b1c01c60338fe437c463416135d97fac8b9c497b0d5ae326006afa63ce9cf"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.0068359307568548,
+        "reverse": 0.9978663803486747
+      }
+    },
+    {
+      "name": "sequence_d1024_float",
+      "shape": [
+        1,
+        8192,
+        1,
+        1024
+      ],
+      "dtype": "float32",
+      "baseline_us": 94.3315,
+      "candidate_us": 94.50200000000001,
+      "speedup": 0.9981958053797803,
+      "latency_change_percent": 0.18074556219291882,
+      "block_medians_us": {
+        "baseline": [
+          94.301,
+          94.282,
+          94.462,
+          94.362
+        ],
+        "candidate": [
+          94.522,
+          94.302,
+          94.682,
+          94.482
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "2a959a7db8a71c20fbca2b0e00715a5eadde3584016abb01b96ceca7104489d2",
+        "positions.bin": "baf900077a8770b9f5472722917b945698c1959724876c49b9ea2e867c2dfc27"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 0.9987236791933228,
+        "reverse": 0.9982026178342603
+      }
+    }
+  ]
+}

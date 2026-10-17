@@ -1,0 +1,71 @@
+--- build/agentic_r5/direct/kernel.asc
++++ build/agentic_r5/compact/kernel.asc
+@@ -751,7 +751,8 @@
+         pipe_.InitBuffer(in_, 1, 2 * capacity_ * sizeof(T));
+         pipe_.InitBuffer(out_, 1, 2 * capacity_ * sizeof(T));
+         pipe_.InitBuffer(work_, 5 * capacity_ * sizeof(float));
+-        pipe_.InitBuffer(freq_, (width_>256?512:pitch_) * sizeof(float));
++        // Keep one coefficient row across all head groups of this token.
++        pipe_.InitBuffer(freq_, ((width_>256?512:pitch_) + 2 * pitch_) * sizeof(float));
+         auto f = freq_.Get<float>();
+         FillDeviceFrequencies(pipe_,frequencyMath_,f,frequencies,width_,pitch_,work_.Get<float>());
+     }
+@@ -759,9 +760,14 @@
+     __aicore__ inline void Process() {
+         auto a = work_.Get<float>();
+         auto b = a[capacity_];
+-        auto c = a[2 * capacity_];
+-        auto s = a[3 * capacity_];
++        auto lo = a[2 * capacity_];
++        auto hi = a[3 * capacity_];
+         auto tmp = a[4 * capacity_];
++        auto c = freq_.Get<float>()[(width_>256?512:pitch_)];
++        auto s = c[pitch_];
++        uint8_t stride = pitch_ / 8;
++        BinaryRepeatParams broadcast{1,1,1,stride,stride,0};
++        BinaryRepeatParams same{1,1,1,stride,stride,stride};
+         uint64_t jobs = tokens_ * groups_;
+         // Contiguous partitions retain token-local cos/sin when a token spans tiles.
+         uint64_t begin = jobs * GetBlockIdx() / GetBlockNum();
+@@ -799,10 +805,6 @@
+                 Muls(a, freq_.Get<float>(), static_cast<float>(position), pitch_);
+                 
+                 SinCosFp32(a,c,s,tmp,b,pitch_);
+-                for (uint32_t h = 1; h < tileHeads_; ++h) {
+-                    DataCopy(c[h * pitch_], c, pitch_);
+-                    DataCopy(s[h * pitch_], s, pitch_);
+-                }
+                 
+                 lastToken = token;
+             }
+@@ -810,17 +812,19 @@
+             LoadFp32(b, in[capacity_], count);
+             
+             auto out = out_.AllocTensor<T>();
+-            Mul(tmp, b, s, count); 
+-            Mul(a, a, c, count); 
+-            Sub(a, a, tmp, count); 
+-            // Recover the original first half for y2; the input is still resident.
+-            LoadFp32(tmp, in, count);
+-            
+-            Mul(tmp, tmp, s, count); 
+-            Mul(b, b, c, count); 
+-            Add(b, b, tmp, count); 
+-            StoreFp32(out, a, count);
+-            StoreFp32(out[capacity_], b, count);
++            // Retain both original halves; each coefficient row broadcasts to
++            // all heads. Products and the separate Sub/Add keep their rounding.
++            for (uint32_t col = 0; col < pitch_; col += 64) {
++                uint64_t mask = pitch_ - col < 64 ? pitch_ - col : 64;
++                Mul(tmp[col], b[col], s[col], mask, rows, broadcast);
++                Mul(lo[col], a[col], c[col], mask, rows, broadcast);
++                Sub(lo[col], lo[col], tmp[col], mask, rows, same);
++                Mul(tmp[col], a[col], s[col], mask, rows, broadcast);
++                Mul(hi[col], b[col], c[col], mask, rows, broadcast);
++                Add(hi[col], hi[col], tmp[col], mask, rows, same);
++            }
++            StoreFp32(out, lo, count);
++            StoreFp32(out[capacity_], hi, count);
+             out_.EnQue(out); out = out_.DeQue<T>();
+             DataCopyExtParams store{static_cast<uint16_t>(rows), width_ * uint32_t(sizeof(T)),
+                                     localGap, (dim_ - width_) * uint32_t(sizeof(T)), 0};

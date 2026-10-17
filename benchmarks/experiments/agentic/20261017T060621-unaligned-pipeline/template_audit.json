@@ -1,0 +1,29 @@
+{
+  "files": [
+    "CMakeLists.txt",
+    "data_utils.h",
+    "kernel.asc",
+    "main.asc",
+    "run.sh",
+    "scripts/RotaryPosEmb.py",
+    "scripts/gen_data.py",
+    "scripts/verify_result.py"
+  ],
+  "changed": [
+    "kernel.asc"
+  ],
+  "unchanged_support_files": 7,
+  "cxx_standard": 14,
+  "additional_dependency": false,
+  "device_entries_identical_to_validated_normal_binary": 44,
+  "template_binary_sha256": "ebba64b4b0e9d0e848e457dab6ad891b7485f967c113cfd39c46a174cb2e9f4b",
+  "support_file_sha256": {
+    "CMakeLists.txt": "9212022b702d292af324a51394901950ff3032b43b014f1a3071a8f80e0b154b",
+    "data_utils.h": "1bdaae93c09b65e2615691a39bfd611122c09668d90e21809c52516f443bfd84",
+    "main.asc": "0e8746b7f81013970705766c853097a200906129e0bcd90b9d92cfc78dc130d0",
+    "run.sh": "6a293a38d60d56e416d0515732847eb86aa6d464fa15448b1ec5a36a9636c21a",
+    "scripts/RotaryPosEmb.py": "7d05b220d60dbd788a32b3208e6fcdc4226551224020511f4f999c309b9d058a",
+    "scripts/gen_data.py": "23becb4ffbbbedabcba2cf27cb876be81c4c4f31307bea11e410179bb1a9457e",
+    "scripts/verify_result.py": "023ea57bfefe6701c8ec8a0aa50696cd9ba228890b8e1cbfd9f6f8ae38b5d371"
+  }
+}

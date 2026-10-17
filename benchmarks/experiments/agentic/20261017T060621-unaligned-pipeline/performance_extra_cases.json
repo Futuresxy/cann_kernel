@@ -1,0 +1,132 @@
+[
+  {
+    "name": "r5_pipeperf_d66_float16",
+    "shape": [
+      1,
+      257,
+      65,
+      66
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35000
+  },
+  {
+    "name": "r5_pipeperf_d66_float32",
+    "shape": [
+      1,
+      257,
+      65,
+      66
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35001
+  },
+  {
+    "name": "r5_pipeperf_d126_float16",
+    "shape": [
+      1,
+      257,
+      65,
+      126
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35002
+  },
+  {
+    "name": "r5_pipeperf_d126_float32",
+    "shape": [
+      1,
+      257,
+      65,
+      126
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35003
+  },
+  {
+    "name": "r5_pipeperf_d254_float16",
+    "shape": [
+      1,
+      257,
+      65,
+      254
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35004
+  },
+  {
+    "name": "r5_pipeperf_d254_float32",
+    "shape": [
+      1,
+      257,
+      65,
+      254
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35005
+  },
+  {
+    "name": "r5_pipeperf_d514_float16",
+    "shape": [
+      1,
+      257,
+      65,
+      514
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35006
+  },
+  {
+    "name": "r5_pipeperf_d514_float32",
+    "shape": [
+      1,
+      257,
+      65,
+      514
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35007
+  },
+  {
+    "name": "r5_pipeperf_d1022_float16",
+    "shape": [
+      1,
+      257,
+      65,
+      1022
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35008
+  },
+  {
+    "name": "r5_pipeperf_d1022_float32",
+    "shape": [
+      1,
+      257,
+      65,
+      1022
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "zero_every": 7,
+    "seed": 35009
+  }
+]

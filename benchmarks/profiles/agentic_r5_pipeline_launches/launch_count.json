@@ -1,0 +1,39 @@
+{
+  "label": "agentic_r5_pipeline_launches",
+  "source_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+  "binary_sha256": "97e330dafc38e33a081daf8eb4a39366de3bd30ecb0c4247350a4d39f13e6de3",
+  "local_cases": [
+    "tiny",
+    "unaligned_half",
+    "deepseek_half",
+    "deepseek_float",
+    "extreme_d1024",
+    "packed_mixed_zero_float",
+    "packed_mixed_zero_half",
+    "dim30",
+    "dim514",
+    "sequence8192",
+    "aligned_d512_fp32",
+    "stream_h128_d64_half",
+    "head_tile_large_half",
+    "wide_single_head_float",
+    "half_wide_prefill"
+  ],
+  "case_count": 15,
+  "calls_per_case": 5,
+  "run_kernel_calls": 75,
+  "actual_device_kernel_tasks": 75,
+  "expected_device_kernel_tasks": 75,
+  "single_kernel_rule_passed": true,
+  "command": [
+    "msprof",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/launch_profiles/agentic_r5_pipeline_launches",
+    "--runtime-api=on",
+    "--task-time=on",
+    "--ai-core=off",
+    "--aicpu=off",
+    "--type=text",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline_normal/rope_runner --device 0 --batch /data/pyptouser/songxiaoyou/cann_kernel/project/build/launch_profiles/agentic_r5_pipeline_launches/cases.txt"
+  ],
+  "platform_hidden_cases_tested": false
+}

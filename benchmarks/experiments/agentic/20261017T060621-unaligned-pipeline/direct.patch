@@ -1,0 +1,92 @@
+--- platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc
++++ build/agentic_r5/direct/kernel.asc
+@@ -841,6 +841,89 @@
+     uint32_t heads_, dim_, half_, colStart_, width_, pitch_, tileHeads_, groups_, capacity_;
+ };
+ 
++// FP32 keeps the two original halves in VECIN and computes directly into
++// VECOUT. Dense coefficients preserve the generic count-API arithmetic.
++template <> class Rotary<float> {
++public:
++    template <typename F>
++    __aicore__ inline void Init(GM_ADDR x, GM_ADDR pos, GM_ADDR y, uint64_t tokens,
++        uint32_t heads, uint32_t dim, uint32_t colStart, uint32_t width,
++        uint32_t tileHeads, const F& frequencies) {
++        x_.SetGlobalBuffer((__gm__ float*)x);
++        y_.SetGlobalBuffer((__gm__ float*)y);
++        pos_.SetGlobalBuffer((__gm__ int32_t*)pos);
++        tokens_=tokens; heads_=heads; dim_=dim; half_=dim/2;
++        colStart_=colStart; width_=width; pitch_=(width+15)/16*16;
++        tileHeads_=tileHeads; groups_=(heads+tileHeads-1)/tileHeads;
++        capacity_=tileHeads*pitch_;
++        pipe_.InitBuffer(in_,1,2*capacity_*sizeof(float));
++        pipe_.InitBuffer(out_,1,2*capacity_*sizeof(float));
++        pipe_.InitBuffer(work_,3*capacity_*sizeof(float));
++        pipe_.InitBuffer(freq_,(width_>256?512:pitch_)*sizeof(float));
++        FillDeviceFrequencies(pipe_,frequencyMath_,freq_.Get<float>(),frequencies,
++                              width_,pitch_,work_.Get<float>());
++    }
++    __aicore__ inline void Process() {
++        auto c=work_.Get<float>(); auto s=c[capacity_]; auto tmp=c[2*capacity_];
++        uint64_t jobs=tokens_*groups_;
++        uint64_t begin=jobs*GetBlockIdx()/GetBlockNum();
++        uint64_t end=jobs*(GetBlockIdx()+1)/GetBlockNum();
++        uint64_t lastToken=static_cast<uint64_t>(-1);
++        for(uint64_t job=begin;job<end;++job) {
++            uint64_t token=job/groups_;
++            uint32_t firstHead=(job%groups_)*tileHeads_;
++            uint32_t rows=heads_-firstHead; if(rows>tileHeads_)rows=tileHeads_;
++            uint32_t count=rows*pitch_;
++            uint64_t offset=(token*heads_+firstHead)*dim_+colStart_;
++            uint32_t localGap=(pitch_*sizeof(float)-((width_*sizeof(float)+31)/32*32))/32;
++            auto input=in_.AllocTensor<float>();
++            DataCopyExtParams load{static_cast<uint16_t>(rows),width_*uint32_t(sizeof(float)),
++                (dim_-width_)*uint32_t(sizeof(float)),localGap,0};
++            DataCopyPad(input,x_[offset],load,DataCopyPadExtParams<float>{false,0,0,0});
++            DataCopyPad(input[capacity_],x_[offset+half_],load,DataCopyPadExtParams<float>{false,0,0,0});
++            in_.EnQue(input); input=in_.DeQue<float>();
++            auto output=out_.AllocTensor<float>();
++            int32_t position=pos_.GetValue(token);
++            if(position==0) {
++                // The output queue supplies V->MTE3 ownership for this copy.
++                DataCopy(output,input,count);
++                DataCopy(output[capacity_],input[capacity_],count);
++            } else {
++                if(token!=lastToken) {
++                    // Both output halves are scratch before rotation writes.
++                    Muls(output,freq_.Get<float>(),static_cast<float>(position),pitch_);
++                    SinCosFp32(output,c,s,tmp,output[capacity_],pitch_);
++                    for(uint32_t h=1;h<tileHeads_;++h) {
++                        DataCopy(c[h*pitch_],c,pitch_);
++                        DataCopy(s[h*pitch_],s,pitch_);
++                    }
++                    lastToken=token;
++                }
++                Mul(tmp,input[capacity_],s,count);
++                Mul(output,input,c,count);
++                Sub(output,output,tmp,count);
++                Mul(tmp,input,s,count);
++                Mul(output[capacity_],input[capacity_],c,count);
++                Add(output[capacity_],output[capacity_],tmp,count);
++            }
++            out_.EnQue(output); output=out_.DeQue<float>();
++            DataCopyExtParams store{static_cast<uint16_t>(rows),width_*uint32_t(sizeof(float)),
++                localGap,(dim_-width_)*uint32_t(sizeof(float)),0};
++            DataCopyPad(y_[offset],output,store);
++            DataCopyPad(y_[offset+half_],output[capacity_],store);
++            PipeBarrier<PIPE_ALL>();
++            in_.FreeTensor(input); out_.FreeTensor(output);
++        }
++    }
++private:
++    TPipe pipe_; TBuf<TPosition::VECCALC> frequencyMath_;
++    TQue<QuePosition::VECIN,1> in_; TQue<QuePosition::VECOUT,1> out_;
++    TBuf<TPosition::VECCALC> work_,freq_;
++    GlobalTensor<float> x_,y_; GlobalTensor<int32_t> pos_;
++    uint64_t tokens_;
++    uint32_t heads_,dim_,half_,colStart_,width_,pitch_,tileHeads_,groups_,capacity_;
++};
++
+ template <typename T,typename F=Frequencies>
+ __global__ __vector__ void rotary_kernel(GM_ADDR x, GM_ADDR positions, GM_ADDR y,
+     uint64_t tokens, uint32_t heads, uint32_t dim, uint32_t colStart, uint32_t width, uint32_t tileHeads, F frequencies) {

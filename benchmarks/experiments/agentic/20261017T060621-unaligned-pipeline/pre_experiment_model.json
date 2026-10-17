@@ -1,0 +1,132 @@
+{
+  "request_id": "20261017T060621-unaligned-pipeline",
+  "parent_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "state": "model_complete_before_implementation",
+  "started_at": "2026-10-17T06:13:03.768152+00:00",
+  "protected_hashes": {
+    "operators/rotary_pos_emb/kernel.asc": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+    "submissions/rotary_pos_emb/latest.json": "a3813c80cfddd81ed838828e908fa4c7b34fdd3074ffa0e9cad1137ed514cec1",
+    "AGENTIC.md": "862d0edaaa828090de007b5c35abe80be2a19d79c00de6b16e23f2e199b6a157",
+    "kernel_requirement.md": "8af6ec98cd04b0d0105a5f35d24a3fa1b8b128c348f97c644f7458b5deaf5e4f",
+    "forbidden.md": "b6adc24318ecd1b7a4915b8dfd9fb560abb26d9da3e11239a5683b56aa197219",
+    "tools/suite.py": "a88d26387860a8d25c6299a5d977d602d81bbc9bae6527387631deb774d375b4",
+    "tuning_responses/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json": "0f68c69e506b83d58e386d091c035aca0fef0c4c40877d0df572f21494670afe"
+  },
+  "algorithm": "N=B*S,K=D/2: 3*N*H*D rotation FLOPs; X/Y minimum2*N*H*D*e bytes; per-core frequency and token-local trig reuse unchanged; int32 positions are exactly representable in FP32 over0..131072",
+  "numerical_chain": "All frequency/trig function source unchanged. Four separate Mul then Sub/Add with the same operands, cast, and p0 bit identity. Known trig/amplitude failure retained; no reference or threshold change.",
+  "causal_plan": [
+    {
+      "name": "direct",
+      "parent": "817f8364",
+      "change": "FP32 direct input/output queues, dense c/s and one cross temporary; depth1 and per-job PIPE_ALL retained; FP16 unchanged"
+    },
+    {
+      "name": "compact",
+      "parent": "direct",
+      "change": "Only FP16 uses the completed d655 compact broadcast, q1, per-job barriers; FP32 direct stays byte-identical"
+    },
+    {
+      "name": "pipeline",
+      "parent": "compact",
+      "change": "Both existing generic dtype paths input/output depth2, prefetch next job and remove only proved per-job PIPE_ALL; final drain retained"
+    }
+  ],
+  "bottleneck_evidence": [
+    "Previous source817 PMU D126half VEC39.169/MTE236.415/MTE336.514us; D254float VEC52.964/MTE277.146/MTE361.128us, all48core means, replaydiagnosis only.",
+    "Previous compact experiment reduced VEC but FP32 native regressed6.07%; retain dense FP32 coefficients and separate copy-removal from overlap.",
+    "Queue1 and per-job PIPE_ALL serialize stages. A pure dataflow/pipeline factor has not been tested by prior Gather, mask, trueFMA, frequency-folding, wide-two-read negatives."
+  ],
+  "expected_metrics": {
+    "direct": "remove3 half input DataCopy and2 half output DataCopy per job in FP32; retain c/s expansion and6 arithmetic APIs",
+    "compact": "reuse measured FP16 reduction; no new FP32 broadcast",
+    "pipeline": "unchanged GM traffic/instructions and arithmetic; overlap independent MTE2/V/MTE3, reduce elapsed critical path, no claim busy ratio is lane utilization"
+  },
+  "queue_dependency": {
+    "input": "GM->UB EnQue sets MTE2_V; DeQue waits. FreeTensor sets V_MTE2; AllocTensor on reused slot waits until all input V reads complete.",
+    "output": "V writes/copy -> EnQue V_MTE3 -> DeQue wait -> DataCopyPad. FreeTensor sets MTE3_V; subsequent AllocTensor waits before vector writes/trig scratch.",
+    "p0": "Copy both valid padded half arrays from input to output via VEC, then normal VECOUT EnQue/DeQue and stores; input is never used directly as MTE3 source.",
+    "scratch": "FP32 c/s/tmp persist in3cap work; angle is output[0:pitch], temp output[cap:cap+pitch], q tmp[0:pitch], only before rotation output writes. FP16 a/b/trig scratch before inputs loaded, then a/b retained while lo/hi/tmp used.",
+    "prefetch": "Prefetch(begin) only when begin<end; after DeQue current, prefetch job+1 only if job+1<end. Max2 live input slots, no unconsumed last prefetch. Output slots max2; final PIPE_ALL drains."
+  },
+  "SDK_protocol_reference": [
+    "AlignedRotary::Process",
+    "DirectFloatRotary::Process"
+  ],
+  "frequency_scratch_caveat": "FP32 work shrinks5cap to3cap. FillDeviceFrequencies function/math unchanged, but scratch-derived vector chunk/fallback can differ for small heads. Large target cap4096 still uses full pitch in either layout. Explicitly verify outputs across all1625; do not claim initialization cost unchanged in smaller families.",
+  "capacity_model": {
+    "formulas": {
+      "parent": "4*cap*e+20*cap+4*freq+fallback",
+      "direct_float": "28*cap+4*freq+fallback",
+      "compact_half_q1": "28*cap+4*(freq+2*pitch)+fallback",
+      "pipeline_half": "36*cap+4*(freq+2*pitch)+fallback",
+      "pipeline_float": "44*cap+4*freq+fallback"
+    },
+    "all_even_D16_1024_H1_256_including_unreachable_geometries": {
+      "direct": {
+        "2": [
+          116736,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ],
+        "4": [
+          116736,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ]
+      },
+      "compact": {
+        "2": [
+          120832,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ],
+        "4": [
+          116736,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ]
+      },
+      "pipeline": {
+        "2": [
+          153600,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ],
+        "4": [
+          182272,
+          1024,
+          256,
+          4096,
+          512,
+          0
+        ]
+      }
+    },
+    "budget": 192512
+  },
+  "SDK_files": {
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/include/basic_api/kernel_tpipe.h": "f98e3ce6f1531e5d91f16c8b37dec62737a485302d2237fda69355d334bbbe64",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/kernel_tquebind_impl.h": "72a791e5a60230fb7ca4e84df0e439872e4563dcfbe1125f9c31cc521cc35fda",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/kernel_event.h": "c9d6982034edc83c3c310106eb48181d5e91b252dd7bd7ce6243d7885d9a9f0d"
+  },
+  "small_head_review": {
+    "scalar_frequency_roots": "BuildExp2Roots writes5 uint64 roots=40B; minimum3cap FP32 work is192B, sufficient. No32-element roots table is allocated here.",
+    "trig": "For cap>=pitch, output2cap holds angle[pitch] and temp at offsetcap; tmp3rd work vector holds q[pitch]. All disjoint from persistent c/s. No minimum64-lane scratch assumption.",
+    "vector_fallback": "Retain original FillDeviceFrequencies full=17*max(pitch,32)+64 floats check, including fallback when reduced work<=6144 elements; exhaustive capacity model includes it."
+  }
+}

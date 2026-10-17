@@ -1,0 +1,657 @@
+{
+  "parent_half": {
+    "path": "benchmarks/profiles/agentic_r4_parent_unaligned_half",
+    "metadata": {
+      "case": {
+        "name": "unaligned_h64_d126_half",
+        "shape": [
+          2,
+          512,
+          64,
+          126
+        ],
+        "dtype": "float16",
+        "pmax": 131073
+      },
+      "command": [
+        "msprof",
+        "op",
+        "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+        "--launch-count=1",
+        "--launch-skip-before-match=5",
+        "--warm-up=2",
+        "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r4_parent_unaligned_half",
+        "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r2wide/candidate_runner --device 0 --shape 2 512 64 126 --dtype float16 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/unaligned_h64_d126_half --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+      ],
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60"
+    },
+    "summary": {
+      "PipeUtilization": {
+        "block_id": 23.5,
+        "aiv_time(us)": 122.85170079166667,
+        "aiv_total_cycles": 227275.64583333334,
+        "aiv_vec_time(us)": 39.169189,
+        "aiv_vec_ratio": 0.3191392708333333,
+        "aiv_mte2_time(us)": 36.415146479166665,
+        "aiv_mte2_ratio": 0.29619720833333335,
+        "aiv_mte2_active_bw(GB/s)": 8.9759968125,
+        "aiv_mte3_time(us)": 36.514471020833334,
+        "aiv_mte3_ratio": 0.2973576041666667,
+        "aiv_mte3_active_bw(GB/s)": 17.608906625,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 16.194346875,
+        "aiv_scalar_ratio": 0.13197229166666666,
+        "aiv_scalar_single_time(us)": 5.1895161666666665,
+        "aiv_scalar_dual_time(us)": 5.590799416666667,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 30.698851395833334,
+        "aiv_scalar_wait_ib_time(us)": 0.21531524999999999,
+        "aiv_scalar_wait_time(us)": 0.004042583333333333
+      },
+      "Memory": {
+        "block_id": 23.5,
+        "aiv_time(us)": 122.85170079166667,
+        "aiv_total_cycles": 227275.64583333334,
+        "aiv_ub_to_gm_bw(GB/s)": 5.221833604166666,
+        "aiv_gm_to_ub_bw(GB/s)": 2.652359875,
+        "aiv_main_mem_read_bw(GB/s)": 5.225719395833333,
+        "aiv_main_mem_write_bw(GB/s)": 5.222805,
+        "aiv_mte2_instructions": 86.33333333333333,
+        "aiv_mte2_ratio": 0.29619720833333335,
+        "aiv_mte3_instructions": 86.33333333333333,
+        "aiv_mte3_ratio": 0.2973576041666667,
+        "read_main_memory_datas(KB)": 672.5,
+        "write_main_memory_datas(KB)": 672.125,
+        "GM_to_UB_datas(KB)": 341.3333333333333,
+        "GM_to_UB_bw_usage_rate(%)": 1.2052894375,
+        "UB_to_GM_datas(KB)": 672.0,
+        "UB_to_GM_bw_usage_rate(%)": 2.7954140625
+      },
+      "OpBasicInfo": {
+        "Task Duration(us)": 132.102646,
+        "Block Dim": 48.0,
+        "Device Id": 0.0,
+        "Pid": 1753078.0,
+        "Current Freq": 1850.0,
+        "Rated Freq": 1850.0
+      },
+      "MemoryUB": {
+        "block_id": 23.5,
+        "aiv_time(us)": 122.85170079166667,
+        "aiv_total_cycles": 227275.64583333334,
+        "aiv_ub_read_bw_vector(GB/s)": 48.11830852083333,
+        "aiv_ub_write_bw_vector(GB/s)": 31.159028,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.0086214375
+      }
+    },
+    "core_ranges": {
+      "aiv_time(us)": {
+        "min": 112.408646,
+        "max": 131.157303
+      },
+      "aiv_vec_time(us)": {
+        "min": 38.320541,
+        "max": 39.593513
+      },
+      "aiv_mte2_time(us)": {
+        "min": 31.203243,
+        "max": 41.742161
+      },
+      "aiv_mte3_time(us)": {
+        "min": 32.376759,
+        "max": 40.91946
+      }
+    },
+    "sum_VEC_MTE2_MTE3_over_elapsed": 0.9124725647070889
+  },
+  "parent_float": {
+    "path": "benchmarks/profiles/agentic_r4_parent_unaligned_float",
+    "metadata": {
+      "case": {
+        "name": "unaligned_h64_d254_float",
+        "shape": [
+          2,
+          512,
+          64,
+          254
+        ],
+        "dtype": "float32",
+        "pmax": 131073
+      },
+      "command": [
+        "msprof",
+        "op",
+        "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+        "--launch-count=1",
+        "--launch-skip-before-match=5",
+        "--warm-up=2",
+        "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r4_parent_unaligned_float",
+        "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r2wide/candidate_runner --device 0 --shape 2 512 64 254 --dtype float32 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/unaligned_h64_d254_float --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+      ],
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60"
+    },
+    "summary": {
+      "PipeUtilization": {
+        "block_id": 23.5,
+        "aiv_time(us)": 202.43543947916666,
+        "aiv_total_cycles": 374505.5625,
+        "aiv_vec_time(us)": 52.96360266666667,
+        "aiv_vec_ratio": 0.2626824166666667,
+        "aiv_mte2_time(us)": 77.14585541666666,
+        "aiv_mte2_ratio": 0.38047766666666666,
+        "aiv_mte2_active_bw(GB/s)": 17.0190303125,
+        "aiv_mte3_time(us)": 61.127578666666665,
+        "aiv_mte3_ratio": 0.3012519791666667,
+        "aiv_mte3_active_bw(GB/s)": 35.99942025,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 16.0375449375,
+        "aiv_scalar_ratio": 0.07953545833333334,
+        "aiv_scalar_single_time(us)": 4.8621058125,
+        "aiv_scalar_dual_time(us)": 5.668919000000001,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 51.125473,
+        "aiv_scalar_wait_ib_time(us)": 0.20617114583333332,
+        "aiv_scalar_wait_time(us)": 0.003952541666666667
+      },
+      "Memory": {
+        "block_id": 23.5,
+        "aiv_time(us)": 202.43543947916666,
+        "aiv_total_cycles": 374505.5625,
+        "aiv_ub_to_gm_bw(GB/s)": 10.796600354166667,
+        "aiv_gm_to_ub_bw(GB/s)": 6.4577796875,
+        "aiv_main_mem_read_bw(GB/s)": 7.973686791666666,
+        "aiv_main_mem_write_bw(GB/s)": 7.971913,
+        "aiv_mte2_instructions": 86.33333333333333,
+        "aiv_mte2_ratio": 0.38047766666666666,
+        "aiv_mte3_instructions": 86.33333333333333,
+        "aiv_mte3_ratio": 0.3012519791666667,
+        "read_main_memory_datas(KB)": 1685.8333333333333,
+        "write_main_memory_datas(KB)": 1685.4583333333333,
+        "GM_to_UB_datas(KB)": 1365.3333333333333,
+        "GM_to_UB_bw_usage_rate(%)": 2.9345540625,
+        "UB_to_GM_datas(KB)": 2282.6666666666665,
+        "UB_to_GM_bw_usage_rate(%)": 5.7797645625000005
+      },
+      "OpBasicInfo": {
+        "Task Duration(us)": 227.164551,
+        "Block Dim": 48.0,
+        "Device Id": 0.0,
+        "Pid": 1754638.0,
+        "Current Freq": 1850.0,
+        "Rated Freq": 1850.0
+      },
+      "MemoryUB": {
+        "block_id": 23.5,
+        "aiv_time(us)": 202.43543947916666,
+        "aiv_total_cycles": 374505.5625,
+        "aiv_ub_read_bw_vector(GB/s)": 61.439459937500004,
+        "aiv_ub_write_bw_vector(GB/s)": 41.1544459375,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.005246770833333333
+      }
+    },
+    "core_ranges": {
+      "aiv_time(us)": {
+        "min": 187.18486,
+        "max": 226.325409
+      },
+      "aiv_vec_time(us)": {
+        "min": 51.885406,
+        "max": 53.502701
+      },
+      "aiv_mte2_time(us)": {
+        "min": 68.80703,
+        "max": 89.164864
+      },
+      "aiv_mte3_time(us)": {
+        "min": 52.341621,
+        "max": 74.385406
+      }
+    },
+    "sum_VEC_MTE2_MTE3_over_elapsed": 0.9446816093171317
+  },
+  "compact_half_equivalent_entry": {
+    "path": "benchmarks/profiles/agentic_r4_candidate_unaligned_half",
+    "metadata": {
+      "case": {
+        "name": "unaligned_h64_d126_half",
+        "shape": [
+          2,
+          512,
+          64,
+          126
+        ],
+        "dtype": "float16",
+        "pmax": 131073
+      },
+      "command": [
+        "msprof",
+        "op",
+        "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+        "--launch-count=1",
+        "--launch-skip-before-match=5",
+        "--warm-up=2",
+        "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r4_candidate_unaligned_half",
+        "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r4/normal/rope_runner --device 0 --shape 2 512 64 126 --dtype float16 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/unaligned_h64_d126_half --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+      ],
+      "source_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+      "binary_sha256": "08826a6da6a5c508a24ca627bb5877d77fbf545f154cfc77de69fb328dae62b8"
+    },
+    "summary": {
+      "PipeUtilization": {
+        "block_id": 23.5,
+        "aiv_time(us)": 109.69934697916666,
+        "aiv_total_cycles": 202943.79166666666,
+        "aiv_vec_time(us)": 26.846846666666664,
+        "aiv_vec_ratio": 0.245651125,
+        "aiv_mte2_time(us)": 37.727792916666665,
+        "aiv_mte2_ratio": 0.34298066666666666,
+        "aiv_mte2_active_bw(GB/s)": 8.728308833333333,
+        "aiv_mte3_time(us)": 37.31489870833333,
+        "aiv_mte3_ratio": 0.341224625,
+        "aiv_mte3_active_bw(GB/s)": 17.270968333333332,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 10.993885125,
+        "aiv_scalar_ratio": 0.10060558333333333,
+        "aiv_scalar_single_time(us)": 3.586373479166667,
+        "aiv_scalar_dual_time(us)": 3.8328489375,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 2.223603666666667,
+        "aiv_scalar_wait_ib_time(us)": 0.19298420833333332,
+        "aiv_scalar_wait_time(us)": 0.004583104166666667
+      },
+      "Memory": {
+        "block_id": 23.5,
+        "aiv_time(us)": 109.69934697916666,
+        "aiv_total_cycles": 202943.79166666666,
+        "aiv_ub_to_gm_bw(GB/s)": 5.864044229166667,
+        "aiv_gm_to_ub_bw(GB/s)": 2.978562145833333,
+        "aiv_main_mem_read_bw(GB/s)": 5.868407625,
+        "aiv_main_mem_write_bw(GB/s)": 5.8651350625,
+        "aiv_mte2_instructions": 86.33333333333333,
+        "aiv_mte2_ratio": 0.34298066666666666,
+        "aiv_mte3_instructions": 86.33333333333333,
+        "aiv_mte3_ratio": 0.341224625,
+        "read_main_memory_datas(KB)": 672.5,
+        "write_main_memory_datas(KB)": 672.125,
+        "GM_to_UB_datas(KB)": 341.3333333333333,
+        "GM_to_UB_bw_usage_rate(%)": 1.3535227708333333,
+        "UB_to_GM_datas(KB)": 672.0,
+        "UB_to_GM_bw_usage_rate(%)": 3.1392099375
+      },
+      "OpBasicInfo": {
+        "Task Duration(us)": 131.522629,
+        "Block Dim": 48.0,
+        "Device Id": 0.0,
+        "Pid": 1796541.0,
+        "Current Freq": 1850.0,
+        "Rated Freq": 1850.0
+      },
+      "MemoryUB": {
+        "block_id": 23.5,
+        "aiv_time(us)": 109.69934697916666,
+        "aiv_total_cycles": 202943.79166666666,
+        "aiv_ub_read_bw_vector(GB/s)": 43.42617927083333,
+        "aiv_ub_write_bw_vector(GB/s)": 29.082397958333335,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.009680916666666666
+      }
+    },
+    "core_ranges": {
+      "aiv_time(us)": {
+        "min": 97.858917,
+        "max": 130.657303
+      },
+      "aiv_vec_time(us)": {
+        "min": 26.344866,
+        "max": 27.097837
+      },
+      "aiv_mte2_time(us)": {
+        "min": 30.316757,
+        "max": 50.664864
+      },
+      "aiv_mte3_time(us)": {
+        "min": 32.604324,
+        "max": 43.910812
+      }
+    },
+    "sum_VEC_MTE2_MTE3_over_elapsed": 0.9288071542578717
+  },
+  "direct_float": {
+    "path": "benchmarks/profiles/agentic_r5_direct_unaligned_float",
+    "metadata": {
+      "case": {
+        "name": "unaligned_h64_d254_float",
+        "shape": [
+          2,
+          512,
+          64,
+          254
+        ],
+        "dtype": "float32",
+        "pmax": 131073
+      },
+      "command": [
+        "msprof",
+        "op",
+        "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+        "--launch-count=1",
+        "--launch-skip-before-match=5",
+        "--warm-up=2",
+        "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r5_direct_unaligned_float",
+        "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/direct_audit/rope_runner --device 0 --shape 2 512 64 254 --dtype float32 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/unaligned_h64_d254_float --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+      ],
+      "source_sha256": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055",
+      "binary_sha256": "40af5786cd0939f6e2a0db03d903a915e4cac210174f359a61c3e31ce9cf74c7"
+    },
+    "summary": {
+      "PipeUtilization": {
+        "block_id": 23.5,
+        "aiv_time(us)": 193.5481643125,
+        "aiv_total_cycles": 358064.1041666667,
+        "aiv_vec_time(us)": 43.89765666666666,
+        "aiv_vec_ratio": 0.22785389583333335,
+        "aiv_mte2_time(us)": 77.6831533125,
+        "aiv_mte2_ratio": 0.4008764166666667,
+        "aiv_mte2_active_bw(GB/s)": 16.8906324375,
+        "aiv_mte3_time(us)": 60.9574885625,
+        "aiv_mte3_ratio": 0.3141325833333333,
+        "aiv_mte3_active_bw(GB/s)": 36.2313166875,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 15.270923291666666,
+        "aiv_scalar_ratio": 0.079262,
+        "aiv_scalar_single_time(us)": 4.6285360625,
+        "aiv_scalar_dual_time(us)": 5.5283446875,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 49.490123583333336,
+        "aiv_scalar_wait_ib_time(us)": 0.26009008333333333,
+        "aiv_scalar_wait_time(us)": 0.0040089375
+      },
+      "Memory": {
+        "block_id": 23.5,
+        "aiv_time(us)": 193.5481643125,
+        "aiv_total_cycles": 358064.1041666667,
+        "aiv_ub_to_gm_bw(GB/s)": 11.29916825,
+        "aiv_gm_to_ub_bw(GB/s)": 6.758381020833333,
+        "aiv_main_mem_read_bw(GB/s)": 8.344851604166667,
+        "aiv_main_mem_write_bw(GB/s)": 8.34299525,
+        "aiv_mte2_instructions": 86.33333333333333,
+        "aiv_mte2_ratio": 0.4008764166666667,
+        "aiv_mte3_instructions": 86.33333333333333,
+        "aiv_mte3_ratio": 0.3141325833333333,
+        "read_main_memory_datas(KB)": 1685.8333333333333,
+        "write_main_memory_datas(KB)": 1685.4583333333333,
+        "GM_to_UB_datas(KB)": 1365.3333333333333,
+        "GM_to_UB_bw_usage_rate(%)": 3.07115375,
+        "UB_to_GM_datas(KB)": 2282.6666666666665,
+        "UB_to_GM_bw_usage_rate(%)": 6.04880525
+      },
+      "OpBasicInfo": {
+        "Task Duration(us)": 220.564407,
+        "Block Dim": 48.0,
+        "Device Id": 0.0,
+        "Pid": 2110340.0,
+        "Current Freq": 1850.0,
+        "Rated Freq": 1850.0
+      },
+      "MemoryUB": {
+        "block_id": 23.5,
+        "aiv_time(us)": 193.5481643125,
+        "aiv_total_cycles": 358064.1041666667,
+        "aiv_ub_read_bw_vector(GB/s)": 47.40345197916667,
+        "aiv_ub_write_bw_vector(GB/s)": 26.174198166666667,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.005491041666666667
+      }
+    },
+    "core_ranges": {
+      "aiv_time(us)": {
+        "min": 179.792435,
+        "max": 219.791351
+      },
+      "aiv_vec_time(us)": {
+        "min": 42.963242,
+        "max": 44.364864
+      },
+      "aiv_mte2_time(us)": {
+        "min": 69.596756,
+        "max": 90.392975
+      },
+      "aiv_mte3_time(us)": {
+        "min": 44.508648,
+        "max": 73.162704
+      }
+    },
+    "sum_VEC_MTE2_MTE3_over_elapsed": 0.9431156280404861
+  },
+  "pipeline_half": {
+    "path": "benchmarks/profiles/agentic_r5_pipeline_unaligned_half",
+    "metadata": {
+      "case": {
+        "name": "unaligned_h64_d126_half",
+        "shape": [
+          2,
+          512,
+          64,
+          126
+        ],
+        "dtype": "float16",
+        "pmax": 131073
+      },
+      "command": [
+        "msprof",
+        "op",
+        "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+        "--launch-count=1",
+        "--launch-skip-before-match=5",
+        "--warm-up=2",
+        "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r5_pipeline_unaligned_half",
+        "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline_normal/rope_runner --device 0 --shape 2 512 64 126 --dtype float16 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/unaligned_h64_d126_half --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+      ],
+      "source_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+      "binary_sha256": "97e330dafc38e33a081daf8eb4a39366de3bd30ecb0c4247350a4d39f13e6de3"
+    },
+    "summary": {
+      "PipeUtilization": {
+        "block_id": 23.5,
+        "aiv_time(us)": 66.70470683333333,
+        "aiv_total_cycles": 123403.70833333333,
+        "aiv_vec_time(us)": 25.785945666666667,
+        "aiv_vec_ratio": 0.3893474375,
+        "aiv_mte2_time(us)": 59.50630629166667,
+        "aiv_mte2_ratio": 0.8905919166666667,
+        "aiv_mte2_active_bw(GB/s)": 5.538257625,
+        "aiv_mte3_time(us)": 45.9257433125,
+        "aiv_mte3_ratio": 0.6896404791666667,
+        "aiv_mte3_active_bw(GB/s)": 14.027698104166667,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 14.83324325,
+        "aiv_scalar_ratio": 0.22386202083333334,
+        "aiv_scalar_single_time(us)": 4.319143979166666,
+        "aiv_scalar_dual_time(us)": 4.346858041666667,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 52.4996844375,
+        "aiv_scalar_wait_ib_time(us)": 0.17378379166666666,
+        "aiv_scalar_wait_time(us)": 0.003243
+      },
+      "Memory": {
+        "block_id": 23.5,
+        "aiv_time(us)": 66.70470683333333,
+        "aiv_total_cycles": 123403.70833333333,
+        "aiv_ub_to_gm_bw(GB/s)": 9.67696825,
+        "aiv_gm_to_ub_bw(GB/s)": 4.915285458333333,
+        "aiv_main_mem_read_bw(GB/s)": 9.684169916666667,
+        "aiv_main_mem_write_bw(GB/s)": 9.678768479166667,
+        "aiv_mte2_instructions": 86.33333333333333,
+        "aiv_mte2_ratio": 0.8905919166666667,
+        "aiv_mte3_instructions": 86.33333333333333,
+        "aiv_mte3_ratio": 0.6896404791666667,
+        "read_main_memory_datas(KB)": 672.5,
+        "write_main_memory_datas(KB)": 672.125,
+        "GM_to_UB_datas(KB)": 341.3333333333333,
+        "GM_to_UB_bw_usage_rate(%)": 2.233611625,
+        "UB_to_GM_datas(KB)": 672.0,
+        "UB_to_GM_bw_usage_rate(%)": 5.180389770833333
+      },
+      "OpBasicInfo": {
+        "Task Duration(us)": 70.481407,
+        "Block Dim": 48.0,
+        "Device Id": 0.0,
+        "Pid": 2118860.0,
+        "Current Freq": 1850.0,
+        "Rated Freq": 1850.0
+      },
+      "MemoryUB": {
+        "block_id": 23.5,
+        "aiv_time(us)": 66.70470683333333,
+        "aiv_total_cycles": 123403.70833333333,
+        "aiv_ub_read_bw_vector(GB/s)": 70.12645579166667,
+        "aiv_ub_write_bw_vector(GB/s)": 47.992120625,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.015978083333333334
+      }
+    },
+    "core_ranges": {
+      "aiv_time(us)": {
+        "min": 44.314594,
+        "max": 69.821083
+      },
+      "aiv_vec_time(us)": {
+        "min": 25.300541,
+        "max": 26.028648
+      },
+      "aiv_mte2_time(us)": {
+        "min": 34.829189,
+        "max": 62.596218
+      },
+      "aiv_mte3_time(us)": {
+        "min": 33.611351,
+        "max": 50.090271
+      }
+    },
+    "sum_VEC_MTE2_MTE3_over_elapsed": 1.9671474697983644
+  },
+  "pipeline_float": {
+    "path": "benchmarks/profiles/agentic_r5_pipeline_unaligned_float",
+    "metadata": {
+      "case": {
+        "name": "unaligned_h64_d254_float",
+        "shape": [
+          2,
+          512,
+          64,
+          254
+        ],
+        "dtype": "float32",
+        "pmax": 131073
+      },
+      "command": [
+        "msprof",
+        "op",
+        "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+        "--launch-count=1",
+        "--launch-skip-before-match=5",
+        "--warm-up=2",
+        "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r5_pipeline_unaligned_float",
+        "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline_normal/rope_runner --device 0 --shape 2 512 64 254 --dtype float32 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/unaligned_h64_d254_float --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+      ],
+      "source_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+      "binary_sha256": "97e330dafc38e33a081daf8eb4a39366de3bd30ecb0c4247350a4d39f13e6de3"
+    },
+    "summary": {
+      "PipeUtilization": {
+        "block_id": 23.5,
+        "aiv_time(us)": 117.1091096875,
+        "aiv_total_cycles": 216651.85416666666,
+        "aiv_vec_time(us)": 43.896305625,
+        "aiv_vec_ratio": 0.3749750625,
+        "aiv_mte2_time(us)": 108.95240991666667,
+        "aiv_mte2_ratio": 0.9303845,
+        "aiv_mte2_active_bw(GB/s)": 11.955391416666666,
+        "aiv_mte3_time(us)": 62.46516916666667,
+        "aiv_mte3_ratio": 0.5332141458333334,
+        "aiv_mte3_active_bw(GB/s)": 35.269971291666664,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 17.8548310625,
+        "aiv_scalar_ratio": 0.152481125,
+        "aiv_scalar_single_time(us)": 5.115360479166667,
+        "aiv_scalar_dual_time(us)": 6.107454770833333,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 99.324538625,
+        "aiv_scalar_wait_ib_time(us)": 0.2036373125,
+        "aiv_scalar_wait_time(us)": 0.003243
+      },
+      "Memory": {
+        "block_id": 23.5,
+        "aiv_time(us)": 117.1091096875,
+        "aiv_total_cycles": 216651.85416666666,
+        "aiv_ub_to_gm_bw(GB/s)": 18.596300229166665,
+        "aiv_gm_to_ub_bw(GB/s)": 11.123020645833334,
+        "aiv_main_mem_read_bw(GB/s)": 13.734052708333333,
+        "aiv_main_mem_write_bw(GB/s)": 13.73099725,
+        "aiv_mte2_instructions": 86.33333333333333,
+        "aiv_mte2_ratio": 0.9303845,
+        "aiv_mte3_instructions": 86.33333333333333,
+        "aiv_mte3_ratio": 0.5332141458333334,
+        "read_main_memory_datas(KB)": 1685.8333333333333,
+        "write_main_memory_datas(KB)": 1685.4583333333333,
+        "GM_to_UB_datas(KB)": 1365.3333333333333,
+        "GM_to_UB_bw_usage_rate(%)": 5.0545399375,
+        "UB_to_GM_datas(KB)": 2282.6666666666665,
+        "UB_to_GM_bw_usage_rate(%)": 9.955192770833333
+      },
+      "OpBasicInfo": {
+        "Task Duration(us)": 123.542473,
+        "Block Dim": 48.0,
+        "Device Id": 0.0,
+        "Pid": 2125228.0,
+        "Current Freq": 1850.0,
+        "Rated Freq": 1850.0
+      },
+      "MemoryUB": {
+        "block_id": 23.5,
+        "aiv_time(us)": 117.1091096875,
+        "aiv_total_cycles": 216651.85416666666,
+        "aiv_ub_read_bw_vector(GB/s)": 78.01616766666666,
+        "aiv_ub_write_bw_vector(GB/s)": 43.076818395833335,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.009038291666666667
+      }
+    },
+    "core_ranges": {
+      "aiv_time(us)": {
+        "min": 112.567024,
+        "max": 122.945404
+      },
+      "aiv_vec_time(us)": {
+        "min": 42.956757,
+        "max": 44.364864
+      },
+      "aiv_mte2_time(us)": {
+        "min": 105.38324,
+        "max": 114.616219
+      },
+      "aiv_mte3_time(us)": {
+        "min": 48.365406,
+        "max": 78.001625
+      }
+    },
+    "sum_VEC_MTE2_MTE3_over_elapsed": 1.8385750287307967
+  },
+  "interpretation": "Source-bound replay diagnosis only. Direct FP32 lowers VEC/copy work, while depth1+PIPE_ALL still serializes stages. Final active VEC+MTE2+MTE3 sum exceeds elapsed (~2x), consistent with explicit queue/event-driven overlap; individual MTE active times can grow due to contention. Native paired Task Duration determines gain; do not add busy ratios into peak SIMD utilization or infer useful lanes. No exact isolated frequency/trig time measured; no physical DRAM-peak claim."
+}

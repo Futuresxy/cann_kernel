@@ -1,0 +1,44 @@
+-- System processer: aarch64
+-- CMAKE_ASC_COMPILER: /usr/local/Ascend/cann-9.0.0/bin/bisheng
+-- ASCEND_CANN_PACKAGE_LINUX_PATH: /usr/local/Ascend/cann-9.0.0/aarch64-linux
+-- CMAKE_ASC_LLD_LINKER: /usr/local/Ascend/cann-9.0.0/aarch64-linux/ccec_compiler/bin/ld.lld
+-- The CXX compiler identification is GNU 10.3.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/lib64/ccache/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r5/pipeline_normal
+[ 50%] Building ASC object CMakeFiles/rope_runner.dir/tests/runner.asc.o
+/data/pyptouser/songxiaoyou/cann_kernel/project/tests/runner.asc:64:21: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+        run_kernel((GM_ADDR)dx,ix,(GM_ADDR)dp,ip,(GM_ADDR)dy,iy,cores,stream,theta);
+                    ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+/data/pyptouser/songxiaoyou/cann_kernel/project/tests/runner.asc:64:36: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+        run_kernel((GM_ADDR)dx,ix,(GM_ADDR)dp,ip,(GM_ADDR)dy,iy,cores,stream,theta);
+                                   ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+/data/pyptouser/songxiaoyou/cann_kernel/project/tests/runner.asc:64:51: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+        run_kernel((GM_ADDR)dx,ix,(GM_ADDR)dp,ip,(GM_ADDR)dy,iy,cores,stream,theta);
+                                                  ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+3 warnings generated.
+[100%] Linking ASC executable rope_runner
+[100%] Built target rope_runner

@@ -1,0 +1,14 @@
+{
+  "direct": {
+    "sha256": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055",
+    "outside_Rotary_and_specialization_byte_identical": true
+  },
+  "compact": {
+    "sha256": "5128bd8ebb885e5d00bfa0a402aeca3257daa7e09e5ecc78851a47dae6bcdf08",
+    "outside_Rotary_and_specialization_byte_identical": true
+  },
+  "pipeline": {
+    "sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+    "outside_Rotary_and_specialization_byte_identical": true
+  }
+}

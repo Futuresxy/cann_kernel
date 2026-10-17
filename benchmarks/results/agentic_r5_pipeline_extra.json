@@ -1,0 +1,380 @@
+{
+  "label": "agentic_r5_pipeline_extra",
+  "source_sha256": {
+    "baseline": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+    "candidate": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0"
+  },
+  "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+  "metric": "Native non-replay Task Duration; median of four block medians from shared-allocation ABBA and BAAB",
+  "shared_context_and_addresses_within_each_process": true,
+  "source_orders_reversed": true,
+  "run_kernel_calls": 800,
+  "actual_device_kernel_tasks": 800,
+  "profile_labels": {
+    "forward": "agentic_r5_pipeline_extra_forward",
+    "reverse": "agentic_r5_pipeline_extra_reverse"
+  },
+  "geometric_mean_speedup": 1.5077343429938894,
+  "cases": [
+    {
+      "name": "r5_pipeperf_d66_float16",
+      "shape": [
+        1,
+        257,
+        65,
+        66
+      ],
+      "dtype": "float16",
+      "baseline_us": 39.641000000000005,
+      "candidate_us": 25.16,
+      "speedup": 1.5755564387917331,
+      "latency_change_percent": -36.53035998082794,
+      "block_medians_us": {
+        "baseline": [
+          39.521,
+          39.581,
+          39.701,
+          39.701
+        ],
+        "candidate": [
+          25.28,
+          25.4,
+          25.04,
+          25.021
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "8331dd180d8b7cccddf7a13640ad2a7a5497eea34adc53dd9b67a203becebe42",
+        "positions.bin": "ac2a490b04ce17a0402b3974e09e2fa97779b8457d1f022d6ef5fab37a47625b"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.5608129439621152,
+        "reverse": 1.5861049519586106
+      }
+    },
+    {
+      "name": "r5_pipeperf_d66_float32",
+      "shape": [
+        1,
+        257,
+        65,
+        66
+      ],
+      "dtype": "float32",
+      "baseline_us": 35.3505,
+      "candidate_us": 25.531,
+      "speedup": 1.3846108652226705,
+      "latency_change_percent": -27.777542043252566,
+      "block_medians_us": {
+        "baseline": [
+          35.221,
+          35.221,
+          35.561,
+          35.48
+        ],
+        "candidate": [
+          25.361,
+          25.461,
+          25.601,
+          25.7
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "2781e60d0bda144750724df6527c419bdd6a89874dc58d3cc07ffcbc2b3eea8c",
+        "positions.bin": "b94b7389707336531920f8ceb1803e75f11d034b976b8bbbbf8bfe567e8edfde"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.3860532840108613,
+        "reverse": 1.3847878209001774
+      }
+    },
+    {
+      "name": "r5_pipeperf_d126_float16",
+      "shape": [
+        1,
+        257,
+        65,
+        126
+      ],
+      "dtype": "float16",
+      "baseline_us": 36.181,
+      "candidate_us": 23.7405,
+      "speedup": 1.5240201343695372,
+      "latency_change_percent": -34.384068986484614,
+      "block_medians_us": {
+        "baseline": [
+          36.201,
+          36.161,
+          36.02,
+          36.72
+        ],
+        "candidate": [
+          23.78,
+          23.64,
+          23.8,
+          23.701
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "1cf699cb2b0a320b15542cb8fe7da1ff21f5077dbb7b9408439ee5e81c49e0af",
+        "positions.bin": "195e87654c6d7995ea2a51ff710cccd28cb01c75a2bcc29374894b001c7ccf27"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.525980598903416,
+        "reverse": 1.5313361823961602
+      }
+    },
+    {
+      "name": "r5_pipeperf_d126_float32",
+      "shape": [
+        1,
+        257,
+        65,
+        126
+      ],
+      "dtype": "float32",
+      "baseline_us": 40.051,
+      "candidate_us": 29.3005,
+      "speedup": 1.3669050016211328,
+      "latency_change_percent": -26.842026416319197,
+      "block_medians_us": {
+        "baseline": [
+          39.921,
+          40.181,
+          40.561,
+          39.861
+        ],
+        "candidate": [
+          29.241,
+          29.041,
+          29.36,
+          29.841
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "8996bc8b4652e4713d9dbd177f8f7818d046c4c9e5db4f244c02a7b66da6397a",
+        "positions.bin": "7fab7e26ea9245dc80e1df3b54280ec1a944286679f237b8a5f5cf28087c590e"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.3743866030678427,
+        "reverse": 1.3584567828246144
+      }
+    },
+    {
+      "name": "r5_pipeperf_d254_float16",
+      "shape": [
+        1,
+        257,
+        65,
+        254
+      ],
+      "dtype": "float16",
+      "baseline_us": 43.631,
+      "candidate_us": 29.2805,
+      "speedup": 1.4901043356500059,
+      "latency_change_percent": -32.89060530356856,
+      "block_medians_us": {
+        "baseline": [
+          43.541,
+          43.561,
+          43.86,
+          43.701
+        ],
+        "candidate": [
+          29.46,
+          29.22,
+          29.341,
+          29.12
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "ea76f634a99cfab341391926cf4d91354961c86cd80bddaef91d3365731669ae",
+        "positions.bin": "9fdcf38651639e7c59685404d6b0fc672f18c3b9d89391c6553c4b51ed4c80f0"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.4843558282208589,
+        "reverse": 1.4977677425976292
+      }
+    },
+    {
+      "name": "r5_pipeperf_d254_float32",
+      "shape": [
+        1,
+        257,
+        65,
+        254
+      ],
+      "dtype": "float32",
+      "baseline_us": 47.221000000000004,
+      "candidate_us": 34.691,
+      "speedup": 1.361188780951832,
+      "latency_change_percent": -26.534804430232317,
+      "block_medians_us": {
+        "baseline": [
+          47.301,
+          47.141,
+          47.301,
+          46.741
+        ],
+        "candidate": [
+          34.641,
+          34.921,
+          34.741,
+          34.56
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "cb2dcde98f7290c1df211d06383d01a7a43163253dc5c51184028fad65a894f1",
+        "positions.bin": "624db1f4a208d136aff27d8e40cc28d45a9c0b32f4cdddc9f0c14aa091a56a75"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.3576665420775713,
+        "reverse": 1.3570078353847708
+      }
+    },
+    {
+      "name": "r5_pipeperf_d514_float16",
+      "shape": [
+        1,
+        257,
+        65,
+        514
+      ],
+      "dtype": "float16",
+      "baseline_us": 56.8515,
+      "candidate_us": 36.540000000000006,
+      "speedup": 1.555870279146141,
+      "latency_change_percent": -35.727289517426975,
+      "block_medians_us": {
+        "baseline": [
+          56.742,
+          56.221,
+          57.141,
+          56.961
+        ],
+        "candidate": [
+          36.56,
+          36.52,
+          36.621,
+          36.501
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "db97a23f193b145b2180da2929ec262a30debce933a7a0fbd7a9da45c7cd9170",
+        "positions.bin": "6551fa2ef4971358d59d54d7b12bf7d851638f2b324fb65e0ee3d729df556881"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.5457443897099066,
+        "reverse": 1.56043324854353
+      }
+    },
+    {
+      "name": "r5_pipeperf_d514_float32",
+      "shape": [
+        1,
+        257,
+        65,
+        514
+      ],
+      "dtype": "float32",
+      "baseline_us": 61.051,
+      "candidate_us": 36.4905,
+      "speedup": 1.6730655924144642,
+      "latency_change_percent": -40.22948027059344,
+      "block_medians_us": {
+        "baseline": [
+          61.081,
+          61.001,
+          61.021,
+          61.161
+        ],
+        "candidate": [
+          36.641,
+          36.441,
+          36.3,
+          36.54
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "461c53b6afde85c491fc2921680e2809ca6dc1318ffa529778df64c0ef47e1da",
+        "positions.bin": "2bd0c543f7024ef482b492f8f35f48bd82998356ed266ac352987a830286d339"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.6704797350920884,
+        "reverse": 1.6774025260845689
+      }
+    },
+    {
+      "name": "r5_pipeperf_d1022_float16",
+      "shape": [
+        1,
+        257,
+        65,
+        1022
+      ],
+      "dtype": "float16",
+      "baseline_us": 87.231,
+      "candidate_us": 66.482,
+      "speedup": 1.3120995156583737,
+      "latency_change_percent": -23.786268643028276,
+      "block_medians_us": {
+        "baseline": [
+          86.901,
+          87.561,
+          86.862,
+          88.001
+        ],
+        "candidate": [
+          66.442,
+          66.422,
+          66.522,
+          66.701
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "162a8c5953fb912dafa82d45ccde6b617bc188f2ae2cddd9cb95a85d8acf104b",
+        "positions.bin": "e6901423018e7096634416e377715250ac443fa865fb95ebfc0cdbd056dd84a2"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.3130870664739887,
+        "reverse": 1.3125586422764837
+      }
+    },
+    {
+      "name": "r5_pipeperf_d1022_float32",
+      "shape": [
+        1,
+        257,
+        65,
+        1022
+      ],
+      "dtype": "float32",
+      "baseline_us": 91.382,
+      "candidate_us": 47.3905,
+      "speedup": 1.9282767643304037,
+      "latency_change_percent": -48.14022455188112,
+      "block_medians_us": {
+        "baseline": [
+          91.182,
+          91.161,
+          91.902,
+          91.582
+        ],
+        "candidate": [
+          47.741,
+          47.401,
+          47.38,
+          47.281
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "c8b32a0d452a3d537c510e8d45ec0e80ae7111eaf7ae036b6ca03d0d14239186",
+        "positions.bin": "ef1bfb4193e866819c689161272736e6e1461b07300a59c7ccb2521a05ab717f"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.9165352841016587,
+        "reverse": 1.9383272942394436
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T060621-unaligned-pipeline",
+  "state": "blocked",
+  "completion": "experimental_archive_complete",
+  "blocker_scope": "production_ready_only",
+  "reason": "Final unaligned queue pipeline has substantial native benefits (1.7253x FP16 representative,1.6801x FP32,extra10 geomean1.5077x) with all1723 outputs byte-identical to817f8364. Production ready remains blocked by the unchanged inherited valid-input amplitude max32>0.1. Task-specific output is one experimental archive for coordinator review, not production ready/latest. No new platform trial performed.",
+  "experimental_candidate_path": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/experimental_candidate.json",
+  "candidate_source_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+  "coordinator_review_recommended": true,
+  "ready_published": false,
+  "latest_changed": false,
+  "platform_submissions": 0,
+  "evidence_paths": [
+    "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline.json",
+    "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/README.md",
+    "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/native_summary.json",
+    "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/pmu_comparison.json",
+    "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/pipeline_correctness.json"
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T060621-unaligned-pipeline",
+  "tuning_request_id": "20261017T060621-unaligned-pipeline",
+  "state": "experimental_archive_for_coordinator_review",
+  "parent_kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "kernel_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+  "source_path": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/kernel.asc",
+  "patch_from_parent": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline/final_from_parent.patch",
+  "production_ready": false,
+  "latest_changed": false,
+  "known_precision_failure": {
+    "shape": [
+      1,
+      137,
+      17,
+      1024
+    ],
+    "dtype": "float16",
+    "matched_ratio": 0.9999874208351224,
+    "parent_max_abs_error": 32,
+    "candidate_max_abs_error": 32,
+    "max_abs_error_limit": 0.1,
+    "original_golden_and_thresholds_unchanged": true,
+    "output_bits_identical": true,
+    "diagnosis": "Inherited SinCosFp32/reference-library rounding and FP16 midpoint crossings; prior stage/internal reports retained"
+  },
+  "performance": {
+    "fixed33_geomean": 1.0332356367839077,
+    "fp16_D126": {
+      "name": "unaligned_h64_d126_half",
+      "shape": [
+        2,
+        512,
+        64,
+        126
+      ],
+      "dtype": "float16",
+      "baseline_us": 108.7825,
+      "candidate_us": 63.0515,
+      "speedup": 1.7252959882001222,
+      "latency_change_percent": -42.03893089421552,
+      "block_medians_us": {
+        "baseline": [
+          108.422,
+          108.863,
+          109.262,
+          108.702
+        ],
+        "candidate": [
+          62.781,
+          63.322,
+          62.922,
+          63.181
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "7c42c1ca8b25c2fa435bcf02f0b9e2d8dc220972a51bc222eebf2c376318ab8b",
+        "positions.bin": "a708d7010207a5acbb9d41bc41689f059117c60915f79252eda07209e652d7e2"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.723075581072615,
+        "reverse": 1.7284600683568194
+      }
+    },
+    "fp32_D254": {
+      "name": "unaligned_h64_d254_float",
+      "shape": [
+        2,
+        512,
+        64,
+        254
+      ],
+      "dtype": "float32",
+      "baseline_us": 153.563,
+      "candidate_us": 91.402,
+      "speedup": 1.6800835867924113,
+      "latency_change_percent": -40.47915187903336,
+      "block_medians_us": {
+        "baseline": [
+          153.743,
+          153.483,
+          153.583,
+          153.543
+        ],
+        "candidate": [
+          91.502,
+          91.322,
+          91.482,
+          90.922
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "4bf5fd4385066fff4c01211c3d5a6a7b0da803fd5fcf01412b4573613fb80b8a",
+        "positions.bin": "3a9b1c01c60338fe437c463416135d97fac8b9c497b0d5ae326006afa63ce9cf"
+      },
+      "direction_adjusted_speedup": {
+        "forward": 1.6804467684767863,
+        "reverse": 1.683767899826758
+      }
+    },
+    "extra10_geomean": 1.5077343429938894,
+    "extra10_minmax": [
+      1.3120995156583737,
+      1.9282767643304037
+    ],
+    "small_generic_latency_regression_percent": 1.520912547528508
+  },
+  "original_template_build_passed": true,
+  "one_kernel_per_invocation_verified": true,
+  "dependencies_added": false,
+  "evidence_path": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline.json",
+  "coordinator_platform_trial_review_recommended": true,
+  "platform_trial_performed_by_server": false
+}

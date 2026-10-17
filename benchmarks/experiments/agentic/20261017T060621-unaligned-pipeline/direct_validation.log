@@ -1,0 +1,16 @@
+{
+  "variant": "direct",
+  "runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+  "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+  "source_sha256": "6f74f7f5bda058acd9c0abe8583cbac9f6c5969f4d0f85d19746a16c8f2ed055",
+  "binary_sha256": "40af5786cd0939f6e2a0db03d903a915e4cac210174f359a61c3e31ce9cf74c7",
+  "git_dirty": true,
+  "git_commit": "403c384f311af727cf6a0b2166e1a56f59c571b8",
+  "total": 1723,
+  "bit_identical": 1723,
+  "candidate_passed": 1722,
+  "parent_passed": 1722,
+  "all_guard_identity_launch_checks_passed": true,
+  "audited_calls": 1919
+}
+Failures: [('frozen_amplitude', {'passed': False, 'matched_ratio': 0.9999874208351224, 'max_abs_error': 32.0}, {'passed': False, 'matched_ratio': 0.9999874208351224, 'max_abs_error': 32.0})]

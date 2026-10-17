@@ -1,0 +1,41 @@
+{
+  "reused_profile": "benchmarks/profiles/agentic_r4_candidate_unaligned_half",
+  "profile_source_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+  "current_source_sha256": "5128bd8ebb885e5d00bfa0a402aeca3257daa7e09e5ecc78851a47dae6bcdf08",
+  "binding": "Executed FP16 generic entry text is bit-identical; FP32 specialization is not executed by this profile. Not relabeling previous whole-source metadata.",
+  "entry_evidence": [
+    {
+      "section": ".text._ZN8rope174311wide_kernelIDhNS_11FrequenciesEEEvPhS2_S2_mjjjT0_",
+      "baseline_bytes": 16196,
+      "candidate_bytes": 16196,
+      "identical": true,
+      "baseline_sha256": "b029e928c0047a940064c7bb5a7a1c2d00f7e108a7ffb9922487b2929a56b93c",
+      "candidate_sha256": "b029e928c0047a940064c7bb5a7a1c2d00f7e108a7ffb9922487b2929a56b93c"
+    },
+    {
+      "section": ".text._ZN8rope174311wide_kernelIDhNS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT0_",
+      "baseline_bytes": 10312,
+      "candidate_bytes": 10312,
+      "identical": true,
+      "baseline_sha256": "ee9e0838dcde5d1d64e3242b689e82e9b6a9a628704e8cd7d55c82fe3dc40a3b",
+      "candidate_sha256": "ee9e0838dcde5d1d64e3242b689e82e9b6a9a628704e8cd7d55c82fe3dc40a3b"
+    },
+    {
+      "section": ".text._ZN8rope174313rotary_kernelIDhNS_11FrequenciesEEEvPhS2_S2_mjjjjjT0_",
+      "baseline_bytes": 16404,
+      "candidate_bytes": 16404,
+      "identical": true,
+      "baseline_sha256": "90a64d12d6b65968de15188e8321ee973a0eaefb9ceec0cd9f085ed80e5401b5",
+      "candidate_sha256": "90a64d12d6b65968de15188e8321ee973a0eaefb9ceec0cd9f085ed80e5401b5"
+    },
+    {
+      "section": ".text._ZN8rope174313rotary_kernelIDhNS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjjjT0_",
+      "baseline_bytes": 10332,
+      "candidate_bytes": 10332,
+      "identical": true,
+      "baseline_sha256": "0c443ee6cbaec6f2b13e1b78b759b7073e1ed2d97fcf68db8186da8299ad3f73",
+      "candidate_sha256": "0c443ee6cbaec6f2b13e1b78b759b7073e1ed2d97fcf68db8186da8299ad3f73"
+    }
+  ],
+  "reason": "Reuse existing PMU before collecting missing evidence; new direct-copy variant FP32 and final pipeline PMU will be collected separately."
+}
