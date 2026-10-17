@@ -11,7 +11,7 @@
 - Mac无运行中的提交/浏览器轮询进程，无未决平台提交。
 - 私有控制器 `.local/cannjudge/controller.json` 为 `paused_by_user`，`paused:true`。
 - 已向服务器固定会话发送暂停消息，回执ID `01a148ee-8840-7d80-9282-3c0ad9e29ebc`。要求不再启动实验、保留已提交任务/现场、保存交接，等待用户恢复。
-- 暂停检查时服务器没有正在运行的NPU测试或bisheng编译进程；有未跟踪的 `benchmarks/experiments/agentic/20261017-shared-math-diagnosis/frequency_attribution/`，不可清理或覆盖。下次核实是否已保存提交。
+- 暂停检查时服务器没有正在运行的NPU测试或bisheng编译进程。频率补充诊断现场此前未跟踪，随后已在远端提交 `3e4b1f6` 完整归档，并合入Mac；不要清理或覆盖。
 - SSH一次出现连接关闭，重试成功；不能把连接失败当作服务器任务已停止。
 
 ## 平台真实成绩与源码
@@ -53,7 +53,7 @@ https://cannjudge.cn/public/op_challenge_jingdong_prelim/rotaryposemb/submission
 
 粗/细两版诊断已经输出8项结果，均与817父版输出逐位一致、guard通过，使用独立trace缓冲。粗粒度的全核累计SYS_CNT tick大致为：tiny频率81.75/trig21.38；DeepSeek FP16频率114.65/trig55.79/旋转396.38；FP32旋转583.21；H1D1024 FP16 trig2264.58/旋转1333.92；FP32 trig2413.42/旋转1511.94。不能把强制同步后的阶段tick当原kernel可加占比，也没有解码ISA计数。Sqrt不是唯一或最大trig成本。
 
-首个coarse任务 `task_20261017_004741_35852268361` 已确认completed(exit0)；排队期间没有取消或重提。诊断分配到device1，本身不是并发违规；旧native计时device0与新诊断不可混算加速比。频率子阶段补充诊断后来被用户“先逆向case”及暂停指令覆盖；其未跟踪现场应保留，恢复先检查任务状态。
+首个coarse任务 `task_20261017_004741_35852268361` 已确认completed(exit0)；排队期间没有取消或重提。诊断分配到device1，本身不是并发违规；旧native计时device0与新诊断不可混算加速比。频率子阶段补充诊断后来被用户“先逆向case”及暂停指令覆盖；已保存于 `frequency_attribution/`，恢复先检查任务状态，不自动继续实验。
 
 ## 工具与约束
 
