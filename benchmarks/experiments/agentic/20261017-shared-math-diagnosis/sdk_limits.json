@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/dav_c220/kernel_operator_sys_var_impl.h": "0a889a0604d0383b38045c8c0ee38361ab6ce42277507f4ecb0d0e53d524b948",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/dav_c220/kernel_operator_vec_binary_impl.h": "b596e9a469ca0663e770d5da54c087664ef677644c0dcbbdbe8fe0b5f7700c84"
+  },
+  "GetSystemCycle": "MOV SYS_CNT; no conversion to AIV cycles/us assumed",
+  "true_FMA": false,
+  "vmadd_semantics_from_existing_probe": "round(round(dst*src0)+src1), not single-rounding residual",
+  "unsupported_API_audit": "benchmarks/analysis/cann9_api_compatibility.json",
+  "unsupported_on_2201": [
+    "joint SinCos",
+    "SqrtConfig overload"
+  ],
+  "decoder_limit": "Installed llvm-objdump recognizes the HiIPU object but renders each instruction as <not available>, even with --mcpu=dav-c220-vec. The compiler rejects device -S and -print-after. Header intrinsic mapping, object text size/hash and measured rounding are recorded; no decoded machine-instruction count is claimed.",
+  "new_unsupported_API_or_decoder_attempts": 0
+}

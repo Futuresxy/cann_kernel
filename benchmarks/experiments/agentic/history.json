@@ -845,6 +845,20 @@
       "new_performance_measurements": 0,
       "ready_published": false,
       "decision": "Device sqrt differs by one ULP on 5224/59392 angles, but sqrt-only correction leaves 802/817 max-error failures. Local reference FMA/rounding model reproduces trig and outputs. General repair is a proposal only, pending proof/cost review."
+    },
+    {
+      "request_id": "20261017-shared-math-diagnosis",
+      "state": "diagnosis_complete",
+      "evidence": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis",
+      "parent_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "diagnostic_source_sha256": "d0dca9a7724208149500705e46a042f387df9c215c12b0c56f24c271f9676ee1",
+      "cases": 8,
+      "granularities": 2,
+      "NPU_tasks": 2,
+      "all_outputs_identical": true,
+      "candidate_created": false,
+      "known_failure_preserved": true,
+      "reason": "Aligned multihead rotation, H1 trig and tiny setup have different dominant measured costs; calibrated counters are not original fractions."
     }
   ],
   "terminology_corrections": [

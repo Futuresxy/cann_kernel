@@ -1,0 +1,52 @@
+{
+  "ranking_scope": "Public-family diagnosis; no hidden-shape weights or score forecast",
+  "ranked": [
+    {
+      "rank": 1,
+      "family": "Aligned many-head FP16/FP32",
+      "observation": "Rotation dominates the measured trig work: D64 rotation396/583tick vs trig56; D1024 rotation832/1011 vs trig105/80. DirectFloat has no Load/Store copy, while FP16 conversion is separately measured.",
+      "bottleneck_hypothesis": "Vector rotation operand layout, masks and dependent arithmetic; FP32 also has substantial MTE2/MTE3 overlap, so VEC busy alone is insufficient.",
+      "expected_metric_direction": "Reduce rotation VEC work/UB passes or useful masked repeats without increasing GM transactions; native benefit must survive read/write overlap.",
+      "confidence": "Family stage ordering is stable across the two diagnostic granularities; original critical-path fractions remain unknown."
+    },
+    {
+      "rank": 2,
+      "family": "H1 long sequences, especially D1024 FP16/FP32",
+      "observation": "Coarse trig2265/2413tick vs rotation1334/1512. Detailed range+polynomial far exceeds isolated sqrt, and both double-angle stages remain material.",
+      "bottleneck_hypothesis": "Repeated shared trig range/Horner/angle-restoration VEC dependencies and UB traversals; there is no H-fold reuse.",
+      "expected_metric_direction": "Lower trig VEC elapsed and repeated UB traffic, keeping FP32 range reduction/coefficient order and separate rounding. No expected MTE payload reduction.",
+      "confidence": "Both dtype counts match4,194,304angles; coarse/fine perturbation prevents percentage claims."
+    },
+    {
+      "rank": 3,
+      "family": "Tiny and initialization-amortization controls",
+      "observation": "Tiny frequency70.5\u201381.75tick, compared to coarse trig21.38 and rotation5.62. Wide DirectFloat scratch8200 splits vector-frequency initialization into472+40lanes; both wide aligned dtype paths touch288tokens vs256 ideal.",
+      "bottleneck_hypothesis": "Repeated per-core setup and frequency scratch chunking; setup is not uniformly dominant in long H1.",
+      "expected_metric_direction": "Fewer repeated setup calls/chunks or more work per initialized core, subject to parallelism/GM/UB costs. Do not cross-invocation cache or Host compute.",
+      "confidence": "Unchanged frequency timings vary up to+21.83% between diagnostic builds; no precise setup saving forecast."
+    }
+  ],
+  "broadly_reused_next_experiment": {
+    "state": "proposal_only_requires_new_coordinator_authorization",
+    "name": "Verify separately-rounded constant-broadcast fusion in existing shared SinCos chain",
+    "reason": "Targets measured H1 polynomial/double-angle costs while using the helper shared by all five classes; original approximation and FP32 rounding order are retained. Many-head end-to-end benefit may be small because rotation is larger there.",
+    "scope": "Large current-call trig batches; retain original path where new coefficient setup cannot amortize. Public work/UB criteria, no hidden-case routing.",
+    "possible_transformation": "If vmadd equivalence is proven on all required values, three existing Horner Mul+Adds pairs become in-place FusedMulAdd with Device-initialized exact coefficient vectors; negative-scale+one pairs in sqrt preparation and each double-angle stage similarly retain two-rounding semantics.",
+    "expected_metrics": {
+      "source_vector_API_traversals": "34 -> at best28, subject to tail/broadcast lowering; not decoded ISA counts",
+      "logical_trig_UB_traffic_model": "324 -> approximately300 bytes/angle including vector constant reads, not measured physical traffic",
+      "frequency_and_GM_payload": "unchanged",
+      "new_fixed_UB": "Five64-element FP32 constant vectors,1280B preliminary; wide FP16 model190528+1280=191808<192512, but full-domain lifetimes/capacity still require proof",
+      "initialization_cost": "Five per-call constant Duplicate operations plus masks; cost increases, so no tiny benefit assumed"
+    },
+    "required_gates": [
+      "Prove hardware separately-rounded equivalence; do not assume IEEE single rounding or use as TwoProd residual",
+      "Audit aliasing, src repeat0 broadcast, masks/tails, signed zeros, subnormal/overflow/nonfinite behavior and UB read ports",
+      "Keep exact Device frequency/range/polynomial coefficients, actual input/golden/thresholds and position0 identity",
+      "Full source-bound precision/launch/template and paired native controls only after separate authorization; inherited max32 failure prevents production ready",
+      "Reject if constant traffic/bank conflicts/control negate benefit; no promise of official score gain"
+    ],
+    "prior_negative_difference": "Prior frequency accumulation folding showed no gain and true-FMA residual was disproved. This would retain the current trig numerical sequence on measured Horner/scale-add stages, with shared constant rows, not retry frequency compensation or cosine-polynomial replacement. No transformation was implemented in this task."
+  },
+  "other_model_opportunity": "For wide FP32 aligned initialization, review increasing two output scratch slots by568float each: full8768floats frequency math fits with modelUB186944B. This only reduces the two-chunk setup and is not yet an authorized variant."
+}

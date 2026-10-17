@@ -1,0 +1,22 @@
+任务已提交: task_20261017_004741_35852268361 (断开后可用 task-submit --wait task_20261017_004741_35852268361 重连)
+等待任务执行: task_20261017_004741_35852268361 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 1 的锁 (无超时)...
+[npu-lock] 已获取设备 1 的锁 (pid=3699860)
+soc=Ascend910_9392 device=1 vector_cores=48
+soc=Ascend910_9392 device=1 vector_cores=48
+soc=Ascend910_9392 device=1 vector_cores=48
+soc=Ascend910_9392 device=1 vector_cores=48
+soc=Ascend910_9392 device=1 vector_cores=48
+soc=Ascend910_9392 device=1 vector_cores=48
+soc=Ascend910_9392 device=1 vector_cores=48
+soc=Ascend910_9392 device=1 vector_cores=48
+{"event_us":14.080000,"min_event_us":14.080000,"host_us":162.941000,"cores":48,"soc":"Ascend910_9392","device":1,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":41.799999,"min_event_us":41.799999,"host_us":134.871000,"cores":48,"soc":"Ascend910_9392","device":1,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":48.880001,"min_event_us":48.880001,"host_us":124.201000,"cores":48,"soc":"Ascend910_9392","device":1,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":55.320000,"min_event_us":55.320000,"host_us":178.652000,"cores":48,"soc":"Ascend910_9392","device":1,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":62.540001,"min_event_us":62.540001,"host_us":126.602000,"cores":48,"soc":"Ascend910_9392","device":1,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":20.700001,"min_event_us":20.700001,"host_us":95.441000,"cores":48,"soc":"Ascend910_9392","device":1,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":120.059998,"min_event_us":120.059998,"host_us":186.552000,"cores":48,"soc":"Ascend910_9392","device":1,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":137.440002,"min_event_us":137.440002,"host_us":204.032000,"cores":48,"soc":"Ascend910_9392","device":1,"guard_ok":true,"launch_audit":true,"iterations":2,"kernel_launches":2,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+[npu-lock] 已释放设备 1 的锁
+=== 任务完成 (exit=0) ===

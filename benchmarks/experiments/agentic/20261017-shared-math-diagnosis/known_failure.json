@@ -1,0 +1,85 @@
+{
+  "evidence_reused_without_new_measurement": true,
+  "source_report": "benchmarks/experiments/agentic/20261017-headtile-attribution/correctness.json",
+  "source_report_sha256": "fdb6a567a6927c09c1da540d362079b9eda104fcef3d93ab502a015f6f81be96",
+  "input_record": {
+    "group": "amplitude",
+    "case": {
+      "name": "frozen_amplitude",
+      "shape": [
+        1,
+        137,
+        17,
+        1024
+      ],
+      "dtype": "float16",
+      "theta": 10000
+    },
+    "directory": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/rope_v9_system/input",
+    "golden": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r4/validation/frozen_golden.bin",
+    "hashes": {
+      "x.bin": "1f7f48c43ce98bbafc1ea3cd72a4454170ba22aafc0168313bbe9b19adbb337a",
+      "positions.bin": "6440650f7929ae325dea035aa3603e4ab3f2aff805932f02b77e9726ffa579cc"
+    },
+    "golden_sha256": "a0c2d29c1defa294e64248d66b88f8eb50860459b65efaef842d6ceb9b34a069",
+    "parent_output": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r4/validation/output/parent/amplitude/frozen_amplitude.bin",
+    "parent_output_sha256": "248cf74c43ad2df74183f34549bce956ec72a37082a4c91e7eb2a0d357a80663",
+    "reused_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556"
+  },
+  "full_failure": {
+    "group": "amplitude",
+    "case": {
+      "name": "frozen_amplitude",
+      "shape": [
+        1,
+        137,
+        17,
+        1024
+      ],
+      "dtype": "float16",
+      "theta": 10000
+    },
+    "candidate": {
+      "passed": false,
+      "matched_ratio": 0.9999874208351224,
+      "max_abs_error": 32.0
+    },
+    "parent": {
+      "passed": false,
+      "matched_ratio": 0.9999874208351224,
+      "max_abs_error": 32.0
+    },
+    "finite_bit_differences": 0,
+    "all_bit_differences": 0,
+    "nonfinite_classes_identical": true,
+    "position0_bits": true,
+    "runtime": {
+      "event_us": 1029.279907,
+      "min_event_us": 1029.279907,
+      "host_us": 1240.412,
+      "cores": 48,
+      "soc": "Ascend910_9392",
+      "device": 0,
+      "guard_ok": true,
+      "launch_audit": true,
+      "iterations": 1,
+      "kernel_launches": 1,
+      "one_kernel_per_iteration": true,
+      "output_alignment_bytes": 512
+    },
+    "output_sha256": {
+      "parent": "248cf74c43ad2df74183f34549bce956ec72a37082a4c91e7eb2a0d357a80663",
+      "candidate": "248cf74c43ad2df74183f34549bce956ec72a37082a4c91e7eb2a0d357a80663"
+    }
+  },
+  "thresholds": {
+    "atol": 0.00195,
+    "rtol": 0.00195,
+    "matched_ratio_min": 0.99,
+    "max_abs_error_limit": 0.1
+  },
+  "diagnostic_expansion_on_amplitude": false,
+  "precision_internal_report": "benchmarks/diagnostics/rope_v9_trig_internal/diagnosis.json",
+  "precision_internal_report_sha256": "811be803c8b73502df5c811e6d0a7c68fb123af2621699318de2a84b85f1a2c7",
+  "conclusion": "Inherited source817 and8d output has max32>0.1, same outputSHA; neither current diagnosis nor platform15Pass resolves universal correctness."
+}

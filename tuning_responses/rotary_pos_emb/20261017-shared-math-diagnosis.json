@@ -1,0 +1,14 @@
+{
+  "request_id": "20261017-shared-math-diagnosis",
+  "state": "diagnosis_complete",
+  "production_ready": false,
+  "candidate_created": false,
+  "reason": "Eight calibrated coarse/fine source817 diagnostic cases complete; all outputs bit-identical,32 single-launch audits, ranked evidence and next-metric proposal archived. Inherited FP16max32 failure retained. No performance implementation authorized or performed.",
+  "evidence_paths": [
+    "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/README.md",
+    "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/ranked_hypotheses.json",
+    "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/calibration.json",
+    "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/tasks.json"
+  ],
+  "auto_generic_request_consumed": false
+}

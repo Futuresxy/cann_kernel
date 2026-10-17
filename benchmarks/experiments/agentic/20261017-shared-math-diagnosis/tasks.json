@@ -1,0 +1,33 @@
+{
+  "tasks": [
+    {
+      "mode": "coarse",
+      "task_id": "task_20261017_004741_35852268361",
+      "device": 1,
+      "max_time_seconds": 60,
+      "exit_code": 0,
+      "lock_released": true,
+      "audited_invocations": 16,
+      "predecessor_terminal_and_card_release_checked_before_submit": true,
+      "no_overlap": true
+    },
+    {
+      "mode": "detailed",
+      "task_id": "task_20261017_005306_37109977053",
+      "device": 1,
+      "max_time_seconds": 60,
+      "exit_code": 0,
+      "lock_released": true,
+      "audited_invocations": 16,
+      "predecessor_terminal_and_card_release_checked_before_submit": true,
+      "no_overlap": true
+    }
+  ],
+  "new_NPU_tasks": 2,
+  "actual_launch_api_calls": 32,
+  "one_kernel_per_invocation": true,
+  "serial_auto_one_card": true,
+  "environment_changed": false,
+  "prior_R6_overlap_evidence_preserved": "benchmarks/experiments/agentic/20261017-headtile-attribution/tasks.json",
+  "prior_excluded_samples_reused": false
+}

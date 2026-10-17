@@ -1,0 +1,10 @@
+{
+  "trig_vector_calls_unchanged": true,
+  "count": 34,
+  "original_helper_sha256": "6d4f436dc9c470cfadcf9b11e1d6a92643f8a2c0729693b5e57571502e64aa11",
+  "pre_device_compile_repair": {
+    "failed_source_sha256": "c7da47b1bb078b96e9d3525ebe2ff2ee43704929c8dc9b68432cf939954e5061",
+    "reason": "Bulk position-broadcast contained an earlier col loop; initial rotation marker selected it, placing End outside stamp scope. Anchor moved after LoadFp32 before any NPU invocation. No numerical operations changed.",
+    "NPU_tasks_before_repair": 0
+  }
+}

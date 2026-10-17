@@ -1,0 +1,97 @@
+{
+  "cases": [
+    {
+      "name": "tiny",
+      "empty_ticks_per_call": {
+        "coarse": 0.125,
+        "detailed": 0.1328125
+      },
+      "trig_fine_to_coarse_ratio": 1.5204678362573099,
+      "frequency_fine_to_coarse_ratio": 0.8623853211009175,
+      "coarse_event_us_diagnostic_only": 14.08,
+      "detailed_event_us_diagnostic_only": 38.82
+    },
+    {
+      "name": "deepseek_half",
+      "empty_ticks_per_call": {
+        "coarse": 0.12890625,
+        "detailed": 0.12369791666666667
+      },
+      "trig_fine_to_coarse_ratio": 1.396938013442868,
+      "frequency_fine_to_coarse_ratio": 0.9890968562602217,
+      "coarse_event_us_diagnostic_only": 41.799999,
+      "detailed_event_us_diagnostic_only": 42.720001
+    },
+    {
+      "name": "deepseek_float",
+      "empty_ticks_per_call": {
+        "coarse": 0.14973958333333334,
+        "detailed": 0.14583333333333334
+      },
+      "trig_fine_to_coarse_ratio": 1.3907703758838854,
+      "frequency_fine_to_coarse_ratio": 0.9640048925388782,
+      "coarse_event_us_diagnostic_only": 48.880001,
+      "detailed_event_us_diagnostic_only": 56.279999
+    },
+    {
+      "name": "prefill_h32_d1024_half",
+      "empty_ticks_per_call": {
+        "coarse": 0.12825520833333334,
+        "detailed": 0.150390625
+      },
+      "trig_fine_to_coarse_ratio": 1.2130330809087284,
+      "frequency_fine_to_coarse_ratio": 0.972610060792304,
+      "coarse_event_us_diagnostic_only": 55.32,
+      "detailed_event_us_diagnostic_only": 55.759998
+    },
+    {
+      "name": "prefill_h32_d1024_float",
+      "empty_ticks_per_call": {
+        "coarse": 0.12760416666666666,
+        "detailed": 0.13606770833333334
+      },
+      "trig_fine_to_coarse_ratio": 1.1381186835967867,
+      "frequency_fine_to_coarse_ratio": 0.8675302007257362,
+      "coarse_event_us_diagnostic_only": 62.540001,
+      "detailed_event_us_diagnostic_only": 59.579998
+    },
+    {
+      "name": "sequence8192",
+      "empty_ticks_per_call": {
+        "coarse": 0.142578125,
+        "detailed": 0.12890625
+      },
+      "trig_fine_to_coarse_ratio": 1.1834779230868833,
+      "frequency_fine_to_coarse_ratio": 0.9963516964611456,
+      "coarse_event_us_diagnostic_only": 20.700001,
+      "detailed_event_us_diagnostic_only": 21.0
+    },
+    {
+      "name": "sequence_d1024_half",
+      "empty_ticks_per_call": {
+        "coarse": 0.115234375,
+        "detailed": 0.13346354166666666
+      },
+      "trig_fine_to_coarse_ratio": 1.137709291628335,
+      "frequency_fine_to_coarse_ratio": 1.004176035978156,
+      "coarse_event_us_diagnostic_only": 120.059998,
+      "detailed_event_us_diagnostic_only": 127.599998
+    },
+    {
+      "name": "sequence_d1024_float",
+      "empty_ticks_per_call": {
+        "coarse": 0.1328125,
+        "detailed": 0.14192708333333334
+      },
+      "trig_fine_to_coarse_ratio": 1.1544490867028072,
+      "frequency_fine_to_coarse_ratio": 1.2183009157141902,
+      "coarse_event_us_diagnostic_only": 137.440002,
+      "detailed_event_us_diagnostic_only": 147.320007
+    }
+  ],
+  "meaning": "Empty markers provide timer floor, not an exact universal subtraction. Fine-vs-coarse builds change barriers/register pressure/scheduling; no additive native fractions or global clock conversion.",
+  "native_device": 0,
+  "diagnostic_device": 1,
+  "unmatched_environments_do_not_form_a_speedup": true,
+  "independent_timing_repetitions": 0
+}

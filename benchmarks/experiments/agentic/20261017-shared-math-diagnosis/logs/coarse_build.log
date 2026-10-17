@@ -1,0 +1,41 @@
+Consolidate compiler generated dependencies of target shared_probe
+[ 50%] Building ASC object CMakeFiles/shared_probe.dir/diagnostic_runner.asc.o
+/data/pyptouser/songxiaoyou/cann_kernel/project/benchmarks/experiments/agentic/20261017-shared-math-diagnosis/diagnostic_runner.asc:58:32: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+    rope1743::diagnosticTrace=(GM_ADDR)((uint8_t*)dtraceBase+traceStride);
+                               ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+/data/pyptouser/songxiaoyou/cann_kernel/project/benchmarks/experiments/agentic/20261017-shared-math-diagnosis/diagnostic_runner.asc:70:21: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+        run_kernel((GM_ADDR)dx,ix,(GM_ADDR)dp,ip,(GM_ADDR)dy,iy,cores,stream,theta);
+                    ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+/data/pyptouser/songxiaoyou/cann_kernel/project/benchmarks/experiments/agentic/20261017-shared-math-diagnosis/diagnostic_runner.asc:70:36: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+        run_kernel((GM_ADDR)dx,ix,(GM_ADDR)dp,ip,(GM_ADDR)dy,iy,cores,stream,theta);
+                                   ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+/data/pyptouser/songxiaoyou/cann_kernel/project/benchmarks/experiments/agentic/20261017-shared-math-diagnosis/diagnostic_runner.asc:70:51: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+        run_kernel((GM_ADDR)dx,ix,(GM_ADDR)dp,ip,(GM_ADDR)dy,iy,cores,stream,theta);
+                                                  ^~~~~~~
+/usr/local/Ascend/cann-9.0.0/aarch64-linux/tikcpp/tikcfw/impl/utils/kernel_utils_macros.h:23:17: note: expanded from macro 'GM_ADDR'
+#define GM_ADDR __gm__ uint8_t*
+                ^~~~~~
+/usr/local/Ascend/cann-9.0.0/tools/bisheng_compiler/lib/clang/15.0.5/include/__clang_cce_defines.h:61:31: note: expanded from macro '__gm__'
+#define __gm__ __attribute__((cce_global))
+                              ^~~~~~~~~~
+4 warnings generated.
+[100%] Linking ASC executable shared_probe
+[100%] Built target shared_probe

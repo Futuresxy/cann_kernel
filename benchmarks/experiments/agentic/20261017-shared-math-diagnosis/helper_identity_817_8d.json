@@ -1,0 +1,31 @@
+{
+  "parent_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "latest_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea",
+  "selected_classes": {
+    "AlignedRotary": {
+      "identical": true,
+      "sha256": "1f30b404a540847e3a3e03367fc1b67c60ac8db050ec5dd878506db1aa4669fb"
+    },
+    "LargeAlignedRotary": {
+      "identical": true,
+      "sha256": "7d3e68f890f91a5724475b4f67f0e72ebea2b212f1647e80351ac48c78dd2e6c"
+    },
+    "DirectFloatRotary": {
+      "identical": true,
+      "sha256": "17cedfd3df72a1b4a0a6868f52816cab9d4faf94699a32fb817f671f04d969fb"
+    },
+    "BatchedRotary": {
+      "identical": true,
+      "sha256": "7b812b1f6a43ffe971442596b36d2d202044a4848fa54dd4a7483ccb9956bfc3"
+    },
+    "BulkPositionRotary": {
+      "identical": true,
+      "sha256": "5f45b2f6dd86f39fbffbb2f572def6535b10ed447fc9e57787046ad0b8dbeb1e"
+    },
+    "all_shared_numerical_helpers": {
+      "identical": true,
+      "sha256": "493581235a721404b6bb210e8b369f91696132d911f3c5b21e45246ed5e2b1e1"
+    }
+  },
+  "scope": "Eight actual selected entries; tiny goes through DirectFloatRotary, not SmallRotary"
+}

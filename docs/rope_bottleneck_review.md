@@ -6,6 +6,8 @@
 
 初次复核只采集诊断，没有改 kernel、安装依赖或发起平台提交。六次采集均通过现有 task-submit 串行申请单卡，单次上限60秒；任务日志、原始CSV、二进制/源码哈希和输入哈希均保留。汇总见 [机器可读证据](../benchmarks/analysis/rope_bottleneck_review_20261017.json)。后续HeadTile实验的唯一真实平台试验为 **887393：15/15 Pass，48.29分，排名快照69**，低于此前883390的48.78。局部原生收益尚未转化成平台提分，不据此提升性能基线；下一阶段转向频率初始化、trig与旋转的共用计算链归因。
 
+后续[8点共用数学链诊断](../benchmarks/experiments/agentic/20261017-shared-math-diagnosis/README.md)已完成，仅有校准诊断、没有新候选：多head对齐场景的旋转累计重于trig，H1/D1024则trig更重，tiny频率设置显著；range/Horner/倍角成本高于孤立Sqrt。细分插桩使trig总tick增加约14%–52%，这些不是原始关键路径占比。两项单卡任务串行执行并释放，两个粒度共16份输出与817逐位相同，继承幅值失败及SDK限制仍保留。
+
 ## 分析对象与计量边界
 
 - 性能对照为真实提交 **883390，15/15 Pass，48.78分**，源码 `817f8364de18`，存档于 `platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc`。

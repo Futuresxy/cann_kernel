@@ -1,0 +1,9 @@
+{
+  "diagnostic_only": true,
+  "detail": 1,
+  "source_sha256": "d0dca9a7724208149500705e46a042f387df9c215c12b0c56f24c271f9676ee1",
+  "runner_sha256": "1d69f2bcb3d0afab7837253f087ad2d85bbfaf6a4dfa4f1396d4f304eedb21db",
+  "binary_sha256": "91c6e8a7127d3a227dcc26861264af52cb6099a5be395d5fd3e13de0b9233f30",
+  "parent_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "launch_audit": true
+}
