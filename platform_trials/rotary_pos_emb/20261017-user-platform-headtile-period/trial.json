@@ -48,5 +48,21 @@
   "platform_submissions_authorized_for_this_source": 1,
   "poll_seconds": 60,
   "created_at": "2026-10-17T07:33:17.672803+00:00",
-  "measurement_exception": "One overlapped device1 timing was excluded and recollected serially ondevice0; final timing CSVs verified device0."
+  "measurement_exception": "One overlapped device1 timing was excluded and recollected serially ondevice0; final timing CSVs verified device0.",
+  "source_git_commit": "f9698331a3fd6fb9f0b8f552b4686542ff5e9c0e",
+  "platform_run_id": "20261017T073409479470Z-8d91182ab86e",
+  "platform_submission_id": "887393",
+  "platform_result_url": "https://cannjudge.cn/public/op_challenge_jingdong_prelim/rotaryposemb/submission/6ad324f5193e507d8e794473",
+  "platform_state_at_capture": "accepted",
+  "platform_status": "Pass",
+  "platform_score_raw": "48.29",
+  "platform_rank_at_capture": 69,
+  "platform_passed_cases": 15,
+  "official_score_delta_from_parent": -0.49,
+  "editor_readback": {
+    "adapter": "keyboard",
+    "readback_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea",
+    "bytes": 90498,
+    "lines": 1901
+  }
 }

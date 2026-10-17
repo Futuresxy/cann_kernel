@@ -1,0 +1,684 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017-shared-math-diagnosis",
+  "state": "ready_for_tuning",
+  "baseline_run_id": "20261017T053637875276Z-817f8364de18",
+  "parent_kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "source_git_commit": "7c23980023adc6e5b628af1cbf0a4bdbbc14aeaa",
+  "result_path": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+  "result_state": "accepted",
+  "platform_status": "Pass",
+  "official_score_raw": "48.78",
+  "rank_at_capture": 65,
+  "cases": [
+    {
+      "id": 1,
+      "latency_us": 3.86,
+      "raw_latency": "3.86μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 2.15,
+      "ratio_to_best": 1.7953488372093023
+    },
+    {
+      "id": 2,
+      "latency_us": 5.62,
+      "raw_latency": "5.62μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 3.13,
+      "ratio_to_best": 1.7955271565495208
+    },
+    {
+      "id": 3,
+      "latency_us": 6.82,
+      "raw_latency": "6.82μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 3.88,
+      "ratio_to_best": 1.7577319587628868
+    },
+    {
+      "id": 4,
+      "latency_us": 10.84,
+      "raw_latency": "10.84μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 5.46,
+      "ratio_to_best": 1.9853479853479854
+    },
+    {
+      "id": 5,
+      "latency_us": 19.57,
+      "raw_latency": "19.57μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 6.68,
+      "ratio_to_best": 2.9296407185628746
+    },
+    {
+      "id": 6,
+      "latency_us": 17.7,
+      "raw_latency": "17.70μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 8.44,
+      "ratio_to_best": 2.0971563981042656
+    },
+    {
+      "id": 7,
+      "latency_us": 20.47,
+      "raw_latency": "20.47μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 10.51,
+      "ratio_to_best": 1.9476688867745005
+    },
+    {
+      "id": 8,
+      "latency_us": 12.92,
+      "raw_latency": "12.92μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 7.72,
+      "ratio_to_best": 1.6735751295336787
+    },
+    {
+      "id": 9,
+      "latency_us": 53.89,
+      "raw_latency": "53.89μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 15.92,
+      "ratio_to_best": 3.3850502512562817
+    },
+    {
+      "id": 10,
+      "latency_us": 3370.0,
+      "raw_latency": "3.37ms",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 3060.0,
+      "ratio_to_best": 1.1013071895424837
+    },
+    {
+      "id": 11,
+      "latency_us": 40.04,
+      "raw_latency": "40.04μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 35.73,
+      "ratio_to_best": 1.1206269241533726
+    },
+    {
+      "id": 12,
+      "latency_us": 48.97,
+      "raw_latency": "48.97μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 41.4,
+      "ratio_to_best": 1.1828502415458937
+    },
+    {
+      "id": 13,
+      "latency_us": 339.52,
+      "raw_latency": "339.52μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 236.22,
+      "ratio_to_best": 1.437304207941749
+    },
+    {
+      "id": 14,
+      "latency_us": 859.7,
+      "raw_latency": "859.70μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 734.12,
+      "ratio_to_best": 1.1710619517245138
+    },
+    {
+      "id": 15,
+      "latency_us": 270.89,
+      "raw_latency": "270.89μs",
+      "status": "Pass",
+      "output_error_percent": 0.0,
+      "best_latency_us": 171.0,
+      "ratio_to_best": 1.5841520467836256
+    }
+  ],
+  "priority_case_ids": [
+    9,
+    5,
+    6,
+    4,
+    7
+  ],
+  "required_output": {
+    "status": "diagnostic_report_only",
+    "path": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis.json",
+    "tuning_request_id": "20261017-shared-math-diagnosis",
+    "evidence": "Source/input/binary-bound calibrated stage counters, original and diagnostic source distinction, SDK/instruction limitations, raw task logs and clear common-bottleneck ranking. No experimental_candidate.json, staging or platform submission."
+  },
+  "user_policy_files": [
+    "~/cann_kernel/project/AGENTIC.md",
+    "~/cann_kernel/project/kernel_requirement.md",
+    "~/cann_kernel/project/forbidden.md"
+  ],
+  "experiment_log": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis.json",
+  "optimization_strategy": "docs/rope_optimization_strategy.md",
+  "optimization_sequence": [
+    "Analyze RoPE algorithmic work, reuse opportunities and the numerical error chain",
+    "Model actual dtype/shape dataflow, GM/UB traffic, copies, casts, fusion and parallelism",
+    "Use source-bound profiling/assembly to identify critical stalls and hardware utilization",
+    "Choose one evidenced hypothesis with predicted metric changes and regression controls"
+  ],
+  "experiment_fields": [
+    "algorithm_work_model",
+    "dataflow_model",
+    "dtype_shape_family",
+    "expected_metric_changes",
+    "prior_attempts_reviewed",
+    "hypothesis",
+    "bottleneck_evidence",
+    "parent_source_sha256",
+    "candidate_source_sha256",
+    "changes",
+    "validation",
+    "local_performance",
+    "decision",
+    "next_steps"
+  ],
+  "execution_constraints": [
+    "Use the existing user environment; no installation or system configuration",
+    "Only kernel.asc changes in the competition project",
+    "Judge payload uses only original-template C++ and supported dav-2201 CANN APIs; no extra packages, libraries, generated helper files or build changes",
+    "Existing offline diagnostic libraries are not submission dependencies",
+    "NPU tasks serial, one card, task-submit, at most 60 seconds per task",
+    "Do not infer hidden shapes from case IDs or bypass correctness",
+    "Distinguish FP16/FP32 data from int32 positions; preserve original precision gates",
+    "Do not repeat local instruction substitutions without a diagnosed bottleneck",
+    "State one optimization hypothesis and measure before publishing"
+  ],
+  "created_at": "2026-10-17T07:38:06.433055+00:00",
+  "problem_context": {
+    "source_url": "https://cannjudge.cn/public/op_challenge_jingdong_prelim/rotaryposemb",
+    "start": "2026/09/05 00:00:00",
+    "deadline": "2026/10/17 18:00:00",
+    "constraints": "数据类型: float16, float32\n维度场景: 4维输入（B, S, H, rope_dim），B 为 batch，S 为序列长度，H 为头数，rope_dim 为位置编码维度\n维度取值范围（均为正整数）:\nB（batch）: [1, 128]\nS（序列长度）: [1, 8192]\nH（头数）: [1, 256]\nrope_dim（位置编码维度）: [16, 1024]，且必须为偶数\n位置索引约束: positions 中每个元素为 [0, 131072] 的整数，表示绝对位置\n典型 shape:\nDeepSeek V3 实际场景: (B, S, 128, 64)，rope_dim=64，128 个 head\n小规模调试: (1, 8, 1, 16)\n非对齐场景: rope_dim、H、S 的任意组合可能导致非对齐的内存访问，算子需正确处理",
+    "rules": "cos/sin 生成规则: 逆频率计算与三角函数 cos/sin 的生成在算子内部完成，cos/sin 不作为算子输入\n实现方式规则: 旋转位置编码的具体实现方式不限（如 rotate-half、复数乘法等），任何与数学定义等价的实现均可\n中间精度规则: 逆频率与三角函数计算必须使用 FP32 精度，旋转乘法可在输入精度下进行，需保证最终输出与 golden 的误差在阈值内",
+    "precision": "精度要求：计算结果需满足以下精度误差要求：\n\nfloat32：相对误差 < 1e-4，绝对误差 < 1e-4（双万分之一精度）\nfloat16、bfloat16：相对误差 < 1e-3，绝对误差 < 1e-3（双千分之一精度）\nint32：要求计算结果完全准确，无误差",
+    "scoring": "本次比赛共15个测试点，所有case点精度全部通过才会计分。\n每个测试点单独计分，逻辑如下（T为最优性能，t为当前提交性能）：\n\\[\\frac{100}{1+\\log_{1.5}\\frac{t}{T}}\\]\n排行榜显示的最终分数为所有case得分的均值。若得分计算一致，则以提交时间进行排序，提交越早，排名越高。"
+  },
+  "leaders": [
+    {
+      "rank": 1,
+      "score_raw": "84.66",
+      "cases": [
+        {
+          "id": 1,
+          "latency_us": 2.62,
+          "speedup_needed": 1.4732824427480915
+        },
+        {
+          "id": 2,
+          "latency_us": 3.94,
+          "speedup_needed": 1.4263959390862944
+        },
+        {
+          "id": 3,
+          "latency_us": 4.14,
+          "speedup_needed": 1.6473429951690823
+        },
+        {
+          "id": 4,
+          "latency_us": 6.4,
+          "speedup_needed": 1.6937499999999999
+        },
+        {
+          "id": 5,
+          "latency_us": 6.7,
+          "speedup_needed": 2.9208955223880597
+        },
+        {
+          "id": 6,
+          "latency_us": 8.61,
+          "speedup_needed": 2.0557491289198606
+        },
+        {
+          "id": 7,
+          "latency_us": 11.43,
+          "speedup_needed": 1.7909011373578303
+        },
+        {
+          "id": 8,
+          "latency_us": 8.5,
+          "speedup_needed": 1.52
+        },
+        {
+          "id": 9,
+          "latency_us": 15.96,
+          "speedup_needed": 3.3765664160401
+        },
+        {
+          "id": 10,
+          "latency_us": 3190.0,
+          "speedup_needed": 1.0564263322884013
+        },
+        {
+          "id": 11,
+          "latency_us": 37.86,
+          "speedup_needed": 1.057580559957739
+        },
+        {
+          "id": 12,
+          "latency_us": 45.23,
+          "speedup_needed": 1.0826884810966173
+        },
+        {
+          "id": 13,
+          "latency_us": 246.61,
+          "speedup_needed": 1.3767487125420703
+        },
+        {
+          "id": 14,
+          "latency_us": 753.31,
+          "speedup_needed": 1.1412300380985254
+        },
+        {
+          "id": 15,
+          "latency_us": 191.26,
+          "speedup_needed": 1.4163442434382516
+        }
+      ]
+    },
+    {
+      "rank": 2,
+      "score_raw": "84.56",
+      "cases": [
+        {
+          "id": 1,
+          "latency_us": 2.5,
+          "speedup_needed": 1.544
+        },
+        {
+          "id": 2,
+          "latency_us": 3.17,
+          "speedup_needed": 1.772870662460568
+        },
+        {
+          "id": 3,
+          "latency_us": 4.25,
+          "speedup_needed": 1.6047058823529412
+        },
+        {
+          "id": 4,
+          "latency_us": 5.86,
+          "speedup_needed": 1.849829351535836
+        },
+        {
+          "id": 5,
+          "latency_us": 7.49,
+          "speedup_needed": 2.6128170894526033
+        },
+        {
+          "id": 6,
+          "latency_us": 8.89,
+          "speedup_needed": 1.9910011248593924
+        },
+        {
+          "id": 7,
+          "latency_us": 11.76,
+          "speedup_needed": 1.7406462585034013
+        },
+        {
+          "id": 8,
+          "latency_us": 9.23,
+          "speedup_needed": 1.3997833152762729
+        },
+        {
+          "id": 9,
+          "latency_us": 16.04,
+          "speedup_needed": 3.3597256857855364
+        },
+        {
+          "id": 10,
+          "latency_us": 3070.0,
+          "speedup_needed": 1.0977198697068404
+        },
+        {
+          "id": 11,
+          "latency_us": 38.9,
+          "speedup_needed": 1.029305912596401
+        },
+        {
+          "id": 12,
+          "latency_us": 44.91,
+          "speedup_needed": 1.0904030282787798
+        },
+        {
+          "id": 13,
+          "latency_us": 255.47,
+          "speedup_needed": 1.3290014483109562
+        },
+        {
+          "id": 14,
+          "latency_us": 750.61,
+          "speedup_needed": 1.1453351274296906
+        },
+        {
+          "id": 15,
+          "latency_us": 195.49,
+          "speedup_needed": 1.3856974781318736
+        }
+      ]
+    },
+    {
+      "rank": 3,
+      "score_raw": "75.99",
+      "cases": [
+        {
+          "id": 1,
+          "latency_us": 2.5,
+          "speedup_needed": 1.544
+        },
+        {
+          "id": 2,
+          "latency_us": 3.63,
+          "speedup_needed": 1.5482093663911847
+        },
+        {
+          "id": 3,
+          "latency_us": 4.51,
+          "speedup_needed": 1.5121951219512197
+        },
+        {
+          "id": 4,
+          "latency_us": 6.8,
+          "speedup_needed": 1.5941176470588236
+        },
+        {
+          "id": 5,
+          "latency_us": 17.0,
+          "speedup_needed": 1.1511764705882352
+        },
+        {
+          "id": 6,
+          "latency_us": 8.44,
+          "speedup_needed": 2.0971563981042656
+        },
+        {
+          "id": 7,
+          "latency_us": 12.56,
+          "speedup_needed": 1.6297770700636942
+        },
+        {
+          "id": 8,
+          "latency_us": 10.73,
+          "speedup_needed": 1.2041006523765143
+        },
+        {
+          "id": 9,
+          "latency_us": 16.18,
+          "speedup_needed": 3.3306551297898643
+        },
+        {
+          "id": 10,
+          "latency_us": 3070.0,
+          "speedup_needed": 1.0977198697068404
+        },
+        {
+          "id": 11,
+          "latency_us": 42.6,
+          "speedup_needed": 0.9399061032863849
+        },
+        {
+          "id": 12,
+          "latency_us": 45.03,
+          "speedup_needed": 1.0874972240728402
+        },
+        {
+          "id": 13,
+          "latency_us": 249.19,
+          "speedup_needed": 1.3624944821220755
+        },
+        {
+          "id": 14,
+          "latency_us": 755.65,
+          "speedup_needed": 1.1376960232912063
+        },
+        {
+          "id": 15,
+          "latency_us": 201.74,
+          "speedup_needed": 1.342767919103797
+        }
+      ]
+    },
+    {
+      "rank": 4,
+      "score_raw": "73.19",
+      "cases": [
+        {
+          "id": 1,
+          "latency_us": 2.66,
+          "speedup_needed": 1.4511278195488722
+        },
+        {
+          "id": 2,
+          "latency_us": 4.27,
+          "speedup_needed": 1.3161592505854802
+        },
+        {
+          "id": 3,
+          "latency_us": 4.47,
+          "speedup_needed": 1.5257270693512306
+        },
+        {
+          "id": 4,
+          "latency_us": 5.53,
+          "speedup_needed": 1.9602169981916817
+        },
+        {
+          "id": 5,
+          "latency_us": 8.68,
+          "speedup_needed": 2.254608294930876
+        },
+        {
+          "id": 6,
+          "latency_us": 8.77,
+          "speedup_needed": 2.0182440136830104
+        },
+        {
+          "id": 7,
+          "latency_us": 12.9,
+          "speedup_needed": 1.5868217054263565
+        },
+        {
+          "id": 8,
+          "latency_us": 9.38,
+          "speedup_needed": 1.3773987206823026
+        },
+        {
+          "id": 9,
+          "latency_us": 18.73,
+          "speedup_needed": 2.8772023491724505
+        },
+        {
+          "id": 10,
+          "latency_us": 3340.0,
+          "speedup_needed": 1.0089820359281436
+        },
+        {
+          "id": 11,
+          "latency_us": 36.66,
+          "speedup_needed": 1.0921985815602837
+        },
+        {
+          "id": 12,
+          "latency_us": 42.51,
+          "speedup_needed": 1.151964243707363
+        },
+        {
+          "id": 13,
+          "latency_us": 330.84,
+          "speedup_needed": 1.0262362471285214
+        },
+        {
+          "id": 14,
+          "latency_us": 852.25,
+          "speedup_needed": 1.0087415664417718
+        },
+        {
+          "id": 15,
+          "latency_us": 259.65,
+          "speedup_needed": 1.0432890429424226
+        }
+      ]
+    },
+    {
+      "rank": 5,
+      "score_raw": "71.89",
+      "cases": [
+        {
+          "id": 1,
+          "latency_us": 2.62,
+          "speedup_needed": 1.4732824427480915
+        },
+        {
+          "id": 2,
+          "latency_us": 3.75,
+          "speedup_needed": 1.4986666666666666
+        },
+        {
+          "id": 3,
+          "latency_us": 6.88,
+          "speedup_needed": 0.991279069767442
+        },
+        {
+          "id": 4,
+          "latency_us": 5.88,
+          "speedup_needed": 1.8435374149659864
+        },
+        {
+          "id": 5,
+          "latency_us": 8.5,
+          "speedup_needed": 2.3023529411764705
+        },
+        {
+          "id": 6,
+          "latency_us": 8.83,
+          "speedup_needed": 2.0045300113250284
+        },
+        {
+          "id": 7,
+          "latency_us": 11.2,
+          "speedup_needed": 1.8276785714285715
+        },
+        {
+          "id": 8,
+          "latency_us": 8.05,
+          "speedup_needed": 1.6049689440993786
+        },
+        {
+          "id": 9,
+          "latency_us": 21.94,
+          "speedup_needed": 2.456244302643573
+        },
+        {
+          "id": 10,
+          "latency_us": 3250.0,
+          "speedup_needed": 1.0369230769230768
+        },
+        {
+          "id": 11,
+          "latency_us": 38.4,
+          "speedup_needed": 1.0427083333333333
+        },
+        {
+          "id": 12,
+          "latency_us": 44.56,
+          "speedup_needed": 1.0989676840215439
+        },
+        {
+          "id": 13,
+          "latency_us": 337.93,
+          "speedup_needed": 1.004705116444234
+        },
+        {
+          "id": 14,
+          "latency_us": 852.77,
+          "speedup_needed": 1.0081264584823575
+        },
+        {
+          "id": 15,
+          "latency_us": 268.21,
+          "speedup_needed": 1.009992170314306
+        }
+      ]
+    }
+  ],
+  "compiler_errors": [],
+  "previous_request_id": "20261017-headtile-attribution",
+  "official_score_target": 70.01,
+  "source_git_path": "platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc",
+  "previous_experiment_path": "benchmarks/experiments/agentic/20261017-headtile-attribution.json",
+  "requested_focus": "Diagnostic-only attribution of the shared frequency/trig/rotation chain across small, aligned and H1 workloads. Do not implement a performance candidate until coordinator review of measured evidence.",
+  "profiling_evidence": [
+    "docs/rope_bottleneck_review.md",
+    "benchmarks/analysis/rope_bottleneck_review_20261017.json",
+    "benchmarks/profiles/review_20261017_unaligned_h128_d30_half",
+    "benchmarks/profiles/review_20261017_unaligned_h128_d30_float",
+    "benchmarks/analysis/headtile_lcm_hypothesis.json"
+  ],
+  "diagnostic_requirements": [
+    "Read AGENTIC.md/kernel_requirement.md/forbidden.md and prior numerical/stage/negative reports; no environment or dependency changes.",
+    "Source817 is the comparison baseline. Canonical and latest pointer remain unchanged. Verify the selected common helper/class bodies are identical in latest8d trial before reusing conclusions.",
+    "Collect source-bound calibrated stage attribution for frequency setup, index/queue setup if any, angle generation, range reduction, polynomial/Sqrt/double-angle chain, rotation/casts, positions/GM transfers and waits. Use only safe diagnostic clones, never submit them.",
+    "Include tiny FP32, aligned DeepSeek FP16/FP32, aligned D1024/H32 FP16/FP32, H1 D64 FP32, H1 D1024 FP16/FP32 using original frozen public inputs. Reuse valid existing diagnostic evidence where stage coverage and source/input binding match.",
+    "Instrumentation may serialize stages. Report empty-marker overhead and instrumentation effects; do not sum stages into original critical-path fractions, convert SYS_CNT to AIV cycles without authoritative evidence, or claim decoded ISA unavailable to installed tools.",
+    "For each family distinguish total per-core initialization from repeated work per job and per valid element; use native uninstrumented timings separately. Do not infer hidden platform shape or treat longest runtime as highest score priority.",
+    "No new approximation or kernel candidate. In particular do not launch deferred guarded-trig or software-RN-FMA ports and do not repeat generic pipeline/HeadTile microtuning.",
+    "Only one NPU task at a time, auto-assigned single card, max_time60. Explicitly wait for predecessor terminal status and card release before submitting the next; no background NPU submissions or Promise.all scheduling. Preserve the previous overlap exception and never use its samples.",
+    "Record all diagnostics, failures and unsupported tooling honestly. Preserve original inputs, golden and precision thresholds. No production-ready/latest/browser changes.",
+    "Finish with a ranked bottleneck hypothesis and a specific expected metric change for the most broadly useful next experiment; state uncertainty and numerical risk without implementing it. Commit/push the report."
+  ],
+  "implementation_gate": {
+    "allowed": false,
+    "reason": "First determine which shared initialization/trig/rotation component is critical across families; implementation will be a separate reviewed hypothesis."
+  },
+  "latest_platform_observation": {
+    "run_id": "20261017T073409479470Z-8d91182ab86e",
+    "submission_id": "887393",
+    "source_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea",
+    "status": "15/15 Pass",
+    "official_score": "48.29",
+    "comparison_baseline": "883390 / 817f8364 / 48.78",
+    "interpretation": "HeadTile native1.525x did not produce observed official gain; no hidden shape mapping. Keep historical817 as comparison baseline; shared math bodies are unchanged in these variants."
+  },
+  "scope_cases": [
+    {
+      "name": "tiny"
+    },
+    {
+      "name": "deepseek_half"
+    },
+    {
+      "name": "deepseek_float"
+    },
+    {
+      "name": "prefill_h32_d1024_half"
+    },
+    {
+      "name": "prefill_h32_d1024_float"
+    },
+    {
+      "name": "sequence8192"
+    },
+    {
+      "name": "sequence_d1024_half"
+    },
+    {
+      "name": "sequence_d1024_float"
+    }
+  ]
+}
