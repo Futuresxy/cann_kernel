@@ -1,0 +1,45 @@
+任务已提交: task_20261017_002632_333110423442 (断开后可用 task-submit --wait task_20261017_002632_333110423442 重连)
+等待任务执行: task_20261017_002632_333110423442 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=3331219)
+2026-10-17 00:26:33 [WARN]  The option "--application" will be deprecated in future version. It is recommended to specify <app> [arguments] instead.
+2026-10-17 00:26:33 [INFO]  Op profiling analysis start.
+2026-10-17 00:26:33 [INFO]  Running device task: DeviceProf
+soc=Ascend910_9392 device=0 vector_cores=48
+[INFO] <ProfData> Start profiling on device 0, kernel: _ZN8rope174316head_tile_kernelIDhNS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT0_
+[INFO] <WarmUp> Warm Up enabled. times:2
+{"event_us":387.549988,"min_event_us":387.549988,"host_us":461.594500,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+2026-10-17 00:26:37 [INFO]  Profiling running finished. All task success.
+2026-10-17 00:26:37 [INFO]  Start analyze kernel on device: device0, kernel: _ZN8rope174316head_tile_kernelIDhNS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT0_, name is: 0
+2026-10-17 00:26:37 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-10-17 00:26:37 [INFO]  Save profiling data with metric [Memory] success.
+2026-10-17 00:26:37 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-10-17 00:26:37 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+
+2026-10-17 00:26:37 [INFO]  Operator Basic Information:
+
+	Op Name: _ZN8rope174316head_tile_kernelIDhNS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT0_
+	Op Type: vector
+	Task Duration(us): 66.361328
+	Block Dim: 48
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 3331268
+	Current Freq: 1850
+	Rated Freq: 1850
+
+2026-10-17 00:26:37 [INFO]  Profiling results saved in /data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r6_pmu_half/OPPROF_20261017002633_BRWEAVDECRGJCIIT
+2026-10-17 00:26:37 [INFO]  Profiling data parse finished.
+2026-10-17 00:26:37 [INFO]  Op profiling finish. Welcome to next use.
+{
+  "label": "agentic_r6_pmu_half",
+  "task_us": 66.361328,
+  "vec_ratio": 0.8478453125000001,
+  "mte2_active_gbs": 22.01229725,
+  "mte3_active_gbs": 46.27552454166667
+}
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

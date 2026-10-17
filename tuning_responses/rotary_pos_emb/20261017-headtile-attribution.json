@@ -1,0 +1,16 @@
+{
+  "request_id": "20261017-headtile-attribution",
+  "state": "blocked",
+  "completion": "experimental_archive_complete",
+  "blocker_scope": "production_ready_only",
+  "reason": "Measured HeadTile gain archived for review. All1765 outputs identical to parent, but inherited valid-input FP16 max32 failure persists; no production-ready/latest publication.",
+  "parent_kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "kernel_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea",
+  "evidence_paths": [
+    "benchmarks/experiments/agentic/20261017-headtile-attribution/README.md",
+    "benchmarks/experiments/agentic/20261017-headtile-attribution/experimental_candidate.json",
+    "benchmarks/experiments/agentic/20261017-headtile-attribution/correctness.json",
+    "benchmarks/experiments/agentic/20261017-headtile-attribution/tasks.json"
+  ],
+  "platform_submit_by_server": false
+}

@@ -1,0 +1,218 @@
+{
+  "state": "implementation_gate_supported",
+  "prior_negatives": [
+    {
+      "name": "round2/head_mask",
+      "reason": "D64 aligned head packing and GatherMask+strided-copy regressed; this candidate changes the existing nonaligned HeadTile path, with independently measured layout costs"
+    },
+    {
+      "name": "round3/layout_copy",
+      "reason": "D64 strided per-head half copies and MulAddDst regressed; current proposed copies only replicate aligned coefficient prefixes, and retain separately rounded products"
+    },
+    {
+      "name": "R4",
+      "reason": "FP32 compact broadcast regressed6.07%; do not reuse it or generalize FP16 wins"
+    },
+    {
+      "name": "R5",
+      "reason": "local generic pipeline1.7x but platform48.44 versus81748.78; this is an independent measured HeadTile family"
+    }
+  ],
+  "stages": "diagnostics/stages.json",
+  "instrumentation_caveat": "SYS_CNT+PIPE_ALL serializes stages, empty-marker cost measured, not additive original critical-path fractions",
+  "hypothesis": "Flat input rotation plus current-call generated alignment-period coefficient prefix copied with supported vector Copy repeats",
+  "API": "dav_c220 Copy uses vcopy; count mask<=64,repeat<=255,32B-aligned bases and block/repeat units,srcRepeatSize0,dstRepeatSize=prefix/8<=31; disjoint immutable prefix and destination",
+  "numerical": "FP32 numerical helper bodies unchanged; low output uses a*c+b*(-s), equivalent separately rounded normal/zero products under RN to a*c-b*s; full finite bitwise, signedzero and nonfinite gates mandatory before acceptance",
+  "liveness": [
+    "During frequency: original6cap float scratch unchanged",
+    "During trig: angle rotated[0:pitch],C z[0:pitch],S z[cap:cap+pitch],q c[0:pitch],temp c[cap:cap+pitch]",
+    "negS z[cap+pitch:cap+2pitch],then Gather coefficient prefixes to c[0:U] and output FP32[0:U]",
+    "Copy expands immutable aligned prefixes; load z overwrites dead compact coefficients",
+    "Gather rotated from z completes before z is overwritten;two Mul read original halves;Add c=products;Store from c overwrites dead output sine buffer",
+    "Output slot reuse waits via existing TQue MTE3_V;input ownership/prefetch and p0 protocol unchanged"
+  ],
+  "example_d30_h128": {
+    "parent_Gather_elements": 12032,
+    "candidate_Gather_elements": 4080,
+    "coefficient_Copy_elements": 7440,
+    "rotation_arithmetic_parent": 12288,
+    "rotation_arithmetic_candidate": 11520,
+    "extra_neg_sine": 16,
+    "parent_GM_bytes": "2*N*H*D*sizeof(T) unchanged",
+    "note": "Logical counts, not hardware instruction or bandwidth counts"
+  },
+  "geometry_cases": 4704,
+  "max_ub_bytes": {
+    "2": 117312,
+    "4": 133696
+  },
+  "geometry_detail_count": 4704,
+  "geometry_details_reproducible_by": "model.py",
+  "geometry_examples": [
+    {
+      "d": 18,
+      "h": 33,
+      "tile": 33,
+      "cap": 528,
+      "prefix": 72,
+      "ub_bytes": {
+        "2": 30368,
+        "4": 34592
+      }
+    },
+    {
+      "d": 18,
+      "h": 65,
+      "tile": 65,
+      "cap": 1040,
+      "prefix": 72,
+      "ub_bytes": {
+        "2": 59168,
+        "4": 67488
+      }
+    },
+    {
+      "d": 18,
+      "h": 128,
+      "tile": 128,
+      "cap": 2048,
+      "prefix": 72,
+      "ub_bytes": {
+        "2": 115840,
+        "4": 132224
+      }
+    },
+    {
+      "d": 18,
+      "h": 129,
+      "tile": 128,
+      "cap": 2048,
+      "prefix": 72,
+      "ub_bytes": {
+        "2": 115840,
+        "4": 132224
+      }
+    },
+    {
+      "d": 18,
+      "h": 256,
+      "tile": 128,
+      "cap": 2048,
+      "prefix": 72,
+      "ub_bytes": {
+        "2": 115840,
+        "4": 132224
+      }
+    },
+    {
+      "d": 30,
+      "h": 33,
+      "tile": 33,
+      "cap": 528,
+      "prefix": 120,
+      "ub_bytes": {
+        "2": 30752,
+        "4": 34976
+      }
+    },
+    {
+      "d": 30,
+      "h": 65,
+      "tile": 65,
+      "cap": 1040,
+      "prefix": 120,
+      "ub_bytes": {
+        "2": 59552,
+        "4": 67872
+      }
+    },
+    {
+      "d": 30,
+      "h": 128,
+      "tile": 128,
+      "cap": 2048,
+      "prefix": 120,
+      "ub_bytes": {
+        "2": 116224,
+        "4": 132608
+      }
+    },
+    {
+      "d": 30,
+      "h": 129,
+      "tile": 128,
+      "cap": 2048,
+      "prefix": 120,
+      "ub_bytes": {
+        "2": 116224,
+        "4": 132608
+      }
+    },
+    {
+      "d": 30,
+      "h": 256,
+      "tile": 128,
+      "cap": 2048,
+      "prefix": 120,
+      "ub_bytes": {
+        "2": 116224,
+        "4": 132608
+      }
+    },
+    {
+      "d": 62,
+      "h": 33,
+      "tile": 33,
+      "cap": 1056,
+      "prefix": 248,
+      "ub_bytes": {
+        "2": 61536,
+        "4": 69984
+      }
+    },
+    {
+      "d": 62,
+      "h": 65,
+      "tile": 64,
+      "cap": 2048,
+      "prefix": 248,
+      "ub_bytes": {
+        "2": 117312,
+        "4": 133696
+      }
+    },
+    {
+      "d": 62,
+      "h": 128,
+      "tile": 64,
+      "cap": 2048,
+      "prefix": 248,
+      "ub_bytes": {
+        "2": 117312,
+        "4": 133696
+      }
+    },
+    {
+      "d": 62,
+      "h": 129,
+      "tile": 64,
+      "cap": 2048,
+      "prefix": 248,
+      "ub_bytes": {
+        "2": 117312,
+        "4": 133696
+      }
+    },
+    {
+      "d": 62,
+      "h": 256,
+      "tile": 64,
+      "cap": 2048,
+      "prefix": 248,
+      "ub_bytes": {
+        "2": 117312,
+        "4": 133696
+      }
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "name": "unaligned_h128_d30_half",
+    "shape": [
+      2,
+      1024,
+      128,
+      30
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 65
+  },
+  {
+    "name": "unaligned_h128_d30_float",
+    "shape": [
+      2,
+      1024,
+      128,
+      30
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "seed": 66
+  },
+  {
+    "name": "attr_d18_h129_float16",
+    "shape": [
+      1,
+      257,
+      129,
+      18
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 61002
+  },
+  {
+    "name": "attr_d18_h129_float32",
+    "shape": [
+      1,
+      257,
+      129,
+      18
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "seed": 61003
+  },
+  {
+    "name": "attr_d62_h65_float16",
+    "shape": [
+      1,
+      257,
+      65,
+      62
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 61004
+  },
+  {
+    "name": "attr_d62_h65_float32",
+    "shape": [
+      1,
+      257,
+      65,
+      62
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "seed": 61005
+  }
+]

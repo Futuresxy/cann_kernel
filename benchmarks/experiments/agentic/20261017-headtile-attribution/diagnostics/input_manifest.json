@@ -1,0 +1,110 @@
+[
+  {
+    "case": {
+      "name": "unaligned_h128_d30_half",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "seed": 65
+    },
+    "hashes": {
+      "x.bin": "c6a237291092fb801de8b0329ac4701f970e41683d0b458f5d3fcf1cbe9ac370",
+      "positions.bin": "78490796833c12939c501b199818233d481327038721f9913bcaa68c1136091a"
+    }
+  },
+  {
+    "case": {
+      "name": "unaligned_h128_d30_float",
+      "shape": [
+        2,
+        1024,
+        128,
+        30
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "seed": 66
+    },
+    "hashes": {
+      "x.bin": "3034e37c11548d6bcec9800bbf5c02253a9ebf58ce4815f61bef307de4c06a81",
+      "positions.bin": "b626a8d6d329968f171667a891ff12ea5861649cc6b9af4e81b31a96ea88f4f1"
+    }
+  },
+  {
+    "case": {
+      "name": "attr_d18_h129_float16",
+      "shape": [
+        1,
+        257,
+        129,
+        18
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "seed": 61002
+    },
+    "hashes": {
+      "x.bin": "a802bb8f0c431d9ca7dcdb455fd323dc953209f2312cfc38046edf1b7f5c51f1",
+      "positions.bin": "b372b3e408b6e911a7d1fb3d886424af32b1c03c263f9c55668e46a644ff7939"
+    }
+  },
+  {
+    "case": {
+      "name": "attr_d18_h129_float32",
+      "shape": [
+        1,
+        257,
+        129,
+        18
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "seed": 61003
+    },
+    "hashes": {
+      "x.bin": "2d1a52bda1e1422a59fb89112227e3d078319710b2f688a6dfa54ca5c8adb6af",
+      "positions.bin": "126bbb2fc6de0691f47b0003968212851b9ec82225aa3842c202f21f4f75508c"
+    }
+  },
+  {
+    "case": {
+      "name": "attr_d62_h65_float16",
+      "shape": [
+        1,
+        257,
+        65,
+        62
+      ],
+      "dtype": "float16",
+      "pmax": 131073,
+      "seed": 61004
+    },
+    "hashes": {
+      "x.bin": "c71a068aceaf0b1facab57ae38bc4f1dabe7fd189b02b9d2687fb5375644c630",
+      "positions.bin": "43f9c09217a1ede79d6b36642c281d415f1a54d19ed2edbd9ce992836137bf6c"
+    }
+  },
+  {
+    "case": {
+      "name": "attr_d62_h65_float32",
+      "shape": [
+        1,
+        257,
+        65,
+        62
+      ],
+      "dtype": "float32",
+      "pmax": 131073,
+      "seed": 61005
+    },
+    "hashes": {
+      "x.bin": "8b2ad9d1cbc43e6bae68994344e7f4bd27e7e213adcb0f79c63bdac98b0fd644",
+      "positions.bin": "61f69da1198c9c3539b7728635bb9c1f5998b6e5c723ecaf8c01df58201c499d"
+    }
+  }
+]

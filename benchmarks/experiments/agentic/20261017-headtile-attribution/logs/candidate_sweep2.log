@@ -1,0 +1,520 @@
+{"event_us":1047.599976,"min_event_us":1047.599976,"host_us":1239.962000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":38.840000,"min_event_us":38.840000,"host_us":87.770000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.880001,"min_event_us":18.880001,"host_us":59.771000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.960001,"min_event_us":17.960001,"host_us":54.561000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.080000,"min_event_us":17.080000,"host_us":53.481000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":14.160000,"min_event_us":14.160000,"host_us":50.380000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.559999,"min_event_us":17.559999,"host_us":54.520000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":20.760000,"min_event_us":20.760000,"host_us":57.320000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":21.360001,"min_event_us":21.360001,"host_us":56.270000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.680000,"min_event_us":16.680000,"host_us":54.640000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.360001,"min_event_us":16.360001,"host_us":54.830000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.139999,"min_event_us":17.139999,"host_us":54.800000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.300001,"min_event_us":17.300001,"host_us":55.620000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.120000,"min_event_us":11.120000,"host_us":52.091000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.699999,"min_event_us":17.699999,"host_us":57.621000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":15.340000,"min_event_us":15.340000,"host_us":54.001000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.879999,"min_event_us":16.879999,"host_us":52.220000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.720001,"min_event_us":16.720001,"host_us":57.870000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.600000,"min_event_us":16.600000,"host_us":53.310000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.400000,"min_event_us":17.400000,"host_us":53.450000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.180000,"min_event_us":11.180000,"host_us":46.350000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.860001,"min_event_us":16.860001,"host_us":53.020000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.780000,"min_event_us":10.780000,"host_us":51.901000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.020000,"min_event_us":11.020000,"host_us":53.431000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.859999,"min_event_us":17.859999,"host_us":56.011000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.120001,"min_event_us":17.120001,"host_us":53.081000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.900000,"min_event_us":16.900000,"host_us":54.531000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.200001,"min_event_us":17.200001,"host_us":51.910000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.580000,"min_event_us":10.580000,"host_us":44.410000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.680000,"min_event_us":10.680000,"host_us":48.131000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.120001,"min_event_us":17.120001,"host_us":54.161000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.240002,"min_event_us":17.240002,"host_us":53.121000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.440001,"min_event_us":17.440001,"host_us":54.890000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.759998,"min_event_us":17.759998,"host_us":53.580000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.920000,"min_event_us":16.920000,"host_us":53.230000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.039999,"min_event_us":17.039999,"host_us":54.391000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.020000,"min_event_us":17.020000,"host_us":52.031000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.100000,"min_event_us":17.100000,"host_us":56.111000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.820001,"min_event_us":10.820001,"host_us":46.971000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.200001,"min_event_us":17.200001,"host_us":51.361000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.680000,"min_event_us":16.680000,"host_us":51.591000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.440001,"min_event_us":16.440001,"host_us":52.031000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.920000,"min_event_us":16.920000,"host_us":54.891000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.000000,"min_event_us":17.000000,"host_us":52.451000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.459999,"min_event_us":10.459999,"host_us":51.901000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.939999,"min_event_us":16.939999,"host_us":53.591000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.799999,"min_event_us":16.799999,"host_us":52.951000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.840000,"min_event_us":16.840000,"host_us":53.291000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.540001,"min_event_us":17.540001,"host_us":52.671000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.880001,"min_event_us":18.880001,"host_us":52.051000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":69.799995,"min_event_us":69.799995,"host_us":103.951000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.180000,"min_event_us":11.180000,"host_us":50.630000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.059999,"min_event_us":12.059999,"host_us":45.760000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.160000,"min_event_us":11.160000,"host_us":45.360000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.020000,"min_event_us":11.020000,"host_us":44.450000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.719999,"min_event_us":10.719999,"host_us":44.420000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.400001,"min_event_us":11.400001,"host_us":45.000000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.820000,"min_event_us":11.820000,"host_us":45.590000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.800000,"min_event_us":10.800000,"host_us":43.810000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.820001,"min_event_us":10.820001,"host_us":44.530000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.060000,"min_event_us":11.060000,"host_us":43.171000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.760000,"min_event_us":11.760000,"host_us":50.401000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.620000,"min_event_us":11.620000,"host_us":46.061000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.540000,"min_event_us":11.540000,"host_us":45.201000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.700001,"min_event_us":10.700001,"host_us":44.411000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.900001,"min_event_us":10.900001,"host_us":43.411000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.780000,"min_event_us":10.780000,"host_us":43.961000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.520000,"min_event_us":10.520000,"host_us":45.000000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.280001,"min_event_us":11.280001,"host_us":43.870000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.180000,"min_event_us":11.180000,"host_us":44.560000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.080000,"min_event_us":11.080000,"host_us":45.101000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.520000,"min_event_us":11.520000,"host_us":45.431000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.400001,"min_event_us":11.400001,"host_us":50.751000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.840000,"min_event_us":11.840000,"host_us":45.401000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.580000,"min_event_us":10.580000,"host_us":45.361000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.700001,"min_event_us":10.700001,"host_us":44.161000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.800000,"min_event_us":10.800000,"host_us":44.141000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.520000,"min_event_us":10.520000,"host_us":43.931000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.620000,"min_event_us":10.620000,"host_us":44.031000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.800000,"min_event_us":10.800000,"host_us":44.310000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.040000,"min_event_us":11.040000,"host_us":44.941000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.839999,"min_event_us":10.839999,"host_us":43.750000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.800000,"min_event_us":10.800000,"host_us":45.851000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.760000,"min_event_us":10.760000,"host_us":43.470000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.719999,"min_event_us":10.719999,"host_us":45.021000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.279999,"min_event_us":17.279999,"host_us":49.260000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.880000,"min_event_us":10.880000,"host_us":44.760000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.880000,"min_event_us":10.880000,"host_us":45.770000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.340000,"min_event_us":11.340000,"host_us":48.590000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.380000,"min_event_us":11.380000,"host_us":53.790000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.640000,"min_event_us":11.640000,"host_us":45.150000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.880000,"min_event_us":11.880000,"host_us":45.390000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.880000,"min_event_us":11.880000,"host_us":45.430000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.780000,"min_event_us":10.780000,"host_us":43.000000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.380000,"min_event_us":13.380000,"host_us":51.840000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.600000,"min_event_us":17.600000,"host_us":50.880000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.800000,"min_event_us":10.800000,"host_us":51.650000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.500000,"min_event_us":17.500000,"host_us":52.931000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":21.340000,"min_event_us":21.340000,"host_us":55.611000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.380000,"min_event_us":10.380000,"host_us":51.420000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.440001,"min_event_us":17.440001,"host_us":50.620000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.300000,"min_event_us":11.300000,"host_us":48.220000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.780000,"min_event_us":10.780000,"host_us":46.051000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.020000,"min_event_us":11.020000,"host_us":43.800000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.340000,"min_event_us":11.340000,"host_us":44.140000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.020000,"min_event_us":11.020000,"host_us":43.200000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.640000,"min_event_us":11.640000,"host_us":46.890000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.120000,"min_event_us":11.120000,"host_us":45.360000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.920000,"min_event_us":10.920000,"host_us":51.920000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.200000,"min_event_us":12.200000,"host_us":51.650000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.559999,"min_event_us":11.559999,"host_us":45.140000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.340000,"min_event_us":11.340000,"host_us":44.600000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.920000,"min_event_us":10.920000,"host_us":44.550000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.340000,"min_event_us":11.340000,"host_us":43.520000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.120000,"min_event_us":11.120000,"host_us":44.310000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.640000,"min_event_us":10.640000,"host_us":44.580000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.240000,"min_event_us":11.240000,"host_us":43.720000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.540000,"min_event_us":11.540000,"host_us":44.520000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.540000,"min_event_us":11.540000,"host_us":45.150000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.820000,"min_event_us":11.820000,"host_us":45.030000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.920000,"min_event_us":11.920000,"host_us":44.250000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.960000,"min_event_us":11.960000,"host_us":44.671000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.880000,"min_event_us":10.880000,"host_us":44.021000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.080000,"min_event_us":11.080000,"host_us":43.561000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.839999,"min_event_us":10.839999,"host_us":42.831000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.640000,"min_event_us":10.640000,"host_us":43.421000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.440000,"min_event_us":11.440000,"host_us":44.731000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.140000,"min_event_us":11.140000,"host_us":50.211000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.320001,"min_event_us":10.320001,"host_us":46.020000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.099999,"min_event_us":11.099999,"host_us":44.450000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.880000,"min_event_us":10.880000,"host_us":44.400000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.880000,"min_event_us":10.880000,"host_us":43.800000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.000000,"min_event_us":11.000000,"host_us":45.070000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.400001,"min_event_us":11.400001,"host_us":49.121000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.200000,"min_event_us":11.200000,"host_us":45.900000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.340000,"min_event_us":11.340000,"host_us":43.511000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.680000,"min_event_us":11.680000,"host_us":43.931000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.179999,"min_event_us":12.179999,"host_us":45.121000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.480000,"min_event_us":11.480000,"host_us":44.621000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.920000,"min_event_us":10.920000,"host_us":43.691000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.780000,"min_event_us":10.780000,"host_us":44.821000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.080000,"min_event_us":11.080000,"host_us":45.021000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.860000,"min_event_us":10.860000,"host_us":45.081000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.700001,"min_event_us":10.700001,"host_us":50.191000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.560000,"min_event_us":10.560000,"host_us":49.561000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.960000,"min_event_us":10.960000,"host_us":51.131000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.799999,"min_event_us":12.799999,"host_us":53.960000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.380000,"min_event_us":10.380000,"host_us":52.551000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.120000,"min_event_us":11.120000,"host_us":52.611000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.059999,"min_event_us":13.059999,"host_us":48.270000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.920000,"min_event_us":10.920000,"host_us":47.790000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.540000,"min_event_us":10.540000,"host_us":47.710000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":14.220000,"min_event_us":14.220000,"host_us":52.930000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.400001,"min_event_us":12.400001,"host_us":52.180000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.880000,"min_event_us":12.880000,"host_us":48.070000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.580000,"min_event_us":10.580000,"host_us":45.610000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.219999,"min_event_us":10.219999,"host_us":46.010000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.580000,"min_event_us":10.580000,"host_us":44.850000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.980000,"min_event_us":10.980000,"host_us":45.260000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.040000,"min_event_us":11.040000,"host_us":45.330000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.740000,"min_event_us":10.740000,"host_us":44.480000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.320000,"min_event_us":12.320000,"host_us":46.730000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.320000,"min_event_us":13.320000,"host_us":45.270000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.760000,"min_event_us":12.760000,"host_us":44.311000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.020000,"min_event_us":13.020000,"host_us":45.831000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.820000,"min_event_us":12.820000,"host_us":45.421000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.340000,"min_event_us":13.340000,"host_us":47.600000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.679999,"min_event_us":12.679999,"host_us":46.180000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.140000,"min_event_us":13.140000,"host_us":47.850000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.000000,"min_event_us":13.000000,"host_us":47.430000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":14.259999,"min_event_us":14.259999,"host_us":47.920000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.320000,"min_event_us":12.320000,"host_us":45.680000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.880000,"min_event_us":12.880000,"host_us":44.660000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.400001,"min_event_us":12.400001,"host_us":45.751000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.679999,"min_event_us":12.679999,"host_us":46.431000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.400001,"min_event_us":12.400001,"host_us":44.561000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.620000,"min_event_us":12.620000,"host_us":45.941000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.440000,"min_event_us":12.440000,"host_us":46.440000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.300000,"min_event_us":13.300000,"host_us":46.590000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.559999,"min_event_us":12.559999,"host_us":44.000000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.400001,"min_event_us":12.400001,"host_us":45.150000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.980000,"min_event_us":12.980000,"host_us":44.070000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.100000,"min_event_us":12.100000,"host_us":45.790000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.660000,"min_event_us":12.660000,"host_us":45.060000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.920000,"min_event_us":11.920000,"host_us":46.171000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.120000,"min_event_us":13.120000,"host_us":43.871000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.660000,"min_event_us":12.660000,"host_us":46.971000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.320000,"min_event_us":12.320000,"host_us":46.071000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.260000,"min_event_us":11.260000,"host_us":47.070000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.719999,"min_event_us":10.719999,"host_us":49.880000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.900001,"min_event_us":10.900001,"host_us":53.150000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.320000,"min_event_us":11.320000,"host_us":51.230000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.760000,"min_event_us":10.760000,"host_us":47.401000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.720000,"min_event_us":11.720000,"host_us":50.301000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.440001,"min_event_us":17.440001,"host_us":53.961000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.240000,"min_event_us":11.240000,"host_us":51.281000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.360000,"min_event_us":11.360000,"host_us":53.620000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.599999,"min_event_us":11.599999,"host_us":51.550000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.939999,"min_event_us":16.939999,"host_us":51.200000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.680000,"min_event_us":17.680000,"host_us":53.920000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.200001,"min_event_us":18.200001,"host_us":53.360000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.920000,"min_event_us":16.920000,"host_us":54.770000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.820001,"min_event_us":10.820001,"host_us":57.531000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.660000,"min_event_us":17.660000,"host_us":51.731000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.759998,"min_event_us":16.759998,"host_us":53.611000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.040000,"min_event_us":11.040000,"host_us":52.220000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.880001,"min_event_us":17.880001,"host_us":53.730000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.480001,"min_event_us":17.480001,"host_us":51.100000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.120001,"min_event_us":17.120001,"host_us":53.600000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.180000,"min_event_us":17.180000,"host_us":51.851000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.340000,"min_event_us":17.340000,"host_us":52.581000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":27.119999,"min_event_us":27.119999,"host_us":62.731000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.820000,"min_event_us":11.820000,"host_us":50.420000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.340000,"min_event_us":17.340000,"host_us":52.130000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.980000,"min_event_us":17.980000,"host_us":53.770000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.379999,"min_event_us":17.379999,"host_us":52.800000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.799999,"min_event_us":16.799999,"host_us":53.610000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":12.059999,"min_event_us":12.059999,"host_us":51.130000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":23.560001,"min_event_us":23.560001,"host_us":58.921000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.460000,"min_event_us":11.460000,"host_us":50.131000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.940001,"min_event_us":10.940001,"host_us":85.731000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.960000,"min_event_us":10.960000,"host_us":51.870000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.260000,"min_event_us":11.260000,"host_us":51.130000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.240002,"min_event_us":17.240002,"host_us":52.961000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":13.500000,"min_event_us":13.500000,"host_us":52.111000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.500000,"min_event_us":18.500000,"host_us":52.121000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.300000,"min_event_us":11.300000,"host_us":48.390000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":21.160000,"min_event_us":21.160000,"host_us":57.490000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.960000,"min_event_us":11.960000,"host_us":50.610000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.440001,"min_event_us":17.440001,"host_us":53.710000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.380001,"min_event_us":16.380001,"host_us":53.040000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.300001,"min_event_us":17.300001,"host_us":51.800000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.699999,"min_event_us":16.699999,"host_us":54.241000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.300001,"min_event_us":18.300001,"host_us":55.811000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.420000,"min_event_us":17.420000,"host_us":51.351000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.860001,"min_event_us":16.860001,"host_us":53.350000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.020000,"min_event_us":11.020000,"host_us":53.780000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.160000,"min_event_us":18.160000,"host_us":56.550000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.840000,"min_event_us":11.840000,"host_us":67.711000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.500000,"min_event_us":11.500000,"host_us":52.890000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.200001,"min_event_us":17.200001,"host_us":54.610000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.060001,"min_event_us":18.060001,"host_us":52.020000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.540001,"min_event_us":17.540001,"host_us":56.861000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.300001,"min_event_us":17.300001,"host_us":54.561000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.920000,"min_event_us":17.920000,"host_us":54.071000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.519999,"min_event_us":17.519999,"host_us":52.940000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.080000,"min_event_us":17.080000,"host_us":52.630000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.379999,"min_event_us":18.379999,"host_us":52.280000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.600000,"min_event_us":16.600000,"host_us":51.660000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.680000,"min_event_us":16.680000,"host_us":53.050000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.960001,"min_event_us":16.960001,"host_us":55.441000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":17.300001,"min_event_us":17.300001,"host_us":53.151000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.519999,"min_event_us":16.519999,"host_us":51.381000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.260000,"min_event_us":18.260000,"host_us":53.081000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":16.740000,"min_event_us":16.740000,"host_us":52.150000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":18.160000,"min_event_us":18.160000,"host_us":52.680000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.880000,"min_event_us":10.880000,"host_us":58.261000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.400001,"min_event_us":11.400001,"host_us":52.691000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":11.260000,"min_event_us":11.260000,"host_us":45.250000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+{"event_us":10.860000,"min_event_us":10.860000,"host_us":51.220000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48

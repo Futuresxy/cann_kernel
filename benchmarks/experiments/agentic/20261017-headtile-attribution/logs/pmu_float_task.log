@@ -1,0 +1,45 @@
+任务已提交: task_20261017_002707_333668429550 (断开后可用 task-submit --wait task_20261017_002707_333668429550 重连)
+等待任务执行: task_20261017_002707_333668429550 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=3336796)
+2026-10-17 00:27:08 [WARN]  The option "--application" will be deprecated in future version. It is recommended to specify <app> [arguments] instead.
+2026-10-17 00:27:08 [INFO]  Op profiling analysis start.
+2026-10-17 00:27:08 [INFO]  Running device task: DeviceProf
+soc=Ascend910_9392 device=0 vector_cores=48
+[INFO] <ProfData> Start profiling on device 0, kernel: _ZN8rope174316head_tile_kernelIfNS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT0_
+[INFO] <WarmUp> Warm Up enabled. times:2
+{"event_us":384.019989,"min_event_us":384.019989,"host_us":458.649000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+2026-10-17 00:27:13 [INFO]  Profiling running finished. All task success.
+2026-10-17 00:27:13 [INFO]  Start analyze kernel on device: device0, kernel: _ZN8rope174316head_tile_kernelIfNS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT0_, name is: 0
+2026-10-17 00:27:13 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-10-17 00:27:13 [INFO]  Save profiling data with metric [Memory] success.
+2026-10-17 00:27:13 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-10-17 00:27:13 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+
+2026-10-17 00:27:13 [INFO]  Operator Basic Information:
+
+	Op Name: _ZN8rope174316head_tile_kernelIfNS_21ScalarFrequencyConfigEEEvPhS2_S2_mjjjT0_
+	Op Type: vector
+	Task Duration(us): 66.081322
+	Block Dim: 48
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 3336847
+	Current Freq: 1850
+	Rated Freq: 1850
+
+2026-10-17 00:27:13 [INFO]  Profiling results saved in /data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r6_pmu_float/OPPROF_20261017002708_CSZAHNEOMRMKOBZG
+2026-10-17 00:27:13 [INFO]  Profiling data parse finished.
+2026-10-17 00:27:13 [INFO]  Op profiling finish. Welcome to next use.
+{
+  "label": "agentic_r6_pmu_float",
+  "task_us": 66.081322,
+  "vec_ratio": 0.8494263958333333,
+  "mte2_active_gbs": 36.4514753125,
+  "mte3_active_gbs": 72.14304227083333
+}
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

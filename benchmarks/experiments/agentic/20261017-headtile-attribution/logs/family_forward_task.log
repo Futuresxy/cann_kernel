@@ -1,0 +1,18 @@
+任务已提交: task_20261017_002534_33192134964 (断开后可用 task-submit --wait task_20261017_002534_33192134964 重连)
+等待任务执行: task_20261017_002534_33192134964 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=3319311)
+htperf_d18_h129_float16: 20.390 -> 14.860 us (1.37x)
+htperf_d18_h129_float32: 20.370 -> 14.681 us (1.39x)
+htperf_d22_h255_float16: 28.011 -> 18.931 us (1.48x)
+htperf_d22_h255_float32: 28.200 -> 18.921 us (1.49x)
+htperf_d26_h65_float16: 14.510 -> 12.050 us (1.20x)
+htperf_d26_h65_float32: 13.901 -> 11.671 us (1.19x)
+htperf_d34_h129_float16: 31.800 -> 22.401 us (1.42x)
+htperf_d34_h129_float32: 31.800 -> 22.290 us (1.43x)
+htperf_d46_h255_float16: 52.711 -> 36.081 us (1.46x)
+htperf_d46_h255_float32: 52.871 -> 36.011 us (1.47x)
+htperf_d62_h65_float16: 24.801 -> 21.581 us (1.15x)
+htperf_d62_h65_float32: 24.760 -> 21.470 us (1.15x)
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

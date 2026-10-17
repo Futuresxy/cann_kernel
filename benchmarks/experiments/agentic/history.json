@@ -808,6 +808,18 @@
       "candidate_source_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
       "native_speedup": 1.0332356367839077,
       "reason": "Final unaligned queue pipeline has substantial native benefits (1.7253x FP16 representative,1.6801x FP32,extra10 geomean1.5077x) with all1723 outputs byte-identical to817f8364. Production ready remains blocked by the unchanged inherited valid-input amplitude max32>0.1. Task-specific output is one experimental archive for coordinator review, not production ready/latest. No new platform trial performed."
+    },
+    {
+      "request_id": "20261017-headtile-attribution",
+      "parent_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "candidate_source_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea",
+      "decision": "experimental_archive; no production ready",
+      "hypothesis": "Short32B-aligned coefficient-period Gather then regular Copy; one flat rotate-half Gather replaces padded split/repack. Same math helpers/GM transactions/tiling/dispatch.",
+      "evidence": "benchmarks/experiments/agentic/20261017-headtile-attribution",
+      "fixed33_geomean": 1.028365675648823,
+      "family12_geomean": 1.3415005798222046,
+      "all_bits_identical_cases": 1765,
+      "known_failure_preserved": true
     }
   ],
   "diagnostics": [

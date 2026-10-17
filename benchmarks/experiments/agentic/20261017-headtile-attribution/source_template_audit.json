@@ -1,0 +1,22 @@
+{
+  "parent_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "candidate_sha256": "8d91182ab86ed3937f8127f3d427bb0777bbf94cffff83977b1bab580428eaea",
+  "only_HeadTile_class_changed": true,
+  "Host_and_other_paths_identical": true,
+  "FP32_numerical_helpers_identical": true,
+  "original_support_files_unchanged": [
+    "templates/rotaryposemb_1743/main.asc",
+    "templates/rotaryposemb_1743/CMakeLists.txt",
+    "templates/rotaryposemb_1743/run.sh",
+    "templates/rotaryposemb_1743/data_utils.h",
+    "templates/rotaryposemb_1743/scripts/RotaryPosEmb.py",
+    "templates/rotaryposemb_1743/scripts/gen_data.py",
+    "templates/rotaryposemb_1743/scripts/verify_result.py",
+    "templates/rotaryposemb_1743/scripts/__pycache__/RotaryPosEmb.cpython-310.pyc"
+  ],
+  "original_build_success": true,
+  "original_build_log": "template_build.log",
+  "normal_audit_and_template_device_code_44of44_identical": true,
+  "original_template_device_verify_pass": true,
+  "original_template_max_diff": 2.6226043701171875e-06
+}

@@ -1,0 +1,123 @@
+{
+  "constraint": "One card serially, max60s per task",
+  "exception": "One scheduling mistake: excluded forward timing overlapped the end of the previous task and was allocated device1; all subsequent measurements waited for predecessor release and used device0. No sample from that run used for decisions.",
+  "tasks": [
+    {
+      "log": "correctness_main_task.log",
+      "task_id": "task_20261017_002324_32894462116",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "correctness_rest_task.log",
+      "task_id": "task_20261017_002401_329557130828",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "correctness_smoke_task.log",
+      "task_id": "task_20261017_002250_32841226366",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "diagnostic_task.log",
+      "task_id": "task_20261017_001827_322453828759",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "family_forward_task.log",
+      "task_id": "task_20261017_002534_33192134964",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "family_reverse_task.log",
+      "task_id": "task_20261017_002615_33263482154",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "fixed33_forward_serial_task.log",
+      "task_id": "task_20261017_002442_330986213133",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "fixed33_forward_task.log",
+      "task_id": "task_20261017_002403_329645012528",
+      "device": 1,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": true,
+      "exception": "Submitted before previous task released; allocated device1. Native timings preserved but excluded; recollected device0 serially."
+    },
+    {
+      "log": "fixed33_reverse_task.log",
+      "task_id": "task_20261017_002508_331443719110",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "ordinary_launch_task.log",
+      "task_id": "task_20261017_002729_334340328814",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "pmu_float_task.log",
+      "task_id": "task_20261017_002707_333668429550",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "pmu_half_task.log",
+      "task_id": "task_20261017_002632_333110423442",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    },
+    {
+      "log": "template_device_task.log",
+      "task_id": "task_20261017_002812_335314128008",
+      "device": 0,
+      "max_time_seconds": 60,
+      "completed": true,
+      "excluded_from_performance": false,
+      "exception": null
+    }
+  ]
+}

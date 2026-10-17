@@ -1,0 +1,11 @@
+任务已提交: task_20261017_002324_32894462116 (断开后可用 task-submit --wait task_20261017_002324_32894462116 重连)
+等待任务执行: task_20261017_002324_32894462116 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=3289553)
+candidate sweep0 done
+candidate sweep1 done
+candidate dispatch done
+candidate conditioning done
+candidate math done
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

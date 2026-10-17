@@ -1,0 +1,2 @@
+{"event_us":1029.279907,"min_event_us":1029.279907,"host_us":1240.412000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"launch_audit":true,"iterations":1,"kernel_launches":1,"one_kernel_per_iteration":true,"output_alignment_bytes":512}
+soc=Ascend910_9392 device=0 vector_cores=48

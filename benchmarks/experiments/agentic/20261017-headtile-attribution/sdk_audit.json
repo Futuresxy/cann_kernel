@@ -1,0 +1,14 @@
+{
+  "headers": {
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/include/basic_api/kernel_operator_data_copy_intf.h": "58a7a47d9857d73fbd8115e16058db4a1f028962b8c3268345cc58c34de43718",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/include/basic_api/kernel_operator_sys_var_intf.h": "452078c5a0b3a57565f788a8769a1ec74b7f4e95d91dea453647fa6e3e04ec7b",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/dav_c220/kernel_operator_data_copy_impl.h": "efb584d2ca41a9d3a316eef039d4fce469477b81b4ee8ec5ac9123cdcd76703b",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/dav_c220/kernel_operator_vec_gather_impl.h": "d740bb7e951923a2293db365e743f91fe34685c4bd9f89889df9e1cd6c910af7",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/kernel_operator_vec_gather_intf_impl.h": "7a2bcf40e43b1bc02807362c735e2ecd035790f1879d17855365be86ef5379f2",
+    "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/dav_c220/kernel_operator_sys_var_impl.h": "0a889a0604d0383b38045c8c0ee38361ab6ce42277507f4ecb0d0e53d524b948"
+  },
+  "Copy": "supported dav_c220 intrinsic vcopy; CopyRepeatParams uses32-byte blocks, srcRepeatSize0 repeats immutable prefix; all destinations outside source prefix",
+  "Gather": "level2 uses64element FP32 repeats and optional tail; D30 old188 logical repeats versus new64 Gather repeats+124 regular Copy repeats",
+  "assembly_limit": "Device -S rejected; previous llvm-objdump prints not available on HiIPU. No decoded ISA counts claimed.",
+  "system_clock": "GetSystemCycle compiles inline MOV SYS_CNT. Stamps include PIPE_ALL and scalar/mark overhead; counts are not AIV core cycles."
+}

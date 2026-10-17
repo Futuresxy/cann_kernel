@@ -1,0 +1,18 @@
+任务已提交: task_20261017_001827_322453828759 (断开后可用 task-submit --wait task_20261017_001827_322453828759 重连)
+等待任务执行: task_20261017_001827_322453828759 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=3224892)
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+soc=Ascend910_9392 device=0 vector_cores=48
+{"event_us":128.340012,"min_event_us":128.340012,"host_us":271.072000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":133.379990,"min_event_us":133.379990,"host_us":199.942000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":29.680000,"min_event_us":29.680000,"host_us":133.712000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":31.459999,"min_event_us":31.459999,"host_us":87.371000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":34.079998,"min_event_us":34.079998,"host_us":88.401000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+{"event_us":35.660000,"min_event_us":35.660000,"host_us":95.191000,"cores":48,"soc":"Ascend910_9392","device":0,"guard_ok":true,"output_alignment_bytes":512}
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===

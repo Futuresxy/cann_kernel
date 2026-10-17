@@ -1,0 +1,9 @@
+{
+  "AGENTIC.md": "862d0edaaa828090de007b5c35abe80be2a19d79c00de6b16e23f2e199b6a157",
+  "kernel_requirement.md": "8af6ec98cd04b0d0105a5f35d24a3fa1b8b128c348f97c644f7458b5deaf5e4f",
+  "forbidden.md": "b6adc24318ecd1b7a4915b8dfd9fb560abb26d9da3e11239a5683b56aa197219",
+  "operators/rotary_pos_emb/kernel.asc": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "submissions/rotary_pos_emb/latest.json": "a3813c80cfddd81ed838828e908fa4c7b34fdd3074ffa0e9cad1137ed514cec1",
+  "tools/suite.py": "a88d26387860a8d25c6299a5d977d602d81bbc9bae6527387631deb774d375b4",
+  "platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556"
+}

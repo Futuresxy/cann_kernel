@@ -1,0 +1,146 @@
+[
+  {
+    "name": "htperf_d18_h129_float16",
+    "shape": [
+      1,
+      257,
+      129,
+      18
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 63000
+  },
+  {
+    "name": "htperf_d18_h129_float32",
+    "shape": [
+      1,
+      257,
+      129,
+      18
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "seed": 63001
+  },
+  {
+    "name": "htperf_d22_h255_float16",
+    "shape": [
+      1,
+      257,
+      255,
+      22
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 63002
+  },
+  {
+    "name": "htperf_d22_h255_float32",
+    "shape": [
+      1,
+      257,
+      255,
+      22
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "seed": 63003
+  },
+  {
+    "name": "htperf_d26_h65_float16",
+    "shape": [
+      1,
+      257,
+      65,
+      26
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 63004
+  },
+  {
+    "name": "htperf_d26_h65_float32",
+    "shape": [
+      1,
+      257,
+      65,
+      26
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "seed": 63005
+  },
+  {
+    "name": "htperf_d34_h129_float16",
+    "shape": [
+      1,
+      257,
+      129,
+      34
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 63006
+  },
+  {
+    "name": "htperf_d34_h129_float32",
+    "shape": [
+      1,
+      257,
+      129,
+      34
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "seed": 63007
+  },
+  {
+    "name": "htperf_d46_h255_float16",
+    "shape": [
+      1,
+      257,
+      255,
+      46
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 63008
+  },
+  {
+    "name": "htperf_d46_h255_float32",
+    "shape": [
+      1,
+      257,
+      255,
+      46
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "seed": 63009
+  },
+  {
+    "name": "htperf_d62_h65_float16",
+    "shape": [
+      1,
+      257,
+      65,
+      62
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 63010
+  },
+  {
+    "name": "htperf_d62_h65_float32",
+    "shape": [
+      1,
+      257,
+      65,
+      62
+    ],
+    "dtype": "float32",
+    "pmax": 131073,
+    "seed": 63011
+  }
+]

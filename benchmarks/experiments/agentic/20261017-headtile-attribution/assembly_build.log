@@ -1,0 +1,10 @@
+tests/runner.asc:64:36: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+        run_kernel((__attribute__((cce_global)) uint8_t*)dx,ix,(__attribute__((cce_global)) uint8_t*)dp,ip,(__attribute__((cce_global)) uint8_t*)dy,iy,cores,stream,theta);
+                                   ^~~~~~~~~~
+tests/runner.asc:64:80: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+        run_kernel((__attribute__((cce_global)) uint8_t*)dx,ix,(__attribute__((cce_global)) uint8_t*)dp,ip,(__attribute__((cce_global)) uint8_t*)dy,iy,cores,stream,theta);
+                                                                               ^~~~~~~~~~
+tests/runner.asc:64:124: warning: 'cce_global' attribute ignored when parsing type [-Wignored-attributes]
+        run_kernel((__attribute__((cce_global)) uint8_t*)dx,ix,(__attribute__((cce_global)) uint8_t*)dp,ip,(__attribute__((cce_global)) uint8_t*)dy,iy,cores,stream,theta);
+                                                                                                                           ^~~~~~~~~~
+3 warnings generated.

@@ -1,0 +1,6 @@
+{
+  "samples": 1000000,
+  "finite_pairs": 863632,
+  "finite_bit_differences": 0,
+  "scope": "NumPy separate FP32 products and addition/subtraction, includes zero/subnormal and random exponent patterns; offline diagnostic, does not prove NPU behavior or replace device gates"
+}
