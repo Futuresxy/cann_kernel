@@ -196,7 +196,11 @@
     "mean_abs_error": 2.0640982256736606e-09,
     "max_ulp": 1,
     "p99_ulp": 1.0,
-    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts.",
+    "fp32_metrics_reference": "80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.",
+    "max_abs_error_vs_unrounded_oracle": 5.567287053587222e-08,
+    "mean_abs_error_vs_unrounded_oracle": 2.8918670337712476e-09,
+    "unrounded_oracle_storage": "80-digit computation converted to float64; its rounding is negligible at FP32 error scale."
   },
   "reduced_vs_high_precision_same_quotient": {
     "elements": 59392,
@@ -207,7 +211,11 @@
     "mean_abs_error": 8.825787304054945e-10,
     "max_ulp": 323,
     "p99_ulp": 1.0,
-    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts.",
+    "fp32_metrics_reference": "80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.",
+    "max_abs_error_vs_unrounded_oracle": 1.4601283515602859e-07,
+    "mean_abs_error_vs_unrounded_oracle": 3.425411304276507e-08,
+    "unrounded_oracle_storage": "80-digit computation converted to float64; its rounding is negligible at FP32 error scale."
   },
   "cosine_vs_high_precision_same_fp32_angle": {
     "elements": 59392,
@@ -218,7 +226,11 @@
     "mean_abs_error": 6.977087879092856e-08,
     "max_ulp": 9244,
     "p99_ulp": 55.0,
-    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts.",
+    "fp32_metrics_reference": "80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.",
+    "max_abs_error_vs_unrounded_oracle": 5.302475133417417e-07,
+    "mean_abs_error_vs_unrounded_oracle": 7.268783226044144e-08,
+    "unrounded_oracle_storage": "80-digit computation converted to float64; its rounding is negligible at FP32 error scale."
   },
   "sine_vs_high_precision_same_fp32_angle": {
     "elements": 59392,
@@ -229,7 +241,11 @@
     "mean_abs_error": 5.102288286892566e-08,
     "max_ulp": 56789,
     "p99_ulp": 45.0,
-    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts.",
+    "fp32_metrics_reference": "80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.",
+    "max_abs_error_vs_unrounded_oracle": 4.3551782762107916e-07,
+    "mean_abs_error_vs_unrounded_oracle": 5.264700980977885e-08,
+    "unrounded_oracle_storage": "80-digit computation converted to float64; its rounding is negligible at FP32 error scale."
   },
   "current_numpy_cosine_vs_high_precision_same_angle": {
     "elements": 59392,
@@ -240,7 +256,11 @@
     "mean_abs_error": 5.919102633321205e-09,
     "max_ulp": 1,
     "p99_ulp": 1.0,
-    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts.",
+    "fp32_metrics_reference": "80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.",
+    "max_abs_error_vs_unrounded_oracle": 6.262810803292496e-08,
+    "mean_abs_error_vs_unrounded_oracle": 1.3191756795043943e-08,
+    "unrounded_oracle_storage": "80-digit computation converted to float64; its rounding is negligible at FP32 error scale."
   },
   "current_numpy_sine_vs_high_precision_same_angle": {
     "elements": 59392,
@@ -251,7 +271,11 @@
     "mean_abs_error": 6.160513325524115e-09,
     "max_ulp": 1,
     "p99_ulp": 1.0,
-    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts.",
+    "fp32_metrics_reference": "80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.",
+    "max_abs_error_vs_unrounded_oracle": 6.626045534474656e-08,
+    "mean_abs_error_vs_unrounded_oracle": 1.3303204125729885e-08,
+    "unrounded_oracle_storage": "80-digit computation converted to float64; its rounding is negligible at FP32 error scale."
   },
   "cosine_vs_unrounded_real_rope": {
     "elements": 59392,
@@ -262,7 +286,11 @@
     "mean_abs_error": 0.00016103238683403572,
     "max_ulp": 1963344280,
     "p99_ulp": 195089.9999999958,
-    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts.",
+    "fp32_metrics_reference": "80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.",
+    "max_abs_error_vs_unrounded_oracle": 0.01002071570961996,
+    "mean_abs_error_vs_unrounded_oracle": 0.0001610326479174609,
+    "unrounded_oracle_storage": "80-digit computation converted to float64; its rounding is negligible at FP32 error scale."
   },
   "sine_vs_unrounded_real_rope": {
     "elements": 59392,
@@ -273,7 +301,11 @@
     "mean_abs_error": 0.00015846080235128323,
     "max_ulp": 1967815584,
     "p99_ulp": 193122.66999999838,
-    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts.",
+    "fp32_metrics_reference": "80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.",
+    "max_abs_error_vs_unrounded_oracle": 0.009744516514586188,
+    "mean_abs_error_vs_unrounded_oracle": 0.00015846083198675604,
+    "unrounded_oracle_storage": "80-digit computation converted to float64; its rounding is negligible at FP32 error scale."
   },
   "angle_vs_unrounded_real_math": {
     "elements": 59392,
@@ -284,7 +316,11 @@
     "mean_abs_error": 0.00020466332669708082,
     "max_ulp": 2,
     "p99_ulp": 1.0,
-    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts.",
+    "fp32_metrics_reference": "80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.",
+    "max_abs_error_vs_unrounded_oracle": 0.01024507982947398,
+    "mean_abs_error_vs_unrounded_oracle": 0.0002506236081213981,
+    "unrounded_oracle_storage": "80-digit computation converted to float64; its rounding is negligible at FP32 error scale."
   },
   "half_boundary_summary": {
     "elements_above_point_one": 817,

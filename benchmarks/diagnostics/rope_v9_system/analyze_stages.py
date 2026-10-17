@@ -58,6 +58,20 @@ def half_check(a, b):
                 pass_current_rules=bool(matched.mean() >= .99 and maximum <= .1))
 
 
+def oracle_stats(a, oracle, mask=None):
+    """Keep FP32 ULP comparison and unrounded-oracle absolute error distinct."""
+    result = stats(a, oracle, mask)
+    aa, bb = np.broadcast_arrays(np.asarray(a, 'f8'), np.asarray(oracle, 'f8'))
+    valid = np.isfinite(aa) & np.isfinite(bb)
+    if mask is not None: valid &= np.broadcast_to(mask, aa.shape)
+    error = np.abs(aa[valid]-bb[valid])
+    result['fp32_metrics_reference'] = '80-digit oracle rounded to FP32 for the original bit/ULP/max_abs_error fields.'
+    result['max_abs_error_vs_unrounded_oracle'] = float(error.max(initial=0))
+    result['mean_abs_error_vs_unrounded_oracle'] = float(error.mean()) if len(error) else 0
+    result['unrounded_oracle_storage'] = '80-digit computation converted to float64; its rounding is negligible at FP32 error scale.'
+    return result
+
+
 def trig_replay(a):
     # Each NumPy FP32 operation is separately rounded, in V9 source order.
     q = np.rint(a * np.float32(.15915494309189535)).astype(np.float32)
@@ -147,7 +161,7 @@ results = dict(schema_version=1, diagnostic_only=True,
 freq_real = [mp.power(mp.mpf(10000), -mp.mpf(i)/W) for i in range(W)]
 freq_contract = np.array([np.float32(float(1/mp.mpf(float(np.float32(float(mp.power(mp.mpf(10000), mp.mpf(i)/W))))))) for i in range(W)], 'f4')
 results['inv_freq_vs_high_precision_rounded_power_then_reciprocal'] = stats(layout['frequency'][0], freq_contract)
-results['inv_freq_vs_high_precision_direct_inverse_power'] = stats(layout['frequency'][0], np.array([float(v) for v in freq_real], 'f4'))
+results['inv_freq_vs_high_precision_direct_inverse_power'] = oracle_stats(layout['frequency'][0], np.array([float(v) for v in freq_real], 'f8'))
 hp_c = np.empty((T, W), 'f8'); hp_s = np.empty_like(hp_c)
 real_c = np.empty_like(hp_c); real_s = np.empty_like(hp_c)
 hp_reduced = np.empty_like(hp_c)
@@ -158,14 +172,14 @@ for token in range(T):
         true_angle = int(p[token])*freq_real[i]
         real_c[token, i], real_s[token, i] = float(mp.cos(true_angle)), float(mp.sin(true_angle))
         hp_reduced[token, i] = float(a-mp.mpf(float(q[token, i]))*2*mp.pi)
-results['reduced_vs_high_precision_same_quotient'] = stats(layout['reduced'], hp_reduced.astype('f4'), active[:, None])
-results['cosine_vs_high_precision_same_fp32_angle'] = stats(dc, hp_c.astype('f4'), active[:, None])
-results['sine_vs_high_precision_same_fp32_angle'] = stats(ds, hp_s.astype('f4'), active[:, None])
-results['current_numpy_cosine_vs_high_precision_same_angle'] = stats(c, hp_c.astype('f4'), active[:, None])
-results['current_numpy_sine_vs_high_precision_same_angle'] = stats(s, hp_s.astype('f4'), active[:, None])
-results['cosine_vs_unrounded_real_rope'] = stats(dc, real_c.astype('f4'), active[:, None])
-results['sine_vs_unrounded_real_rope'] = stats(ds, real_s.astype('f4'), active[:, None])
-results['angle_vs_unrounded_real_math'] = stats(angle, (p[:, None].astype('f8')*np.array([float(v) for v in freq_real])[None, :]).astype('f4'), active[:, None])
+results['reduced_vs_high_precision_same_quotient'] = oracle_stats(layout['reduced'], hp_reduced, active[:, None])
+results['cosine_vs_high_precision_same_fp32_angle'] = oracle_stats(dc, hp_c, active[:, None])
+results['sine_vs_high_precision_same_fp32_angle'] = oracle_stats(ds, hp_s, active[:, None])
+results['current_numpy_cosine_vs_high_precision_same_angle'] = oracle_stats(c, hp_c, active[:, None])
+results['current_numpy_sine_vs_high_precision_same_angle'] = oracle_stats(s, hp_s, active[:, None])
+results['cosine_vs_unrounded_real_rope'] = oracle_stats(dc, real_c, active[:, None])
+results['sine_vs_unrounded_real_rope'] = oracle_stats(ds, real_s, active[:, None])
+results['angle_vs_unrounded_real_math'] = oracle_stats(angle, p[:, None].astype('f8')*np.array([float(v) for v in freq_real])[None, :], active[:, None])
 
 finite = np.isfinite(y) & np.isfinite(gold)
 error = np.zeros(y.shape, 'f8'); error[finite] = np.abs(y[finite].astype('f8')-gold[finite].astype('f8'))

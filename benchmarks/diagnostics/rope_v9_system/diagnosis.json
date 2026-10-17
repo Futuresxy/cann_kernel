@@ -237,13 +237,13 @@
   "evidence_hashes": {
     "benchmarks/diagnostics/rope_v9_system/stage_probe.asc": "4b804568a9e7db24558698100ba51369a7077ce2bd568d1e1a68f4f5eb37cbc5",
     "benchmarks/diagnostics/rope_v9_system/prepare.py": "4d03c2ef56996dca3cf688cbef3e6b4b55419e4553762de44cbda3817d17158d",
-    "benchmarks/diagnostics/rope_v9_system/analyze_stages.py": "5bb7d67ec6d92072239033496523f2a14ecef4909cc6c31805e60dc9c7dc79a4",
+    "benchmarks/diagnostics/rope_v9_system/analyze_stages.py": "58ef4811af778717dcc7ebd6a728827425d026e67cf623c10937efb9d635b538",
     "benchmarks/diagnostics/rope_v9_system/cost_model.py": "9ace7e367232832de34d7d2fc197bc4ff7d50ad912d8c0deb43c3c266f3df751",
     "benchmarks/diagnostics/rope_v9_system/finalize_report.py": "9cf1230669ab00ced732aaab19e94ca5df42f099a9423c4a146bad932c7cb589",
     "benchmarks/diagnostics/rope_v9_system/CMakeLists.txt": "85246ffa5fa1e0018eacab78f4866607c2b7783b1f5aa826b33bf6c66b054de6",
     "benchmarks/diagnostics/rope_v9_system/input_manifest.json": "1c3b1f4cf36da5bb6c8dc63a2fd3c2360140a1a1f3ea2e599fa23e5b850a781a",
     "benchmarks/diagnostics/rope_v9_system/probe_identity.json": "629c4eff8fd8d42a1182248d26572470d02906be6fd80a7e48d3cfc4e149d028",
-    "benchmarks/diagnostics/rope_v9_system/stage_report.json": "35a7ac3d2e74f9bf26637881680329dbe302e03831b5812451af7bba0085ee63",
+    "benchmarks/diagnostics/rope_v9_system/stage_report.json": "b5599feca643a9bb4f393465a85c6dfe224ee0d3f80aa610a27e037ba47462a5",
     "benchmarks/diagnostics/rope_v9_system/system_model.json": "ccdf715c2b8085609418f88581e9d9d5d102d5b39e7559de87280b07ce5b5d4c",
     "benchmarks/diagnostics/rope_v9_system/fp16_boundary_failures.csv": "225a5f39d7c888a7b914b3e612384a8ffe2c8d1229edf024ca8f7aaa88021d61",
     "benchmarks/diagnostics/rope_v9_system/task.log": "c7ba58817d31db941331ba0cde1e3aea7d660894a8d990ac34a3470efc40da6d"
