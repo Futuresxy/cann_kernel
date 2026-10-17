@@ -1,0 +1,62 @@
+{
+  "PipeUtilization": {
+    "block_id": 3.5,
+    "aiv_time(us)": 2.223581125,
+    "aiv_total_cycles": 4113.625,
+    "aiv_vec_time(us)": 0.35391875,
+    "aiv_vec_ratio": 0.152054875,
+    "aiv_mte2_time(us)": 0.155000125,
+    "aiv_mte2_ratio": 0.0708125,
+    "aiv_mte2_active_bw(GB/s)": 0.7966695,
+    "aiv_mte3_time(us)": 0.117635125,
+    "aiv_mte3_ratio": 0.05291075,
+    "aiv_mte3_active_bw(GB/s)": 1.038737375,
+    "aiv_icache_miss_rate": 0.0,
+    "aiv_scalar_time(us)": 1.781148625,
+    "aiv_scalar_ratio": 0.807835375,
+    "aiv_scalar_single_time(us)": 0.248108375,
+    "aiv_scalar_dual_time(us)": 0.423108125,
+    "aiv_scalar_mte2_stall_time(us)": 0.0,
+    "aiv_scalar_mte3_stall_time(us)": 0.0,
+    "aiv_scalar_stall_by_ub_time(us)": 0.0,
+    "aiv_scalar_vector_stall_time(us)": 0.0,
+    "aiv_scalar_wait_ib_time(us)": 0.133040375,
+    "aiv_scalar_wait_time(us)": 0.0
+  },
+  "Memory": {
+    "block_id": 3.5,
+    "aiv_time(us)": 2.223581125,
+    "aiv_total_cycles": 4113.625,
+    "aiv_ub_to_gm_bw(GB/s)": 0.05421325,
+    "aiv_gm_to_ub_bw(GB/s)": 0.05421325,
+    "aiv_main_mem_read_bw(GB/s)": 0.255884375,
+    "aiv_main_mem_write_bw(GB/s)": 0.10842675,
+    "aiv_mte2_instructions": 2.0,
+    "aiv_mte2_ratio": 0.0708125,
+    "aiv_mte3_instructions": 2.0,
+    "aiv_mte3_ratio": 0.05291075,
+    "read_main_memory_datas(KB)": 0.59375,
+    "write_main_memory_datas(KB)": 0.25,
+    "GM_to_UB_datas(KB)": 0.125,
+    "GM_to_UB_bw_usage_rate(%)": 0.0246355,
+    "UB_to_GM_datas(KB)": 0.125,
+    "UB_to_GM_bw_usage_rate(%)": 0.029022125
+  },
+  "OpBasicInfo": {
+    "Task Duration(us)": 3.040061,
+    "Block Dim": 8.0,
+    "Device Id": 0.0,
+    "Pid": 1213212.0,
+    "Current Freq": 1850.0,
+    "Rated Freq": 1850.0
+  },
+  "MemoryUB": {
+    "block_id": 3.5,
+    "aiv_time(us)": 2.223581125,
+    "aiv_total_cycles": 4113.625,
+    "aiv_ub_read_bw_vector(GB/s)": 3.090696875,
+    "aiv_ub_write_bw_vector(GB/s)": 3.090696875,
+    "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+    "aiv_ub_write_bw_scalar(GB/s)": 0.05421325
+  }
+}

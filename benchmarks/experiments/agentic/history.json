@@ -1,0 +1,727 @@
+{
+  "schema_version": 1,
+  "prior_attempts": [
+    {
+      "round": "round3",
+      "name": "mask_trig",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "a4f3765aae0a56b48e4b3557ed2d19f14a04fdfb4bc30d004123657ad414d819",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_mask_trig"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "mask_all",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "c9183e4a2dca29bae6dbc2229e5ab35957d38d2301c0f9e02d7984ef601362d6",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_mask_all"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "mask_pad",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "d02d8209ad050afe43909e0057be165b117a8ec65eec9fcf6daa4ff54968b5fa",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_mask_pad"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "half_fast",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "d315f06cc3dc95f972b67e2c32da36e0947eb0dde1f36bf216be6db118a48b09",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_half_fast"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "cache_stream",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "d2c2b53969c792ae92f181fb38f44fd479860260337edd69939dd6c8c64e16e4",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_cache_stream"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "cache_write",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "b9c1275fc9579ca7832fdaf4a25c785123476575dd8a22b4db47529cc740a799",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_cache_write"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "layout_copy",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "6490b0d29aea12af259a4d433a6916d954b430e7537f4f1e6b134877461318f7",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_layout_copy"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "head_tile",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "8ac763eba0c1b10c6b8881791f76297ef3f8b4c61ae2fe33d6fc542a1bef0bec",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_head_tile"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "wide_batch",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "ed11311168bce03c30fa6277d1381ebbaa91c42c59bd51155099fccee4c1afac",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_wide_batch"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "half_wide",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "7f167768004f9a3f3beb47679d4f7e9af55618eea26f4f02bcdaad5fcc5e3140",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_half_wide"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "batch_fma",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "7eccb3abade41251bbafb6f542e3f739f1f121ec31b207820fddfcc2eb8a874d",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_batch_fma"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "bulk_position",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "6fc672c916e69a8e9b62381f94e5572dd4491d8d44c44b004e1bdf81faf4b0ce",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_bulk_position"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "merged_cache64",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "60917718260dcabd65b17ace4de152b21689d13233608f0a8d5a6569a75d4c99",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round3_merged",
+        "round3_merged_paths"
+      ]
+    },
+    {
+      "round": "round3",
+      "name": "merged",
+      "status": "historical experiment; see associated report",
+      "source_sha256": "217729cabc7de8ff0230343bcec7133fff9bc2157da1d52b7089e09c5755b7a9",
+      "decision": "See benchmarks/experiments/round3/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "profiled_v5",
+        "profiled_v5_paired",
+        "profiled_v5_extended"
+      ]
+    },
+    {
+      "round": "round4",
+      "name": "precision_safe",
+      "status": "experimental_not_promoted",
+      "source_sha256": "854ef74a9688bcc32c22ce2e389630a961e45709f7cf8725a53613caed5f970a",
+      "decision": "Targeted gains; control-case regressions/variation unresolved; keep formal release V4",
+      "result_labels": [
+        "round4_precision_safe",
+        "round4_precision_safe_audit",
+        "round4_precision_safe_bits",
+        "round4_precision_safe_extended",
+        "round4_precision_safe_paired",
+        "round4_precision_safe_controls_repeat"
+      ]
+    },
+    {
+      "round": "round4",
+      "name": "trig_batch64",
+      "status": "rejected",
+      "source_sha256": "7084c55b89f89cbb85f8adde4b608f0ca213982922e867f1566d355f8f372b11",
+      "decision": "8% stream regression in local paired profile",
+      "result_labels": [
+        "round4_trig_batch64_paired"
+      ]
+    },
+    {
+      "round": "round4",
+      "name": "precision_safe_tiled",
+      "status": "experimental_not_promoted",
+      "source_sha256": "394a298a65222b3d1a43b5ea5b8eb25040f070fea18be1cc4e0cfd372b565579",
+      "decision": "Targeted gains; control-case regressions/variation unresolved; keep formal release V4",
+      "result_labels": [
+        "round4_precision_safe_tiled",
+        "round4_precision_safe_tiled_audit",
+        "round4_precision_safe_tiled_bits",
+        "round4_wide_tiling_paired",
+        "round4_precision_safe_tiled_paths"
+      ]
+    },
+    {
+      "round": "round5",
+      "name": "direct_float",
+      "status": "retained",
+      "source_sha256": "2f06ce668213922684143dd6142fb001b381820694e49be5df6055cbb899eb2e",
+      "decision": "See benchmarks/experiments/round5/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round5_direct_float",
+        "round5_direct_float_shared"
+      ]
+    },
+    {
+      "round": "round5",
+      "name": "bank_pad",
+      "status": "rejected",
+      "source_sha256": "aa1871e2a8a2f62c3a11edf99b19fea74e1c002e20871c6b30151112ca7d0c94",
+      "decision": "See benchmarks/experiments/round5/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round5_bank_pad",
+        "round5_bank_pad_shared"
+      ]
+    },
+    {
+      "round": "round5",
+      "name": "position_cache",
+      "status": "rejected",
+      "source_sha256": "09e50e54d42fd9d09a4a710dfd25d158ecffa139fe4a867c4d12dd6962a5c461",
+      "decision": "See benchmarks/experiments/round5/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round5_position_cache",
+        "round5_position_cache_shared"
+      ]
+    },
+    {
+      "round": "round5",
+      "name": "trig_vector",
+      "status": "rejected",
+      "source_sha256": "ec57439e1cd7e671fc0f5272ed9d47e8c6beeb70e8f996096c28d634d81d479b",
+      "decision": "See benchmarks/experiments/round5/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round5_trig_vector"
+      ]
+    },
+    {
+      "round": "round5",
+      "name": "trig_vector_queue",
+      "status": "rejected",
+      "source_sha256": "632ccd0117282fb934489bdc065efe055acd83c924ce8756c0eb270509fad6a9",
+      "decision": "See benchmarks/experiments/round5/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round5_trig_vector_queue",
+        "round5_trig_vector_queue_shared"
+      ]
+    },
+    {
+      "round": "round5",
+      "name": "bulk_precise",
+      "status": "retained",
+      "source_sha256": "44a31514337527acbea7551dc56f7559e41e48720e6ec3f5682ef2452403fadb",
+      "decision": "See benchmarks/experiments/round5/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round5_bulk_precise",
+        "round5_bulk_precise_shared"
+      ]
+    },
+    {
+      "round": "round5",
+      "name": "fp32_dma",
+      "status": "retained",
+      "source_sha256": "394a298a65222b3d1a43b5ea5b8eb25040f070fea18be1cc4e0cfd372b565579",
+      "decision": "See benchmarks/experiments/round5/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round5_fp32_dma_shared"
+      ]
+    },
+    {
+      "round": "round5",
+      "name": "final",
+      "status": "retained",
+      "source_sha256": "d04a5eedfadf0293736adbf6dd7d6573f03c8425cdeab12085bdf785f975d321",
+      "decision": "See benchmarks/experiments/round5/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round5_merged_screen",
+        "profiled_v6_shared",
+        "profiled_v6_balanced",
+        "profiled_v6",
+        "profiled_v6_audit",
+        "profiled_v6_bits",
+        "profiled_v6_extended_bits",
+        "profiled_v6_sweep",
+        "profiled_v6_packed_sweep",
+        "profiled_v6_path_sweep",
+        "profiled_v6_paired",
+        "profiled_v6_aligned_audit"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "device_exp",
+      "status": "experiment-only",
+      "source_sha256": "413c344c3441d9a8d1546b3cd39577f33c9abfd314cde18e03d110835ce5cf6b",
+      "decision": "rejected: 36/52 accuracy failures; naive log/exp error is amplified by positions up to 131072",
+      "result_labels": [
+        "round6_device_exp"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "device_dd",
+      "status": "experiment-only",
+      "source_sha256": "9aac99c9d71e731ea9d5dd1fd559b3191c6b13687f6144028b7ac5188018da9f",
+      "decision": "rejected: 51/52; wide_theta_half maximum absolute error 0.170407 exceeds 0.1",
+      "result_labels": [
+        "round6_device_dd"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "device_dd_bias",
+      "status": "experiment-only",
+      "source_sha256": "fbf4befc03e1281ee32bb9836dae9f30ffe57d822f78f740926f6cb36662e671",
+      "decision": "superseded: 52/52 but initialization dominates",
+      "result_labels": [
+        "round6_device_dd_bias"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "device_fixed_nofence",
+      "status": "experiment-only",
+      "source_sha256": "23ff664e4748e394043e374437e40564087bc94f8db2239ec1c1efde9d9387a4",
+      "decision": "superseded: 52/52 but too many vector math instructions",
+      "result_labels": [
+        "round6_device_fixed_nofence"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "device_table_fast",
+      "status": "experiment-only",
+      "source_sha256": "edf8b1cdb25ca3861eba3f5df2adc698f0339b09176e9aca378d709cd258bc54",
+      "decision": "retained as parent of final: generate generic exp2 table inside Device; 52/52",
+      "result_labels": [
+        "round6_device_table_fast"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "cos_full",
+      "status": "experiment-only",
+      "source_sha256": "ae75f6ac8d32bedc53fd9c850e6e860e9667bde0b7d078108f3f8f1a6e4689a5",
+      "decision": "retained as parent: smaller workspace and full-width cosine multiplication; 52/52",
+      "result_labels": [
+        "round6_cos_full"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "scalar_small",
+      "status": "experiment-only",
+      "source_sha256": "d7cf8014f7256f1c69bc09ea5e337cdf991a23d64649dc2789b9582e5bb36e03",
+      "decision": "partly retained: scalar guard-bit frequencies only for width <=32; width64 was slower",
+      "result_labels": [
+        "round6_scalar_small"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "sin_split",
+      "status": "experiment-only",
+      "source_sha256": "ee205701654195d9e3255c1cbc2f5b1fb39bbd1e295d3d0f29d0ffe4013b1132",
+      "decision": "rejected: no stable improvement, DeepSeek FP16 slower than parent",
+      "result_labels": [
+        "round6_sin_split"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "dma_plain",
+      "status": "experiment-only",
+      "source_sha256": "79e02fc3c2fc66b3ab8fe6d8aad7d403ecbd5aa340857c8e3b6e087bf137f37e",
+      "decision": "rejected: aligned DataCopy replacement has no stable gain",
+      "result_labels": [
+        "round6_dma_plain"
+      ]
+    },
+    {
+      "round": "round6",
+      "name": "selected_scratch",
+      "status": "superseded-by-scalar-table",
+      "source_sha256": "c328c772c04aec08ab7d68b4766420a2774c7a3f2f5f449bd65c577e13e6002a",
+      "decision": "superseded: full accuracy gates passed; scalar table further reduces initialization",
+      "result_labels": []
+    },
+    {
+      "round": "round6",
+      "name": "scalar_table",
+      "status": "retained",
+      "source_sha256": "1c66f36807ae1540c173c6dd95141079cf94c76af1aaa578478a4f2393cfc32b",
+      "decision": "retained: lower Device initialization cost; all final source-matched correctness/bitwise/launch gates passed",
+      "result_labels": [
+        "round6_scalar_table",
+        "round6_scalar_table_math",
+        "round6_scalar_table_persistent"
+      ]
+    },
+    {
+      "round": "round7",
+      "name": "adaptive",
+      "status": "cpu-only-not-selected",
+      "source_sha256": "506be4d3e45ab5c264929fbe029462a0a3221952bcafe0ed4091186a4736f400",
+      "decision": "CPU-built precursor; superseded by adaptive_all, no NPU run claimed.",
+      "result_labels": []
+    },
+    {
+      "round": "round7",
+      "name": "adaptive_all",
+      "status": "rejected",
+      "source_sha256": "b92533a5cc67b87ac476e55748c82d0f2bf254f6797744be6f0217bbf03f0b0b",
+      "decision": "Correctness passed; column partitioning regressed already-parallel row grids. Refined by occupancy gate.",
+      "result_labels": [
+        "round7_adaptive_all",
+        "round7_adaptive_all_math",
+        "round7_adaptive_all_small",
+        "round7_all_shared"
+      ]
+    },
+    {
+      "round": "round7",
+      "name": "adaptive_only",
+      "status": "rejected",
+      "source_sha256": "b21634370d2e82e1a0b2a6c0653c29d4ae0b1c186f581a291e53c830f472b586",
+      "decision": "Preserved as the numerical-only control; full candidate adds partitioning only with spare cores.",
+      "result_labels": [
+        "round7_adaptive_only",
+        "round7_adaptive_only_math",
+        "round7_only_shared"
+      ]
+    },
+    {
+      "round": "round7",
+      "name": "ratio_exact",
+      "status": "cpu-only-not-selected",
+      "source_sha256": "b7b52175191e537f9ac3b8cb32a0ceb387b80995b2abbf3f44640cc2211d1255",
+      "decision": "CPU proof showed binary dimension ratio is exact; incorporated in later candidates.",
+      "result_labels": []
+    },
+    {
+      "round": "round7",
+      "name": "sparse_exact",
+      "status": "cpu-only-not-selected",
+      "source_sha256": "b1c7f3f70d3a0f471bfc6d9fdcbc0e49c1ab8dbd60ae9885dab1b7605111f4c3",
+      "decision": "CPU-only exploration; no device performance claim, omitted from submission.",
+      "result_labels": []
+    },
+    {
+      "round": "round7",
+      "name": "split_scalar",
+      "status": "rejected",
+      "source_sha256": "5adadc74ffe42e16de1abcff07f786a80887119c690f5a326e0d352bfaa92bbd",
+      "decision": "52+544 correctness passed; splitting busy grids increased DMA/trig work. Replaced by occupancy-aware partitioning.",
+      "result_labels": [
+        "round7_split_scalar",
+        "round7_split_small"
+      ]
+    },
+    {
+      "round": "round7",
+      "name": "wide_scalar128",
+      "status": "rejected",
+      "source_sha256": "5d7e56d750236e0ab2ff2699efc14f94a9600904363ff4a204d5517cfb20716e",
+      "decision": "Normal profile showed large regressions for D=256; rejected without asserting a matched paired measurement.",
+      "result_labels": [
+        "round7_wide_scalar128",
+        "round7_wide_scalar128_math"
+      ]
+    },
+    {
+      "round": "round7",
+      "name": "wide_scalar64",
+      "status": "rejected",
+      "source_sha256": "1a0530e2d41baa0ced46d87bd3d8222e7cc889826387ce9351ef8cceeca6bd6e",
+      "decision": "Paired profile geomean below one; serializing all 64 frequency columns was slower than V7 vector initialization.",
+      "result_labels": [
+        "round7_wide_scalar64",
+        "round7_wide_scalar64_math",
+        "round7_wide64_shared"
+      ]
+    },
+    {
+      "round": "round7",
+      "name": "occupancy",
+      "status": "selected-full-device-validation-passed",
+      "source_sha256": "c9dd01c9addb702d01964676f2e753f383fc31b21a9a4834fee0e7b754aa7c2a",
+      "decision": "Selected: Q31 power with Q53 ambiguity fallback, and paired-column partitioning only if jobs*4<=available AIV cores.",
+      "result_labels": [
+        "round7_occupancy_balanced",
+        "round7_v7_tiny",
+        "round7_v7_single_token_many_heads",
+        "round7_occupancy_tiny",
+        "round7_occupancy_single_token_many_heads",
+        "profiled_v8",
+        "profiled_v8_audit",
+        "profiled_v8_math",
+        "profiled_v8_small",
+        "profiled_v8_sweep",
+        "profiled_v8_packed_sweep",
+        "profiled_v8_path_sweep",
+        "profiled_v8_aligned_audit",
+        "profiled_v8_bits",
+        "profiled_v8_extended_bits",
+        "profiled_v8_balanced"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "unroll",
+      "status": "experimental-not-for-submission",
+      "source_sha256": "1e55aa75d6285a29b0279a2b1dd7d166e1839a0ba2635f97c406c8b61645235d",
+      "decision": "See benchmarks/experiments/round8/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round8_unroll",
+        "round8_unroll_math"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "ratio",
+      "status": "experimental-not-for-submission",
+      "source_sha256": "049955b4173f8aed48885361fb3b29f2cb6421e9546023643c3b8b5cb5639939",
+      "decision": "See benchmarks/experiments/round8/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round8_ratio",
+        "round8_ratio_math"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "recip",
+      "status": "not-selected",
+      "source_sha256": "0aedf80de7366dbdb06ca449645fd11b0ee740ff429897551a502866d4c1a72e",
+      "decision": "All 8,388,608 significands proved exact; initial profile did not show a performance gain.",
+      "result_labels": [
+        "round8_recip",
+        "round8_recip_math"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "combined",
+      "status": "experimental-not-for-submission",
+      "source_sha256": "81091098582b1c9f868dd94fafbfe34dc6819bdc9e9a4f8e04082c702700c510",
+      "decision": "See benchmarks/experiments/round8/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round8_combined",
+        "round8_combined_math",
+        "round8_combined_shared"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "cos_poly",
+      "status": "rejected-accuracy",
+      "source_sha256": "28053ae0a94d119fbf610daaa51cd3196bfc5fc831d65ce07b570c6e9fbc7d74",
+      "decision": "51/52; half_overflow max error=4.0 exceeds 0.1; no relaxed precision gate.",
+      "result_labels": [
+        "round8_cos_base"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "fences",
+      "status": "experimental-not-for-submission",
+      "source_sha256": "29d82b7d32a3c56987dc64d7efda64c9510affef464e8e6a1110288210c3fd28",
+      "decision": "See benchmarks/experiments/round8/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round8_fences",
+        "round8_fences_math",
+        "round8_fences_shared"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "tablefree",
+      "status": "cpu-only-not-selected",
+      "source_sha256": "dd461b858f4e1e8916c5b9eee52b35c0742adbfe63bd122ebcc78709c10fc5ea",
+      "decision": "True high-degree exp2 changed some frequency rounding from the previously validated power approximation; replaced by lazy original guard path.",
+      "result_labels": []
+    },
+    {
+      "round": "round8",
+      "name": "lazy_center",
+      "status": "experimental-not-for-submission",
+      "source_sha256": "87beb7eed64c52dfe543f6363c9aae4092aae4d37e1f72442ae4d6971198a3ce",
+      "decision": "See benchmarks/experiments/round8/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round8_lazy_base",
+        "round8_lazy_math",
+        "round8_lazy_small",
+        "round8_lazy_shared"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "lean",
+      "status": "experimental-not-for-submission",
+      "source_sha256": "3f3a23e0021172c341663ac4bb8b063961a40217a3e9f1bb7b45bbd049c3b986",
+      "decision": "See benchmarks/experiments/round8/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round8_lean_base",
+        "round8_lean_math",
+        "round8_lean_small"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "overlap",
+      "status": "experimental-not-for-submission",
+      "source_sha256": "d54a5ad425c0a2892c22b1e812a2ff455e318200c47552a19f0d60d8b8ef4bc4",
+      "decision": "See benchmarks/experiments/round8/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round8_overlap_base",
+        "round8_overlap_math",
+        "round8_overlap_small"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "conditioned",
+      "status": "control-precision-passed",
+      "source_sha256": "f4d3f793a101c5953f06788457689301192e1ad33d985ccf47d3254421570af0",
+      "decision": "640/640 new reference cases passed; refined by leaving exact theta=1 on the already-correct vector algorithm.",
+      "result_labels": [
+        "round8_conditioned_new_precision"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "conditioned_v2",
+      "status": "selected-as-final-basis",
+      "source_sha256": "018973b8cfe020ba501a25c7cf0d12fe0bea9fe867c40608e6811d9449e7aa8a",
+      "decision": "Numerical conditioning for nonzero log(theta) near zero; preserves exact theta=1 vector performance. Final includes only version marker changes.",
+      "result_labels": []
+    },
+    {
+      "round": "round8",
+      "name": "two_read",
+      "status": "rejected-target-performance",
+      "source_sha256": "346b168092c2da3298da6fc65e5ceaa5a578a2d02927078f751b8dd313ae6807",
+      "decision": "The targeted FP16 D1024 path regressed by about 18% in the exploratory forward paired run. Unrelated apparent gains are not accepted without balanced confirmation.",
+      "result_labels": [
+        "round8_two_read",
+        "round8_two_read_shared"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "pre_typed_final",
+      "status": "superseded",
+      "source_sha256": "a4f5c20d76438272300cf78a8d932dbbdf4a4d4f94ca99d65318bc4619c9ec77",
+      "decision": "Pre-typed source validation retained in pre_typed_validation; final separates scalar/vector code generation.",
+      "result_labels": []
+    },
+    {
+      "round": "round8",
+      "name": "coalesced",
+      "status": "not-selected-as-monolithic-kernel",
+      "source_sha256": "f2163e159f04029961928ced2c1b404d48c78756c36e90816825cd49b90b764c",
+      "decision": "Scalar reuse improved conditioned-frequency cost but the exploratory fixed33 profile showed wide-kernel regressions. Separate compile-time frequency strategies in typed_v2 remove that coupling.",
+      "result_labels": [
+        "round8_coalesced_base",
+        "round8_coalesced_math",
+        "round8_coalesced_small",
+        "round8_coalesced_new",
+        "round8_coalesced_shared"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "typed",
+      "status": "not-selected",
+      "source_sha256": "ad676f8e14d2767f8a7e619f351b3b78ae6093056f7b7c7064ac763cf7bd0e22",
+      "decision": "The moved Process initially erased frequency type for three classes; corrected by templating Process in typed_v2. No submission used this prototype.",
+      "result_labels": []
+    },
+    {
+      "round": "round8",
+      "name": "typed_v2",
+      "status": "selected-as-final-basis",
+      "source_sha256": "129c50a631d0d93f67c04ca50c96cfca5d2b4842e388f98530597cbb08ac4fa2",
+      "decision": "See benchmarks/experiments/round8/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "round8_typed_v2_base",
+        "round8_typed_v2_new",
+        "round8_typed_v2_dispatch",
+        "round8_typed_v2_shared"
+      ]
+    },
+    {
+      "round": "round8",
+      "name": "final",
+      "status": "selected-full-device-validation-passed",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "decision": "See benchmarks/experiments/round8/manifest.json and associated docs/profiled_v*.md",
+      "result_labels": [
+        "profiled_v9",
+        "profiled_v9_audit",
+        "profiled_v9_math",
+        "profiled_v9_small",
+        "profiled_v9_new_math",
+        "profiled_v9_dispatch",
+        "profiled_v9_sweep",
+        "profiled_v9_packed_sweep",
+        "profiled_v9_path_sweep",
+        "profiled_v9_aligned_audit",
+        "profiled_v9_bits",
+        "profiled_v9_extended_bits",
+        "profiled_v9_balanced",
+        "profiled_v9_extended_balanced"
+      ]
+    },
+    {
+      "round": "agentic-request-1",
+      "request_id": "20261017T032204914387Z-5917d3aaeb69",
+      "name": "exact_zero_log_terms",
+      "source_sha256": "587ebd035ffd2b21c51ae0e1a322eea1ca979d98d46fc5c3484ea5d6071be632",
+      "status": "rejected-native-performance",
+      "decision": "0.995493x on balanced fixed33 despite exact integer arithmetic and 52+52 base correctness; branch/code-generation cost remains.",
+      "experiment_log": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69.json"
+    }
+  ],
+  "requests": [
+    {
+      "request_id": "20261017T032204914387Z-5917d3aaeb69",
+      "state": "no_improvement",
+      "experiment_log": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69.json",
+      "candidate_source_sha256": "587ebd035ffd2b21c51ae0e1a322eea1ca979d98d46fc5c3484ea5d6071be632",
+      "native_speedup": 0.9954930385856202,
+      "reason": "Fixed-input balanced native timing regressed; do not spend a platform submission on this candidate."
+    }
+  ]
+}

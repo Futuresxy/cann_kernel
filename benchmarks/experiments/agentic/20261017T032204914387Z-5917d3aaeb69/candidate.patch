@@ -1,0 +1,93 @@
+diff --git a/operators/rotary_pos_emb/kernel.asc b/operators/rotary_pos_emb/kernel.asc
+index 8213204..e05bb5c 100644
+--- a/operators/rotary_pos_emb/kernel.asc
++++ b/operators/rotary_pos_emb/kernel.asc
+@@ -1,4 +1,4 @@
+-// ROPE1743_PROFILED_V9
++// ROPE1743_PROFILED_V10
+ #include <cmath>
+ #include <cstdint>
+ #include "kernel_operator.h"
+@@ -15,28 +15,45 @@ __aicore__ inline uint64_t MultiplyQ53(uint64_t a,uint64_t b) {
+     uint64_t middle=ah*bl+al*bh+((al*bl)>>27);
+     return (ah*bh<<1)+(middle>>26);
+ }
+-__aicore__ inline void DeviceLogTheta(float mantissa,int32_t exponent,
+-    const LocalTensor<float>& scratch,float& logHi,float& logLo) {
+-    FloatBits bits;bits.value=mantissa;
+-    uint32_t sig=(bits.bits&0x7fffffu)|0x800000u;
+-    if((bits.bits>>23)==127)sig<<=1;
+-    int64_t signedNumerator=int64_t(sig)-16777216;
+-    uint64_t numerator=signedNumerator<0?uint64_t(-signedNumerator):uint64_t(signedNumerator);
+-    uint64_t denominator=uint64_t(sig)+16777216;
+-    uint64_t wide=numerator<<38;
+-    uint64_t high=wide/denominator,remainder=wide-high*denominator;
+-    uint64_t z=(high<<15)+((remainder<<15)/denominator);
++// In Q53, |z| < 0.172 and zz < 1.  Successive nonnegative
++// fixed-point terms cannot increase.  Once term < the next denominator,
++// every remaining integer quotient is exactly zero, as in the full series.
++__aicore__ inline uint64_t LogAtanhSumQ53(uint64_t z) {
+     uint64_t zz=MultiplyQ53(z,z),term=z,sum=z;
++    if(term<3u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/3u;
++    if(term<5u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/5u;
++    if(term<7u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/7u;
++    if(term<9u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/9u;
++    if(term<11u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/11u;
++    if(term<13u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/13u;
++    if(term<15u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/15u;
++    if(term<17u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/17u;
++    if(term<19u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/19u;
++    if(term<21u)return sum;
+     term=MultiplyQ53(term,zz);sum+=term/21u;
++    return sum;
++}
++__aicore__ inline void DeviceLogTheta(float mantissa,int32_t exponent,
++    const LocalTensor<float>& scratch,float& logHi,float& logLo) {
++    FloatBits bits;bits.value=mantissa;
++    uint32_t sig=(bits.bits&0x7fffffu)|0x800000u;
++    if((bits.bits>>23)==127)sig<<=1;
++    int64_t signedNumerator=int64_t(sig)-16777216;
++    uint64_t numerator=signedNumerator<0?uint64_t(-signedNumerator):uint64_t(signedNumerator);
++    uint64_t denominator=uint64_t(sig)+16777216;
++    uint64_t wide=numerator<<38;
++    uint64_t high=wide/denominator,remainder=wide-high*denominator;
++    uint64_t z=(high<<15)+((remainder<<15)/denominator);
++    uint64_t sum=LogAtanhSumQ53(z);
+     int64_t value=int64_t(sum<<1);
+     if(signedNumerator<0)value=-value;
+     value=int64_t(MultiplyQ53(uint64_t(value<0?-value:value),uint64_t(12994641697113596ULL)))*(value<0?-1:1);
+@@ -344,17 +361,8 @@ __aicore__ inline int64_t DeviceLog2Q53(float theta) {
+     uint64_t numerator=signedNumerator<0?uint64_t(-signedNumerator):uint64_t(signedNumerator);
+     uint64_t denominator=uint64_t(sig)+16777216,wide=numerator<<38;
+     uint64_t h=wide/denominator,r=wide-h*denominator;
+-    uint64_t z=(h<<15)+((r<<15)/denominator),zz=MultiplyQ53(z,z),term=z,sum=z;
+-    term=MultiplyQ53(term,zz);sum+=term/3u;
+-    term=MultiplyQ53(term,zz);sum+=term/5u;
+-    term=MultiplyQ53(term,zz);sum+=term/7u;
+-    term=MultiplyQ53(term,zz);sum+=term/9u;
+-    term=MultiplyQ53(term,zz);sum+=term/11u;
+-    term=MultiplyQ53(term,zz);sum+=term/13u;
+-    term=MultiplyQ53(term,zz);sum+=term/15u;
+-    term=MultiplyQ53(term,zz);sum+=term/17u;
+-    term=MultiplyQ53(term,zz);sum+=term/19u;
+-    term=MultiplyQ53(term,zz);sum+=term/21u;
++    uint64_t z=(h<<15)+((r<<15)/denominator);
++    uint64_t sum=LogAtanhSumQ53(z);
+     int64_t value=int64_t(MultiplyQ53(sum<<1,uint64_t(12994641697113596ULL)));
+     if(signedNumerator<0)value=-value;
+     return value+int64_t(exponent)*int64_t(9007199254740992LL);
+@@ -1886,4 +1894,4 @@ void LaunchFrequencyMode(GM_ADDR x, const TensorGroupInfo& info_x,
+             x, positions, y, tokens, heads, dim, 0, width, tileHeads, frequencies);
+     }
+ }
+-// END_ROPE1743_V9
++// END_ROPE1743_V10

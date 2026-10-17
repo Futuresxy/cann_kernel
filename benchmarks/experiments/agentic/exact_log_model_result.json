@@ -1,0 +1,19 @@
+{
+  "kind": "exhaustive CPU fixed-point equivalence, not device golden",
+  "normalized_fp32_mantissas": 8388608,
+  "sum_mismatches": 0,
+  "omitted_multiply_count_histogram": {
+    "0": 87553,
+    "1": 1594417,
+    "2": 1582578,
+    "3": 1521056,
+    "4": 1379517,
+    "5": 1122375,
+    "6": 739774,
+    "7": 313496,
+    "8": 47429,
+    "9": 412,
+    "10": 1
+  },
+  "proof": "zz<Q53; successive truncated nonnegative terms do not increase; term<next_odd implies every subsequent integer quotient is zero"
+}

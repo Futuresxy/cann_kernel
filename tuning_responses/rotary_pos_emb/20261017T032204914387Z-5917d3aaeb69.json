@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T032204914387Z-5917d3aaeb69",
+  "state": "no_improvement",
+  "reason": "Exact Q53 log-tail pruning passes base correctness and single-launch checks, but fixed-input ABBA+BAAB native Task Duration regresses by 0.4527% geometrically (26/33 cases slower). V9 is restored; no new ready candidate was published.",
+  "parent_kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "rejected_candidate_sha256": "587ebd035ffd2b21c51ae0e1a322eea1ca979d98d46fc5c3484ea5d6071be632",
+  "official_baseline_score": 48.45,
+  "target_score": 70,
+  "target_achieved": false,
+  "new_ready_candidates_published": 0,
+  "evidence_paths": [
+    "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69.json",
+    "benchmarks/experiments/agentic/history.json",
+    "benchmarks/experiments/agentic/exact_log_model_result.json",
+    "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69/candidate.patch",
+    "benchmarks/results/agentic_r1_fixed_balanced.json",
+    "benchmarks/results/agentic_r1_full_log.json",
+    "benchmarks/results/agentic_r1_full_log_audit.json",
+    "benchmarks/profiles/agentic_r1_full_log_launches/launch_count.json"
+  ],
+  "completed_at": "2026-10-17T04:09:27.669793+00:00"
+}

@@ -1,0 +1,833 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T032204914387Z-5917d3aaeb69",
+  "state": "no_improvement",
+  "parent_source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "official_baseline": {
+    "submission_id": "879119",
+    "score": 48.45
+  },
+  "prior_attempts_reviewed": {
+    "reports": [
+      "docs/profiled_v4.md",
+      "docs/profiled_v5.md",
+      "docs/rollback_v4_round4.md",
+      "docs/profiled_v6.md",
+      "docs/profiled_v7.md",
+      "docs/profiled_v8.md",
+      "docs/profiled_v9.md",
+      "docs/tuning_workflow.md"
+    ],
+    "manifests": [
+      "benchmarks/experiments/round3/manifest.json",
+      "benchmarks/experiments/round4/manifest.json",
+      "benchmarks/experiments/round5/manifest.json",
+      "benchmarks/experiments/round6/manifest.json",
+      "benchmarks/experiments/round7/manifest.json",
+      "benchmarks/experiments/round8/manifest.json"
+    ],
+    "avoid_repeating": [
+      "Unprotected FP32 log/exp failed accuracy at long positions",
+      "Cosine sqrt replacement failed max_abs_error",
+      "Two-read wide rotation regressed target by 18%",
+      "Fixed loop unrolling alone had no reliable benefit",
+      "Broader trig batch caused streaming regressions",
+      "Positions UB scalar staging and general bank padding regressed",
+      "Broad small-workset column splitting regressed occupied shapes"
+    ]
+  },
+  "hypothesis": "Exact termination of the scalar Q53 atanh series after all remaining integer terms are provably zero reduces frequency initialization scalar instructions without changing log bits, frequencies, trig or rotation. This differs from prior fixed unrolling; termination is justified by term monotonicity in the current numeric algorithm.",
+  "bottleneck_evidence": [
+    "benchmarks/profiles/agentic_r1_v9_tiny/summary.json",
+    "benchmarks/profiles/agentic_r1_v9_deepseek/summary.json",
+    "benchmarks/profiles/profiled_v9_prefill_h32_d1024_half/summary.json",
+    "benchmarks/profiles/agentic_r1_v9_wide/summary.json",
+    "benchmarks/profiles/agentic_r1_v9_stream/summary.json"
+  ],
+  "candidate_source_sha256": "587ebd035ffd2b21c51ae0e1a322eea1ca979d98d46fc5c3484ea5d6071be632",
+  "changes": [
+    "Introduce LogAtanhSumQ53 with exact monotone integer-term termination",
+    "Use the same helper for scalar and compensated-vector Device log initialization",
+    "No trig, rotation, memory layout, tiling, Host math or runtime-launch changes"
+  ],
+  "validation": {
+    "cpu_exact_log": "benchmarks/experiments/agentic/exact_log_model_result.json",
+    "original_fp32_mantissas_checked": 8388608,
+    "integer_sum_mismatches": 0,
+    "normal": {
+      "path": "benchmarks/results/agentic_r1_full_log.json",
+      "passed": 52,
+      "total": 52,
+      "min_matched_ratio": 1.0,
+      "max_abs_error_by_dtype": {
+        "float16": 0.0078125,
+        "float32": 8.106231689453125e-06
+      }
+    },
+    "audit": {
+      "path": "benchmarks/results/agentic_r1_full_log_audit.json",
+      "passed": 52,
+      "total": 52,
+      "audited_launches": 156
+    },
+    "single_device_launch": {
+      "path": "benchmarks/profiles/agentic_r1_full_log_launches/launch_count.json",
+      "calls": 75,
+      "tasks": 75
+    },
+    "precision_policy": {
+      "matched_ratio_minimum": 0.99,
+      "float32": {
+        "atol": 0.000977,
+        "rtol": 1.53e-05,
+        "max_abs_error": 0.01
+      },
+      "float16": {
+        "atol": 0.00195,
+        "rtol": 0.00195,
+        "max_abs_error": 0.1
+      },
+      "golden_or_thresholds_changed": false
+    },
+    "remaining_extended_validation": "Not run after the performance hypothesis failed; this candidate is not submission-ready.",
+    "compliance_review": {
+      "only_competition_file_changed_during_experiment": "kernel.asc",
+      "host_tensor_computation": false,
+      "all_math_on_device": true,
+      "generated_result_tables_or_cross_invocation_caches": false,
+      "new_device_launches": false,
+      "changed_judge_or_timing": false,
+      "detail": "Only omit integer series terms proven identically zero for the current algorithm, independent of case identities or data-generation patterns. All tensor outputs follow the original frequency/trig/rotation paths."
+    }
+  },
+  "local_performance": {
+    "metric": "Native non-replay Task Duration, shared-context/address ABBA plus source-swapped BAAB",
+    "fixed_cases": "tests/round6_performance_cases.json",
+    "case_count": 33,
+    "report": "benchmarks/results/agentic_r1_fixed_balanced.json",
+    "run_kernel_calls": 2640,
+    "actual_device_kernel_tasks": 2640,
+    "input_sha256_matched_between_directions": true,
+    "geometric_mean_speedup": 0.9954930385856202,
+    "cases": [
+      {
+        "name": "tiny",
+        "shape": [
+          1,
+          8,
+          1,
+          16
+        ],
+        "dtype": "float32",
+        "baseline_us": 2.6500000000000004,
+        "candidate_us": 2.71,
+        "speedup": 0.9778597785977862
+      },
+      {
+        "name": "unaligned_half",
+        "shape": [
+          2,
+          16,
+          3,
+          24
+        ],
+        "dtype": "float16",
+        "baseline_us": 5.039999999999999,
+        "candidate_us": 5.0600000000000005,
+        "speedup": 0.9960474308300392
+      },
+      {
+        "name": "deepseek_half",
+        "shape": [
+          2,
+          512,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 17.34,
+        "candidate_us": 17.411,
+        "speedup": 0.9959221182011371
+      },
+      {
+        "name": "deepseek_float",
+        "shape": [
+          2,
+          512,
+          128,
+          64
+        ],
+        "dtype": "float32",
+        "baseline_us": 18.2305,
+        "candidate_us": 18.21,
+        "speedup": 1.0011257550796264
+      },
+      {
+        "name": "sequence8192",
+        "shape": [
+          1,
+          8192,
+          1,
+          64
+        ],
+        "dtype": "float32",
+        "baseline_us": 11.5705,
+        "candidate_us": 11.59,
+        "speedup": 0.9983175150992234
+      },
+      {
+        "name": "large_half",
+        "shape": [
+          4,
+          1024,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 51.900999999999996,
+        "candidate_us": 51.921,
+        "speedup": 0.999614799406791
+      },
+      {
+        "name": "heads256",
+        "shape": [
+          1,
+          32,
+          256,
+          128
+        ],
+        "dtype": "float16",
+        "baseline_us": 8.6905,
+        "candidate_us": 8.74,
+        "speedup": 0.9943363844393592
+      },
+      {
+        "name": "aligned_d512_half",
+        "shape": [
+          1,
+          7,
+          17,
+          512
+        ],
+        "dtype": "float16",
+        "baseline_us": 8.51,
+        "candidate_us": 8.65,
+        "speedup": 0.983815028901734
+      },
+      {
+        "name": "wide_half",
+        "shape": [
+          1,
+          7,
+          17,
+          1024
+        ],
+        "dtype": "float16",
+        "baseline_us": 9.33,
+        "candidate_us": 9.470500000000001,
+        "speedup": 0.9851644580539569
+      },
+      {
+        "name": "prefill_h32_d128_half",
+        "shape": [
+          2,
+          512,
+          32,
+          128
+        ],
+        "dtype": "float16",
+        "baseline_us": 15.901,
+        "candidate_us": 16.09,
+        "speedup": 0.9882535736482287
+      },
+      {
+        "name": "prefill_h32_d128_float",
+        "shape": [
+          2,
+          512,
+          32,
+          128
+        ],
+        "dtype": "float32",
+        "baseline_us": 14.3905,
+        "candidate_us": 14.4405,
+        "speedup": 0.9965375160139884
+      },
+      {
+        "name": "prefill_h32_d256_half",
+        "shape": [
+          2,
+          512,
+          32,
+          256
+        ],
+        "dtype": "float16",
+        "baseline_us": 26.5,
+        "candidate_us": 26.661,
+        "speedup": 0.9939612167585612
+      },
+      {
+        "name": "prefill_h8_d64_half",
+        "shape": [
+          2,
+          512,
+          8,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 10.551,
+        "candidate_us": 10.559999999999999,
+        "speedup": 0.9991477272727274
+      },
+      {
+        "name": "prefill_h3_d24_half",
+        "shape": [
+          2,
+          512,
+          3,
+          24
+        ],
+        "dtype": "float16",
+        "baseline_us": 7.2105,
+        "candidate_us": 7.2005,
+        "speedup": 1.0013887924449691
+      },
+      {
+        "name": "prefill_h32_d30_float",
+        "shape": [
+          2,
+          512,
+          32,
+          30
+        ],
+        "dtype": "float32",
+        "baseline_us": 19.89,
+        "candidate_us": 19.9,
+        "speedup": 0.999497487437186
+      },
+      {
+        "name": "prefill_h32_d96_half",
+        "shape": [
+          2,
+          512,
+          32,
+          96
+        ],
+        "dtype": "float16",
+        "baseline_us": 15.7805,
+        "candidate_us": 15.9405,
+        "speedup": 0.9899626736927951
+      },
+      {
+        "name": "prefill_h32_d1024_half",
+        "shape": [
+          1,
+          256,
+          32,
+          1024
+        ],
+        "dtype": "float16",
+        "baseline_us": 31.860500000000002,
+        "candidate_us": 31.991,
+        "speedup": 0.995920727704667
+      },
+      {
+        "name": "prefill_h32_d1024_float",
+        "shape": [
+          1,
+          256,
+          32,
+          1024
+        ],
+        "dtype": "float32",
+        "baseline_us": 32.99,
+        "candidate_us": 33.071,
+        "speedup": 0.9975507241994498
+      },
+      {
+        "name": "stream_h128_d64_half",
+        "shape": [
+          2,
+          4096,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 199.694,
+        "candidate_us": 199.464,
+        "speedup": 1.0011530902819556
+      },
+      {
+        "name": "stream_h32_d128_float",
+        "shape": [
+          2,
+          4096,
+          32,
+          128
+        ],
+        "dtype": "float32",
+        "baseline_us": 201.2045,
+        "candidate_us": 201.094,
+        "speedup": 1.000549494266363
+      },
+      {
+        "name": "single_token_many_heads",
+        "shape": [
+          1,
+          1,
+          256,
+          128
+        ],
+        "dtype": "float16",
+        "baseline_us": 5.3100000000000005,
+        "candidate_us": 5.48,
+        "speedup": 0.9689781021897811
+      },
+      {
+        "name": "short_s16_h32",
+        "shape": [
+          1,
+          16,
+          32,
+          128
+        ],
+        "dtype": "float32",
+        "baseline_us": 6.99,
+        "candidate_us": 6.93,
+        "speedup": 1.0086580086580088
+      },
+      {
+        "name": "narrow_head_long",
+        "shape": [
+          1,
+          8192,
+          4,
+          16
+        ],
+        "dtype": "float16",
+        "baseline_us": 20.621,
+        "candidate_us": 20.740000000000002,
+        "speedup": 0.9942622950819671
+      },
+      {
+        "name": "unaligned_h128_d30_half",
+        "shape": [
+          2,
+          1024,
+          128,
+          30
+        ],
+        "dtype": "float16",
+        "baseline_us": 99.99199999999999,
+        "candidate_us": 99.93199999999999,
+        "speedup": 1.0006004082776288
+      },
+      {
+        "name": "unaligned_h128_d30_float",
+        "shape": [
+          2,
+          1024,
+          128,
+          30
+        ],
+        "dtype": "float32",
+        "baseline_us": 100.012,
+        "candidate_us": 100.082,
+        "speedup": 0.9993005735297057
+      },
+      {
+        "name": "prefill_d192_half",
+        "shape": [
+          2,
+          512,
+          32,
+          192
+        ],
+        "dtype": "float16",
+        "baseline_us": 20.5,
+        "candidate_us": 20.6,
+        "speedup": 0.9951456310679611
+      },
+      {
+        "name": "prefill_d384_float",
+        "shape": [
+          2,
+          512,
+          32,
+          384
+        ],
+        "dtype": "float32",
+        "baseline_us": 30.3205,
+        "candidate_us": 30.4605,
+        "speedup": 0.995403883718258
+      },
+      {
+        "name": "large_stream_half",
+        "shape": [
+          4,
+          8192,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 841.226,
+        "candidate_us": 841.877,
+        "speedup": 0.9992267278949301
+      },
+      {
+        "name": "large_stream_float",
+        "shape": [
+          2,
+          8192,
+          64,
+          128
+        ],
+        "dtype": "float32",
+        "baseline_us": 840.4665,
+        "candidate_us": 840.637,
+        "speedup": 0.999797177616498
+      },
+      {
+        "name": "sequence_d1024_half",
+        "shape": [
+          1,
+          8192,
+          1,
+          1024
+        ],
+        "dtype": "float16",
+        "baseline_us": 87.25200000000001,
+        "candidate_us": 87.332,
+        "speedup": 0.9990839554802365
+      },
+      {
+        "name": "unaligned_h64_d126_half",
+        "shape": [
+          2,
+          512,
+          64,
+          126
+        ],
+        "dtype": "float16",
+        "baseline_us": 108.752,
+        "candidate_us": 109.063,
+        "speedup": 0.9971484371418354
+      },
+      {
+        "name": "unaligned_h64_d254_float",
+        "shape": [
+          2,
+          512,
+          64,
+          254
+        ],
+        "dtype": "float32",
+        "baseline_us": 154.013,
+        "candidate_us": 153.9735,
+        "speedup": 1.0002565376509593
+      },
+      {
+        "name": "sequence_d1024_float",
+        "shape": [
+          1,
+          8192,
+          1,
+          1024
+        ],
+        "dtype": "float32",
+        "baseline_us": 94.282,
+        "candidate_us": 94.45150000000001,
+        "speedup": 0.998205428182718
+      }
+    ]
+  },
+  "decision": {
+    "publish": false,
+    "reason": "Fixed-input balanced native timing regressed; do not spend a platform submission on this candidate.",
+    "geometric_mean_speedup": 0.9954930385856202,
+    "geometric_mean_latency_change_percent": 0.4527366078604933,
+    "slower_cases": 26,
+    "faster_cases": 7,
+    "official_score_target": 70,
+    "official_target_achieved": false,
+    "last_verified_official_score": 48.45,
+    "canonical_source_restored_to_parent": true
+  },
+  "next_steps": [
+    "Stop this request and wait for the Mac coordinator.",
+    "Do not retry per-term branched Q53 log pruning without new instruction/PMU evidence; saved integer multiplications did not yield end-to-end improvement.",
+    "Future requests may investigate the many-head VEC critical path and full Device frequency initialization; existing naive exp/log, cosine replacement, two-read rotation and bank-padding failures remain constraints."
+  ],
+  "baseline_pmu": {
+    "tiny": {
+      "replay": true,
+      "native_timing": false,
+      "summary": "benchmarks/profiles/agentic_r1_v9_tiny/summary.json",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "pipe": {
+        "block_id": 3.5,
+        "aiv_time(us)": 2.089054375,
+        "aiv_total_cycles": 3864.75,
+        "aiv_vec_time(us)": 0.408580875,
+        "aiv_vec_ratio": 0.1902135,
+        "aiv_mte2_time(us)": 0.1755405,
+        "aiv_mte2_ratio": 0.085593625,
+        "aiv_mte2_active_bw(GB/s)": 0.7369735,
+        "aiv_mte3_time(us)": 0.1191215,
+        "aiv_mte3_ratio": 0.056814125,
+        "aiv_mte3_active_bw(GB/s)": 1.0316565,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 1.585945875,
+        "aiv_scalar_ratio": 0.7645755000000001,
+        "aiv_scalar_single_time(us)": 0.255473,
+        "aiv_scalar_dual_time(us)": 0.437973,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 0.0,
+        "aiv_scalar_wait_ib_time(us)": 0.13263525,
+        "aiv_scalar_wait_time(us)": 0.0
+      },
+      "memory_ub": {
+        "block_id": 3.5,
+        "aiv_time(us)": 2.089054375,
+        "aiv_total_cycles": 3864.75,
+        "aiv_ub_read_bw_vector(GB/s)": 3.8931442499999998,
+        "aiv_ub_write_bw_vector(GB/s)": 3.8931442499999998,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.05761175
+      }
+    },
+    "deepseek": {
+      "replay": true,
+      "native_timing": false,
+      "summary": "benchmarks/profiles/agentic_r1_v9_deepseek/summary.json",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "pipe": {
+        "block_id": 23.5,
+        "aiv_time(us)": 16.10352470833333,
+        "aiv_total_cycles": 29791.520833333332,
+        "aiv_vec_time(us)": 11.423829020833333,
+        "aiv_vec_ratio": 0.709791875,
+        "aiv_mte2_time(us)": 9.830450395833333,
+        "aiv_mte2_ratio": 0.610685125,
+        "aiv_mte2_active_bw(GB/s)": 33.16255808333333,
+        "aiv_mte3_time(us)": 4.631396395833334,
+        "aiv_mte3_ratio": 0.28781677083333335,
+        "aiv_mte3_active_bw(GB/s)": 70.92547358333333,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 9.578502291666666,
+        "aiv_scalar_ratio": 0.5947293541666666,
+        "aiv_scalar_single_time(us)": 2.15130625,
+        "aiv_scalar_dual_time(us)": 2.7761485833333333,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 6.070022520833334,
+        "aiv_scalar_wait_ib_time(us)": 0.1851801875,
+        "aiv_scalar_wait_time(us)": 0.0
+      },
+      "memory_ub": {
+        "block_id": 23.5,
+        "aiv_time(us)": 16.10352470833333,
+        "aiv_total_cycles": 29791.520833333332,
+        "aiv_ub_read_bw_vector(GB/s)": 250.91177147916667,
+        "aiv_ub_write_bw_vector(GB/s)": 188.8299939375,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0046305625,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.0342663125
+      }
+    },
+    "wide": {
+      "replay": true,
+      "native_timing": false,
+      "summary": "benchmarks/profiles/agentic_r1_v9_wide/summary.json",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "pipe": {
+        "block_id": 23.5,
+        "aiv_time(us)": 30.523310833333333,
+        "aiv_total_cycles": 56468.125,
+        "aiv_vec_time(us)": 26.344391375,
+        "aiv_vec_ratio": 0.863221125,
+        "aiv_mte2_time(us)": 7.65190325,
+        "aiv_mte2_ratio": 0.2507430625,
+        "aiv_mte2_active_bw(GB/s)": 42.827500375,
+        "aiv_mte3_time(us)": 4.255033770833333,
+        "aiv_mte3_ratio": 0.13941695833333334,
+        "aiv_mte3_active_bw(GB/s)": 77.97815025,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 9.5722635625,
+        "aiv_scalar_ratio": 0.31349485416666667,
+        "aiv_scalar_single_time(us)": 1.9051915833333333,
+        "aiv_scalar_dual_time(us)": 3.9464074166666667,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 20.276644083333334,
+        "aiv_scalar_wait_ib_time(us)": 0.13860360416666667,
+        "aiv_scalar_wait_time(us)": 0.0002028125
+      },
+      "memory_ub": {
+        "block_id": 23.5,
+        "aiv_time(us)": 30.523310833333333,
+        "aiv_total_cycles": 56468.125,
+        "aiv_ub_read_bw_vector(GB/s)": 244.5010801875,
+        "aiv_ub_write_bw_vector(GB/s)": 123.60467529166667,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.03417841666666667
+      }
+    },
+    "stream": {
+      "replay": true,
+      "native_timing": false,
+      "summary": "benchmarks/profiles/agentic_r1_v9_stream/summary.json",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "pipe": {
+        "block_id": 23.5,
+        "aiv_time(us)": 757.8453840416666,
+        "aiv_total_cycles": 1402013.9583333333,
+        "aiv_vec_time(us)": 357.1148999166667,
+        "aiv_vec_ratio": 0.4713145625,
+        "aiv_mte2_time(us)": 710.2466863333333,
+        "aiv_mte2_ratio": 0.9371762083333334,
+        "aiv_mte2_active_bw(GB/s)": 14.670489395833334,
+        "aiv_mte3_time(us)": 484.160800875,
+        "aiv_mte3_ratio": 0.6388040208333333,
+        "aiv_mte3_active_bw(GB/s)": 21.528976979166668,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 223.0870605625,
+        "aiv_scalar_ratio": 0.29442104166666666,
+        "aiv_scalar_single_time(us)": 54.764189208333335,
+        "aiv_scalar_dual_time(us)": 53.014729708333334,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 592.2984911666666,
+        "aiv_scalar_wait_ib_time(us)": 1.1819707708333334,
+        "aiv_scalar_wait_time(us)": 0.0
+      },
+      "memory_ub": {
+        "block_id": 23.5,
+        "aiv_time(us)": 757.8453840416666,
+        "aiv_total_cycles": 1402013.9583333333,
+        "aiv_ub_read_bw_vector(GB/s)": 170.4538295,
+        "aiv_ub_write_bw_vector(GB/s)": 128.24426845833332,
+        "aiv_ub_read_bw_scalar(GB/s)": 9.837499999999999e-05,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.0007276458333333333
+      }
+    }
+  },
+  "invalidated_measurements": [
+    {
+      "labels": [
+        "agentic_r1_forward",
+        "agentic_r1_reverse"
+      ],
+      "reason": "An intervening correctness suite regenerated shared build/data inputs; input SHA mismatch prevents balanced aggregation. Not used for candidate selection.",
+      "mismatched_input_cases": [
+        "tiny",
+        "unaligned_half",
+        "deepseek_half",
+        "deepseek_float",
+        "sequence8192",
+        "large_half",
+        "heads256",
+        "aligned_d512_half",
+        "wide_half",
+        "stream_h128_d64_half",
+        "stream_h32_d128_float"
+      ],
+      "correction": "Generate fixed performance inputs once on CPU and run ABBA and source-swapped BAAB consecutively in one serialized reservation."
+    }
+  ],
+  "completed_at": "2026-10-17T04:09:27.669793+00:00",
+  "candidate_pmu": {
+    "summary": "benchmarks/profiles/agentic_r1_candidate_tiny/summary.json",
+    "replay": true,
+    "native_timing": false,
+    "caveat": "Qualitative diagnostic only. Input seeds changed during intervening correctness preparation, so initial baseline/candidate PMU values are not a paired causal comparison. Candidate tiny scalar occupancy remained high; no scalar-cost reduction is demonstrated."
+  },
+  "why_rejected": [
+    "Exhaustive arithmetic equivalence and the base correctness suite pass, but this is not a performance benefit.",
+    "Balanced native measurements show 26/33 regressions and 0.995493x geometric speedup.",
+    "The large apparent single_token_many_heads improvement in forward-only screens reverses under swapped source placement; balanced values regress 5.310 to 5.480 us.",
+    "Per-term conditional checks and changed code generation can offset omitted products. This is an inference; instruction-level attribution was not established.",
+    "The first two directional profiles used changed input hashes and were explicitly invalidated rather than combined."
+  ],
+  "tasks": [
+    {
+      "id": "task_20261016_205947_117876524774",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed"
+    },
+    {
+      "id": "task_20261016_210051_118377023476",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed"
+    },
+    {
+      "id": "task_20261016_210249_119164613520",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed"
+    },
+    {
+      "id": "task_20261016_210409_11968823697",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed"
+    },
+    {
+      "id": "task_20261016_210500_120046722714",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed"
+    },
+    {
+      "id": "task_20261016_210533_120321626962",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed"
+    },
+    {
+      "id": "task_20261016_210616_120647012709",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed"
+    },
+    {
+      "id": "task_20261016_210659_121288313774",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed"
+    },
+    {
+      "id": "task_20261016_210735_121518010257",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed"
+    }
+  ],
+  "user_policy_files_sha256": {
+    "AGENTIC.md": "862d0edaaa828090de007b5c35abe80be2a19d79c00de6b16e23f2e199b6a157",
+    "kernel_requirement.md": "8af6ec98cd04b0d0105a5f35d24a3fa1b8b128c348f97c644f7458b5deaf5e4f",
+    "forbidden.md": "b6adc24318ecd1b7a4915b8dfd9fb560abb26d9da3e11239a5683b56aa197219"
+  },
+  "environment_restoration": {
+    "build/rope_runner": {
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+      "source_and_binary_verified": true
+    },
+    "build/launch_audit/rope_runner": {
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "f35a21ab096eb48df8c4e163af5bd92a03a2ba4efa48418946368318f2da8a80",
+      "source_and_binary_verified": true
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "case": {
+    "name": "large_stream_half",
+    "shape": [
+      4,
+      8192,
+      128,
+      64
+    ],
+    "dtype": "float16",
+    "pmax": 131073,
+    "seed": 69
+  },
+  "command": [
+    "msprof",
+    "op",
+    "--aic-metrics=PipeUtilization,Memory,MemoryUB",
+    "--launch-count=1",
+    "--launch-skip-before-match=5",
+    "--warm-up=2",
+    "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/profiles/agentic_r1_v9_stream",
+    "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r1/v9_runner --device 0 --shape 4 8192 128 64 --dtype float16 --theta 10000 --input /data/pyptouser/songxiaoyou/cann_kernel/project/build/data/large_stream_half --output /data/pyptouser/songxiaoyou/cann_kernel/project/build/profile_output.bin --warmup 6 --repeat 2 --batches 1"
+  ],
+  "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "binary_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c"
+}
