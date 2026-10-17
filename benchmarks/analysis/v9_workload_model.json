@@ -762,6 +762,60 @@
     ],
     "note": "Structural model; position-zero branches can avoid trig work. Cache capacity, per-core boundary overlap, scratch and queues must be considered together; these counts are not cycle estimates."
   },
+  "generic_unaligned_worked_layouts": [
+    {
+      "shape": [
+        2,
+        512,
+        64,
+        126
+      ],
+      "dtype": "float16",
+      "pitch": 64,
+      "tile_heads": 32,
+      "groups": 2,
+      "jobs": 2048,
+      "all_nonzero_token_visits_across_cores": 1040,
+      "existing_ub_bytes": 57600,
+      "proposed_ub_bytes": 58368,
+      "proposed_additional_ub_bytes": 768,
+      "coefficient_copy_calls_removed": 64480,
+      "coefficient_copy_operand_bytes_removed": 33013760,
+      "repeated_half_load_calls_removed": 2048,
+      "repeated_half_load_operand_bytes_removed": 25165824,
+      "existing_arithmetic_api_calls_per_job": 6,
+      "proposed_arithmetic_api_calls_per_job": 6,
+      "minimum_x_y_gm_bytes_unchanged": 33030144,
+      "assumptions": "Keep both input halves, two result vectors and a temporary within the existing five capacity-sized FP32 work vectors. Add separate pitch-sized frequency/angle/cos/sin storage. Preserve four Mul plus Sub/Add, queue depths and DMA policy. This is a source-operand/count model, not physical traffic or timing.",
+      "scope": "Public representative of the existing generic unaligned Rotary dispatch only; not a hidden-case mapping. Same Rotary source in V9 and the platform-accepted 817f8364 wide-only patch."
+    },
+    {
+      "shape": [
+        2,
+        512,
+        64,
+        254
+      ],
+      "dtype": "float32",
+      "pitch": 128,
+      "tile_heads": 32,
+      "groups": 2,
+      "jobs": 2048,
+      "all_nonzero_token_visits_across_cores": 1040,
+      "existing_ub_bytes": 147968,
+      "proposed_ub_bytes": 149504,
+      "proposed_additional_ub_bytes": 1536,
+      "coefficient_copy_calls_removed": 64480,
+      "coefficient_copy_operand_bytes_removed": 66027520,
+      "repeated_half_load_calls_removed": 2048,
+      "repeated_half_load_operand_bytes_removed": 67108864,
+      "existing_arithmetic_api_calls_per_job": 6,
+      "proposed_arithmetic_api_calls_per_job": 12,
+      "minimum_x_y_gm_bytes_unchanged": 133169152,
+      "assumptions": "Keep both input halves, two result vectors and a temporary within the existing five capacity-sized FP32 work vectors. Add separate pitch-sized frequency/angle/cos/sin storage. Preserve four Mul plus Sub/Add, queue depths and DMA policy. This is a source-operand/count model, not physical traffic or timing.",
+      "scope": "Public representative of the existing generic unaligned Rotary dispatch only; not a hidden-case mapping. Same Rotary source in V9 and the platform-accepted 817f8364 wide-only patch."
+    }
+  ],
   "sincos_static_source_api_calls": {
     "Muls": 11,
     "Mul": 10,
