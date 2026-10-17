@@ -29,6 +29,8 @@ Mac：watch 读取新 ready 候选 → 全文核对 → 一次提交
 
 远端会话先梳理 docs/profiled_v*.md、docs/tuning_workflow.md 和 benchmarks/experiments 中已有尝试，维护 `benchmarks/experiments/agentic/history.json` 及每个 request_id 的实验 JSON。记录假设、PMU/profiling 瓶颈证据、父/候选源码 SHA、改动、精度与单启动检查、本地配对耗时、保留/放弃原因和下一步。已被否定的方案只有出现新证据时才能重试。平台测试点差距用于定优先级，本地 profiling 决定具体算法与搬运优化。
 
+每轮先按 [RoPE 优化路线](rope_optimization_strategy.md) 分析算法工作量与数值链，再建立实际 dtype/shape 的访存、转换、融合及并行度模型，最后用源码绑定的 profiling/汇编决定实验。自动生成的任务和 SSH 通知均携带此顺序，记录预期指标变化，避免退回无依据的局部指令试错。继承精度失败先归因，golden 和阈值保持原值。
+
 ## Mac 端
 
 ```bash

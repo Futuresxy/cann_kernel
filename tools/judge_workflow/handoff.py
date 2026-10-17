@@ -46,13 +46,22 @@ def create_request(record, report, repository):
                                      '~/cann_kernel/project/kernel_requirement.md',
                                      '~/cann_kernel/project/forbidden.md'],
                'experiment_log': f'benchmarks/experiments/agentic/{run_id}.json',
-               'experiment_fields': ['prior_attempts_reviewed', 'hypothesis', 'bottleneck_evidence',
+               'optimization_strategy': 'docs/rope_optimization_strategy.md',
+               'optimization_sequence': [
+                   'Analyze RoPE algorithmic work, reuse opportunities and the numerical error chain',
+                   'Model actual dtype/shape dataflow, GM/UB traffic, copies, casts, fusion and parallelism',
+                   'Use source-bound profiling/assembly to identify critical stalls and hardware utilization',
+                   'Choose one evidenced hypothesis with predicted metric changes and regression controls'],
+               'experiment_fields': ['algorithm_work_model', 'dataflow_model', 'dtype_shape_family',
+                                     'prior_attempts_reviewed', 'hypothesis', 'expected_metric_changes', 'bottleneck_evidence',
                                      'parent_source_sha256', 'candidate_source_sha256',
                                      'changes', 'validation', 'local_performance', 'decision', 'next_steps'],
                'execution_constraints': ['Use the existing user environment; no installation or system configuration',
                                         'Only kernel.asc changes in the competition project',
                                         'NPU tasks serial, one card, task-submit, at most 60 seconds per task',
                                         'Do not infer hidden shapes from case IDs or bypass correctness',
+                                        'Distinguish FP16/FP32 data from int32 positions; preserve original precision gates',
+                                        'Do not repeat local instruction substitutions without a diagnosed bottleneck',
                                         'State one optimization hypothesis and measure before publishing'],
                'created_at': utcnow()}
     if record.get('tuning_request_id'):

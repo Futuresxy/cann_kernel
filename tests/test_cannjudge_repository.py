@@ -141,6 +141,11 @@ class RepositoryTests(unittest.TestCase):
         self.assertEqual(set(changed), {exported.relative_to(self.repository).as_posix(), request.relative_to(self.repository).as_posix()})
         received = inbox(self.repository)
         self.assertEqual(read_json(received)['request_id'], record['run_id'])
+        delivered = read_json(received)
+        self.assertEqual(delivered['optimization_strategy'], 'docs/rope_optimization_strategy.md')
+        self.assertIn('numerical error chain', delivered['optimization_sequence'][0])
+        self.assertIn('GM/UB traffic', delivered['optimization_sequence'][1])
+        self.assertIn('profiling/assembly', delivered['optimization_sequence'][2])
         self.assertIsNone(inbox(self.repository, after=record['run_id']))
         self.assertEqual(publish_feedback(request, self.repository), revision)
         # A rejected local experiment can start another task without inventing
