@@ -1,0 +1,27 @@
+{
+  "shared_math_request_id": "20261017-shared-math-diagnosis",
+  "archived_state": "complete_with_documented_limitations",
+  "evidence_commit": "3e4b1f65fa7c30c66d613b85a55443783683e368",
+  "all_previously_submitted_thread_tasks_terminal_and_released": true,
+  "completed_tasks": [
+    "task_20261017_004741_35852268361",
+    "task_20261017_005306_37109977053",
+    "task_20261017_011041_389484217601",
+    "task_20261017_011342_39528598540"
+  ],
+  "launch_audits_preserved": 52,
+  "known_FP16_max_abs_error32_unresolved": true,
+  "limitations_retained": [
+    "Instrumentation overhead and pure-scalar compiler ordering limitations",
+    "Context-dependent scalar timing, no decoded ISA or universal latency claim",
+    "Public test family subset, no verified15pointmapping",
+    "Inherited valid-input FP16 amplitude failure"
+  ],
+  "new_NPU_jobs_started": 0,
+  "jobs_cancelled": 0,
+  "jobs_duplicated": 0,
+  "new_performance_candidates": 0,
+  "queued_frequency_or_other_implementation_requests_claimed": false,
+  "next_priority": "Public-case provenance only; await Mac normal-UI metadata before any profiling or implementation",
+  "environment_changed": false
+}

@@ -1,0 +1,40 @@
+"""CPU-only provenance audit. Reads original ZIP as data; never executes its scripts."""
+import ast,datetime,hashlib,json
+from pathlib import Path
+import zipfile
+R=Path(__file__).resolve().parents[3];H=Path(__file__).resolve().parent
+ZIP=Path('/data/pyptouser/songxiaoyou/.codex/attachments/4af3b995-8b5b-48d9-bd4d-7a83a5b92822/rotaryposemb_problem_1743_template.zip')
+TEXT=Path('/data/pyptouser/songxiaoyou/.codex/attachments/64ecc59a-84d1-4b30-bb75-2d107c45d344/已粘贴的文本.txt')
+def sha(b):return hashlib.sha256(b).hexdigest()
+def save(name,d):(H/name).write_text(json.dumps(d,ensure_ascii=False,indent=2)+'\n')
+with zipfile.ZipFile(ZIP) as z:
+ entries=[];payload={}
+ for f in z.infolist():
+  if f.is_dir():continue
+  data=z.read(f.filename);payload[f.filename]=data;local=R/'templates/rotaryposemb_1743'/f.filename
+  entries.append(dict(member=f.filename,bytes=len(data),sha256=sha(data),local_template_byte_identical=local.is_file() and data==local.read_bytes()))
+ assert len(entries)==8 and all(e['local_template_byte_identical'] for e in entries)
+ assert not any(e['member'].endswith('.json') for e in entries)
+# AST inspection only: no import, exec, run.sh, compiler or NPU.
+manual=ast.parse(payload['scripts/RotaryPosEmb.py']);assign=next(n for n in ast.walk(manual) if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='cases' for t in n.targets));assert isinstance(assign.value,ast.List)
+assert len(assign.value.elts)==1
+elt=assign.value.elts[0];assert isinstance(elt,ast.Tuple)
+embedded=dict(literal_id=ast.literal_eval(elt.elts[0]),shape=ast.literal_eval(elt.elts[1]),dtype=ast.unparse(elt.elts[2]),positions_high_exclusive=ast.literal_eval(elt.elts[3]),theta=ast.literal_eval(elt.elts[4]),source_lines=[elt.lineno,elt.end_lineno])
+assert embedded['literal_id']==1 and embedded['shape']==[1,3,2,20] and embedded['dtype']=='np.float32'
+manifest=json.loads((R/'templates/rotaryposemb_1743.sha256.json').read_text());assert all(manifest[e['member']]==e['sha256'] for e in entries)
+public=[
+ dict(evidence_id='zip_executable_case0',kind='original_download_executable_local_case',shape=[1,7,1,16],dtype='float32',positions_shape=[1,7],positions_dtype='int32',positions_generation='np.random.randint(low=int(0),high=int(50),size=(1,7)).astype(np.int32)',positions_range=[0,50],positions_range_upper_exclusive=True,theta=10000.0,x_generation='np.random.uniform(low=-10.0,high=10.0,size=(1,7,1,16)).astype(np.float32)',seed=42,platform_case_ordinal=None,provenance=[dict(member='scripts/gen_data.py',lines=[17,30]),dict(member='main.asc',lines=[48,58]),dict(member='scripts/verify_result.py',lines=[10,17])],confidence='Exact original ZIP metadata; no verified platform ordinal'),
+ dict(evidence_id='zip_embedded_manual_case1',kind='original_download_manual_example_list',shape=embedded['shape'],dtype='float32',positions_shape=[1,3],positions_dtype='int32',positions_generation='np.random.randint(0,pmax,(B,S)).astype(np.int32)',positions_range=[0,3],positions_range_upper_exclusive=True,theta=embedded['theta'],x_generation='np.random.randn(*shape).astype(dt)',seed=None,source_literal_id=embedded['literal_id'],platform_case_ordinal=None,provenance=[dict(member='scripts/RotaryPosEmb.py',lines=[48,60])],confidence='Literal tuple in downloaded script; comment says15 but actual list length1; not linked to generator or proven platform point1'),
+ dict(evidence_id='problem_example1',kind='user_supplied_problem_text_example',shape=[1,8,1,16],dtype='float32',positions_shape=[1,8],positions_dtype='int32',positions_generation='continuous0..7 per supplied description',theta=10000.0,platform_case_ordinal=None,provenance=[dict(attachment=str(TEXT),lines=[148,153])],confidence='Explicit example in user-pasted problem; not independently refreshed from authenticated UI'),
+ dict(evidence_id='problem_example2',kind='user_supplied_problem_text_example',shape=[2,512,128,64],dtype='float16',positions_shape=[2,512],positions_dtype='int32',positions_range=[0,8192],positions_range_upper_exclusive=True,theta=10000.0,platform_case_ordinal=None,provenance=[dict(attachment=str(TEXT),lines=[155,160])],confidence='Explicit example; no verified platform ordinal'),
+ dict(evidence_id='problem_example3',kind='user_supplied_problem_text_example',shape=[2,16,3,24],dtype='float16',positions_shape=[2,16],positions_dtype='int32',positions_generation=None,theta=10000.0,platform_case_ordinal=None,provenance=[dict(attachment=str(TEXT),lines=[162,167])],confidence='Explicit example; positions distribution not stated; no verified platform ordinal')]
+result_path=R/'platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json';result=json.loads(result_path.read_text());assert len(result['cases'])==15
+matrix=[]
+for c in result['cases']:
+ assert all(k not in c for k in ['shape','dtype','theta','positions_shape'])
+ matrix.append(dict(platform_case_ordinal=c['id'],shape=None,x_dtype=None,theta=None,positions_distribution=None,metadata_state='unknown_not_reconstructed',known_status=c['status'],known_latency_us=c['latency_us'],source=str(result_path.relative_to(R)),submission_id=result['submission_id'],do_not_infer_from_timing=True))
+save('provenance.json',dict(state='partial_public_metadata_only',official_15_configuration_reconstruction_complete=False,audit_kind='CPU_only_read_only_original_artifacts',zip_path=str(ZIP),zip_sha256=sha(ZIP.read_bytes()),zip_entries=entries,json_config_files_in_zip=0,embedded_manual_list_ast_count=len(assign.value.elts),problem_text_path=str(TEXT),problem_text_sha256=sha(TEXT.read_bytes()),source_known_cases=public,platform_15_matrix=matrix,verified_platform_case_metadata_count=0,normal_result_export_keys=sorted(result['cases'][0]),normal_result_export_sha256=sha(result_path.read_bytes()),no_original_scripts_executed=True,new_NPU_tasks=0,no_candidate_created=True,no_testcase_specific_dispatch=True,public_web_read_attempt=dict(url='https://cannjudge.cn/public/op_challenge_jingdong_prelim/rotaryposemb',outcome='Web tool reported URL inaccessible; no new facts obtained. No authenticated browser or endpoint probing.',Mac_coordinator_owns_authenticated_UI=True),limitations=['Original ZIP exposes only one executable local case and one different manual tuple, not the15officialconfigs.','A comment claiming15 and a literalid1 do not prove mapping to platform point1.','Problem examples are not verified hidden benchmark members or order.','Old exported normal results contain timings/status only; no shape/dtype/theta.','Local tests/*.json are agent-authored workload/validation matrices and cannot reconstruct hidden platform metadata.','No intentional errors, output markers, timing/correctness interference or hidden-case routing.']))
+# Archive completion status from existing records; do not run/cancel jobs.
+tasks=json.loads((R/'benchmarks/experiments/agentic/20261017-shared-math-diagnosis/tasks.json').read_text());assert tasks['all_tasks_terminal_and_released'] and all(t['exit_code']==0 and t['lock_released'] for t in tasks['tasks'])
+save('diagnostic_hold.json',dict(shared_math_request_id='20261017-shared-math-diagnosis',archived_state='complete_with_documented_limitations',evidence_commit='3e4b1f65fa7c30c66d613b85a55443783683e368',all_previously_submitted_thread_tasks_terminal_and_released=True,completed_tasks=[t['task_id'] for t in tasks['tasks']],launch_audits_preserved=52,known_FP16_max_abs_error32_unresolved=True,limitations_retained=['Instrumentation overhead and pure-scalar compiler ordering limitations','Context-dependent scalar timing, no decoded ISA or universal latency claim','Public test family subset, no verified15pointmapping','Inherited valid-input FP16 amplitude failure'],new_NPU_jobs_started=0,jobs_cancelled=0,jobs_duplicated=0,new_performance_candidates=0,queued_frequency_or_other_implementation_requests_claimed=False,next_priority='Public-case provenance only; await Mac normal-UI metadata before any profiling or implementation',environment_changed=False))
+print('Original ZIP8members exact-matched;1executable local case+1manual tuple+3problem examples;verified platform mapping0/15;no NPU')

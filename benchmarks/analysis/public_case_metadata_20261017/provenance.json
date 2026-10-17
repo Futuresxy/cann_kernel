@@ -1,0 +1,466 @@
+{
+  "audit_kind": "CPU_only_read_only_original_artifacts",
+  "zip_path": "/data/pyptouser/songxiaoyou/.codex/attachments/4af3b995-8b5b-48d9-bd4d-7a83a5b92822/rotaryposemb_problem_1743_template.zip",
+  "zip_sha256": "8fcc24c896aa275deb35a8c1a6ef65bb4a9e20842b5ead80d88671c64e9ce94e",
+  "zip_entries": [
+    {
+      "member": "CMakeLists.txt",
+      "bytes": 630,
+      "sha256": "9212022b702d292af324a51394901950ff3032b43b014f1a3071a8f80e0b154b",
+      "local_template_byte_identical": true
+    },
+    {
+      "member": "data_utils.h",
+      "bytes": 1962,
+      "sha256": "1bdaae93c09b65e2615691a39bfd611122c09668d90e21809c52516f443bfd84",
+      "local_template_byte_identical": true
+    },
+    {
+      "member": "kernel.asc",
+      "bytes": 1141,
+      "sha256": "6f7644b82e05767008522dc5aa0f0acdc8bae00b7df7e2a1b522f664a900eac6",
+      "local_template_byte_identical": true
+    },
+    {
+      "member": "main.asc",
+      "bytes": 3771,
+      "sha256": "0e8746b7f81013970705766c853097a200906129e0bcd90b9d92cfc78dc130d0",
+      "local_template_byte_identical": true
+    },
+    {
+      "member": "run.sh",
+      "bytes": 1106,
+      "sha256": "6a293a38d60d56e416d0515732847eb86aa6d464fa15448b1ec5a36a9636c21a",
+      "local_template_byte_identical": true
+    },
+    {
+      "member": "scripts/gen_data.py",
+      "bytes": 849,
+      "sha256": "23becb4ffbbbedabcba2cf27cb876be81c4c4f31307bea11e410179bb1a9457e",
+      "local_template_byte_identical": true
+    },
+    {
+      "member": "scripts/RotaryPosEmb.py",
+      "bytes": 1971,
+      "sha256": "7d05b220d60dbd788a32b3208e6fcdc4226551224020511f4f999c309b9d058a",
+      "local_template_byte_identical": true
+    },
+    {
+      "member": "scripts/verify_result.py",
+      "bytes": 4584,
+      "sha256": "023ea57bfefe6701c8ec8a0aa50696cd9ba228890b8e1cbfd9f6f8ae38b5d371",
+      "local_template_byte_identical": true
+    }
+  ],
+  "json_config_files_in_zip": 0,
+  "embedded_manual_list_ast_count": 1,
+  "problem_text_path": "/data/pyptouser/songxiaoyou/.codex/attachments/64ecc59a-84d1-4b30-bb75-2d107c45d344/已粘贴的文本.txt",
+  "problem_text_sha256": "f4fc2dc398ced334d2bd30d308981ce7adebf96ff04a1a1a1941d27af6dc581f",
+  "source_known_cases": [
+    {
+      "evidence_id": "zip_executable_case0",
+      "kind": "original_download_executable_local_case",
+      "shape": [
+        1,
+        7,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "positions_shape": [
+        1,
+        7
+      ],
+      "positions_dtype": "int32",
+      "positions_generation": "np.random.randint(low=int(0),high=int(50),size=(1,7)).astype(np.int32)",
+      "positions_range": [
+        0,
+        50
+      ],
+      "positions_range_upper_exclusive": true,
+      "theta": 10000.0,
+      "x_generation": "np.random.uniform(low=-10.0,high=10.0,size=(1,7,1,16)).astype(np.float32)",
+      "seed": 42,
+      "platform_case_ordinal": null,
+      "provenance": [
+        {
+          "member": "scripts/gen_data.py",
+          "lines": [
+            17,
+            30
+          ]
+        },
+        {
+          "member": "main.asc",
+          "lines": [
+            48,
+            58
+          ]
+        },
+        {
+          "member": "scripts/verify_result.py",
+          "lines": [
+            10,
+            17
+          ]
+        }
+      ],
+      "confidence": "Exact original ZIP metadata; no verified platform ordinal"
+    },
+    {
+      "evidence_id": "zip_embedded_manual_case1",
+      "kind": "original_download_manual_example_list",
+      "shape": [
+        1,
+        3,
+        2,
+        20
+      ],
+      "dtype": "float32",
+      "positions_shape": [
+        1,
+        3
+      ],
+      "positions_dtype": "int32",
+      "positions_generation": "np.random.randint(0,pmax,(B,S)).astype(np.int32)",
+      "positions_range": [
+        0,
+        3
+      ],
+      "positions_range_upper_exclusive": true,
+      "theta": 10000.0,
+      "x_generation": "np.random.randn(*shape).astype(dt)",
+      "seed": null,
+      "source_literal_id": 1,
+      "platform_case_ordinal": null,
+      "provenance": [
+        {
+          "member": "scripts/RotaryPosEmb.py",
+          "lines": [
+            48,
+            60
+          ]
+        }
+      ],
+      "confidence": "Literal tuple in downloaded script; comment says15 but actual list length1; not linked to generator or proven platform point1"
+    },
+    {
+      "evidence_id": "problem_example1",
+      "kind": "user_supplied_problem_text_example",
+      "shape": [
+        1,
+        8,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "positions_shape": [
+        1,
+        8
+      ],
+      "positions_dtype": "int32",
+      "positions_generation": "continuous0..7 per supplied description",
+      "theta": 10000.0,
+      "platform_case_ordinal": null,
+      "provenance": [
+        {
+          "attachment": "/data/pyptouser/songxiaoyou/.codex/attachments/64ecc59a-84d1-4b30-bb75-2d107c45d344/已粘贴的文本.txt",
+          "lines": [
+            148,
+            153
+          ]
+        }
+      ],
+      "confidence": "Explicit example in user-pasted problem; not independently refreshed from authenticated UI"
+    },
+    {
+      "evidence_id": "problem_example2",
+      "kind": "user_supplied_problem_text_example",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "positions_shape": [
+        2,
+        512
+      ],
+      "positions_dtype": "int32",
+      "positions_range": [
+        0,
+        8192
+      ],
+      "positions_range_upper_exclusive": true,
+      "theta": 10000.0,
+      "platform_case_ordinal": null,
+      "provenance": [
+        {
+          "attachment": "/data/pyptouser/songxiaoyou/.codex/attachments/64ecc59a-84d1-4b30-bb75-2d107c45d344/已粘贴的文本.txt",
+          "lines": [
+            155,
+            160
+          ]
+        }
+      ],
+      "confidence": "Explicit example; no verified platform ordinal"
+    },
+    {
+      "evidence_id": "problem_example3",
+      "kind": "user_supplied_problem_text_example",
+      "shape": [
+        2,
+        16,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "positions_shape": [
+        2,
+        16
+      ],
+      "positions_dtype": "int32",
+      "positions_generation": null,
+      "theta": 10000.0,
+      "platform_case_ordinal": null,
+      "provenance": [
+        {
+          "attachment": "/data/pyptouser/songxiaoyou/.codex/attachments/64ecc59a-84d1-4b30-bb75-2d107c45d344/已粘贴的文本.txt",
+          "lines": [
+            162,
+            167
+          ]
+        }
+      ],
+      "confidence": "Explicit example; positions distribution not stated; no verified platform ordinal"
+    }
+  ],
+  "platform_15_matrix": [
+    {
+      "platform_case_ordinal": 1,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 3.86,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 2,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 5.62,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 3,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 6.82,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 4,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 10.84,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 5,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 19.57,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 6,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 17.7,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 7,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 20.47,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 8,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 12.92,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 9,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 53.89,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 10,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 3370.0,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 11,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 40.04,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 12,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 48.97,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 13,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 339.52,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 14,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 859.7,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    },
+    {
+      "platform_case_ordinal": 15,
+      "shape": null,
+      "x_dtype": null,
+      "theta": null,
+      "positions_distribution": null,
+      "metadata_state": "unknown_not_reconstructed",
+      "known_status": "Pass",
+      "known_latency_us": 270.89,
+      "source": "platform_results/rotary_pos_emb/20261017T053637875276Z-817f8364de18.json",
+      "submission_id": "883390",
+      "do_not_infer_from_timing": true
+    }
+  ],
+  "verified_platform_case_metadata_count": 0,
+  "normal_result_export_keys": [
+    "best_latency_us",
+    "id",
+    "latency_us",
+    "output_error_percent",
+    "ratio_to_best",
+    "raw_latency",
+    "status"
+  ],
+  "normal_result_export_sha256": "562e26662106ef2c671e9498ae50ad47d8258e3b4feeda4a3a4beac5ed650695",
+  "no_original_scripts_executed": true,
+  "new_NPU_tasks": 0,
+  "no_candidate_created": true,
+  "no_testcase_specific_dispatch": true,
+  "public_web_read_attempt": {
+    "url": "https://cannjudge.cn/public/op_challenge_jingdong_prelim/rotaryposemb",
+    "outcome": "Web tool reported URL inaccessible; no new facts obtained. No authenticated browser or endpoint probing.",
+    "Mac_coordinator_owns_authenticated_UI": true
+  },
+  "limitations": [
+    "Original ZIP exposes only one executable local case and one different manual tuple, not the15officialconfigs.",
+    "A comment claiming15 and a literalid1 do not prove mapping to platform point1.",
+    "Problem examples are not verified hidden benchmark members or order.",
+    "Old exported normal results contain timings/status only; no shape/dtype/theta.",
+    "Local tests/*.json are agent-authored workload/validation matrices and cannot reconstruct hidden platform metadata.",
+    "No intentional errors, output markers, timing/correctness interference or hidden-case routing."
+  ],
+  "state": "partial_public_metadata_only",
+  "official_15_configuration_reconstruction_complete": false
+}
