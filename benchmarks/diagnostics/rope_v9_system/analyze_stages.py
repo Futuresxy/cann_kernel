@@ -231,7 +231,7 @@ for label, cc, ss in [('reference_cos_device_sin',c,ds),('device_cos_reference_s
     results.setdefault('cpu_stage_attribution',{})[label] = half_check(hh,gold)
 results['interpretation'] = [
     'All diagnostics use a frozen input and untouched production V9; instrumented final half output must equal saved V9 bit-for-bit.',
-    'Position-zero trig/product NaN sentinels mean those operations are intentionally not executed by V9; they are excluded from active-stage comparisons.',
+    'Position-zero trig/product NaN sentinels mark values not consumed by the V9 identity branch; these rows are excluded from active-stage comparisons. Trig batching may nevertheless evaluate a zero-position angle speculatively for its cache.',
     'High-precision direct inverse power differs from rounded FP32 power followed by reciprocal; mathematical closeness is not proof of acceptance-reference agreement.',
     'A tiny pre-cast error can cross an FP16 midpoint and cause a half-ULP output step much larger than the global 0.1 cap.',
     'ULP distances near zero should be read together with absolute errors; NaN payload identity is checked separately for the original output.',
