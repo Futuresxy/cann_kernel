@@ -1,0 +1,21 @@
+{
+  "kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "reviewer": "Mac coordinator / user-authorized platform trial",
+  "reviewed_at": "2026-10-17T05:32:39.067977+00:00",
+  "device_math_notes": "All V9 frequency, angle and trig math remains on Device unchanged. Only the existing dim>512 many-head LargeAlignedRotary operand layout changes. Both cross products consume original input before in-place writes. Host dispatch/math is unchanged; one existing kernel branch per invocation. No extra includes, generated helpers, packages or link dependencies. Known inherited large-amplitude precision failure remains recorded; user explicitly requested a real platform trial to determine the 15-case verdict. This is not a claim of universal correctness.",
+  "assertions": {
+    "host_only_validation_shape_tiling_launch": true,
+    "no_host_tensor_read_or_reorder": true,
+    "all_frequency_angle_trig_rotation_on_device": true,
+    "no_precomputed_results_or_host_vectors": true,
+    "no_testcase_or_data_pattern_shortcuts": true,
+    "no_markers_stale_output_or_uninitialized_memory": true,
+    "no_judge_precision_or_timing_changes": true,
+    "no_empty_kernel_or_warmup_detection": true,
+    "no_cross_invocation_cache": true,
+    "exactly_one_device_kernel_per_invocation": true,
+    "kernel_asc_is_only_template_change": true
+  },
+  "known_precision_failure": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json",
+  "trial_only": true
+}

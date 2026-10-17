@@ -1,0 +1,47 @@
+{
+  "trial_id": "20261017-user-platform-wide-fma",
+  "mode": "user_authorized_platform_trial",
+  "production_ready": false,
+  "user_instruction": "当前是不是因为本地的测试数据太特殊了？，可以把当前的kernel实现传输到平台上一次测试一下是否能通过15项测试。",
+  "kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "parent_kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "source_path": "platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc",
+  "template_diff": {
+    "changed": [
+      "kernel.asc"
+    ],
+    "added": [],
+    "removed": [],
+    "unchanged": [
+      "CMakeLists.txt",
+      "data_utils.h",
+      "main.asc",
+      "run.sh",
+      "scripts/RotaryPosEmb.py",
+      "scripts/gen_data.py",
+      "scripts/verify_result.py"
+    ],
+    "kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556"
+  },
+  "current_formal_source_unchanged": true,
+  "known_local_validation": {
+    "normal_passed": 52,
+    "audit_passed": 52,
+    "profile_calls": 75,
+    "profile_device_tasks": 75,
+    "supplemental_passed": 217,
+    "supplemental_total": 218,
+    "inherited_fp16_max_abs_error": 32.0,
+    "inherited_fp16_limit": 0.1,
+    "baseline_and_candidate_output_bits_identical_on_failure": true
+  },
+  "evidence_paths": {
+    "normal": "benchmarks/results/agentic_r2_wide.json",
+    "audit": "benchmarks/results/agentic_r2_wide_audit.json",
+    "launches": "benchmarks/profiles/agentic_r2_wide_launches/launch_count.json",
+    "full_experiment": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json"
+  },
+  "created_at": "2026-10-17T05:32:39.068073+00:00",
+  "platform_submissions_authorized": 1,
+  "poll_seconds": 60
+}
