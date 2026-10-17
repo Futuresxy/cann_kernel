@@ -7,16 +7,22 @@ import asyncio
 import copy
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import os
+from argparse import Namespace
 from pathlib import Path
 import sys
 import tempfile
 import threading
 import unittest
+from unittest.mock import AsyncMock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 from judge_workflow.core import (Journal, ROOT, RULES, check_origin, check_review, compare_results,
                                  digest, latency_us, read_json, static_audit, validate_candidate, write_json)
-from judge_workflow.browser import (MODELS, click_once, poll_result, read_result, replace_kernel, validate_config)
+from judge_workflow.browser import (MODELS, click_once, poll_result, read_result, replace_kernel, validate_config,
+                                    read_editor, platform_source_digest)
+from judge_workflow.browser import official_score
+from judge_workflow.pipeline import run_once, feedback
 
 
 SOURCE = b'''#include "kernel_operator.h"
@@ -157,7 +163,14 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self.send_response(200); self.send_header('Content-Type', 'text/html; charset=utf-8'); self.end_headers()
-        if self.path == '/submit':
+        if self.path == '/keyboard':
+            self.wfile.write('''<a href="#logout">退出</a>
+              <div class="tree is-file active" data-file="kernel.asc"></div>
+              <div class="tree is-file active" data-file="kernel.asc"></div>
+              <div class="tree is-file is-readonly" data-file="main.asc"></div>
+              <div class="monaco-editor"><textarea>old kernel</textarea></div>
+              <button id="copy" onclick="navigator.clipboard.writeText(document.querySelector('textarea').value)">copy</button>'''.encode())
+        elif self.path == '/submit':
             self.wfile.write('''<button onclick="send()">提交代码</button><div id="links"></div>
             <script>
             const make=(uri,text)=>({uri:{toString:()=>uri},getValue:()=>text,setValue:t=>{text=t}});
@@ -185,7 +198,7 @@ class BrowserTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
         from playwright.async_api import async_playwright
         self.playwright = await async_playwright().start()
-        self.browser = await self.playwright.chromium.launch(headless=True)
+        self.browser = await self.playwright.chromium.launch(headless=True, channel=os.environ.get('CANNJUDGE_TEST_CHANNEL'))
         self.context = await self.browser.new_context()
         self.page = await self.context.new_page()
         self.origin = f'http://127.0.0.1:{self.server.server_port}'
@@ -259,6 +272,137 @@ class BrowserTests(unittest.IsolatedAsyncioTestCase):
         await self.page.locator('.ok').first.evaluate("n=>n.textContent='PASS'")
         await self.page.locator('.case').first.evaluate('n=>n.remove()')
         with self.assertRaises(ValueError): await read_result(self.page, self.config, {})
+
+    async def test_keyboard_full_source_preserves_trailing_lf_and_readonly_files(self):
+        await self.page.goto(self.origin + '/keyboard')
+        config = dict(self.config, editor_adapter='keyboard', editor_selector='.monaco-editor textarea',
+                      editor_copy_selector='#copy', editor_file_selector='.tree')
+        source = SOURCE + b'// tabs\tand unicode: \xe6\xb5\x8b\xe8\xaf\x95\n'
+        result = await replace_kernel(self.page, config, source)
+        self.assertEqual(result['readback_sha256'], digest(source))
+        self.assertEqual(await read_editor(self.page, config), source)
+        self.assertEqual(result['readonly_files'], ['main.asc'])
+        self.assertEqual(Handler.posts, 0)
+        await self.page.locator('[data-file="main.asc"]').evaluate("e=>e.classList.remove('is-readonly')")
+        with self.assertRaises(ValueError): await replace_kernel(self.page, config, source)
+
+    async def live_result_fixture(self):
+        await self.page.goto(self.origin + '/results/opaque')
+        await self.page.locator('#submission-id').evaluate("e=>e.textContent='提交 ID：879119'")
+        await self.page.locator('#status').evaluate("e=>e.textContent='Pass'")
+        await self.page.locator('.ok').evaluate_all("els=>els.forEach(e=>e.textContent='Pass')")
+        await self.page.evaluate('''source=>{
+            const button=document.createElement('button');button.id='kernel-tab';button.textContent='kernel.asc';
+            const pre=document.createElement('pre');pre.id='code';pre.textContent=source;
+            document.body.append(button,pre);
+        }''', SOURCE.decode().rstrip('\n'))
+        config = dict(self.config, result_identity='source_and_url', result_url_pattern='/results/opaque$',
+                      result_id_pattern=r'^提交 ID：([0-9]+)$', result_kernel_tab_selector='#kernel-tab',
+                      result_code_selector='#code', result_source_final_newline=True,
+                      success_statuses=['Pass'], case_success_statuses=['Pass'], allow_partial_results=True,
+                      case_pending_statuses=['Running'])
+        record = {'result_url': self.page.url, 'platform_source_expected_sha256': platform_source_digest(SOURCE, config)}
+        return config, record
+
+    async def test_numeric_id_opaque_url_is_bound_to_full_source(self):
+        config, record = await self.live_result_fixture()
+        self.assertEqual((await read_result(self.page, config, record))['state'], 'accepted')
+        self.assertEqual(record['submission_id'], '879119')
+        await self.page.locator('#code').evaluate("e=>e.textContent+='changed'")
+        with self.assertRaises(ValueError): await read_result(self.page, config, record)
+
+    async def test_pass_waits_for_all_fifteen_timings(self):
+        config, record = await self.live_result_fixture()
+        await self.page.locator('.latency').first.evaluate("e=>e.textContent='-'")
+        self.assertEqual((await read_result(self.page, config, record))['waiting_for'], 'case_timings')
+        await self.page.locator('.latency').first.evaluate("e=>e.textContent='1.5 μs'")
+        await self.page.locator('.ok').first.evaluate("e=>e.textContent='Running'")
+        self.assertEqual((await read_result(self.page, config, record))['state'], 'pending')
+        await self.page.locator('.ok').first.evaluate("e=>e.textContent='Pass'")
+        self.assertEqual((await read_result(self.page, config, record))['state'], 'accepted')
+        await self.page.locator('.case').last.evaluate('e=>e.remove()')
+        self.assertEqual((await read_result(self.page, config, record))['waiting_for'], 'all_case_rows')
+
+    async def test_pipeline_submits_once_exports_feedback_and_reuses_completed_record(self):
+        root = Path(self.temporary.name)
+        candidate = root / 'candidate'; candidate.mkdir(); fixture_candidate(candidate)
+        args = Namespace(runs=self.journal.root, candidate=candidate)
+        record = await run_once(self.context, args, self.config, root)
+        self.assertEqual(record['state'], 'accepted')
+        self.assertEqual(Handler.posts, 1)
+        self.assertTrue((args.runs / record['run_id'] / 'feedback.json').exists())
+        self.assertEqual(len((args.runs / record['run_id'] / 'cases.csv').read_text().splitlines()), 16)
+        await run_once(self.context, args, self.config, root)
+        self.assertEqual(Handler.posts, 1)
+
+    async def test_pipeline_resumes_without_candidate_or_another_click(self):
+        record = self.journal.create({'kernel_sha256': digest(SOURCE), 'git_commit': 'fixture'}, self.config)
+        record.update(state='pending', result_url=self.origin + '/results/job-1')
+        self.journal.save(record)
+        args = Namespace(runs=self.journal.root, candidate=None)
+        result = await run_once(self.context, args, self.config, Path(self.temporary.name))
+        self.assertEqual(result['state'], 'accepted')
+        self.assertEqual(Handler.posts, 0)
+
+    async def test_coordinator_rejects_candidate_from_a_different_request(self):
+        root = Path(self.temporary.name)
+        candidate = root / 'candidate'; candidate.mkdir(); fixture_candidate(candidate)
+        args = Namespace(runs=self.journal.root, candidate=candidate, expected_request_id='wrong-task')
+        with self.assertRaises(ValueError):
+            await run_once(self.context, args, self.config, root)
+        self.assertEqual(Handler.posts, 0)
+
+    async def test_uncertain_click_never_triggers_another_submission(self):
+        self.journal.create({'kernel_sha256': digest(SOURCE), 'git_commit': 'fixture'}, self.config)
+        args = Namespace(runs=self.journal.root, candidate=None)
+        with self.assertRaises(ValueError): await run_once(self.context, args, self.config, Path(self.temporary.name))
+        self.assertEqual(Handler.posts, 0)
+
+    async def test_pending_is_polled_once_per_minute_without_another_submission(self):
+        record = self.journal.create({'kernel_sha256': digest(SOURCE), 'git_commit': 'fixture'}, self.config)
+        record.update(result_url=self.origin + '/results/job-1', submission_id='job-1')
+        config = dict(self.config, poll_seconds=60)
+        complete = {'state': 'accepted', 'cases': [{'id': i, 'latency_us': i} for i in range(1,16)]}
+        with patch('judge_workflow.browser.read_result', new=AsyncMock(side_effect=[
+                {'state': 'pending', 'cases': []}, {'state': 'pending', 'cases': []}, complete])), \
+             patch('judge_workflow.browser.poll_sleep', new=AsyncMock()) as sleep:
+            result = await poll_result(self.context, config, self.journal, record)
+        self.assertEqual(result['state'], 'accepted')
+        self.assertEqual([call.args for call in sleep.await_args_list], [(60,), (60,)])
+        self.assertEqual(Handler.posts, 0)
+
+    async def test_compile_error_dialog_is_saved_with_source_location_and_no_score(self):
+        Handler.status = 'Compile Error'
+        await self.page.goto(self.origin + '/results/job-1')
+        await self.page.evaluate('''() => {
+            const log=document.createElement('pre');log.id='log';document.body.append(log);
+            document.querySelector('#status').onclick=()=>{
+                log.textContent='kernel.asc:123:7: error: invalid expression';
+            };
+        }''')
+        config = dict(self.config, log_selector='#log')
+        record = self.journal.create({'kernel_sha256': digest(SOURCE), 'git_commit': 'fixture'}, config)
+        record['result_url'] = self.page.url
+        result = await poll_result(self.context, config, self.journal, record)
+        report = feedback(self.journal, result, Path(self.temporary.name))
+        self.assertEqual(result['state'], 'rejected')
+        self.assertEqual(report['diagnostics']['locations'], [{'file': 'kernel.asc', 'line': 123, 'column': 7}])
+        self.assertNotIn('displayed_timings_score', report)
+        self.assertEqual(result['cases'], [])
+
+    async def test_official_score_must_match_user_timestamp_and_all_fifteen_timings(self):
+        record = {'platform_submitter': 'fixture-user', 'platform_submission_time': '2026/10/17 11:22:11',
+                  'cases': [{'id': i, 'latency_us': i} for i in range(1, 16)]}
+        cells = ['1', 'fixture-team', 'fixture-user', 'Accepted', '48.45', record['platform_submission_time']]
+        cells += [f'{i} μs' for i in range(1, 16)]
+        html = ('<meta charset="utf-8"><input id="search"><button>搜索</button><button>清除</button><table><tbody><tr>' +
+                ''.join(f'<td>{cell}</td>' for cell in cells) + '</tr></tbody></table>')
+        await self.context.route(self.origin + '/ranking', lambda route: route.fulfill(body=html, content_type='text/html'))
+        config = dict(self.config, ranking_url=self.origin + '/ranking', ranking_search_selector='#search', ranking_row_selector='tbody tr')
+        self.assertTrue(await official_score(self.context, config, record, Path(self.temporary.name)))
+        self.assertEqual(record['platform_score_raw'], '48.45')
+        record['platform_submission_time'] = '2026/10/17 11:22:12'
+        self.assertFalse(await official_score(self.context, config, record, Path(self.temporary.name)))
 
 
 if __name__ == '__main__':

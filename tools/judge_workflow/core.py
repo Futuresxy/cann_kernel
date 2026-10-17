@@ -167,11 +167,11 @@ class Journal:
     def records(self):
         return [read_json(p) for p in sorted(self.root.glob('*/run.json'))]
 
-    def create(self, candidate, config):
+    def create(self, candidate, config, allow_repeat=False):
         records = self.records()
         if any(r['state'] not in TERMINAL for r in records):
             raise ValueError('An outstanding submission needs resume/reconciliation before another submit')
-        if any(r['kernel_sha256'] == candidate['kernel_sha256'] for r in records):
+        if not allow_repeat and any(r['kernel_sha256'] == candidate['kernel_sha256'] for r in records):
             raise ValueError('This exact source has already been submitted; use its recorded result')
         run_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ') + '-' + candidate['kernel_sha256'][:12]
         record = {'run_id': run_id, 'kernel_sha256': candidate['kernel_sha256'],
@@ -179,6 +179,11 @@ class Journal:
                   'state': 'click_intent', 'submit_url': config['submit_url'],
                   'config_sha256': digest(json.dumps(config, sort_keys=True).encode()),
                   'result_url': None, 'submission_id': None}
+        if allow_repeat:
+            record['intentional_repeat_source'] = True
+        for key in ('tuning_request_id', 'parent_kernel_sha256', 'optimization_hypothesis'):
+            if key in candidate:
+                record[key] = candidate[key]
         self.save(record)
         return record
 

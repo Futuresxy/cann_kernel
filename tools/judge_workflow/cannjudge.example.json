@@ -14,7 +14,7 @@
   "log_selector": null,
   "score_selector": null,
   "expected_cases": 15,
-  "poll_seconds": 15,
+  "poll_seconds": 60,
   "result_timeout_seconds": 900,
   "success_statuses": ["Accepted", "通过", "测试通过"],
   "failure_statuses": ["Compile Error", "Wrong Answer", "Runtime Error", "Time Limit Exceeded", "Memory Limit Exceeded", "System Error", "编译错误", "精度错误", "运行错误", "超时"],
