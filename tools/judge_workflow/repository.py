@@ -1,5 +1,6 @@
 """Exchange validated candidates and small platform summaries through Git."""
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -15,8 +16,9 @@ FILES = ('kernel.asc', 'candidate.json', 'evidence/compliance.json', 'evidence/p
          'evidence/correctness.json', 'evidence/launch_audit.json', 'evidence/launch_count.json')
 
 
-def git(repository, *args):
-    process = subprocess.run(['git', *args], cwd=repository, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+def git(repository, *args, env=None, input_data=None):
+    process = subprocess.run(['git', *args], cwd=repository, env=env, input=input_data,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if process.returncode:
         raise ValueError('Git operation failed: ' + process.stderr.decode(errors='replace').strip())
     return process.stdout
@@ -116,10 +118,59 @@ def export_result(run, repository=ROOT):
                'state', 'submission_id', 'platform_status', 'platform_score_raw', 'cases')
     summary = {key: record[key] for key in allowed if key in record}
     if 'cases' in summary:
-        summary['cases'] = [{key: case[key] for key in ('id', 'latency_us', 'raw_latency', 'status') if key in case}
+        summary['cases'] = [{key: case[key] for key in ('id', 'latency_us', 'raw_latency', 'status',
+                            'error_percent', 'raw_error_percent', 'best_latency_us', 'raw_best_latency') if key in case}
                             for case in record['cases']]
     # URLs, raw errors and page content may contain user/account information.
     summary['exported_at'] = utcnow()
     destination = Path(repository) / 'platform_results/rotary_pos_emb' / (run_id + '.json')
     write_json(destination, summary)
     return destination
+
+
+def share_result(run, repository=ROOT):
+    """Publish one result on top of fetched main; preserve checkout and index.
+
+    No pull, reset, force push or broad add. A concurrent push is retried once
+    from the new remote tip. The run remains available if publishing fails.
+    """
+    repository = Path(repository)
+    with tempfile.TemporaryDirectory(prefix='cannjudge-feedback-') as temporary:
+        temporary = Path(temporary)
+        summary_file = export_result(run, temporary)
+        relative = summary_file.relative_to(temporary).as_posix()
+        data = summary_file.read_bytes()
+        summary = json.loads(data)
+        sha, source = summary['kernel_sha256'], summary['git_commit']
+        if not re.fullmatch(r'[0-9a-f]{64}', sha) or not re.fullmatch(r'[0-9a-f]{40}|[0-9a-f]{64}', source):
+            raise ValueError('Feedback must reference the full validated source SHA and Git commit')
+        for attempt in range(2):
+            git(repository, 'fetch', '--no-tags', 'origin', 'main')
+            tip = git(repository, 'rev-parse', '--verify', 'FETCH_HEAD^{commit}').decode().strip()
+            git(repository, 'merge-base', '--is-ancestor', source, tip)
+            if digest(git(repository, 'show', source + ':' + SOURCE)) != sha:
+                raise ValueError('Feedback kernel SHA does not match its Git source commit')
+            manifest = json.loads(git(repository, 'show', tip + ':' + PREFIX + '/' + sha + '/candidate.json'))
+            if manifest['kernel_sha256'] != sha or manifest['git_commit'] != source:
+                raise ValueError('Feedback source does not match a published candidate')
+            if git(repository, 'ls-tree', '--name-only', tip, '--', relative).strip():
+                existing = json.loads(git(repository, 'show', tip + ':' + relative))
+                comparable = lambda value: {k: v for k, v in value.items() if k != 'exported_at'}
+                if comparable(existing) != comparable(summary):
+                    raise ValueError('A different immutable result already uses this run ID')
+                return {'result_path': relative, 'published_commit': tip, 'pushed': False}
+            index = temporary / ('git-index-' + str(attempt))
+            env = dict(os.environ, GIT_INDEX_FILE=str(index))
+            git(repository, 'read-tree', tip, env=env)
+            blob = git(repository, 'hash-object', '-w', '--stdin', input_data=data).decode().strip()
+            git(repository, 'update-index', '--add', '--cacheinfo', '100644', blob, relative, env=env)
+            tree = git(repository, 'write-tree', env=env).decode().strip()
+            message = ('Record CANNJudge result ' + str(summary['submission_id']) + '\n').encode()
+            commit = git(repository, 'commit-tree', tree, '-p', tip, input_data=message).decode().strip()
+            try:
+                git(repository, 'push', 'origin', commit + ':refs/heads/main')
+            except ValueError:
+                if attempt:
+                    raise
+                continue
+            return {'result_path': relative, 'published_commit': commit, 'pushed': True}

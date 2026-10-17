@@ -3,15 +3,11 @@ import asyncio
 from contextlib import asynccontextmanager
 import re
 import time
-from urllib.parse import urljoin, urlparse
+from urllib.parse import urljoin
 
 from .core import check_origin, digest, latency_us, utcnow, write_json
-
-
-MODELS = """() => {
-    if (!globalThis.monaco?.editor?.getModels) return null;
-    return monaco.editor.getModels().map(m => ({uri: m.uri.toString(), text: m.getValue()}));
-}"""
+from .discovery import structure_report
+from .editor import MODELS, kernel_model, models_ready, read_kernel, replace_kernel, verify_kernel
 
 
 @asynccontextmanager
@@ -68,20 +64,30 @@ async def inspect(context, config, output):
     links = await page.locator('a[href]').evaluate_all(
         '(nodes) => nodes.map(n => ({text:n.innerText,href:n.href}))')
     buttons = await page.get_by_role('button').all_text_contents()
+    structure = await structure_report(page)
+    write_json(output / 'structure.json', structure)
     write_json(output / 'inspect.json', {
         'url': page.url, 'captured_at': utcnow(), 'buttons': buttons, 'links': links,
         'models': None if models is None else [
             {'uri': m['uri'], 'bytes': len(m['text'].encode()), 'lines': len(m['text'].splitlines()),
              'sha256': digest(m['text'].encode())} for m in models],
         'note': 'Read-only discovery. Calibrate result selectors against an actual submission detail page.'})
+    return structure
 
 
 def validate_config(config):
     if config.get('calibrated') is not True:
         raise ValueError('Live selectors are not calibrated; run inspect before enabling submission')
-    for key in ('submit_url', 'allowed_origin', 'submit_button_name', 'result_link_selector',
-                'result_url_pattern', 'result_id_selector', 'result_status_selector',
-                'case_row_selector', 'case_id_selector', 'case_latency_selector', 'case_status_selector'):
+    fields = ['submit_url', 'allowed_origin', 'submit_button_name', 'result_link_selector', 'result_url_pattern']
+    adapter = config.get('result_adapter', 'selectors')
+    if adapter == 'cannjudge-table':
+        fields += ['result_metadata_selector', 'result_table_selector']
+    elif adapter == 'selectors':
+        fields += ['result_id_selector', 'result_status_selector', 'case_row_selector',
+                   'case_id_selector', 'case_latency_selector', 'case_status_selector']
+    else:
+        raise ValueError('Unknown result_adapter: ' + str(adapter))
+    for key in fields:
         if not config.get(key):
             raise ValueError('Missing calibrated browser field: ' + key)
     check_origin(config['submit_url'], config['allowed_origin'])
@@ -90,46 +96,6 @@ def validate_config(config):
     if not 5 <= config['poll_seconds'] <= 60 or not 30 <= config['result_timeout_seconds'] <= 1800:
         raise ValueError('Use a 5..60 second poll and a bounded 30..1800 second wait')
     re.compile(config['result_url_pattern'])
-
-
-async def models_ready(page):
-    await page.wait_for_function('() => !!globalThis.monaco?.editor?.getModels', timeout=15000)
-    models = await page.evaluate(MODELS)
-    if not models:
-        raise ValueError('No Monaco models: login or editor API connection is missing')
-    return models
-
-
-def kernel_model(models, config):
-    explicit = config.get('kernel_model_uri')
-    matches = [m for m in models if m['uri'] == explicit] if explicit else [
-        m for m in models if urlparse(m['uri']).path.rsplit('/', 1)[-1] == 'kernel.asc']
-    if len(matches) != 1:
-        raise ValueError('Cannot uniquely identify kernel.asc model; inspect and calibrate its URI')
-    return matches[0]
-
-
-async def replace_kernel(page, config, data):
-    before = await models_ready(page)
-    target = kernel_model(before, config)
-    text = data.decode('utf-8')
-    await page.evaluate('''({uri,text}) => {
-        const m=monaco.editor.getModels().find(m=>m.uri.toString()===uri);
-        if(!m) throw new Error('kernel model disappeared');
-        m.setValue(text);
-    }''', {'uri': target['uri'], 'text': text})
-    after = await page.evaluate(MODELS)
-    readback = kernel_model(after, config)['text'].encode('utf-8')
-    if readback != data:
-        raise ValueError('Editor readback differs from the complete candidate; submission blocked')
-    untouched_before = {m['uri']: m['text'] for m in before if m['uri'] != target['uri']}
-    untouched_after = {m['uri']: m['text'] for m in after if m['uri'] != target['uri']}
-    if untouched_before != untouched_after:
-        raise ValueError('A non-kernel editor model changed; submission blocked')
-    return {'kernel_model_uri': target['uri'], 'readback_sha256': digest(readback),
-            'bytes': len(readback), 'lines': len(text.splitlines()),
-            'first_line': text.splitlines()[0], 'last_line': text.splitlines()[-1],
-            'unchanged_models': list(untouched_before)}
 
 
 async def visible_links(page, config):
@@ -174,7 +140,8 @@ async def click_once(context, page, config, candidate, journal):
                 check_origin(current.url, config['allowed_origin'])
                 if re.search(config['result_url_pattern'], current.url) and current.url != config['submit_url']:
                     urls.add(current.url)
-                urls.update(await visible_links(current, config) - before_links)
+                else:
+                    urls.update(await visible_links(current, config) - before_links)
             if len(urls) > 1:
                 raise ValueError('Multiple new submission URLs: refuse ambiguous result binding')
             if len(urls) == 1:
@@ -203,9 +170,15 @@ async def unique_text(page, selector):
 
 
 async def read_result(page, config, record):
+    if record.get('result_url') and page.url != record['result_url']:
+        raise ValueError('Result page URL differs from this submission')
+    if config.get('result_adapter') == 'cannjudge-table':
+        from .site import read_cannjudge_result
+        return await read_cannjudge_result(page, config, record)
     # The result page must display the record ID that the URL identifies.
     submission_id = await unique_text(page, config['result_id_selector'])
-    if not submission_id or not re.search(r'(?<![\w-])' + re.escape(submission_id) + r'(?![\w-])', page.url):
+    if not submission_id or (config.get('result_id_matches_url', True) and not re.search(
+            r'(?<![\w-])' + re.escape(submission_id) + r'(?![\w-])', page.url)):
         raise ValueError('Visible submission ID does not match the bound result URL')
     if record.get('submission_id') and record['submission_id'] != submission_id:
         raise ValueError('Result page switched to another submission')

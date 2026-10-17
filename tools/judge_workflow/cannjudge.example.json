@@ -2,8 +2,17 @@
   "submit_url": "https://cannjudge.cn/public/op_challenge_jingdong_prelim/rotaryposemb/submit",
   "allowed_origin": "https://cannjudge.cn",
   "calibrated": false,
+  "editor_mode": "auto",
+  "editor_selector": null,
+  "kernel_tab_selector": null,
+  "kernel_active_selector": null,
+  "editor_frame_selector": null,
   "submit_button_name": "提交代码",
   "result_link_selector": null,
+  "result_adapter": "selectors",
+  "result_metadata_selector": null,
+  "result_table_selector": null,
+  "result_id_matches_url": true,
   "result_url_pattern": null,
   "result_id_selector": null,
   "result_status_selector": null,
@@ -16,7 +25,7 @@
   "expected_cases": 15,
   "poll_seconds": 15,
   "result_timeout_seconds": 900,
-  "success_statuses": ["Accepted", "通过", "测试通过"],
+  "success_statuses": ["Accepted", "Pass", "通过", "测试通过"],
   "failure_statuses": ["Compile Error", "Wrong Answer", "Runtime Error", "Time Limit Exceeded", "Memory Limit Exceeded", "System Error", "编译错误", "精度错误", "运行错误", "超时"],
-  "case_success_statuses": ["Accepted", "AC", "PASS", "通过"]
+  "case_success_statuses": ["Accepted", "Pass", "AC", "PASS", "通过"]
 }

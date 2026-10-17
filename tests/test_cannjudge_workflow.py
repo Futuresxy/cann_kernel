@@ -17,6 +17,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 from judge_workflow.core import (Journal, ROOT, RULES, check_origin, check_review, compare_results,
                                  digest, latency_us, read_json, static_audit, validate_candidate, write_json)
 from judge_workflow.browser import (MODELS, click_once, poll_result, read_result, replace_kernel, validate_config)
+from judge_workflow.editor import read_kernel, verify_kernel
+from judge_workflow.discovery import structure_report
+from judge_workflow.site import RESULT_PATTERN, calibrate_result, parse_table
 
 
 SOURCE = b'''#include "kernel_operator.h"
@@ -157,7 +160,28 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self.send_response(200); self.send_header('Content-Type', 'text/html; charset=utf-8'); self.end_headers()
-        if self.path == '/submit':
+        if self.path == '/submit-ui':
+            self.wfile.write('''<button onclick="send()">提交代码</button><div id="links"></div>
+            <div id="tabs"><button role="tab" id="kernel-tab" aria-selected="true" onclick="selectFile('kernel.asc')">kernel.asc</button>
+            <button role="tab" id="main-tab" aria-selected="false" onclick="selectFile('main.asc')">main.asc</button></div>
+            <textarea id="ui-editor" style="width:600px;height:400px" oninput="files[active]=this.value">old kernel</textarea>
+            <div id="account">private-account-name</div><input value="secret-input-value">
+            <script>
+            const files={'kernel.asc':'old kernel','main.asc':'original main'};let active='kernel.asc';
+            function selectFile(name){active=name;document.querySelector('#ui-editor').value=files[name];
+              document.querySelector('#kernel-tab').setAttribute('aria-selected',name==='kernel.asc');
+              document.querySelector('#main-tab').setAttribute('aria-selected',name==='main.asc');}
+            async function send(){const r=await fetch('/submit-job',{method:'POST'});await r.json();
+              location.href='/public/op_challenge_jingdong_prelim/rotaryposemb/submission/opaque-key';}
+            </script>'''.encode())
+        elif '/rotaryposemb/submission/' in self.path:
+            rows = ''.join(f'<tr><td>{i}</td><td>Pass</td><td>0.00%</td><td>{i}.5 μs</td><td>0.8 μs</td></tr>'
+                           for i in range(1, 16))
+            self.wfile.write(f'''<div id="metadata">提交 ID：878062 提交人：private-account-name
+                提交时间：2026/10/17 10:39:42 提交状态：{self.status}</div>
+                <aside><h3>执行结果</h3><table id="execution"><thead><tr><th>测\n试\n点</th><th>结果</th>
+                <th>输出错误占比</th><th>用时</th><th>最优用时</th></tr></thead><tbody>{rows}</tbody></table></aside>'''.encode())
+        elif self.path == '/submit':
             self.wfile.write('''<button onclick="send()">提交代码</button><div id="links"></div>
             <script>
             const make=(uri,text)=>({uri:{toString:()=>uri},getValue:()=>text,setValue:t=>{text=t}});
@@ -259,6 +283,134 @@ class BrowserTests(unittest.IsolatedAsyncioTestCase):
         await self.page.locator('.ok').first.evaluate("n=>n.textContent='PASS'")
         await self.page.locator('.case').first.evaluate('n=>n.remove()')
         with self.assertRaises(ValueError): await read_result(self.page, self.config, {})
+
+    async def keyboard_config(self):
+        await self.page.goto(self.origin + '/submit-ui')
+        self.config.update(editor_mode='keyboard', editor_selector='#ui-editor',
+                           kernel_tab_selector='#kernel-tab', kernel_active_selector='[role="tab"][aria-selected="true"]',
+                           submit_url=self.origin + '/submit-ui')
+        return self.config
+
+    async def test_no_monaco_keyboard_roundtrip_long_source(self):
+        await self.keyboard_config()
+        data = SOURCE + ('// 中文 comment ' + 'x' * 75 + '\n').encode() * 1900
+        self.assertIsNone(await self.page.evaluate(MODELS))
+        result = await replace_kernel(self.page, self.config, data)
+        self.assertEqual(result['readback_sha256'], digest(data))
+        await verify_kernel(self.page, self.config, data)
+        self.assertEqual(await self.page.evaluate("files['main.asc']"), 'original main')
+        self.assertEqual(Handler.posts, 0)
+
+    async def test_keyboard_wrong_active_file_is_blocked(self):
+        await self.keyboard_config()
+        await replace_kernel(self.page, self.config, SOURCE)
+        await self.page.locator('#main-tab').click()
+        with self.assertRaisesRegex(ValueError, 'active file'):
+            await verify_kernel(self.page, self.config, SOURCE)
+        self.assertEqual(await self.page.evaluate("files['main.asc']"), 'original main')
+        self.assertEqual(Handler.posts, 0)
+
+    async def test_keyboard_truncated_paste_is_blocked(self):
+        await self.keyboard_config()
+        await self.page.locator('#ui-editor').evaluate('''n => n.addEventListener('paste',e=>{
+            e.preventDefault();n.value=e.clipboardData.getData('text/plain').slice(0,25);
+        })''')
+        with self.assertRaisesRegex(ValueError, 'readback differs'):
+            await replace_kernel(self.page, self.config, SOURCE)
+        self.assertEqual(Handler.posts, 0)
+
+    async def test_broad_all_tabs_selector_is_not_an_active_file_guard(self):
+        await self.keyboard_config()
+        self.config['kernel_active_selector'] = '#tabs'
+        with self.assertRaisesRegex(ValueError, 'active file'):
+            await replace_kernel(self.page, self.config, SOURCE)
+        self.assertEqual(await self.page.locator('#ui-editor').input_value(), 'old kernel')
+
+    async def test_result_calibration_without_convenient_element_ids(self):
+        Handler.status = 'Pass'
+        await self.page.goto(self.origin + '/public/op_challenge_jingdong_prelim/rotaryposemb/submission/opaque-key')
+        await self.page.locator('[id]').evaluate_all("nodes=>nodes.forEach(n=>n.removeAttribute('id'))")
+        config, proof = await calibrate_result(self.page, self.config)
+        result = await read_result(self.page, config, {})
+        self.assertEqual(proof['case_count'], 15)
+        self.assertEqual(result['state'], 'accepted')
+
+    async def test_site_rejects_missing_duplicate_or_failed_cases(self):
+        config = await self.calibrated_site()
+        table = await self.page.locator('#execution').evaluate('''t=>({
+            headers:[...t.querySelectorAll('th')].map(n=>n.innerText),
+            rows:[...t.querySelectorAll('tbody tr')].map(n=>[...n.querySelectorAll('td')].map(c=>c.innerText))})''')
+        for mutate in (lambda t: t['rows'].pop(),
+                       lambda t: t['rows'][0].__setitem__(0, '2'),
+                       lambda t: t['rows'][0].__setitem__(1, 'FAIL')):
+            broken = copy.deepcopy(table); mutate(broken)
+            with self.assertRaises(ValueError):
+                parse_table(broken, config)
+
+    async def test_missing_public_api_requires_explicit_keyboard_binding(self):
+        await self.page.goto(self.origin + '/submit-ui')
+        with self.assertRaisesRegex(ValueError, 'calibrate keyboard field'):
+            await replace_kernel(self.page, self.config, SOURCE)
+        self.assertEqual(await self.page.locator('#ui-editor').input_value(), 'old kernel')
+
+    async def test_shared_structure_excludes_account_source_and_input_values(self):
+        await self.keyboard_config()
+        await self.page.locator('#ui-editor').fill('private-kernel-source')
+        encoded = json.dumps(await structure_report(self.page))
+        for secret in ('private-account-name', 'secret-input-value', 'private-kernel-source'):
+            self.assertNotIn(secret, encoded)
+        self.assertIn('kernel.asc', encoded)
+        self.assertIn('ui-editor', encoded)
+
+    async def calibrated_site(self):
+        Handler.status = 'Pass'
+        url = self.origin + '/public/op_challenge_jingdong_prelim/rotaryposemb/submission/opaque-key'
+        await self.page.goto(url)
+        config, proof = await calibrate_result(self.page, self.config)
+        self.assertEqual(proof['submission_id'], '878062')
+        self.assertFalse(config['calibrated'])
+        return dict(config, calibrated=True)
+
+    async def test_real_layout_calibration_with_opaque_url_and_distinct_numeric_id(self):
+        config = await self.calibrated_site()
+        record = {'result_url': self.page.url}
+        result = await read_result(self.page, config, record)
+        self.assertEqual(result['state'], 'accepted')
+        self.assertEqual(record['submission_id'], '878062')
+        self.assertEqual(result['cases'][0]['latency_us'], 1.5)
+        self.assertEqual(result['cases'][0]['best_latency_us'], 0.8)
+        self.assertEqual(result['cases'][0]['error_percent'], 0)
+        with self.assertRaisesRegex(ValueError, 'another submission'):
+            await read_result(self.page, config, {'submission_id': '111111'})
+
+    async def test_site_pending_and_failure_do_not_require_case_rows(self):
+        config = await self.calibrated_site()
+        await self.page.locator('#execution').evaluate('n=>n.remove()')
+        await self.page.locator('#metadata').evaluate("n=>n.textContent='提交 ID：878062 提交状态：Running'")
+        self.assertEqual((await read_result(self.page, config, {}))['state'], 'pending')
+        await self.page.locator('#metadata').evaluate("n=>n.textContent='提交 ID：878062 提交状态：Compile Error'")
+        self.assertEqual((await read_result(self.page, config, {}))['state'], 'rejected')
+
+    async def test_keyboard_submit_redirect_and_actual_time_column(self):
+        config = await self.calibrated_site()
+        await self.keyboard_config()
+        config.update({key: self.config[key] for key in ('editor_mode', 'editor_selector', 'kernel_tab_selector',
+                                                       'kernel_active_selector', 'submit_url')})
+        await replace_kernel(self.page, config, SOURCE)
+        record = await click_once(self.context, self.page, config,
+                                  {'kernel_sha256': digest(SOURCE), 'git_commit': 'fixture'}, self.journal)
+        result = await poll_result(self.context, config, self.journal, record)
+        self.assertEqual(Handler.posts, 1)
+        self.assertEqual(result['state'], 'accepted')
+        self.assertEqual(result['submission_id'], '878062')
+        self.assertEqual(result['cases'][14]['latency_us'], 15.5)
+
+    async def test_current_and_best_columns_are_distinct_even_when_reordered(self):
+        config = await self.calibrated_site()
+        cases = parse_table({'headers': ['最优用时', '结果', '用时', '测试点', '输出错误占比'],
+                             'rows': [['2μs', 'Pass', '3.36ms', str(i), '0.00%'] for i in range(1,16)]}, config)
+        self.assertEqual(cases[0]['latency_us'], 3360)
+        self.assertEqual(cases[0]['best_latency_us'], 2)
 
 
 if __name__ == '__main__':

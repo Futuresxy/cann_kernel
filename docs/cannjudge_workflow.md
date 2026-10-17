@@ -2,9 +2,9 @@
 
 **2026-10-16 更新：采用 Mac 本地 Chrome 提交模式，不需要服务器隧道。** Mac 从 GitHub 拉取已验证候选并直接提交，操作步骤见 [Mac 本地运行](mac_cannjudge.md)。本文后续的 CDP/SSH 隧道仅保留为可选接入方式。
 
-当前状态（2026-10-15）：工具和本地浏览器测试已完成，真实站点尚未接通，未自动提交或取得新平台成绩。服务器的 HTTP 客户端与 Chromium 访问平台均出现连接关闭，也没有连接到截图中的登录浏览器。默认站点配置 `calibrated=false`，禁止点击提交，直到浏览器连接和真实结果页校准完成。
+当前状态（2026-10-17）：用户已在 Mac 完成浏览器安装和平台登录。全局 Monaco API 未暴露，新增 keyboard 编辑器适配，以及截图所示 `/submission/...` 详情页的 `Pass`/五列表格适配。结果 URL 中的不透明标识和页面数字提交 ID 分别绑定；按列名区分本次“用时”和“最优用时”。真实编辑器仍需页面结构报告校准，尚未通过本工具自动提交或取得 V9 平台成绩。默认配置仍为 `calibrated=false`。
 
-**V7 已实现 Device 完整频率计算。** 本地验证见 [V7 报告](profiled_v7.md)，GitHub 的 latest.json 指向通过源码规则、精度和启动检查的冻结候选。V4/V6 的 Host 频率表仍属历史对照，不能用于新规则下的提交。真实浏览器页面仍需首次校准，尚未取得 V7 平台成绩。
+**当前待提交候选是 V9，Device 完成全部计算。** 本地验证见 [V9 报告](profiled_v9.md)，GitHub 的 latest.json 指向通过源码规则、精度和启动检查的冻结候选。V4/V6 的 Host 频率表仍属历史对照，不能用于新规则下的提交。
 
 ## 流程
 
@@ -31,6 +31,10 @@
 | `tools/cannjudge.py` | audit / stage / login / inspect / submit / resume / compare |
 | `tools/judge_workflow/core.py` | 合规筛查、证据校验、提交状态、耗时比较 |
 | `tools/judge_workflow/browser.py` | 浏览器连接、源码回读、一次提交、结果采集 |
+| `tools/judge_workflow/editor.py` | 公共 Monaco / keyboard 编辑器、活动文件检查、完整剪贴板回读 |
+| `tools/judge_workflow/site.py` | 实际截图对应的详情页元数据/表格校准、按列名解析耗时 |
+| `tools/judge_workflow/discovery.py` | 可分享的结构报告，不含源码、输入值、账号标签或链接 |
+| `tools/judge_workflow/repository.py` | 候选同步、精简结果导出、独立索引单文件 Git 回传 |
 | `tools/judge_workflow/cannjudge.example.json` | 未校准配置，默认禁止提交 |
 | `tests/test_cannjudge_workflow.py` | CPU 浏览器测试，使用本地模拟页面 |
 | `build/platform_candidates/<sha>/` | 冻结源码、Git 版本、本地验证证据 |
@@ -99,7 +103,7 @@ python3 tools/cannjudge.py inspect --cdp http://127.0.0.1:9222 \
 - 可选的 `log_selector` 和 `score_selector`，分别采集日志与官方原始得分。
 - 如编辑器不使用以 `kernel.asc` 结尾的 URI，填写经实际绑定确认的 `kernel_model_uri`。
 
-校准完成才设置 `calibrated=true`。没有臆造平台私有 API。若平台未暴露 Monaco 模型 API，工具停止，需要基于真实编辑器补充适配，不能声称完成全文回读。默认示例没有编造结果页选择器。
+Mac 推荐使用 `inspect --share` 分享结构报告、`calibrate-result` 只读校准已有 Pass 成绩、`check-editor` 校验编辑器后再启用配置，命令见 [Mac 操作说明](mac_cannjudge.md#首次页面校准)。未暴露全局 Monaco 时，keyboard 适配器通过活动文件标签、正常键盘粘贴/复制及字节比对校验 kernel.asc。它不枚举未公开的内部模块或其他文件模型。没有臆造平台私有 API；默认示例也没有编造真实 DOM 选择器。
 
 ## 冻结与提交
 
@@ -121,7 +125,7 @@ python3 tools/cannjudge.py submit --cdp http://127.0.0.1:9222 \
 
 若 worker 在另一台电脑，复制完整的 `build/platform_candidates/<sha>/`，包括 `evidence/`。worker 再次校验源码和证据哈希、精度、合规审查及单 kernel 启动。仅将完整 kernel.asc 放入平台编辑器，测试工程和证据不上传平台。
 
-编辑器读回不一致、其他已打开文件变化、多个新增结果链接、编号不符、测试点缺失或精度状态矛盾都会停止。程序先持久化点击意图，再点击一次；网络异常不自动重试点击。
+编辑器读回不一致、活动文件不是 kernel.asc、公共模型路径下发现其他文件变化、多个新增结果链接、已绑定编号变化、测试点缺失或精度状态矛盾都会停止。程序先持久化点击意图，再点击一次；网络异常不自动重试点击。截图所示站点以新增详情 URL 绑定，再记录该页面数字提交 ID；这两个值无需相同。
 
 ## 恢复和比较
 
@@ -148,6 +152,7 @@ python3 tools/cannjudge.py compare --baseline 路径A/run.json --candidate 路�
 
 ```bash
 build/platform_workflow/venv/bin/python tests/test_cannjudge_workflow.py
+build/platform_workflow/venv/bin/python tests/test_cannjudge_repository.py
 ```
 
-测试使用真实 Chromium 与本地模拟页面，覆盖全文回读、其他文件不变、一次提交、结果绑定、15 点解析、失败状态、精度错误、单位换算、候选篡改与截断、过期审查、重复提交和未校准配置拦截。没有占用 NPU，没有向真实平台提交代码。
+测试使用真实 Chromium 与本地模拟页面，覆盖全文回读、长代码剪贴板往返、活动文件与截断拦截、一次提交、独立 URL/数字 ID 绑定、15 点按列名解析、状态/精度检查、Git 并发与幂等回传、候选篡改及未校准配置拦截。没有占用 NPU，没有向真实平台提交代码。截图契约的模拟测试不能替代 Mac/真实站点校准。
