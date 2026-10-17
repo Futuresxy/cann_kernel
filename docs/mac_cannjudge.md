@@ -29,6 +29,8 @@ bash tools/mac_cannjudge.sh login
 CANNJUDGE_PYTHON=python3.11 bash tools/mac_cannjudge.sh setup
 ```
 
+如果项目根目录已有 `.venv/bin/python`，脚本会自动使用该环境的 Python；显式设置的 `CANNJUDGE_PYTHON` 优先级最高。未激活虚拟环境也可直接运行以上命令。
+
 `login` 打开专用 Chrome 数据目录。手动登录平台后在终端按 Enter，登录状态留在 Mac 的 `.local/cannjudge/browser/`，不会提交到 GitHub。日常 Chrome 可以继续使用。
 
 当前会话的执行位置仍是服务器，不能直接操作 Mac 桌面。因此首次启动需在 Mac 执行，或在 Mac 本地建立对应任务。这个部署方式不依赖服务器回连 Mac。

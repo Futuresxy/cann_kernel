@@ -7,6 +7,9 @@ if [ "$#" -gt 0 ]; then shift; fi
 task_python="${CANNJUDGE_PYTHON:-python3}"
 task_venv="$PWD/.local/cannjudge/venv"
 task_config="$PWD/.local/cannjudge/config.json"
+if [ -z "${CANNJUDGE_PYTHON:-}" ] && [ -x "$PWD/.venv/bin/python" ]; then
+  task_python="$PWD/.venv/bin/python"
+fi
 case "$task_action" in
   setup)
     "$task_python" -c 'import sys; assert sys.version_info >= (3,10), "Requires Python 3.10 or newer; set CANNJUDGE_PYTHON to its executable"'
