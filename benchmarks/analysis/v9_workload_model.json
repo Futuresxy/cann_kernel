@@ -762,6 +762,15 @@
     ],
     "note": "Structural model; position-zero branches can avoid trig work. Cache capacity, per-core boundary overlap, scratch and queues must be considered together; these counts are not cycle estimates."
   },
+  "sincos_static_source_api_calls": {
+    "Muls": 11,
+    "Mul": 10,
+    "Adds": 7,
+    "Sub": 3,
+    "Cast": 2,
+    "Sqrt": 1
+  },
+  "sincos_static_source_api_calls_note": "Source calls only, not dynamic instructions or cycles; each API may emit multiple instructions/repeats.",
   "profiles": [
     {
       "family": "tiny",

@@ -69,6 +69,8 @@ delta_phi ≈ p*delta_f + angle_rounding_error
 
 **搬移要分层计量**：GM↔UB 字节与事务数、UB↔VEC 的读写、UB 内重排/Cast、同步等待分别记录。减少一个 `DataCopy` 不代表减少一遍 DRAM；融合也可能多读第三个操作数、增加 bank 冲突或延长队列占用。FP32 已经直接用队列，不能再给它计算一次并不存在的“去掉输入拷贝”收益。
 
+通用非对齐 `Rotary::Process` 还有可直接从源码核对的成本：每个新 token 将 cos/sin 各复制到另外 `tileHeads-1` 行；计算第一半输出后，又从输入队列重新 LoadFp32 原第一半来计算第二半；每个 job 末尾执行 PIPE_ALL，输入/输出队列深度均为1。这些是明确存在的操作，尚未证明各自占主耗时。后续可以比较“保留两半输入、独立输出/临时区、只广播 K 维系数”的布局，预期减少系数展开和一次半输入转换；同时核对额外 trig 区的 UB 预算、broadcast 读端口、尾 mask 与指令数。预取/双缓冲应作为另一项实验，不能与布局重写一起改变后只报告一个加速数。
+
 ## 4. Profiling 给出的证据与还缺少的证据
 
 同一 V9 SHA 的代表 PMU 为 [tiny](../benchmarks/profiles/agentic_r1_v9_tiny/summary.json)、[DeepSeek FP16](../benchmarks/profiles/agentic_r1_v9_deepseek/summary.json)、[wide FP16](../benchmarks/profiles/agentic_r1_v9_wide/summary.json)、[stream FP16](../benchmarks/profiles/agentic_r1_v9_stream/summary.json)。这些为 replay 诊断，不用作正式加速比。
@@ -81,6 +83,8 @@ delta_phi ≈ p*delta_f + angle_rounding_error
 | 大流式 FP16 | 757.845 | 47.1% | 29.4% | 93.7% | 63.9% | 搬运关键路径、事务和缓存流量 |
 
 各管线可重叠，占比不能相加到 100%，VEC 活跃占比也不等于有效 lane 占比或峰值算力利用率。平均每核时间不等于全 kernel 尾核时间。`scalar_vector_stall` 需结合指令依赖和事件解释，不能直接称作“空跑”。
+
+当前 `SinCosFp32` 静态含34次基础 API 调用：11 Muls、10 Mul、7 Adds、3 Sub、2 Cast、1 Sqrt。这个清单提示应研究范围缩减、sqrt/倍角恢复和数据依赖，但不是34条硬件指令的结论。H=1 时每对输入都需要这套三角生成；H大时可摊到多个head，优化三角求值的收益上限不同。先量化这些阶段和全核临界路径，再决定是否研究新的多项式。
 
 本地大流式 `[4,8192,128,64] / FP16` 最低 X/Y 流量为 1GiB，原生约 842.786us，对应逻辑有效带宽约 **1.274TB/s**。这不是测得的 DRAM 峰值：重复输入可能命中 L2。必须用实际内存计数区分冷数据与稳态缓存，不能据此断言到达硬件上限。小的 DeepSeek 工作集逻辑有效带宽更高同样不意味着 DRAM 更快。
 

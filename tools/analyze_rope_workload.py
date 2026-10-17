@@ -8,6 +8,7 @@ import argparse
 import hashlib
 import json
 import math
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -74,6 +75,11 @@ def report():
     actual = hashlib.sha256(source.read_bytes()).hexdigest()
     if actual != V9:
         raise ValueError('This inventory is bound to V9; review the layout model for a new source')
+    text = source.read_text()
+    trig = text[text.index('__aicore__ inline void SinCosFp32'):
+                text.index('__aicore__ inline void ScalarFrequencyRange')]
+    trig_calls = {name: len(re.findall(r'\b' + name + r'\(', trig))
+                  for name in ('Muls', 'Mul', 'Adds', 'Sub', 'Cast', 'Sqrt')}
     performance = read('benchmarks/results/profiled_v9_balanced.json')
     cases = [workload(c) for c in performance['cases']]
     for row, case in zip(cases, performance['cases']):
@@ -108,6 +114,9 @@ def report():
                         'traffic': 'Logical compulsory X read + Y write; positions listed separately; '
                                    'not a measured DRAM bandwidth or a hardware peak'},
         'workloads': cases, 'wide_fp16_worked_layout': wide_fp16_layout(),
+        'sincos_static_source_api_calls': trig_calls,
+        'sincos_static_source_api_calls_note': 'Source calls only, not dynamic instructions or cycles; '
+                                              'each API may emit multiple instructions/repeats.',
         'profiles': profiles,
         'official_submission_id': feedback['submission_id'],
         'official_score': float(feedback['platform_score_raw']),
