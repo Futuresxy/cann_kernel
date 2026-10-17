@@ -779,6 +779,8 @@
       "existing_ub_bytes": 57600,
       "proposed_ub_bytes": 58368,
       "proposed_additional_ub_bytes": 768,
+      "implemented_candidate_ub_bytes": 58112,
+      "implemented_candidate_liveness_note": "The first prototype reuses the free input work vector as the angle scratch before loading x, so only two extra coefficient rows are needed, rather than the three extra rows in the conservative proposal above.",
       "coefficient_copy_calls_removed": 64480,
       "coefficient_copy_operand_bytes_removed": 33013760,
       "repeated_half_load_calls_removed": 2048,
@@ -786,6 +788,17 @@
       "existing_arithmetic_api_calls_per_job": 6,
       "proposed_arithmetic_api_calls_per_job": 6,
       "minimum_x_y_gm_bytes_unchanged": 33030144,
+      "paired_native_observation": {
+        "source_sha256": {
+          "baseline": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+          "candidate": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168"
+        },
+        "baseline_us": 108.412,
+        "candidate_us": 98.592,
+        "speedup": 1.0996024018175918,
+        "evidence": "benchmarks/results/agentic_r4_unaligned_fixed33.json",
+        "decision": "Mixed result; archived, not promoted or submitted. FP16 benefit does not generalize to FP32."
+      },
       "assumptions": "Keep both input halves, two result vectors and a temporary within the existing five capacity-sized FP32 work vectors. Add separate pitch-sized frequency/angle/cos/sin storage. Preserve four Mul plus Sub/Add, queue depths and DMA policy. This is a source-operand/count model, not physical traffic or timing.",
       "scope": "Public representative of the existing generic unaligned Rotary dispatch only; not a hidden-case mapping. Same Rotary source in V9 and the platform-accepted 817f8364 wide-only patch."
     },
@@ -805,6 +818,8 @@
       "existing_ub_bytes": 147968,
       "proposed_ub_bytes": 149504,
       "proposed_additional_ub_bytes": 1536,
+      "implemented_candidate_ub_bytes": 148992,
+      "implemented_candidate_liveness_note": "The first prototype reuses the free input work vector as the angle scratch before loading x, so only two extra coefficient rows are needed, rather than the three extra rows in the conservative proposal above.",
       "coefficient_copy_calls_removed": 64480,
       "coefficient_copy_operand_bytes_removed": 66027520,
       "repeated_half_load_calls_removed": 2048,
@@ -812,6 +827,17 @@
       "existing_arithmetic_api_calls_per_job": 6,
       "proposed_arithmetic_api_calls_per_job": 12,
       "minimum_x_y_gm_bytes_unchanged": 133169152,
+      "paired_native_observation": {
+        "source_sha256": {
+          "baseline": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+          "candidate": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168"
+        },
+        "baseline_us": 154.023,
+        "candidate_us": 163.3735,
+        "speedup": 0.9427661156797155,
+        "evidence": "benchmarks/results/agentic_r4_unaligned_fixed33.json",
+        "decision": "Mixed result; archived, not promoted or submitted. FP16 benefit does not generalize to FP32."
+      },
       "assumptions": "Keep both input halves, two result vectors and a temporary within the existing five capacity-sized FP32 work vectors. Add separate pitch-sized frequency/angle/cos/sin storage. Preserve four Mul plus Sub/Add, queue depths and DMA policy. This is a source-operand/count model, not physical traffic or timing.",
       "scope": "Public representative of the existing generic unaligned Rotary dispatch only; not a hidden-case mapping. Same Rotary source in V9 and the platform-accepted 817f8364 wide-only patch."
     }

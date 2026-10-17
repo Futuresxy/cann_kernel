@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "state": "future_hypothesis_not_implemented",
+  "priority_condition": "Review only after the current unaligned-pipeline experiment completes; collect HeadTile-specific PMU before deciding to implement.",
+  "scope": "Existing general HeadTileRotary dispatch: nonaligned even D<=64, many heads. Public shape/dtype/alignment parameters only; no hidden testcase mapping.",
+  "source_baseline": "platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc",
+  "parent_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "source_observation": "HeadTileRotary currently gathers compact C/S over padded half-pairs, gathers low/high input halves, computes four products and Sub/Add, then gathers results back to the flat layout. Five Gather calls process about6*capacity elements total.",
+  "naive_rewrite_rejected_by_model": "Simply gathering full C/S and one rotate-half vector changes five Gather calls to three, but still processes about6*capacity elements. Fewer calls alone is not a proven throughput improvement.",
+  "hypothesis": "Use a flat rotate-half representation together with alignment-period coefficient expansion. Build only a short aligned coefficient prefix with Gather; replicate that prefix using supported vector Copy repeats instead of gathering coefficients for every head.",
+  "alignment_model": {
+    "period_heads": "8/gcd(D,8) for FP32 coefficient storage aligned to32 bytes",
+    "prefix_elements": "U=period_heads*D; for even D<=64, period<=4 and U<=256",
+    "expansion": "Generate current-token coefficients on Device for one prefix; repeat-copy the immutable prefix with srcRepStride0 and dstRepStrideU/8. Handle the final partial head group with a valid mask.",
+    "example_D30_H128": "period4, U120. Old coefficient gathers process2*128*16=4096 elements. New prefix gathers process240 elements plus roughly7440 coefficient elements copied with regular vector access. Rotation uses one full-input Gather instead of low/high input plus final packing gathers.",
+    "important_caveat": "Gather and Copy have different costs; these are logical element counts, not measured bandwidth/cycles or a speedup forecast. Confirm installed Copy API alignment/repeat/overlap constraints before coding."
+  },
+  "dataflow_candidate": [
+    "Generate unchanged FP32 sin/cos into compact scratch before loading x; create signed sin base with lower-half negative and upper-half positive values",
+    "Gather a short full-layout C/S prefix using Device-generated geometry indices, then expand its aligned period with Copy",
+    "Load/cast the flat input; Gather one rotate-half vector into sufficiently sized output-queue scratch",
+    "Compute two full-vector products and an addition, preserving the original per-output FP32 product/add order; do not lower precision or assume fused arithmetic",
+    "Use a separate result vector before FP16 output cast so no unsupported shrinking in-place cast is needed; keep position0 as exact input identity"
+  ],
+  "memory_model": "Let capacity=tileHeads*pitch. Existing dominant allocations are6capacity FP32 work +5capacity uint32 indices +four queue slots of2capacity elements. A prototype can retain the same work, use one2capacity rotate-index map plus two short-prefix maps, and enlarge FP16 output slots to hold FP32 scratch. Verify all lifetimes, frequency fallback workspace, masks and tails; do not blindly reuse this estimate as an allocation proof.",
+  "required_evidence": [
+    "Review prior GatherMask/head-packing and layout_copy negatives and explain the different alignment/dataflow",
+    "Measure the existing HeadTile path on both FP16 and FP32 and distinguish Gather throughput, scalar setup, barriers and DMA",
+    "Prove prefix and rotation maps cover every valid element and never read beyond allocated storage; no Host tensor work or stored results",
+    "Preserve all original precision gates, finite output bits and position0 bits; explicitly check nonzero-position nonfinite classes and signed-zero behavior of Sub versus Add with negated sin",
+    "Source-bound normal/audit/launch/template tests and native balanced controls before any platform trial"
+  ],
+  "deployment": "All helpers and current-call generated indices remain inside kernel.asc using existing dav-2201 SDK; no new packages, build changes, additional kernels or cross-invocation cache."
+}
