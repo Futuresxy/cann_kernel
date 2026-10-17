@@ -1,0 +1,78 @@
+{
+  "diagnostic_replay_only": true,
+  "case": "r2wide_perf_d1024_float16_h32",
+  "variants": {
+    "v9": {
+      "pipe": {
+        "block_id": 23.5,
+        "aiv_time(us)": 30.7026350625,
+        "aiv_total_cycles": 56799.875,
+        "aiv_vec_time(us)": 26.344391375,
+        "aiv_vec_ratio": 0.8582357916666666,
+        "aiv_mte2_time(us)": 7.720630604166667,
+        "aiv_mte2_ratio": 0.2516226458333333,
+        "aiv_mte2_active_bw(GB/s)": 42.457241770833335,
+        "aiv_mte3_time(us)": 4.2146846875,
+        "aiv_mte3_ratio": 0.13728558333333332,
+        "aiv_mte3_active_bw(GB/s)": 78.2809910625,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 9.716745520833333,
+        "aiv_scalar_ratio": 0.3162950625,
+        "aiv_scalar_single_time(us)": 1.9070949166666666,
+        "aiv_scalar_dual_time(us)": 3.9455742083333334,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 20.27613727083333,
+        "aiv_scalar_wait_ib_time(us)": 0.13425683333333333,
+        "aiv_scalar_wait_time(us)": 0.00020272916666666665
+      },
+      "memory_ub": {
+        "block_id": 23.5,
+        "aiv_time(us)": 30.7026350625,
+        "aiv_total_cycles": 56799.875,
+        "aiv_ub_read_bw_vector(GB/s)": 243.08891610416666,
+        "aiv_ub_write_bw_vector(GB/s)": 122.89078379166666,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.033981125
+      },
+      "metadata": "benchmarks/profiles/agentic_r2_wide_pmu_v9/metadata.json"
+    },
+    "fma": {
+      "pipe": {
+        "block_id": 23.5,
+        "aiv_time(us)": 27.943941541666668,
+        "aiv_total_cycles": 51696.291666666664,
+        "aiv_vec_time(us)": 23.669076541666666,
+        "aiv_vec_ratio": 0.8471620416666666,
+        "aiv_mte2_time(us)": 7.9911711875,
+        "aiv_mte2_ratio": 0.286020375,
+        "aiv_mte2_active_bw(GB/s)": 41.14644447916667,
+        "aiv_mte3_time(us)": 4.4207094375,
+        "aiv_mte3_ratio": 0.15825764583333332,
+        "aiv_mte3_active_bw(GB/s)": 75.1638756875,
+        "aiv_icache_miss_rate": 0.0,
+        "aiv_scalar_time(us)": 9.911801979166666,
+        "aiv_scalar_ratio": 0.354573625,
+        "aiv_scalar_single_time(us)": 1.7455631458333334,
+        "aiv_scalar_dual_time(us)": 4.142353666666667,
+        "aiv_scalar_mte2_stall_time(us)": 0.0,
+        "aiv_scalar_mte3_stall_time(us)": 0.0,
+        "aiv_scalar_stall_by_ub_time(us)": 0.0,
+        "aiv_scalar_vector_stall_time(us)": 17.66284877083333,
+        "aiv_scalar_wait_ib_time(us)": 0.14388516666666668,
+        "aiv_scalar_wait_time(us)": 0.00023654166666666667
+      },
+      "memory_ub": {
+        "block_id": 23.5,
+        "aiv_time(us)": 27.943941541666668,
+        "aiv_total_cycles": 51696.291666666664,
+        "aiv_ub_read_bw_vector(GB/s)": 224.83934929166668,
+        "aiv_ub_write_bw_vector(GB/s)": 135.01624739583335,
+        "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+        "aiv_ub_write_bw_scalar(GB/s)": 0.037334020833333335
+      },
+      "metadata": "benchmarks/profiles/agentic_r2_wide_pmu_fma/metadata.json"
+    }
+  }
+}

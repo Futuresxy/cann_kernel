@@ -1,0 +1,210 @@
+[
+  {
+    "name": "r2wide_perf_d528_float16_h3",
+    "shape": [
+      1,
+      256,
+      3,
+      528
+    ],
+    "dtype": "float16",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174333
+  },
+  {
+    "name": "r2wide_perf_d528_float16_h32",
+    "shape": [
+      1,
+      256,
+      32,
+      528
+    ],
+    "dtype": "float16",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174334
+  },
+  {
+    "name": "r2wide_perf_d528_float32_h3",
+    "shape": [
+      1,
+      256,
+      3,
+      528
+    ],
+    "dtype": "float32",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174335
+  },
+  {
+    "name": "r2wide_perf_d528_float32_h32",
+    "shape": [
+      1,
+      256,
+      32,
+      528
+    ],
+    "dtype": "float32",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174336
+  },
+  {
+    "name": "r2wide_perf_d640_float16_h3",
+    "shape": [
+      1,
+      256,
+      3,
+      640
+    ],
+    "dtype": "float16",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174337
+  },
+  {
+    "name": "r2wide_perf_d640_float16_h32",
+    "shape": [
+      1,
+      256,
+      32,
+      640
+    ],
+    "dtype": "float16",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174338
+  },
+  {
+    "name": "r2wide_perf_d640_float32_h3",
+    "shape": [
+      1,
+      256,
+      3,
+      640
+    ],
+    "dtype": "float32",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174339
+  },
+  {
+    "name": "r2wide_perf_d640_float32_h32",
+    "shape": [
+      1,
+      256,
+      32,
+      640
+    ],
+    "dtype": "float32",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174340
+  },
+  {
+    "name": "r2wide_perf_d768_float16_h3",
+    "shape": [
+      1,
+      256,
+      3,
+      768
+    ],
+    "dtype": "float16",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174341
+  },
+  {
+    "name": "r2wide_perf_d768_float16_h32",
+    "shape": [
+      1,
+      256,
+      32,
+      768
+    ],
+    "dtype": "float16",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174342
+  },
+  {
+    "name": "r2wide_perf_d768_float32_h3",
+    "shape": [
+      1,
+      256,
+      3,
+      768
+    ],
+    "dtype": "float32",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174343
+  },
+  {
+    "name": "r2wide_perf_d768_float32_h32",
+    "shape": [
+      1,
+      256,
+      32,
+      768
+    ],
+    "dtype": "float32",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174344
+  },
+  {
+    "name": "r2wide_perf_d1024_float16_h3",
+    "shape": [
+      1,
+      256,
+      3,
+      1024
+    ],
+    "dtype": "float16",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174345
+  },
+  {
+    "name": "r2wide_perf_d1024_float16_h32",
+    "shape": [
+      1,
+      256,
+      32,
+      1024
+    ],
+    "dtype": "float16",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174346
+  },
+  {
+    "name": "r2wide_perf_d1024_float32_h3",
+    "shape": [
+      1,
+      256,
+      3,
+      1024
+    ],
+    "dtype": "float32",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174347
+  },
+  {
+    "name": "r2wide_perf_d1024_float32_h32",
+    "shape": [
+      1,
+      256,
+      32,
+      1024
+    ],
+    "dtype": "float32",
+    "theta": 10000.0,
+    "pmax": 131073,
+    "seed": 174348
+  }
+]

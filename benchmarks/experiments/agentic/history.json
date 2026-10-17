@@ -721,6 +721,16 @@
       "status": "rejected-no-safe-native-improvement",
       "decision": "True-FMA residual is unsupported by measured vmadd/vmla behavior; legal same-order vmla fallback has only 1.0016/1.0025x native point estimates, interval spans one and small cases regress.",
       "experiment_log": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma.json"
+    },
+    {
+      "round": "agentic-request-2-authorized-wide-update",
+      "request_id": "20261017T041419176110Z-vector-fma",
+      "name": "two_workspace_wide_fmadd",
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "status": "performance-supported-precision-blocked",
+      "decision": "Wide FP16 dataflow improves native D1024 H32 timing by about 9.2%, but an added valid high-amplitude FP16 stress fails the unchanged max_abs_error gate (32.0 > 0.1) in both V9 and candidate with byte-identical outputs. The inherited precision issue needs independent math/reference diagnosis; the authorized rotation-only trial cannot be called fully validated.",
+      "experiment_log": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json",
+      "explicit_scope_update": "tuning_updates/rotary_pos_emb/20261017T041419176110Z-vector-fma-wide.json"
     }
   ],
   "requests": [
@@ -735,11 +745,13 @@
     },
     {
       "request_id": "20261017T041419176110Z-vector-fma",
-      "state": "no_improvement",
+      "state": "blocked",
       "experiment_log": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma.json",
-      "candidate_source_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
-      "native_speedup": 1.0022317397298193,
-      "reason": "No robust safe overall gain; true-FMA residual unavailable and the legal accumulation fallback has unchanged VEC activity plus repeatable small-case regressions."
+      "candidate_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "native_speedup": 1.0063637305248743,
+      "reason": "Wide FP16 dataflow improves native D1024 H32 timing by about 9.2%, but an added valid high-amplitude FP16 stress fails the unchanged max_abs_error gate (32.0 > 0.1) in both V9 and candidate with byte-identical outputs. The inherited precision issue needs independent math/reference diagnosis; the authorized rotation-only trial cannot be called fully validated.",
+      "scope_extension_log": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json",
+      "prior_frequency_snapshot": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/prior_frequency_experiment.json"
     }
   ]
 }

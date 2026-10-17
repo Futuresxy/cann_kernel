@@ -1,0 +1,1162 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T041419176110Z-vector-fma",
+  "state": "no_improvement",
+  "started_at": "2026-10-17T04:19:56.252081+00:00",
+  "parent_source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "official_baseline": {
+    "submission_id": "879119",
+    "score": 48.45
+  },
+  "prior_attempts_reviewed": {
+    "reports": [
+      "docs/profiled_v9.md",
+      "docs/profiled_v8.md",
+      "docs/profiled_v4.md",
+      "docs/tuning_workflow.md"
+    ],
+    "index": "benchmarks/experiments/agentic/history.json",
+    "prior_request": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69.json",
+    "constraints": [
+      "Exact Q53 log-tail pruning rejected at 0.995493x / 26 of 33 slower; no repetition.",
+      "Previous FusedMulAdd rotation trial had no benefit; this trial changes frequency TwoProd residuals only.",
+      "Naive exp/log accuracy failures, cosine polynomial max-error failure, wide two-read rotation regression remain excluded."
+    ]
+  },
+  "hypothesis": "True single-rounding vector FP32 multiply-add may replace split-4097 TwoProd residual chains in DeviceFrequencyChunk, reducing vector instructions without changing trig or rotation. First test installed intrinsic semantics.",
+  "bottleneck_evidence": [
+    "benchmarks/profiles/agentic_r1_v9_wide/summary.json",
+    "benchmarks/profiles/agentic_r1_v9_tiny/summary.json",
+    "benchmarks/profiles/agentic_r1_v9_deepseek/summary.json",
+    "benchmarks/profiles/agentic_r2_v9_init_wide/summary.json",
+    "benchmarks/profiles/agentic_r2_v9_wide/summary.json",
+    "benchmarks/profiles/agentic_r2_accum_init_wide/summary.json",
+    "benchmarks/profiles/agentic_r2_accum_wide/summary.json"
+  ],
+  "candidate_source_sha256": "7e9dffb030253901d6345a5ef4c27b8bd07ec67b38df6966e8080639a17c22ca",
+  "changes": [
+    "Preserve split-4097 compensation; replace 18 adjacent Mul/Add pairs by same-order in-place MulAddDst inside DeviceFrequencyChunk.",
+    "No trig, rotation, scratch size, tiling or launch changes."
+  ],
+  "validation": {
+    "cpu_compensation_graph": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/compensation_model.json",
+    "prototype_correction": "Before any operator device run, symbolic liveness validation caught that the proposed square-residual accumulator v11 would be overwritten by the cross term. Moved the accumulator to v10 and revalidated both output graphs as identical. Earlier binaries were rebuilt; the invalid prototype is never a submission candidate.",
+    "device_api_semantics": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/fma_semantics_v2.json",
+    "suites": {
+      "normal": {
+        "path": "benchmarks/results/agentic_r2_accum.json",
+        "passed": 52,
+        "total": 52,
+        "min_matched_ratio": 1.0,
+        "max_abs_error_by_dtype": {
+          "float16": 0.0078125,
+          "float32": 8.106231689453125e-06
+        },
+        "audited_launches": 0,
+        "all_output_guards_and_zero_identity_passed": true
+      },
+      "audit": {
+        "path": "benchmarks/results/agentic_r2_accum_audit.json",
+        "passed": 52,
+        "total": 52,
+        "min_matched_ratio": 1.0,
+        "max_abs_error_by_dtype": {
+          "float16": 0.0078125,
+          "float32": 8.106231689453125e-06
+        },
+        "audited_launches": 156,
+        "all_output_guards_and_zero_identity_passed": true
+      },
+      "math": {
+        "path": "benchmarks/results/agentic_r2_accum_math.json",
+        "passed": 256,
+        "total": 256,
+        "min_matched_ratio": 1.0,
+        "max_abs_error_by_dtype": {
+          "float16": 0.03125,
+          "float32": 2.193450927734375e-05
+        },
+        "audited_launches": 512,
+        "all_output_guards_and_zero_identity_passed": true
+      },
+      "near_unity_and_rounding": {
+        "path": "benchmarks/results/agentic_r2_accum_new_math.json",
+        "passed": 640,
+        "total": 640,
+        "min_matched_ratio": 1.0,
+        "max_abs_error_by_dtype": {
+          "float16": 0.03125,
+          "float32": 5.340576171875e-05
+        },
+        "audited_launches": 1280,
+        "all_output_guards_and_zero_identity_passed": true
+      },
+      "dispatch": {
+        "path": "benchmarks/results/agentic_r2_accum_dispatch.json",
+        "passed": 192,
+        "total": 192,
+        "min_matched_ratio": 1.0,
+        "max_abs_error_by_dtype": {
+          "float16": 0.03125,
+          "float32": 2.288818359375e-05
+        },
+        "audited_launches": 384,
+        "all_output_guards_and_zero_identity_passed": true
+      }
+    },
+    "total_cases_passed": 1192,
+    "audited_runtime_launches": 2332,
+    "independent_launch_profile": {
+      "path": "benchmarks/profiles/agentic_r2_accum_launches/launch_count.json",
+      "run_kernel_calls": 75,
+      "device_kernel_tasks": 75,
+      "passed": true
+    },
+    "precision_policy": {
+      "required_matched_ratio": 0.99,
+      "float32": {
+        "atol": 0.000977,
+        "rtol": 1.53e-05,
+        "max_abs_error_limit": 0.01
+      },
+      "float16": {
+        "atol": 0.00195,
+        "rtol": 0.00195,
+        "max_abs_error_limit": 0.1
+      },
+      "golden_thresholds_and_timing_unchanged": true
+    },
+    "coverage_limits": "No publication is planned after the safe-performance gate failed. Full 1010/456/672 sweep suites, extra aligned166 and historical V4 bit comparisons were not rerun. The tested extreme operands in the independent semantics probe do not imply full RoPE correctness for every positive FP32 theta.",
+    "large_amplitude_cases": [
+      {
+        "name": "half_overflow",
+        "dtype": "float16",
+        "scale": 60000,
+        "passed": true,
+        "matched_ratio": 1.0,
+        "max_abs_error": 0.0
+      }
+    ]
+  },
+  "local_performance": {
+    "metric": "Native non-replay Task Duration, fixed inputs, shared-context/allocation ABBA+BAAB, two repetitions",
+    "analysis_path": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/native_analysis.json",
+    "first_report": "benchmarks/results/agentic_r2_accum_balanced.json",
+    "confirmation_report": "benchmarks/results/agentic_r2_accum_confirm.json",
+    "per_run_geometric_speedups": [
+      1.0016460109056746,
+      1.0025122332909293
+    ],
+    "pooled_geometric_speedup": 1.0022317397298193,
+    "observed_block_bootstrap": {
+      "method": "20,000 paired-within-shape block resamples; median per variant then geometric mean across fixed33",
+      "seed": 174317,
+      "percentile_95_interval": [
+        0.9967359089964879,
+        1.0071240341213994
+      ],
+      "resamples_with_speedup_above_one": 0.8193,
+      "caveat": "Descriptive uncertainty of the observed blocks only, not a guarantee of independent samples or coverage of systematic/address/layout effects."
+    },
+    "case_count_per_repetition": 33,
+    "run_kernel_calls": 5280,
+    "actual_device_kernel_tasks": 5280,
+    "inputs_verified_equal_in_both_directions_and_repetitions": true,
+    "cases": [
+      {
+        "name": "tiny",
+        "shape": [
+          1,
+          8,
+          1,
+          16
+        ],
+        "dtype": "float32",
+        "baseline_us": 2.64,
+        "candidate_us": 2.74,
+        "speedup": 0.9635036496350364,
+        "per_run_speedups": [
+          0.9746376811594204,
+          0.9666666666666667
+        ],
+        "input_sha256": {
+          "x.bin": "8e5ba49c41b097e33881d8dfff2c5bbee8c923a084ba2390738919d74cac6695",
+          "positions.bin": "f848dcf5d8e8d774bd9e257cc472ddf1e4e976d37a804ca616181d7f06a9b743"
+        }
+      },
+      {
+        "name": "unaligned_half",
+        "shape": [
+          2,
+          16,
+          3,
+          24
+        ],
+        "dtype": "float16",
+        "baseline_us": 5.26,
+        "candidate_us": 5.37,
+        "speedup": 0.9795158286778398,
+        "per_run_speedups": [
+          0.9834254143646409,
+          0.9923592113951515
+        ],
+        "input_sha256": {
+          "x.bin": "639289ae4a5ef08014e9cee5c5bc9ee986d8df459149581b81059da078facb00",
+          "positions.bin": "2b6d8497ef32248a6e23d948891de0c1bc6ded914f702b4f35412555aa2dd388"
+        }
+      },
+      {
+        "name": "deepseek_half",
+        "shape": [
+          2,
+          512,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 17.5405,
+        "candidate_us": 17.451,
+        "speedup": 1.0051286459228699,
+        "per_run_speedups": [
+          1.002875854214123,
+          1.003503184713376
+        ],
+        "input_sha256": {
+          "x.bin": "c421dbf38804d5337e098dfa1850ab62ab744842534dec00bbf2b3b50cf20c57",
+          "positions.bin": "b3e28c5baf9df5feb3dcb76ee70a486a3c2736bd12261634374dc7726e3daf5c"
+        }
+      },
+      {
+        "name": "deepseek_float",
+        "shape": [
+          2,
+          512,
+          128,
+          64
+        ],
+        "dtype": "float32",
+        "baseline_us": 18.411,
+        "candidate_us": 18.420499999999997,
+        "speedup": 0.9994842702423932,
+        "per_run_speedups": [
+          0.9861155698234352,
+          1.0043954836405595
+        ],
+        "input_sha256": {
+          "x.bin": "b168bd649469b8bcaa943649e0045e72d8fa2e6fdde3e6b2f581e4305ca1da3b",
+          "positions.bin": "2c730ddf55e8aa5eee5ac8d30bad294792f10b57f456971ba67692a853b3d0e2"
+        }
+      },
+      {
+        "name": "sequence8192",
+        "shape": [
+          1,
+          8192,
+          1,
+          64
+        ],
+        "dtype": "float32",
+        "baseline_us": 11.75,
+        "candidate_us": 11.7,
+        "speedup": 1.0042735042735043,
+        "per_run_speedups": [
+          1.0042443020245322,
+          1.0043951261966928
+        ],
+        "input_sha256": {
+          "x.bin": "e1fff8f820d5cb66633c659d67913f9fc167a17f7a4db497a7d4e5bbc28543dd",
+          "positions.bin": "d18da3d340ff4a46ea7f9f47ef7e0a03cfe4dd30039650e7540fea671764f988"
+        }
+      },
+      {
+        "name": "large_half",
+        "shape": [
+          4,
+          1024,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 52.091,
+        "candidate_us": 52.111000000000004,
+        "speedup": 0.9996162038725028,
+        "per_run_speedups": [
+          1.0,
+          1.0005776896266199
+        ],
+        "input_sha256": {
+          "x.bin": "c112bbebead9c04f043c709a7e29bad9b49775b3444cdb31beedb6876413291c",
+          "positions.bin": "10e0a00cfce00173169d537069b021acc5da0e1c2eec497057eeb156b7e4c1d4"
+        }
+      },
+      {
+        "name": "heads256",
+        "shape": [
+          1,
+          32,
+          256,
+          128
+        ],
+        "dtype": "float16",
+        "baseline_us": 8.809999999999999,
+        "candidate_us": 8.6205,
+        "speedup": 1.0219824836146394,
+        "per_run_speedups": [
+          1.0113765642775883,
+          1.0177022274325909
+        ],
+        "input_sha256": {
+          "x.bin": "dfbdfa1fc867b75fdda5c277332f089d288992681d63c41fd6a10f4021fef2c0",
+          "positions.bin": "bed34c196808247755e178b51e0691dcb20f765d687985176ccabe00274b4008"
+        }
+      },
+      {
+        "name": "aligned_d512_half",
+        "shape": [
+          1,
+          7,
+          17,
+          512
+        ],
+        "dtype": "float16",
+        "baseline_us": 9.0,
+        "candidate_us": 8.650500000000001,
+        "speedup": 1.0404022888850355,
+        "per_run_speedups": [
+          1.0123165176311795,
+          1.0405202312138726
+        ],
+        "input_sha256": {
+          "x.bin": "08ded38694d38c9dc9657f71fc13db4e2284c72bc3b1ca909cb5c6e834cd3940",
+          "positions.bin": "68f8dd6698c7e632df33245fa95018a3ee242da9aad10d7669efb6466ce6d2a0"
+        }
+      },
+      {
+        "name": "wide_half",
+        "shape": [
+          1,
+          7,
+          17,
+          1024
+        ],
+        "dtype": "float16",
+        "baseline_us": 9.470500000000001,
+        "candidate_us": 9.36,
+        "speedup": 1.0118055555555558,
+        "per_run_speedups": [
+          1.0128877005347596,
+          1.0117145899893503
+        ],
+        "input_sha256": {
+          "x.bin": "c900481f5b4e02a61bf3ff5920450381c107414d7f9a9c025a45a90e7be59e49",
+          "positions.bin": "8855019b6cf41ae94871734e29098840e547db0d42b10c8f68ad62b591ee571a"
+        }
+      },
+      {
+        "name": "prefill_h32_d128_half",
+        "shape": [
+          2,
+          512,
+          32,
+          128
+        ],
+        "dtype": "float16",
+        "baseline_us": 16.119999999999997,
+        "candidate_us": 15.99,
+        "speedup": 1.008130081300813,
+        "per_run_speedups": [
+          1.0112289457267623,
+          1.001887979861548
+        ],
+        "input_sha256": {
+          "x.bin": "7c65bdc4475660c870cfaf0cb7eb931cd377515e386743685f30cb9d4a293a6c",
+          "positions.bin": "756c434c81818d335b4f9deeb8bc27fe7b32dd1ce85c9176f80de84dcf8221ce"
+        }
+      },
+      {
+        "name": "prefill_h32_d128_float",
+        "shape": [
+          2,
+          512,
+          32,
+          128
+        ],
+        "dtype": "float32",
+        "baseline_us": 14.530000000000001,
+        "candidate_us": 14.33,
+        "speedup": 1.013956734124215,
+        "per_run_speedups": [
+          1.0117993079584775,
+          1.01053521722279
+        ],
+        "input_sha256": {
+          "x.bin": "fcb7ab40ebf3806ff19476c249ca22343cfee71e745ac35b9a3399123f1f93a6",
+          "positions.bin": "65c1582bc7cf322aedd677fc905b78fbfd5ea163509533b2f10fb9ab4203bc9c"
+        }
+      },
+      {
+        "name": "prefill_h32_d256_half",
+        "shape": [
+          2,
+          512,
+          32,
+          256
+        ],
+        "dtype": "float16",
+        "baseline_us": 26.6705,
+        "candidate_us": 26.551000000000002,
+        "speedup": 1.0045007720989794,
+        "per_run_speedups": [
+          1.0025870795995653,
+          1.0045314929278373
+        ],
+        "input_sha256": {
+          "x.bin": "563b93eb2ae7878dce75ba6e1fa8f7bbf4d1f4c88105cfde8f62b4a404340b63",
+          "positions.bin": "046654a0d99123e0dfd3bd954413dc244340bac6510eb5b1cc076a86d956b0b5"
+        }
+      },
+      {
+        "name": "prefill_h8_d64_half",
+        "shape": [
+          2,
+          512,
+          8,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 10.73,
+        "candidate_us": 10.6805,
+        "speedup": 1.0046346144843405,
+        "per_run_speedups": [
+          1.0046425255338904,
+          1.0028013864488865
+        ],
+        "input_sha256": {
+          "x.bin": "5e4c9c5a81ba2d3b010fbe5e78b4b2908442b401a2cc29ab2e8c5ead3239748c",
+          "positions.bin": "0df1140e78399ee91073c972dcd7aef6eaac6ddd1370c52270e9bbd6571b128f"
+        }
+      },
+      {
+        "name": "prefill_h3_d24_half",
+        "shape": [
+          2,
+          512,
+          3,
+          24
+        ],
+        "dtype": "float16",
+        "baseline_us": 7.26,
+        "candidate_us": 7.250500000000001,
+        "speedup": 1.0013102544652093,
+        "per_run_speedups": [
+          1.0026783874733878,
+          1.0042075736325387
+        ],
+        "input_sha256": {
+          "x.bin": "390ad93857dc563cfd4dbd515369e76681a42d3bc11fb4d7c98ea38015f09f1d",
+          "positions.bin": "e4c107e05d0e9eaef9725f2e312d2ab1cd8316afddc44ad4396d618a735fd8b1"
+        }
+      },
+      {
+        "name": "prefill_h32_d30_float",
+        "shape": [
+          2,
+          512,
+          32,
+          30
+        ],
+        "dtype": "float32",
+        "baseline_us": 20.0,
+        "candidate_us": 20.060499999999998,
+        "speedup": 0.9969841230278409,
+        "per_run_speedups": [
+          0.9955155839651156,
+          0.9984864155798291
+        ],
+        "input_sha256": {
+          "x.bin": "df6ee7a24c09dab99ef933813ffaf346947387504fa0dc54232450cb28759df5",
+          "positions.bin": "f12f541ab2b3661b3aa0b6faa59a004d9f171a7bec2175401eb4a4034ddfac66"
+        }
+      },
+      {
+        "name": "prefill_h32_d96_half",
+        "shape": [
+          2,
+          512,
+          32,
+          96
+        ],
+        "dtype": "float16",
+        "baseline_us": 15.9305,
+        "candidate_us": 15.841000000000001,
+        "speedup": 1.0056498958399092,
+        "per_run_speedups": [
+          1.0088047545674665,
+          1.0069874290089975
+        ],
+        "input_sha256": {
+          "x.bin": "91ceeeab68bbd6e9e0da66fe28b48065bf3934b85af4dae51ccd1651adfede2e",
+          "positions.bin": "666d6a753176e15ecc3afa9e4b7fcea04a06e307a79ffda895305c29bf03b6d9"
+        }
+      },
+      {
+        "name": "prefill_h32_d1024_half",
+        "shape": [
+          1,
+          256,
+          32,
+          1024
+        ],
+        "dtype": "float16",
+        "baseline_us": 32.021,
+        "candidate_us": 31.980000000000004,
+        "speedup": 1.0012820512820513,
+        "per_run_speedups": [
+          0.9987379639151164,
+          1.0009591044165973
+        ],
+        "input_sha256": {
+          "x.bin": "18d35046421d8cda3701af58dacaacf6da8effd765290cd6cbfa52a3d794e324",
+          "positions.bin": "0a655fb2b854784cd77089c9b1a0e9246a30f8c1d3b900a5c75c478a2933ea5f"
+        }
+      },
+      {
+        "name": "prefill_h32_d1024_float",
+        "shape": [
+          1,
+          256,
+          32,
+          1024
+        ],
+        "dtype": "float32",
+        "baseline_us": 33.141,
+        "candidate_us": 32.8405,
+        "speedup": 1.0091502869931943,
+        "per_run_speedups": [
+          1.0109639451954806,
+          1.0103952654012451
+        ],
+        "input_sha256": {
+          "x.bin": "91367b251bbdaa96f6cbc6c1cfc81ead1a6edbba9a272c929e5dead764fa8af4",
+          "positions.bin": "866eeb1702eb89448c1de882f38414848ee7d13349a22089e39a90c905d9ef37"
+        }
+      },
+      {
+        "name": "stream_h128_d64_half",
+        "shape": [
+          2,
+          4096,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 214.29399999999998,
+        "candidate_us": 214.34449999999998,
+        "speedup": 0.9997643979668245,
+        "per_run_speedups": [
+          0.9993931302342518,
+          1.0000046573581602
+        ],
+        "input_sha256": {
+          "x.bin": "dff441bc4a51a086652aadbb697e6507fecb1a6645f1762cdc3613eded7c7d97",
+          "positions.bin": "0c64a12c59cc49c670ed5f4a747926cf3664ea47c1bf44c2930421da066ff8d5"
+        }
+      },
+      {
+        "name": "stream_h32_d128_float",
+        "shape": [
+          2,
+          4096,
+          32,
+          128
+        ],
+        "dtype": "float32",
+        "baseline_us": 214.784,
+        "candidate_us": 214.724,
+        "speedup": 1.0002794284756245,
+        "per_run_speedups": [
+          1.0004180708815955,
+          0.9983684048593564
+        ],
+        "input_sha256": {
+          "x.bin": "1916ce8556899dec2a3637c15eb874fa14fb1b041d894e3eb0ffc462e1a99a5f",
+          "positions.bin": "0fd01c92726223a6d208175d6fc5e1a647b9c5a782cbdbdf3a8b6350847aabcb"
+        }
+      },
+      {
+        "name": "single_token_many_heads",
+        "shape": [
+          1,
+          1,
+          256,
+          128
+        ],
+        "dtype": "float16",
+        "baseline_us": 5.24,
+        "candidate_us": 5.4,
+        "speedup": 0.9703703703703703,
+        "per_run_speedups": [
+          0.9833641404805915,
+          0.9665427509293678
+        ],
+        "input_sha256": {
+          "x.bin": "3ff1d5efe0f4425cb6065bc551cb4837f6f05afc43e3ececc4ceaa3434bf94d2",
+          "positions.bin": "75a2861f5330b32dd09f85cb14ed4dce68d344a286b4f0ba04e3a61de9e2ec04"
+        }
+      },
+      {
+        "name": "short_s16_h32",
+        "shape": [
+          1,
+          16,
+          32,
+          128
+        ],
+        "dtype": "float32",
+        "baseline_us": 6.85,
+        "candidate_us": 6.7,
+        "speedup": 1.0223880597014925,
+        "per_run_speedups": [
+          1.0251479289940828,
+          1.027027027027027
+        ],
+        "input_sha256": {
+          "x.bin": "ed5246de613a21e0b0ec24041feb934a413fe34caff774ed908534203d90ce6c",
+          "positions.bin": "506c98036047e57fa5c3555ccb8b922e26a503ec9afee0403246ecfeadaf880b"
+        }
+      },
+      {
+        "name": "narrow_head_long",
+        "shape": [
+          1,
+          8192,
+          4,
+          16
+        ],
+        "dtype": "float16",
+        "baseline_us": 20.791,
+        "candidate_us": 20.79,
+        "speedup": 1.0000481000481,
+        "per_run_speedups": [
+          1.0043487662478074,
+          1.001429921717845
+        ],
+        "input_sha256": {
+          "x.bin": "c36aa69b0a9e107f88df7d473a652455d3d72f380c1182f208396d45eb4180cb",
+          "positions.bin": "4e051244f89aa70f396968ce54d96563d0f872df4bd85daabc15db0bd239b5c9"
+        }
+      },
+      {
+        "name": "unaligned_h128_d30_half",
+        "shape": [
+          2,
+          1024,
+          128,
+          30
+        ],
+        "dtype": "float16",
+        "baseline_us": 100.082,
+        "candidate_us": 100.042,
+        "speedup": 1.0003998320705303,
+        "per_run_speedups": [
+          1.0,
+          0.999899891883234
+        ],
+        "input_sha256": {
+          "x.bin": "c6a237291092fb801de8b0329ac4701f970e41683d0b458f5d3fcf1cbe9ac370",
+          "positions.bin": "78490796833c12939c501b199818233d481327038721f9913bcaa68c1136091a"
+        }
+      },
+      {
+        "name": "unaligned_h128_d30_float",
+        "shape": [
+          2,
+          1024,
+          128,
+          30
+        ],
+        "dtype": "float32",
+        "baseline_us": 100.202,
+        "candidate_us": 100.142,
+        "speedup": 1.0005991492081245,
+        "per_run_speedups": [
+          1.0004987929211309,
+          1.0002000560156843
+        ],
+        "input_sha256": {
+          "x.bin": "3034e37c11548d6bcec9800bbf5c02253a9ebf58ce4815f61bef307de4c06a81",
+          "positions.bin": "b626a8d6d329968f171667a891ff12ea5861649cc6b9af4e81b31a96ea88f4f1"
+        }
+      },
+      {
+        "name": "prefill_d192_half",
+        "shape": [
+          2,
+          512,
+          32,
+          192
+        ],
+        "dtype": "float16",
+        "baseline_us": 20.64,
+        "candidate_us": 20.481,
+        "speedup": 1.0077632928079683,
+        "per_run_speedups": [
+          1.0023762184181175,
+          1.0069245933957616
+        ],
+        "input_sha256": {
+          "x.bin": "19dda3eca8f1a5866e4923a21afd6ba48979424d6d1c984c3af648db63885e24",
+          "positions.bin": "c119736c6fb310750abc78fc478501be27a383557ddc87a918fb8c37664fc7b4"
+        }
+      },
+      {
+        "name": "prefill_d384_float",
+        "shape": [
+          2,
+          512,
+          32,
+          384
+        ],
+        "dtype": "float32",
+        "baseline_us": 30.441000000000003,
+        "candidate_us": 30.331000000000003,
+        "speedup": 1.0036266525996504,
+        "per_run_speedups": [
+          1.0055791448602744,
+          1.0033321728751183
+        ],
+        "input_sha256": {
+          "x.bin": "977a9c23d016e36fad6572f71b4ba1a5e16da87b33a3367b9b6a9ff5d31b1887",
+          "positions.bin": "50314ab727b89e130b0435cece836a5c1bb3e5159cd829ab79913a6777195320"
+        }
+      },
+      {
+        "name": "large_stream_half",
+        "shape": [
+          4,
+          8192,
+          128,
+          64
+        ],
+        "dtype": "float16",
+        "baseline_us": 841.637,
+        "candidate_us": 842.1565,
+        "speedup": 0.9993831312826059,
+        "per_run_speedups": [
+          0.9988714880261912,
+          0.9997032207669487
+        ],
+        "input_sha256": {
+          "x.bin": "60c6498c0084a2b1d1080375a541998a7699bb51fa352cc60b94b542df264cf0",
+          "positions.bin": "874d497cf66b26cef2540ed23d7036a3c0d21277d6f6e3298fa7162d9743216a"
+        }
+      },
+      {
+        "name": "large_stream_float",
+        "shape": [
+          2,
+          8192,
+          64,
+          128
+        ],
+        "dtype": "float32",
+        "baseline_us": 841.477,
+        "candidate_us": 841.237,
+        "speedup": 1.0002852941561058,
+        "per_run_speedups": [
+          1.0001670597425854,
+          1.0002371000348222
+        ],
+        "input_sha256": {
+          "x.bin": "28ef6c97a512c1ca65b14563e7608c4d3cbcb1cb4e44b99d248c4f876eff7200",
+          "positions.bin": "734a3ae8f22b2c3042beab6171b81fb52016e5aa2252f6458bc53a56117672dd"
+        }
+      },
+      {
+        "name": "sequence_d1024_half",
+        "shape": [
+          1,
+          8192,
+          1,
+          1024
+        ],
+        "dtype": "float16",
+        "baseline_us": 87.41149999999999,
+        "candidate_us": 87.332,
+        "speedup": 1.0009103192415152,
+        "per_run_speedups": [
+          1.0009153108624516,
+          1.0006943527886012
+        ],
+        "input_sha256": {
+          "x.bin": "609135e30693bc21b3c086843e79565a69dc92258ff5bb38b875847d9a138d90",
+          "positions.bin": "ccb114d7c753fa1b4e4a313fb280060ad8c20b1f17b5531f88419d06146bc77b"
+        }
+      },
+      {
+        "name": "unaligned_h64_d126_half",
+        "shape": [
+          2,
+          512,
+          64,
+          126
+        ],
+        "dtype": "float16",
+        "baseline_us": 108.412,
+        "candidate_us": 108.402,
+        "speedup": 1.0000922492204942,
+        "per_run_speedups": [
+          1.0003695423218344,
+          1.0003682834309284
+        ],
+        "input_sha256": {
+          "x.bin": "7c42c1ca8b25c2fa435bcf02f0b9e2d8dc220972a51bc222eebf2c376318ab8b",
+          "positions.bin": "a708d7010207a5acbb9d41bc41689f059117c60915f79252eda07209e652d7e2"
+        }
+      },
+      {
+        "name": "unaligned_h64_d254_float",
+        "shape": [
+          2,
+          512,
+          64,
+          254
+        ],
+        "dtype": "float32",
+        "baseline_us": 153.603,
+        "candidate_us": 153.82299999999998,
+        "speedup": 0.9985697847526055,
+        "per_run_speedups": [
+          0.9990898630243853,
+          0.9986347057790955
+        ],
+        "input_sha256": {
+          "x.bin": "4bf5fd4385066fff4c01211c3d5a6a7b0da803fd5fcf01412b4573613fb80b8a",
+          "positions.bin": "3a9b1c01c60338fe437c463416135d97fac8b9c497b0d5ae326006afa63ce9cf"
+        }
+      },
+      {
+        "name": "sequence_d1024_float",
+        "shape": [
+          1,
+          8192,
+          1,
+          1024
+        ],
+        "dtype": "float32",
+        "baseline_us": 94.482,
+        "candidate_us": 94.412,
+        "speedup": 1.0007414311740033,
+        "per_run_speedups": [
+          1.0004335367078703,
+          0.9995756958587917
+        ],
+        "input_sha256": {
+          "x.bin": "2a959a7db8a71c20fbca2b0e00715a5eadde3584016abb01b96ceca7104489d2",
+          "positions.bin": "baf900077a8770b9f5472722917b945698c1959724876c49b9ea2e867c2dfc27"
+        }
+      }
+    ]
+  },
+  "decision": {
+    "publish": false,
+    "state": "no_improvement",
+    "reason": "No robust safe overall gain; true-FMA residual unavailable and the legal accumulation fallback has unchanged VEC activity plus repeatable small-case regressions.",
+    "new_ready_candidates": 0,
+    "platform_submissions": 0,
+    "last_verified_official_score": 48.45,
+    "official_score_target": 70,
+    "official_target_achieved": false,
+    "canonical_source_restored_to_parent": true
+  },
+  "next_steps": [
+    "Stop this request and wait for the Mac coordinator.",
+    "Do not retry IEEE TwoProd residual through these vmadd/vmla APIs without new hardware/compiler semantics evidence.",
+    "Do not repeat bare in-place vmla compensation accumulation without new critical-path evidence; fewer API calls alone was disproved as a sufficient argument.",
+    "A new authorized request may investigate a different vector frequency algorithm with explicit power-rounding guards or loop-level critical-path/reuse changes; preserve prior exp/log, scalar64, cosine and two-read-rotation failures."
+  ],
+  "tasks": [
+    {
+      "id": "task_20261016_212002_126881418184",
+      "max_time_seconds": 60,
+      "device_count": 1,
+      "state": "completed",
+      "purpose": "initial rounding probe"
+    },
+    {
+      "id": "task_20261016_212142_127456422411",
+      "max_time_seconds": 60,
+      "device_count": 1,
+      "state": "completed",
+      "purpose": "general multiply-add equality probe"
+    },
+    {
+      "id": "task_20261016_212545_130071324891",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "purpose": "baseline wide short PMU"
+    },
+    {
+      "id": "task_20261016_212623_13046306683",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "purpose": "baseline wide prefill PMU"
+    },
+    {
+      "id": "task_20261016_212703_13073728711",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "purpose": "candidate PMU, two cases"
+    },
+    {
+      "id": "task_20261016_212730_130992230321",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "purpose": "fixed33 balanced native timing"
+    },
+    {
+      "id": "task_20261016_212816_131360221872",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "purpose": "normal52/audit52 and independent75 launch profile"
+    },
+    {
+      "id": "task_20261016_212856_131699610291",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "purpose": "math256 and dispatch192 audited correctness"
+    },
+    {
+      "id": "task_20261016_212934_131944610283",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "purpose": "near-unity/rounding640 audited correctness"
+    },
+    {
+      "id": "task_20261016_213003_132085116843",
+      "device_count": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "purpose": "fixed33 confirmation native ABBA+BAAB"
+    }
+  ],
+  "user_policy_files_sha256": {
+    "AGENTIC.md": "862d0edaaa828090de007b5c35abe80be2a19d79c00de6b16e23f2e199b6a157",
+    "kernel_requirement.md": "8af6ec98cd04b0d0105a5f35d24a3fa1b8b128c348f97c644f7458b5deaf5e4f",
+    "forbidden.md": "b6adc24318ecd1b7a4915b8dfd9fb560abb26d9da3e11239a5683b56aa197219"
+  },
+  "hypothesis_screen": {
+    "true_fma_residual": "rejected: vmadd and vmla yield zero for the distinguishing nonzero exact product residual; 12352-element device probe",
+    "semantics_evidence": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/fma_semantics_v2.json",
+    "fallback": "Merge six three-term product+sum compensation chains into in-place vmla accumulations, preserving rounded multiplication followed by addition and ordering.",
+    "new_evidence": "The independent probe verifies vmadd/vmla equal separate device Mul+Add and the CPU binary32 model for general cancellation and underflow inputs.",
+    "why_not_old_rotation_retry": "Only DeviceFrequencyChunk is changed, trig and rotation remain byte-identical."
+  },
+  "instruction_evidence": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/sdk_semantics.json",
+  "completed_at": "2026-10-17T04:32:18.913902+00:00",
+  "pmu_comparison": {
+    "purpose": "Diagnostic replay only. Per-core pipeline active intervals overlap; these are not separate stage durations and are not used as native speedups.",
+    "input_hashes": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/pmu_input_hashes.json",
+    "inputs_verified_unchanged_between_parent_and_candidate": true,
+    "cases": {
+      "init_wide": {
+        "v9": {
+          "summary_path": "benchmarks/profiles/agentic_r2_v9_init_wide/summary.json",
+          "pipe": {
+            "block_id": 6.5,
+            "aiv_time(us)": 10.207722071428572,
+            "aiv_total_cycles": 18884.285714285714,
+            "aiv_vec_time(us)": 5.384440357142857,
+            "aiv_vec_ratio": 0.5287341428571428,
+            "aiv_mte2_time(us)": 2.124826357142857,
+            "aiv_mte2_ratio": 0.206699,
+            "aiv_mte2_active_bw(GB/s)": 8.58535942857143,
+            "aiv_mte3_time(us)": 1.215752857142857,
+            "aiv_mte3_ratio": 0.11663971428571429,
+            "aiv_mte3_active_bw(GB/s)": 16.817584285714286,
+            "aiv_icache_miss_rate": 0.0,
+            "aiv_scalar_time(us)": 2.0186100714285713,
+            "aiv_scalar_ratio": 0.19937878571428572,
+            "aiv_scalar_single_time(us)": 0.46972992857142853,
+            "aiv_scalar_dual_time(us)": 0.8476061428571429,
+            "aiv_scalar_mte2_stall_time(us)": 0.0,
+            "aiv_scalar_mte3_stall_time(us)": 0.0,
+            "aiv_scalar_stall_by_ub_time(us)": 0.0,
+            "aiv_scalar_vector_stall_time(us)": 3.3971428571428572,
+            "aiv_scalar_wait_ib_time(us)": 0.11424707142857142,
+            "aiv_scalar_wait_time(us)": 0.00015457142857142858
+          },
+          "memory_ub": {
+            "block_id": 6.5,
+            "aiv_time(us)": 10.207722071428572,
+            "aiv_total_cycles": 18884.285714285714,
+            "aiv_ub_read_bw_vector(GB/s)": 104.05261514285715,
+            "aiv_ub_write_bw_vector(GB/s)": 59.577469,
+            "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+            "aiv_ub_write_bw_scalar(GB/s)": 0.10289357142857143
+          }
+        },
+        "accum": {
+          "summary_path": "benchmarks/profiles/agentic_r2_accum_init_wide/summary.json",
+          "pipe": {
+            "block_id": 6.5,
+            "aiv_time(us)": 9.800540642857143,
+            "aiv_total_cycles": 18131.0,
+            "aiv_vec_time(us)": 5.388223928571429,
+            "aiv_vec_ratio": 0.5520087857142857,
+            "aiv_mte2_time(us)": 1.8174903571428571,
+            "aiv_mte2_ratio": 0.1832155,
+            "aiv_mte2_active_bw(GB/s)": 10.377818642857143,
+            "aiv_mte3_time(us)": 0.9159847142857143,
+            "aiv_mte3_ratio": 0.09220164285714286,
+            "aiv_mte3_active_bw(GB/s)": 20.68380714285714,
+            "aiv_icache_miss_rate": 0.0,
+            "aiv_scalar_time(us)": 2.1159457857142856,
+            "aiv_scalar_ratio": 0.21740092857142856,
+            "aiv_scalar_single_time(us)": 0.5106946428571428,
+            "aiv_scalar_dual_time(us)": 0.820309,
+            "aiv_scalar_mte2_stall_time(us)": 0.0,
+            "aiv_scalar_mte3_stall_time(us)": 0.0,
+            "aiv_scalar_stall_by_ub_time(us)": 0.0,
+            "aiv_scalar_vector_stall_time(us)": 3.298726142857143,
+            "aiv_scalar_wait_ib_time(us)": 0.12490342857142857,
+            "aiv_scalar_wait_time(us)": 0.006100285714285714
+          },
+          "memory_ub": {
+            "block_id": 6.5,
+            "aiv_time(us)": 9.800540642857143,
+            "aiv_total_cycles": 18131.0,
+            "aiv_ub_read_bw_vector(GB/s)": 114.24869042857142,
+            "aiv_ub_write_bw_vector(GB/s)": 62.15609357142857,
+            "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+            "aiv_ub_write_bw_scalar(GB/s)": 0.10729014285714286
+          }
+        }
+      },
+      "wide": {
+        "v9": {
+          "summary_path": "benchmarks/profiles/agentic_r2_v9_wide/summary.json",
+          "pipe": {
+            "block_id": 23.5,
+            "aiv_time(us)": 30.656463979166666,
+            "aiv_total_cycles": 56714.458333333336,
+            "aiv_vec_time(us)": 26.344391375,
+            "aiv_vec_ratio": 0.8594822916666667,
+            "aiv_mte2_time(us)": 7.906565270833333,
+            "aiv_mte2_ratio": 0.25796916666666664,
+            "aiv_mte2_active_bw(GB/s)": 41.536007833333336,
+            "aiv_mte3_time(us)": 4.486373875,
+            "aiv_mte3_ratio": 0.1462915,
+            "aiv_mte3_active_bw(GB/s)": 74.0557980625,
+            "aiv_icache_miss_rate": 0.0,
+            "aiv_scalar_time(us)": 9.625394125,
+            "aiv_scalar_ratio": 0.31386752083333336,
+            "aiv_scalar_single_time(us)": 1.9108780625,
+            "aiv_scalar_dual_time(us)": 3.942939291666667,
+            "aiv_scalar_mte2_stall_time(us)": 0.0,
+            "aiv_scalar_mte3_stall_time(us)": 0.0,
+            "aiv_scalar_stall_by_ub_time(us)": 0.0,
+            "aiv_scalar_vector_stall_time(us)": 20.276925604166667,
+            "aiv_scalar_wait_ib_time(us)": 0.13507883333333334,
+            "aiv_scalar_wait_time(us)": 0.00020277083333333334
+          },
+          "memory_ub": {
+            "block_id": 23.5,
+            "aiv_time(us)": 30.656463979166666,
+            "aiv_total_cycles": 56714.458333333336,
+            "aiv_ub_read_bw_vector(GB/s)": 243.44195720833332,
+            "aiv_ub_write_bw_vector(GB/s)": 123.06926110416667,
+            "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+            "aiv_ub_write_bw_scalar(GB/s)": 0.03403047916666667
+          }
+        },
+        "accum": {
+          "summary_path": "benchmarks/profiles/agentic_r2_accum_wide/summary.json",
+          "pipe": {
+            "block_id": 23.5,
+            "aiv_time(us)": 30.526486458333334,
+            "aiv_total_cycles": 56474.0,
+            "aiv_vec_time(us)": 26.3481754375,
+            "aiv_vec_ratio": 0.8632167083333333,
+            "aiv_mte2_time(us)": 7.7377703125,
+            "aiv_mte2_ratio": 0.25350483333333335,
+            "aiv_mte2_active_bw(GB/s)": 42.41243772916667,
+            "aiv_mte3_time(us)": 4.430934645833333,
+            "aiv_mte3_ratio": 0.14514002083333333,
+            "aiv_mte3_active_bw(GB/s)": 74.79452864583334,
+            "aiv_icache_miss_rate": 0.0,
+            "aiv_scalar_time(us)": 9.611655291666667,
+            "aiv_scalar_ratio": 0.3147832291666667,
+            "aiv_scalar_single_time(us)": 1.9276239583333334,
+            "aiv_scalar_dual_time(us)": 3.9561938333333333,
+            "aiv_scalar_mte2_stall_time(us)": 0.0,
+            "aiv_scalar_mte3_stall_time(us)": 0.0,
+            "aiv_scalar_stall_by_ub_time(us)": 0.0,
+            "aiv_scalar_vector_stall_time(us)": 20.164020208333334,
+            "aiv_scalar_wait_ib_time(us)": 0.1372748125,
+            "aiv_scalar_wait_time(us)": 0.0065201458333333335
+          },
+          "memory_ub": {
+            "block_id": 23.5,
+            "aiv_time(us)": 30.526486458333334,
+            "aiv_total_cycles": 56474.0,
+            "aiv_ub_read_bw_vector(GB/s)": 246.27681729166667,
+            "aiv_ub_write_bw_vector(GB/s)": 123.58626958333333,
+            "aiv_ub_read_bw_scalar(GB/s)": 0.0,
+            "aiv_ub_write_bw_scalar(GB/s)": 0.034173479166666666
+          }
+        }
+      }
+    }
+  },
+  "initialization_and_reuse_review": {
+    "frequency": "LargeAlignedRotary::Process generates the complete frequency vector once per participating core after the first prefetch, before the job loop. It is reused only within this invocation.",
+    "trigonometry": "TrigBatch computes a bounded block of token sin/cos values and reuses them across heads in the current invocation; batch capacity is bounded by UB allocation. This trial leaves all trig operations and reuse unchanged.",
+    "remaining_instruction_graph": "Binary-width DeviceFrequencyChunk has 211 original API operations, dominated in count by 68 Sub, 54 Add, 33 Mul, 33 Muls; compensation and reciprocal rounding constrain legal simplification. The candidate reduces 15 API calls (18 for general widths). These source counts do not isolate runtime cost or decoded instructions.",
+    "scratch_pressure": "17 frequency-math slots and all queue/work/trig allocations remain unchanged. No UB-capacity or occupancy improvement is claimed; only some intermediate store/read traffic is avoided in the source expression graph.",
+    "measured_vec": "Short wide replay VEC 5.384440 -> 5.388224 us; wide prefill replay VEC 26.344391 -> 26.348175 us. Activity did not fall despite fewer API calls.",
+    "interpretation": "The three-read vmla path has no demonstrated throughput benefit over the original Mul/Add pairs here. Its per-instruction operand cost, dependency chain or compiler lowering may account for this; emitted mnemonics are unavailable and no causal instruction-level attribution is claimed.",
+    "not_hidden_shape_attribution": "All references are to named local cases. The platform point IDs remain unmapped."
+  },
+  "compliance_review": {
+    "competition_changes_during_experiment": [
+      "kernel.asc"
+    ],
+    "host_tensor_computation": false,
+    "host_reordering": false,
+    "all_required_math_on_device": true,
+    "generated_rope_tables_or_results_hardcoded": false,
+    "cross_invocation_cache": false,
+    "warmup_detection_or_stale_outputs": false,
+    "single_kernel_per_invocation": true,
+    "trig_rotation_tiling_and_precision_checks_unchanged": true,
+    "only_dev_probe_uses_generated_inputs": "CPU probe vectors/goldens are independent development tests and are never copied into the competition payload."
+  },
+  "why_rejected": [
+    "The proposed single-rounding TwoProd residual is invalid for both installed memory-vector APIs. For (1+2^-23)*(1-2^-23)-1, IEEE FMA gives -2^-46 but vmadd/vmla return zero. The normal-frequency probe has 4096/4096 nonzero residual mismatches, so that replacement was never applied to the operator.",
+    "The fallback preserves rounded arithmetic graphs and passes all 1192 executed correctness checks, but first and confirmation native geometric speedups are only 1.001646x and 1.002512x.",
+    "Pooling eight observed block medians yields 1.002232x with a descriptive paired-block percentile interval [0.996736, 1.007124]. This includes no gain; it does not prove a robust improvement.",
+    "Tiny, unaligned_half, single_token_many_heads and several other cases regress in both repetitions. All 21 scalar-frequency entry text sections are byte-identical, so those changes cannot be attributed to different scalar math; layout/order/systematic effects remain possible.",
+    "Matched-input PMU shows essentially unchanged VEC active time for the two wide local cases. A reduction in source API count and device text size is not sufficient performance evidence.",
+    "Full extended sweep/template publication validation is intentionally omitted after failing the safe-performance gate; no partial candidate is marked ready."
+  ],
+  "environment_restoration": {
+    "canonical_source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+    "normal_runner_source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+    "normal_runner_sha256": "24e470f37160eb4584bca99ed0dc78129170acc6835d95a34dbc287d5f8d963c",
+    "audit_runner": {
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "binary_sha256": "f35a21ab096eb48df8c4e163af5bd92a03a2ba4efa48418946368318f2da8a80",
+      "build_log": "build/agentic_r2/restored_audit_build.log"
+    },
+    "all_npu_tasks_completed_and_released": true,
+    "environment_install_or_configuration_changes": false
+  }
+}

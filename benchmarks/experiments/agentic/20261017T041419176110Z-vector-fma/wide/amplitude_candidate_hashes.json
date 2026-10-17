@@ -1,0 +1,12 @@
+{
+  "float16": {
+    "x.bin": "1f7f48c43ce98bbafc1ea3cd72a4454170ba22aafc0168313bbe9b19adbb337a",
+    "positions.bin": "6440650f7929ae325dea035aa3603e4ab3f2aff805932f02b77e9726ffa579cc",
+    "actual.bin": "248cf74c43ad2df74183f34549bce956ec72a37082a4c91e7eb2a0d357a80663"
+  },
+  "float32": {
+    "x.bin": "7ef9778f5cc2505aefa1c5494199887215227a14078f4cffaeef2de6dfc37b20",
+    "positions.bin": "6440650f7929ae325dea035aa3603e4ab3f2aff805932f02b77e9726ffa579cc",
+    "actual.bin": "6f9bb34deb0fa38b65a4a3b3ee5b010aabe1035b4961313217cde71f74be529a"
+  }
+}

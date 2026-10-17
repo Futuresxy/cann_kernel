@@ -1,0 +1,3852 @@
+{
+  "seed": 174322,
+  "case_count": 384,
+  "elements": 1579776,
+  "finite_bit_differences": 0,
+  "special_class_differences": 0,
+  "model": "Each multiplication and each addition explicitly rounded to binary32, then cast to output dtype. vmadd semantics are independently tested on device, not inferred from its name.",
+  "generic_device_semantics": "../fma_semantics_v2.json",
+  "caveat": "CPU schedule proof and samples supplement, not replace, device reference/stride/tail/launch checks.",
+  "cases": [
+    {
+      "dim": 528,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 528,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 528,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 528,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 528,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 528,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 528,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 528,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 528,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1584,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1584,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1584,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1584,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1584,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1584,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1584,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1584,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 3696,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 3696,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 3696,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 3696,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 3696,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 3696,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 3696,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 3696,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 4752,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 4752,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 4752,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 4752,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 4752,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 4752,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 4752,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 4752,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 5808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 5808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 5808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 5808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 5808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 5808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 5808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 528,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 5808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 544,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 544,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 544,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 544,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 544,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 544,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 544,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 544,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1632,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1632,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1632,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1632,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1632,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1632,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1632,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1632,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 3808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 3808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 3808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 3808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 3808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 3808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 3808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 3808,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 4896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 4896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 4896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 4896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 4896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 4896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 4896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 4896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 5984,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 5984,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 5984,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 5984,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 5984,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 5984,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 5984,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 544,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 5984,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 576,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 576,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 576,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 576,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 576,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 576,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 576,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 576,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1152,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1152,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1152,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1152,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1152,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1152,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1152,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1152,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1728,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1728,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1728,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1728,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1728,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1728,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1728,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1728,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 4032,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 4032,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 4032,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 4032,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 4032,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 4032,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 4032,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 4032,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 5184,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 5184,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 5184,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 5184,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 5184,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 5184,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 5184,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 5184,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 6336,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 6336,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 6336,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 6336,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 6336,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 6336,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 6336,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 576,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 6336,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 640,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 640,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 640,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 640,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 640,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 640,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 640,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 640,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1280,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1280,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1280,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1280,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1280,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1280,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1280,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1280,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1920,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1920,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1920,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1920,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1920,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1920,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1920,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1920,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 4480,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 4480,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 4480,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 4480,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 4480,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 4480,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 4480,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 4480,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 5760,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 5760,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 5760,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 5760,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 5760,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 5760,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 5760,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 5760,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 7040,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 7040,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 7040,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 7040,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 7040,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 7040,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 7040,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 640,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 7040,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 768,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 768,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 768,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 768,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 768,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 768,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 768,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 768,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1536,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1536,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1536,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1536,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1536,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1536,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1536,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1536,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 2304,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 2304,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 2304,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 2304,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 2304,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 2304,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 2304,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 2304,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 5376,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 5376,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 5376,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 5376,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 5376,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 5376,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 5376,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 5376,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 6912,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 6912,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 6912,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 6912,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 6912,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 6912,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 6912,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 6912,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 8448,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 8448,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 8448,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 8448,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 8448,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 8448,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 8448,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 768,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 8448,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 896,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1792,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1792,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1792,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1792,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1792,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1792,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1792,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1792,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 2688,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 2688,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 2688,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 2688,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 2688,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 2688,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 2688,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 2688,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 6272,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 6272,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 6272,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 6272,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 6272,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 6272,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 6272,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 6272,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 8064,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 8064,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 8064,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 8064,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 8064,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 8064,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 8064,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 8064,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 9856,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 9856,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 9856,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 9856,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 9856,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 9856,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 9856,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 896,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 9856,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1008,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1008,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1008,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1008,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1008,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1008,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1008,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1008,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 2016,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 2016,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 2016,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 2016,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 2016,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 2016,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 2016,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 2016,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 3024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 3024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 3024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 3024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 3024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 3024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 3024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 3024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 7056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 7056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 7056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 7056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 7056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 7056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 7056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 7056,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 9072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 9072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 9072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 9072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 9072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 9072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 9072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 9072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 11088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 11088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 11088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 11088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 11088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 11088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 11088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1008,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 11088,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 1024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 1024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 1024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 1,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 1024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 1024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 1024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 1024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 1,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 1024,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 2048,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 2048,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 2048,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 2,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 2048,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 2048,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 2048,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 2048,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 2,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 2048,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 3072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 3072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 3072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 3,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 3072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 3072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 3072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 3072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 3,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 3072,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 7168,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 7168,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 7168,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 7,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 7168,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 7168,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 7168,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 7168,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 7,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 7168,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 9216,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 9216,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 9216,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 9,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 9216,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 9216,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 9216,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 9216,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 9,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 9216,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 1,
+      "elements": 11264,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 32,
+      "elements": 11264,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 4096,
+      "elements": 11264,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 11,
+      "dtype": "float16",
+      "scale": 60000,
+      "elements": 11264,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 1,
+      "elements": 11264,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 32,
+      "elements": 11264,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 4096,
+      "elements": 11264,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    },
+    {
+      "dim": 1024,
+      "rows": 11,
+      "dtype": "float32",
+      "scale": 60000,
+      "elements": 11264,
+      "finite_bit_differences": 0,
+      "special_class_differences": 0,
+      "zero_identity_bits_equal": true
+    }
+  ]
+}

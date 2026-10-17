@@ -1,0 +1,265 @@
+{
+  "original_golden_max_abs_error": 32.0,
+  "elements_above_max_abs_limit": 817,
+  "numpy_vs_libm_frequency_bit_differences": 0,
+  "alternate_libm_frequency_max_abs_error": 32.0,
+  "failures": [
+    {
+      "index": [
+        0,
+        1,
+        0,
+        899
+      ],
+      "position": 131071,
+      "actual": -54944.0,
+      "original_golden": -54976.0,
+      "alternate_libm_frequency_golden": -54976.0,
+      "abs_error": 32.0,
+      "frequency_column": 387,
+      "numpy_frequency_bits": "0x3a785f34",
+      "libm_frequency_bits": "0x3a785f34"
+    },
+    {
+      "index": [
+        0,
+        1,
+        8,
+        94
+      ],
+      "position": 131071,
+      "actual": 10408.0,
+      "original_golden": 10416.0,
+      "alternate_libm_frequency_golden": 10416.0,
+      "abs_error": 8.0,
+      "frequency_column": 94,
+      "numpy_frequency_bits": "0x3e3cc43b",
+      "libm_frequency_bits": "0x3e3cc43b"
+    },
+    {
+      "index": [
+        0,
+        1,
+        9,
+        516
+      ],
+      "position": 131071,
+      "actual": 42624.0,
+      "original_golden": 42592.0,
+      "alternate_libm_frequency_golden": 42592.0,
+      "abs_error": 32.0,
+      "frequency_column": 4,
+      "numpy_frequency_bits": "0x3f6e39f8",
+      "libm_frequency_bits": "0x3f6e39f8"
+    },
+    {
+      "index": [
+        0,
+        1,
+        11,
+        175
+      ],
+      "position": 131071,
+      "actual": -961.5,
+      "original_golden": -962.0,
+      "alternate_libm_frequency_golden": -962.0,
+      "abs_error": 0.5,
+      "frequency_column": 175,
+      "numpy_frequency_bits": "0x3d2fdcb8",
+      "libm_frequency_bits": "0x3d2fdcb8"
+    },
+    {
+      "index": [
+        0,
+        1,
+        11,
+        525
+      ],
+      "position": 131071,
+      "actual": 460.0,
+      "original_golden": 459.75,
+      "alternate_libm_frequency_golden": 459.75,
+      "abs_error": 0.25,
+      "frequency_column": 13,
+      "numpy_frequency_bits": "0x3f4a9e24",
+      "libm_frequency_bits": "0x3f4a9e24"
+    },
+    {
+      "index": [
+        0,
+        1,
+        12,
+        331
+      ],
+      "position": 131071,
+      "actual": -149.0,
+      "original_golden": -149.125,
+      "alternate_libm_frequency_golden": -149.125,
+      "abs_error": 0.125,
+      "frequency_column": 331,
+      "numpy_frequency_bits": "0x3b2a095f",
+      "libm_frequency_bits": "0x3b2a095f"
+    },
+    {
+      "index": [
+        0,
+        1,
+        12,
+        883
+      ],
+      "position": 131071,
+      "actual": 273.25,
+      "original_golden": 273.0,
+      "alternate_libm_frequency_golden": 273.0,
+      "abs_error": 0.25,
+      "frequency_column": 371,
+      "numpy_frequency_bits": "0x3aa59ac8",
+      "libm_frequency_bits": "0x3aa59ac8"
+    },
+    {
+      "index": [
+        0,
+        1,
+        16,
+        798
+      ],
+      "position": 131071,
+      "actual": -1700.0,
+      "original_golden": -1699.0,
+      "alternate_libm_frequency_golden": -1699.0,
+      "abs_error": 1.0,
+      "frequency_column": 286,
+      "numpy_frequency_bits": "0x3bbf04ae",
+      "libm_frequency_bits": "0x3bbf04ae"
+    },
+    {
+      "index": [
+        0,
+        2,
+        2,
+        603
+      ],
+      "position": 65536,
+      "actual": 1172.0,
+      "original_golden": 1171.0,
+      "alternate_libm_frequency_golden": 1171.0,
+      "abs_error": 1.0,
+      "frequency_column": 91,
+      "numpy_frequency_bits": "0x3e473bca",
+      "libm_frequency_bits": "0x3e473bca"
+    },
+    {
+      "index": [
+        0,
+        2,
+        3,
+        232
+      ],
+      "position": 65536,
+      "actual": -2300.0,
+      "original_golden": -2298.0,
+      "alternate_libm_frequency_golden": -2298.0,
+      "abs_error": 2.0,
+      "frequency_column": 232,
+      "numpy_frequency_bits": "0x3c7c4d33",
+      "libm_frequency_bits": "0x3c7c4d33"
+    },
+    {
+      "index": [
+        0,
+        2,
+        4,
+        138
+      ],
+      "position": 65536,
+      "actual": 10152.0,
+      "original_golden": 10160.0,
+      "alternate_libm_frequency_golden": 10160.0,
+      "abs_error": 8.0,
+      "frequency_column": 138,
+      "numpy_frequency_bits": "0x3dab150f",
+      "libm_frequency_bits": "0x3dab150f"
+    },
+    {
+      "index": [
+        0,
+        2,
+        4,
+        343
+      ],
+      "position": 65536,
+      "actual": 897.5,
+      "original_golden": 897.0,
+      "alternate_libm_frequency_golden": 897.0,
+      "abs_error": 0.5,
+      "frequency_column": 343,
+      "numpy_frequency_bits": "0x3b0905ce",
+      "libm_frequency_bits": "0x3b0905ce"
+    },
+    {
+      "index": [
+        0,
+        2,
+        5,
+        551
+      ],
+      "position": 65536,
+      "actual": -3990.0,
+      "original_golden": -3992.0,
+      "alternate_libm_frequency_golden": -3992.0,
+      "abs_error": 2.0,
+      "frequency_column": 39,
+      "numpy_frequency_bits": "0x3efdda64",
+      "libm_frequency_bits": "0x3efdda64"
+    },
+    {
+      "index": [
+        0,
+        2,
+        6,
+        636
+      ],
+      "position": 65536,
+      "actual": -2035.0,
+      "original_golden": -2034.0,
+      "alternate_libm_frequency_golden": -2034.0,
+      "abs_error": 1.0,
+      "frequency_column": 124,
+      "numpy_frequency_bits": "0x3ddc1466",
+      "libm_frequency_bits": "0x3ddc1466"
+    },
+    {
+      "index": [
+        0,
+        2,
+        7,
+        183
+      ],
+      "position": 65536,
+      "actual": 410.0,
+      "original_golden": 410.25,
+      "alternate_libm_frequency_golden": 410.25,
+      "abs_error": 0.25,
+      "frequency_column": 183,
+      "numpy_frequency_bits": "0x3d184a56",
+      "libm_frequency_bits": "0x3d184a56"
+    },
+    {
+      "index": [
+        0,
+        2,
+        8,
+        86
+      ],
+      "position": 65536,
+      "actual": 799.5,
+      "original_golden": 799.0,
+      "alternate_libm_frequency_golden": 799.0,
+      "abs_error": 0.5,
+      "frequency_column": 86,
+      "numpy_frequency_bits": "0x3e59fbf2",
+      "libm_frequency_bits": "0x3e59fbf2"
+    }
+  ],
+  "interpretation": "Diagnostic only. Neither the golden, precision limits nor acceptance decision is changed. The device frequency vector itself was not instrumented, so library differences alone do not establish the full error cause."
+}
