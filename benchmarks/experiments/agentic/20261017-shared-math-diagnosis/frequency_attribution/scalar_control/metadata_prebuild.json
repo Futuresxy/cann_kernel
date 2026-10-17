@@ -1,0 +1,15 @@
+{
+  "diagnostic_only": true,
+  "source_sha256": "533106e59665b24389175675c28253b33de6aea80719e005815a21cd085c4c71",
+  "runner_sha256": "1d69f2bcb3d0afab7837253f087ad2d85bbfaf6a4dfa4f1396d4f304eedb21db",
+  "original_parent_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "cases": [
+    "tiny",
+    "deepseek_half"
+  ],
+  "new_NPU_task_cap": 1,
+  "phase2": "anchored DeviceLog2Q53 + log31 division",
+  "phase3": "remaining complete scalar loop incl setup/Q31/fallback/reciprocal/UB stores/drain",
+  "compiler_dependency": "First SYS_CNT has opaque read-write theta operand, last SYS_CNT consumes both results; surrounding memory clobbers. Outputs remain unchanged in machine MOV.",
+  "limitation": "No decoded ISA; output identity verifies preservation, but exact emitted scheduling/individual integer instruction costs remain unavailable. Register anchoring changes allocation; no native speedup or complete original fraction."
+}

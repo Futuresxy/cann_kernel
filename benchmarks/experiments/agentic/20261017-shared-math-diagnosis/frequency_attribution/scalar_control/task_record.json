@@ -1,0 +1,13 @@
+{
+  "task_id": "task_20261017_011342_39528598540",
+  "device": 0,
+  "max_time_seconds": 60,
+  "exit_code": 0,
+  "lock_released": true,
+  "no_overlap": true,
+  "predecessor_task_id": "task_20261017_011041_389484217601",
+  "predecessor_terminal_and_release_verified": true,
+  "audited_invocations": 4,
+  "one_kernel_per_invocation": true,
+  "raw_log_sha256": "05fcd47e0b4e1209ab1d2d77b282c2d77904561058004f3ecf6d0b586929a47e"
+}

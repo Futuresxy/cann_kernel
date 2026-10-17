@@ -21,13 +21,43 @@
       "audited_invocations": 16,
       "predecessor_terminal_and_card_release_checked_before_submit": true,
       "no_overlap": true
+    },
+    {
+      "mode": "frequency_refinement",
+      "task_id": "task_20261017_011041_389484217601",
+      "device": 0,
+      "max_time_seconds": 60,
+      "exit_code": 0,
+      "lock_released": true,
+      "audited_invocations": 16,
+      "one_kernel_per_invocation": true,
+      "no_overlap": true,
+      "previous_task_terminal_and_release_checked_before_submit": true,
+      "raw_log_sha256": "01835bda6d5e727daec3eaa183a0c87d19baa22632098cdabcf6f9985a8a6f7d",
+      "new_task_count": 1
+    },
+    {
+      "mode": "anchored_scalar_control",
+      "task_id": "task_20261017_011342_39528598540",
+      "device": 0,
+      "max_time_seconds": 60,
+      "exit_code": 0,
+      "lock_released": true,
+      "no_overlap": true,
+      "predecessor_task_id": "task_20261017_011041_389484217601",
+      "predecessor_terminal_and_release_verified": true,
+      "audited_invocations": 4,
+      "one_kernel_per_invocation": true,
+      "raw_log_sha256": "05fcd47e0b4e1209ab1d2d77b282c2d77904561058004f3ecf6d0b586929a47e"
     }
   ],
-  "new_NPU_tasks": 2,
-  "actual_launch_api_calls": 32,
+  "new_NPU_tasks": 4,
+  "actual_launch_api_calls": 52,
   "one_kernel_per_invocation": true,
   "serial_auto_one_card": true,
   "environment_changed": false,
   "prior_R6_overlap_evidence_preserved": "benchmarks/experiments/agentic/20261017-headtile-attribution/tasks.json",
-  "prior_excluded_samples_reused": false
+  "prior_excluded_samples_reused": false,
+  "frequency_refinement_tasks": 2,
+  "all_tasks_terminal_and_released": true
 }

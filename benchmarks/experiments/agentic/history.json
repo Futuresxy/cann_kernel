@@ -858,7 +858,13 @@
       "all_outputs_identical": true,
       "candidate_created": false,
       "known_failure_preserved": true,
-      "reason": "Aligned multihead rotation, H1 trig and tiny setup have different dominant measured costs; calibrated counters are not original fractions."
+      "reason": "Aligned multihead rotation, H1 trig and tiny setup have different dominant measured costs; calibrated counters are not original fractions.",
+      "frequency_refinement": {
+        "report": "benchmarks/experiments/agentic/20261017-shared-math-diagnosis/frequency_attribution/summary.json",
+        "NPU_tasks": 2,
+        "launch_audits": 20,
+        "diagnostic_only": true
+      }
     }
   ],
   "terminology_corrections": [

@@ -1,0 +1,62 @@
+{
+  "diagnostic_only": true,
+  "vector_parts": {
+    "ratio": {
+      "source_calls_both_ratio_branches_included": 40,
+      "histogram": {
+        "Add": 10,
+        "CreateVecIndex": 2,
+        "Div": 2,
+        "Duplicate": 1,
+        "Mul": 5,
+        "Muls": 5,
+        "Sub": 15
+      },
+      "selected_binary_width_API_calls": 2
+    },
+    "logproduct_range": {
+      "source_calls_both_ratio_branches_included": 43,
+      "histogram": {
+        "Add": 9,
+        "Cast": 4,
+        "Duplicate": 2,
+        "Mul": 6,
+        "Muls": 6,
+        "Sub": 16
+      }
+    },
+    "polynomial_table_power": {
+      "source_calls_both_ratio_branches_included": 141,
+      "histogram": {
+        "Add": 41,
+        "Adds": 6,
+        "Cast": 2,
+        "Gather": 2,
+        "Mul": 22,
+        "Muls": 23,
+        "ShiftLeft": 1,
+        "Sub": 44
+      }
+    },
+    "reciprocal_round": {
+      "source_calls_both_ratio_branches_included": 24,
+      "histogram": {
+        "Add": 4,
+        "Adds": 1,
+        "Div": 2,
+        "Duplicate": 1,
+        "Mul": 5,
+        "Muls": 3,
+        "Sub": 8
+      }
+    },
+    "restore_copy": {
+      "source_calls_both_ratio_branches_included": 1,
+      "histogram": {
+        "DataCopy": 1
+      }
+    }
+  },
+  "scalar_log": "10 odd-series terms including degree21 after z; Q53 multiplication decomposition, normalization and rational divisions; pure scalar scheduling needs explicit dependency anchor",
+  "scope": "Static source-level vector API operations, no decoded ISA, peak throughput, UB physical traffic or time claim"
+}

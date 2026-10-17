@@ -1,0 +1,56 @@
+{
+  "diagnostic_only": true,
+  "parent_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "source_sha256": "ee0ccc6cac88193236ca674857ac90a7115bd90c95d5c5516bf719fb7f66638e",
+  "runner_sha256": "1d69f2bcb3d0afab7837253f087ad2d85bbfaf6a4dfa4f1396d4f304eedb21db",
+  "helper_proofs": {
+    "vector_chunk": {
+      "all_API_calls_operands_and_order_identical": true,
+      "API_calls_general_source": 249,
+      "original_sha256": "f597774e64a3e5a490071465664715d653d97626ad7662fe341239030f22e5b5"
+    },
+    "DeviceLogTheta": {
+      "original_helper_retained_byte_identical": true,
+      "sha256": "ccf390f9b3678a830e7b6cdd970f5ff8160b9550031d2d782641ec42b17c96e2"
+    },
+    "DeviceLog2Q53": {
+      "original_helper_retained_byte_identical": true,
+      "sha256": "a3b503d83acb8edadb79cfb1f8f5cf855b71e37639c6ae588195d4ff65857043"
+    },
+    "TryExp2PowerQ31": {
+      "original_helper_retained_byte_identical": true,
+      "sha256": "e15ff5250d379e0aa5acacf06596134afa7ba43870f006bc98d18be49975aec1"
+    },
+    "BuildExp2Roots": {
+      "original_helper_retained_byte_identical": true,
+      "sha256": "fb8c6651ef4a93080c51461707a28040c7557ed4cfee21093807d471f92296f6"
+    },
+    "ScalarFrequencies": {
+      "original_helper_retained_byte_identical": true,
+      "sha256": "11bed64c0d978db81d117a1460a1bd43e0c97dd39235321201c62baf08491958"
+    },
+    "DeviceFrequencyChunk": {
+      "original_helper_retained_byte_identical": true,
+      "sha256": "f597774e64a3e5a490071465664715d653d97626ad7662fe341239030f22e5b5"
+    },
+    "DeviceExp2Table": {
+      "original_helper_retained_byte_identical": true,
+      "sha256": "c26ea5438dc2959b895fda96d870c990555cf8398ee091e50f32f189de1ae4ce"
+    },
+    "FillFrequencies": {
+      "original_helper_retained_byte_identical": true,
+      "sha256": "5201e7b108f54353fe1bc3f8e57f0d076162cf380a2fbe69d78268575bec778e"
+    },
+    "SinCosFp32": {
+      "original_helper_retained_byte_identical": true,
+      "sha256": "6d4f436dc9c470cfadcf9b11e1d6a92643f8a2c0729693b5e57571502e64aa11"
+    }
+  },
+  "trace_row_bytes": 768,
+  "trace_cells_written": 88,
+  "private_counter_state_bytes": 672,
+  "extra_TPipe_UB_bytes": 0,
+  "no_cross_core_synchronization": true,
+  "scope": "Eight already frozen public inputs. Per-phase scalar markers perturb scheduling; no speedup claims.",
+  "inherited_whitespace_preserved": "Trailing whitespace in unchanged original class bodies is intentionally retained so measured source hashes and byte-identity proofs remain valid; no post-measurement source normalization."
+}

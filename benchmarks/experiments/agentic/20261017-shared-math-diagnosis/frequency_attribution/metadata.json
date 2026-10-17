@@ -1,0 +1,17 @@
+{
+  "diagnostic_only": true,
+  "request_id": "20261017-shared-math-diagnosis",
+  "source_sha256": "ee0ccc6cac88193236ca674857ac90a7115bd90c95d5c5516bf719fb7f66638e",
+  "runner_sha256": "1d69f2bcb3d0afab7837253f087ad2d85bbfaf6a4dfa4f1396d4f304eedb21db",
+  "binary_sha256": "c6923b0b7381fbdf54b22a318f450416645fea93789a0988339cc614fe676271",
+  "parent_source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "batch_sha256": "c805b556ee74529f6f2db596ab3eeb4c29e7e18e8000536c986cdd83215c5990",
+  "prior_task_terminal_and_release_checked": true,
+  "prior_task_id": "task_20261017_005306_37109977053",
+  "cases": 8,
+  "invocations_per_case": 2,
+  "trace_row_cells": 96,
+  "max_written_cells": 88,
+  "no_performance_candidate": true,
+  "max_time_seconds": 60
+}

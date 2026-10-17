@@ -1,0 +1,10 @@
+{
+  "header": "/usr/local/Ascend/cann-9.0.0/aarch64-linux/asc/impl/basic_api/dav_c220/kernel_operator_sys_var_impl.h",
+  "sha256": "0a889a0604d0383b38045c8c0ee38361ab6ce42277507f4ecb0d0e53d524b948",
+  "original": "asm volatile(\"MOV %0, SYS_CNT\\n\" : \"+l\"(sysCnt));",
+  "risk": "No numerical input/output or memory clobber. Core-local pipe_barrier alone is not a compiler dependency for pure scalar arithmetic.",
+  "bounded_control": "Two already frozen cases; scalar start binds opaque read-write theta bits, end consumes log/log31, memory clobbers. No per-column probes. Same installed MOV syntax; numerical outputs preserved.",
+  "decoded_ISA_available": false,
+  "additional_probe_tasks_allowed_or_started": false,
+  "Axpy_tested": false
+}
