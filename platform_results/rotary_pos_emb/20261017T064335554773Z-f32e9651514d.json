@@ -1,0 +1,155 @@
+{
+  "run_id": "20261017T064335554773Z-f32e9651514d",
+  "kernel_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+  "git_commit": "127b6812b82c583fc1bb4d051b3c9af863124c44",
+  "created_at": "2026-10-17T06:43:35.554796+00:00",
+  "updated_at": "2026-10-17T06:45:47.989053+00:00",
+  "state": "accepted",
+  "submission_id": "885584",
+  "platform_status": "Pass",
+  "platform_score_raw": "48.44",
+  "platform_rank": 66,
+  "displayed_timings_score": 48.43074752291509,
+  "score_note": "Estimate from rounded displayed timings and current best times; not an official raw score",
+  "cases": [
+    {
+      "id": 1,
+      "latency_us": 3.95,
+      "raw_latency": "3.95μs",
+      "status": "Pass",
+      "best_latency_us": 2.15,
+      "ratio_to_best": 1.8372093023255816,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 2,
+      "latency_us": 5.65,
+      "raw_latency": "5.65μs",
+      "status": "Pass",
+      "best_latency_us": 3.13,
+      "ratio_to_best": 1.8051118210862622,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 3,
+      "latency_us": 6.98,
+      "raw_latency": "6.98μs",
+      "status": "Pass",
+      "best_latency_us": 3.88,
+      "ratio_to_best": 1.7989690721649487,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 4,
+      "latency_us": 11.13,
+      "raw_latency": "11.13μs",
+      "status": "Pass",
+      "best_latency_us": 5.46,
+      "ratio_to_best": 2.0384615384615388,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 5,
+      "latency_us": 19.65,
+      "raw_latency": "19.65μs",
+      "status": "Pass",
+      "best_latency_us": 6.68,
+      "ratio_to_best": 2.9416167664670656,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 6,
+      "latency_us": 17.85,
+      "raw_latency": "17.85μs",
+      "status": "Pass",
+      "best_latency_us": 8.44,
+      "ratio_to_best": 2.114928909952607,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 7,
+      "latency_us": 20.49,
+      "raw_latency": "20.49μs",
+      "status": "Pass",
+      "best_latency_us": 10.51,
+      "ratio_to_best": 1.9495718363463368,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 8,
+      "latency_us": 12.97,
+      "raw_latency": "12.97μs",
+      "status": "Pass",
+      "best_latency_us": 7.72,
+      "ratio_to_best": 1.6800518134715028,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 9,
+      "latency_us": 54.18,
+      "raw_latency": "54.18μs",
+      "status": "Pass",
+      "best_latency_us": 15.92,
+      "ratio_to_best": 3.4032663316582914,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 10,
+      "latency_us": 3360.0,
+      "raw_latency": "3.36ms",
+      "status": "Pass",
+      "best_latency_us": 3060.0,
+      "ratio_to_best": 1.0980392156862746,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 11,
+      "latency_us": 40.23,
+      "raw_latency": "40.23μs",
+      "status": "Pass",
+      "best_latency_us": 35.73,
+      "ratio_to_best": 1.1259445843828715,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 12,
+      "latency_us": 49.24,
+      "raw_latency": "49.24μs",
+      "status": "Pass",
+      "best_latency_us": 41.18,
+      "ratio_to_best": 1.195726080621661,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 13,
+      "latency_us": 341.39,
+      "raw_latency": "341.39μs",
+      "status": "Pass",
+      "best_latency_us": 236.22,
+      "ratio_to_best": 1.4452205571077807,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 14,
+      "latency_us": 857.91,
+      "raw_latency": "857.91μs",
+      "status": "Pass",
+      "best_latency_us": 734.12,
+      "ratio_to_best": 1.1686236582575056,
+      "output_error_percent": 0.0
+    },
+    {
+      "id": 15,
+      "latency_us": 270.1,
+      "raw_latency": "270.10μs",
+      "status": "Pass",
+      "best_latency_us": 171.0,
+      "ratio_to_best": 1.5795321637426902,
+      "output_error_percent": 0.0
+    }
+  ],
+  "tuning_request_id": "20261017T060621-unaligned-pipeline",
+  "parent_kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "optimization_hypothesis": "Source-preserving unaligned queue-direct and overlapped input/output pipeline; user-authorized one-time experimental platform trial after substantial native gains; inherited amplitude limitation retained.",
+  "exported_at": "2026-10-17T06:45:50.126286+00:00"
+}
