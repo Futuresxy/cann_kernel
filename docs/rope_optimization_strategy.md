@@ -125,6 +125,8 @@ python3 tools/analyze_rope_stages.py \
 
 乘加读端口和地址布局的限制见 [官方 FusedMulAdd 文档](https://asc.gitcode.com/api/SIMD-API/basic_api/memory_vector_compute/composite_compute/FusedMulAdd.html)。外部 mask 管理见 [CANN 9.0 SetVectorMask](https://www.hiascend.com/doc_center/source/en/CANNCommunityEdition/900/API/ascendcopapi/atlasascendc_api_07_0096.html)。这些提供假设依据；本机探针、当前源码和端到端测量决定是否适用。
 
+现有 SDK 的[只读架构审计](../benchmarks/analysis/cann9_api_compatibility.json)还排除了两条不适用的捷径：联合 `SinCos` 头文件及带 `SqrtConfig` 的重载仅在 `__NPU_ARCH__` 为3510或5102的条件下暴露，当前dav-2201不能直接调用。审计记录了服务器现有3份头文件的SHA和条件行；没有安装、更新SDK或尝试不支持的NPU候选。
+
 ## 6. 接下来按这个顺序执行
 
 | 阶段 | 工作及进入条件 | 要交付的证据/停止条件 |

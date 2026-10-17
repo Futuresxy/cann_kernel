@@ -1,0 +1,132 @@
+{
+  "read_only_sdk_audit": true,
+  "environment_modified": false,
+  "device": "Ascend910_9392",
+  "compile_arch": "dav-2201",
+  "cann_version_from_existing_runs": "9.0.0",
+  "headers": [
+    {
+      "relative_path": "include/adv_api/math/sincos.h",
+      "sha256": "252a4345a1ab4f9d98480f6f1b71a2b39b4593f9fa6b39f024a8dad877eb92ba",
+      "relevant_lines": [
+        {
+          "line": 25,
+          "text": "#if defined(__NPU_ARCH__) && (__NPU_ARCH__ == 3510 || __NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 40,
+          "text": "__aicore__ inline void SinCos(const LocalTensor<T>& dst0, const LocalTensor<T>& dst1,"
+        },
+        {
+          "line": 55,
+          "text": "__aicore__ inline void SinCos(const LocalTensor<T>& dst0, const LocalTensor<T>& dst1,"
+        }
+      ]
+    },
+    {
+      "relative_path": "basic_api/interface/kernel_operator_vec_unary_intf.h",
+      "sha256": "0240069e778d2cd53e4d339efeafa585288e40418ed8262dfbd75f5951b0090b",
+      "relevant_lines": [
+        {
+          "line": 27,
+          "text": "#if defined(__NPU_ARCH__) && (__NPU_ARCH__ == 3510 || __NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 85,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 108,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 129,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 152,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 190,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 215,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 238,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 261,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 284,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 305,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 306,
+          "text": "template <typename T, bool isSetMask = true, const SqrtConfig& config = DEFAULT_SQRT_CONFIG>"
+        },
+        {
+          "line": 309,
+          "text": "template <typename T, bool isSetMask = true, const SqrtConfig& config = DEFAULT_SQRT_CONFIG>"
+        },
+        {
+          "line": 328,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        },
+        {
+          "line": 329,
+          "text": "template <typename T, const SqrtConfig& config = DEFAULT_SQRT_CONFIG>"
+        },
+        {
+          "line": 366,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102)"
+        }
+      ]
+    },
+    {
+      "relative_path": "basic_api/interface/reg_compute/kernel_reg_compute_utils.h",
+      "sha256": "7f5ddbe6bf281d5b07a8745764f73d289ab3416936652ea3afec401361818905",
+      "relevant_lines": [
+        {
+          "line": 107,
+          "text": "enum class SqrtAlgo {"
+        },
+        {
+          "line": 114,
+          "text": "struct SqrtConfig {"
+        },
+        {
+          "line": 115,
+          "text": "SqrtAlgo algo = SqrtAlgo::INTRINSIC;"
+        },
+        {
+          "line": 118,
+          "text": "constexpr SqrtConfig DEFAULT_SQRT_CONFIG = {SqrtAlgo::INTRINSIC};"
+        },
+        {
+          "line": 277,
+          "text": "#if (__NPU_ARCH__ == 3510) || (__NPU_ARCH__ == 5102) || (__NPU_ARCH__ == 3003) || (__NPU_ARCH__ == 3113) || defined(__ASC_NPU_HOST__)"
+        },
+        {
+          "line": 312,
+          "text": "SqrtAlgo algo = SqrtAlgo::INTRINSIC;"
+        }
+      ]
+    }
+  ],
+  "conclusions": [
+    "The installed joint SinCos header exposes the API only under __NPU_ARCH__ 3510 or 5102, so it is not a drop-in replacement on the current dav-2201 target.",
+    "SqrtConfig overloads are similarly guarded; the current architecture has the ordinary Sqrt overload without that accuracy configuration.",
+    "A header existing on disk is not proof that its API is supported by this target. No unsupported candidate was compiled or run."
+  ]
+}
