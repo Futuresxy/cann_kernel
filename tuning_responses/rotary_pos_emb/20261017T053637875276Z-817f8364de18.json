@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T053637875276Z-817f8364de18",
+  "state": "no_improvement",
+  "reason": "Generic unaligned broadcast/input-retention improves FP16 D126 by 1.09960x but regresses FP32 D254 latency 6.07% in both source orders. Fixed33 geomean 1.001942x does not support a general promotion. The valid-input inherited amplitude failure remains max32 >0.1 with byte-identical outputs. Archive one experimental source only; no production-ready publication or platform trial.",
+  "experimental_source_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+  "production_ready_published": false,
+  "latest_changed": false,
+  "platform_submissions": 0,
+  "evidence_paths": [
+    "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18.json",
+    "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/README.md",
+    "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/experimental_candidate.json",
+    "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/native_analysis.json",
+    "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/pmu_comparison.json",
+    "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/correctness.json"
+  ]
+}

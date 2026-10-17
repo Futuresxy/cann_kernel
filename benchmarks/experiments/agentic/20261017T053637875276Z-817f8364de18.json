@@ -1,0 +1,443 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T053637875276Z-817f8364de18",
+  "state": "no_improvement",
+  "experiment_state": "archived_for_coordinator_review",
+  "parent_kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "candidate_kernel_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+  "official_parent": {
+    "submission_id": 883390,
+    "status": "Pass",
+    "passed_cases": 15,
+    "score": 48.78,
+    "source_git_path": "platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc"
+  },
+  "scope_review": "tuning_updates/rotary_pos_emb/20261017T053637875276Z-platform-review.json",
+  "hypothesis": "Generic Rotary retains input halves and broadcasts compact sin/cos to remove per-head expansion and one half-input load; original arithmetic/DMA/dispatch unchanged",
+  "model": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/pre_experiment_model.json",
+  "prior_attempts_reviewed": [
+    {
+      "paths": [
+        "benchmarks/experiments/round3/layout_copy.patch",
+        "benchmarks/experiments/round3/head_tile.patch",
+        "docs/profiled_v5.md",
+        "docs/profiled_v6.md"
+      ],
+      "finding": "Whole-row CopyRotary/Gather changes input representation and DMA/queue strategy; Gather retained only short D<=64. D126/D254 not improved by broadening prior layout. This trial retains strided two-half DMA and uses no Gather."
+    },
+    {
+      "paths": [
+        "benchmarks/experiments/round8/two_read.patch",
+        "benchmarks/experiments/agentic/history.json"
+      ],
+      "finding": "Wide two-read rotation ~18% slower; current target generic Rotary already holds both halves in queue and removes redundant UB cast/copy, not a second GM pass."
+    },
+    {
+      "paths": [
+        "benchmarks/experiments/round3/mask_trig.patch",
+        "benchmarks/experiments/round3/mask_all.patch"
+      ],
+      "finding": "No trig/mask-hoisting/precision modification in this trial."
+    }
+  ],
+  "prior_closed_attempts_preserved": [
+    "exact Q53 tail pruning: 0.995493x, rejected",
+    "true single-rounding FMA residual: disproved device semantics",
+    "compensation accumulation folding: 1.00223x, interval spans one",
+    "wide rotation: 1.092x targeted, -8.44% latency; archived and platform48.78; inherited precision failure remains"
+  ],
+  "change": {
+    "file": "kernel.asc",
+    "class_name": "Rotary",
+    "layout": "5 cap arrays a/b/lo/hi/tmp; compact c/s at frequency-buffer tail",
+    "arithmetic": "4 separate FP32 Mul + Sub/Add; original operands retained",
+    "unchanged": [
+      "host dispatch",
+      "Device frequencies",
+      "SinCosFp32",
+      "DMA load/store policy",
+      "queue depth 1",
+      "PIPE_ALL per job",
+      "position-zero identity",
+      "all 36 other device entry sections"
+    ]
+  },
+  "validation": {
+    "correctness": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/correctness.json",
+    "total": 1625,
+    "bit_identical_to_actual_parent": 1625,
+    "parent_reference_passed": 1624,
+    "experiment_reference_passed": 1624,
+    "inherited_failures": [
+      {
+        "name": "frozen_amplitude",
+        "parent": 32.0,
+        "experiment": 32.0
+      }
+    ],
+    "reference_and_thresholds_unchanged": true,
+    "zero_guard_and_per_iteration_launch_audit_passed": true,
+    "audited_calls": 3250,
+    "native_task_launch_gate": "benchmarks/profiles/agentic_r4_unaligned_launches/launch_count.json",
+    "native75": {
+      "label": "agentic_r4_unaligned_launches",
+      "source_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+      "binary_sha256": "08826a6da6a5c508a24ca627bb5877d77fbf545f154cfc77de69fb328dae62b8",
+      "local_cases": [
+        "tiny",
+        "unaligned_half",
+        "deepseek_half",
+        "deepseek_float",
+        "extreme_d1024",
+        "packed_mixed_zero_float",
+        "packed_mixed_zero_half",
+        "dim30",
+        "dim514",
+        "sequence8192",
+        "aligned_d512_fp32",
+        "stream_h128_d64_half",
+        "head_tile_large_half",
+        "wide_single_head_float",
+        "half_wide_prefill"
+      ],
+      "case_count": 15,
+      "calls_per_case": 5,
+      "run_kernel_calls": 75,
+      "actual_device_kernel_tasks": 75,
+      "expected_device_kernel_tasks": 75,
+      "single_kernel_rule_passed": true,
+      "command": [
+        "msprof",
+        "--output=/data/pyptouser/songxiaoyou/cann_kernel/project/build/launch_profiles/agentic_r4_unaligned_launches",
+        "--runtime-api=on",
+        "--task-time=on",
+        "--ai-core=off",
+        "--aicpu=off",
+        "--type=text",
+        "--application=/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r4/normal/rope_runner --device 0 --batch /data/pyptouser/songxiaoyou/cann_kernel/project/build/launch_profiles/agentic_r4_unaligned_launches/cases.txt"
+      ],
+      "platform_hidden_cases_tested": false
+    },
+    "paired_native_calls_and_tasks": 2640,
+    "original_template": {
+      "changed": [
+        "kernel.asc"
+      ],
+      "support_files_unchanged": 7,
+      "cxx_standard": 14,
+      "compiled": true,
+      "build_log": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/template_build.log",
+      "external_dependencies_added": false
+    },
+    "source_audit": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/source_audit.json",
+    "device_entry_comparison": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/device_code.json"
+  },
+  "binaries": {
+    "parent": {
+      "path": "build/agentic_r2wide/candidate_runner",
+      "runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+      "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "a9c3fc4bd116831705e80330198d2943d3e5a1eeae8bbbeaa25f96da099a5d60",
+      "git_dirty": true,
+      "git_commit": "783baf9cb20073e424bbf36a9803d11b94c6d316"
+    },
+    "parent_audit": {
+      "path": "build/agentic_r2wide/candidate_audit_runner",
+      "runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+      "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "binary_sha256": "2260e068cf30bcc0d9af4881716a637ed5f047e03d04fbaac435c38ccc7fbd14",
+      "git_dirty": true,
+      "git_commit": "783baf9cb20073e424bbf36a9803d11b94c6d316"
+    },
+    "candidate": {
+      "path": "build/agentic_r4/normal/rope_runner",
+      "runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+      "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+      "source_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+      "binary_sha256": "08826a6da6a5c508a24ca627bb5877d77fbf545f154cfc77de69fb328dae62b8",
+      "git_dirty": true,
+      "git_commit": "dc7a19a9706f37bf52fab4f4b11019807acb576c"
+    },
+    "candidate_audit": {
+      "path": "build/agentic_r4/audit/rope_runner",
+      "runner_sha256": "99739258d8dd4013d9e335c5cb9f15061f0b7882d03a8932c7418c355ad11772",
+      "audit_header_sha256": "fb1ab2955d8310fac9ca86b331673ea72535fb17b457651f3a27d5c6bbac3c60",
+      "source_sha256": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+      "binary_sha256": "922a8ad5127a201ddd475d4a8e794247e5c722a1f7efe6e6ccace79fa9bc43a1",
+      "git_dirty": true,
+      "git_commit": "dc7a19a9706f37bf52fab4f4b11019807acb576c"
+    },
+    "pair_forward": {
+      "path": "build/agentic_r4/pair_forward/rope_paired_runner",
+      "binary_sha256": "82591e8b69703af74660fa731b9a13c59905e5d539e9f2d7b95d4f19c0a985c9",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r4/candidate/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "dc7a19a9706f37bf52fab4f4b11019807acb576c",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r4/candidate/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+        "candidate": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168"
+      }
+    },
+    "pair_reverse": {
+      "path": "build/agentic_r4/pair_reverse/rope_paired_runner",
+      "binary_sha256": "088853cb706c69ac65dd9b66c620af1de750243819584be5ac4fc2785bd0f27b",
+      "runner_sha256": "a8e5d3a1b95f196dc3253a16b57178cbcf400d6dc182556ae52625b6b9162c9a",
+      "flags": "# CMAKE generated file: DO NOT EDIT!\n# Generated by \"Unix Makefiles\" Generator, CMake Version 3.22\n\n# compile ASC with /usr/local/Ascend/cann-9.0.0/bin/bisheng\nASC_DEFINES = -DROPE_BASELINE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r4/candidate/kernel.asc\\\" -DROPE_CANDIDATE_FILE=\\\"/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc\\\"\n\nASC_INCLUDES = -I/data/pyptouser/songxiaoyou/cann_kernel/project/templates/rotaryposemb_1743\n\nASC_FLAGS = --npu-arch=dav-2201\n\n",
+      "git_commit": "dc7a19a9706f37bf52fab4f4b11019807acb576c",
+      "source_paths": {
+        "baseline": "/data/pyptouser/songxiaoyou/cann_kernel/project/build/agentic_r4/candidate/kernel.asc",
+        "candidate": "/data/pyptouser/songxiaoyou/cann_kernel/project/platform_trials/rotary_pos_emb/20261017-user-platform-wide-fma/kernel.asc"
+      },
+      "source_sha256": {
+        "baseline": "d65529a298114f522b3fbfa4f405670af1c98c0fb32a9648562043c7ea03b168",
+        "candidate": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556"
+      }
+    }
+  },
+  "native": {
+    "path": "benchmarks/results/agentic_r4_unaligned_fixed33.json",
+    "analysis": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/native_analysis.json",
+    "geometric_mean_speedup": 1.0019423652508972,
+    "target_fp16": {
+      "name": "unaligned_h64_d126_half",
+      "shape": [
+        2,
+        512,
+        64,
+        126
+      ],
+      "dtype": "float16",
+      "baseline_us": 108.412,
+      "candidate_us": 98.592,
+      "speedup": 1.0996024018175918,
+      "block_medians_us": {
+        "baseline": [
+          108.882,
+          108.762,
+          108.022,
+          108.062
+        ],
+        "candidate": [
+          98.442,
+          100.462,
+          97.102,
+          98.742
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "7c42c1ca8b25c2fa435bcf02f0b9e2d8dc220972a51bc222eebf2c376318ab8b",
+        "positions.bin": "a708d7010207a5acbb9d41bc41689f059117c60915f79252eda07209e652d7e2"
+      },
+      "by_source_order": {
+        "forward": {
+          "parent_us": 108.822,
+          "experiment_us": 99.452,
+          "speedup": 1.0942163053533362
+        },
+        "reverse": {
+          "parent_us": 108.042,
+          "experiment_us": 97.922,
+          "speedup": 1.1033475623455404
+        }
+      },
+      "latency_change_percent": -9.058037855587953
+    },
+    "target_fp32": {
+      "name": "unaligned_h64_d254_float",
+      "shape": [
+        2,
+        512,
+        64,
+        254
+      ],
+      "dtype": "float32",
+      "baseline_us": 154.023,
+      "candidate_us": 163.3735,
+      "speedup": 0.9427661156797155,
+      "block_medians_us": {
+        "baseline": [
+          154.563,
+          153.243,
+          154.683,
+          153.483
+        ],
+        "candidate": [
+          164.084,
+          164.223,
+          162.663,
+          159.984
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "4bf5fd4385066fff4c01211c3d5a6a7b0da803fd5fcf01412b4573613fb80b8a",
+        "positions.bin": "3a9b1c01c60338fe437c463416135d97fac8b9c497b0d5ae326006afa63ce9cf"
+      },
+      "by_source_order": {
+        "forward": {
+          "parent_us": 153.903,
+          "experiment_us": 164.1535,
+          "speedup": 0.9375553978440909
+        },
+        "reverse": {
+          "parent_us": 154.083,
+          "experiment_us": 161.32350000000002,
+          "speedup": 0.9551181322002062
+        }
+      },
+      "latency_change_percent": 6.07084656187713
+    },
+    "small_generic_control": {
+      "name": "unaligned_half",
+      "shape": [
+        2,
+        16,
+        3,
+        24
+      ],
+      "dtype": "float16",
+      "baseline_us": 5.24,
+      "candidate_us": 5.250500000000001,
+      "speedup": 0.9980001904580516,
+      "block_medians_us": {
+        "baseline": [
+          5.24,
+          5.24,
+          5.18,
+          5.34
+        ],
+        "candidate": [
+          5.181,
+          5.32,
+          5.14,
+          5.32
+        ]
+      },
+      "input_sha256": {
+        "x.bin": "639289ae4a5ef08014e9cee5c5bc9ee986d8df459149581b81059da078facb00",
+        "positions.bin": "2b6d8497ef32248a6e23d948891de0c1bc6ded914f702b4f35412555aa2dd388"
+      },
+      "by_source_order": {
+        "forward": {
+          "parent_us": 5.24,
+          "experiment_us": 5.250500000000001,
+          "speedup": 0.9980001904580516
+        },
+        "reverse": {
+          "parent_us": 5.26,
+          "experiment_us": 5.23,
+          "speedup": 1.005736137667304
+        }
+      },
+      "latency_change_percent": 0.2003816793893165
+    }
+  },
+  "PMU": {
+    "path": "benchmarks/experiments/agentic/20261017T053637875276Z-817f8364de18/pmu_comparison.json",
+    "decision": "VEC/scalar costs decrease in both. Unchanged DMA count/bytes but FP32 MTE active time increases; exact cause not established by replay. Native regression overrides optimistic replay totals.",
+    "useful_SIMD_lane_utilization_measured": false
+  },
+  "buffer_liveness": {
+    "frequency_initialization": "work scratch used before work values live, as parent; frequency buffer has separate c/s tail",
+    "trig": "a angle and b/tmp scratch; c/s disjoint; a/b inputs not yet loaded",
+    "rotation": "a,b retained throughout both outputs; lo/hi independent destinations; tmp cross product read before overwritten; col slices disjoint and row repeat stride=pitch/8",
+    "tail": "same padded pitch and valid DataCopyPad width; rows repeats<=32, stride<=64; existing p0 copy bypass unchanged",
+    "max_UB_model_bytes": {
+      "float16": 120832,
+      "float32": 153600
+    },
+    "UB_budget_bytes": 196608
+  },
+  "tasks": [
+    {
+      "id": "task_20261016_225244_175268226464",
+      "purpose": "parent FP16 replay PMU",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_225257_175431210942",
+      "purpose": "parent FP32 replay PMU",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_225528_177541624069",
+      "purpose": "parent/candidate base52",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_225552_177954524144",
+      "purpose": "parent/candidate math256, dispatch192, tails54, conditioning60, frozen amplitude",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_225636_178778019892",
+      "purpose": "parent/candidate all even dimensions1010",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_225717_179207415544",
+      "purpose": "fixed33 native shared-allocation ABBA+BAAB",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_225802_17962156454",
+      "purpose": "candidate FP16 replay PMU",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_225826_17983964168",
+      "purpose": "candidate FP32 replay PMU",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    },
+    {
+      "id": "task_20261016_225849_180042810980",
+      "purpose": "native75 device launch audit",
+      "devices": 1,
+      "max_time_seconds": 60,
+      "state": "completed",
+      "device_released": true
+    }
+  ],
+  "decision": {
+    "publish_ready": false,
+    "stage_invoked": false,
+    "latest_changed": false,
+    "canonical_source_changed": false,
+    "platform_submissions": 0,
+    "experimental_sources_archived": 1,
+    "reason": "Generic unaligned broadcast/input-retention improves FP16 D126 by 1.09960x but regresses FP32 D254 latency 6.07% in both source orders. Fixed33 geomean 1.001942x does not support a general promotion. The valid-input inherited amplitude failure remains max32 >0.1 with byte-identical outputs. Archive one experimental source only; no production-ready publication or platform trial.",
+    "target_official_score": 70.01,
+    "target_achieved": false
+  },
+  "next_evidence_needed": "Coordinator may consider a separately authorized FP16-only study across pitch/head families. This round does not create that variant, alter tiling, implement guarded trig or start another experiment.",
+  "completed_at": "2026-10-17T06:00:22.875415+00:00"
+}

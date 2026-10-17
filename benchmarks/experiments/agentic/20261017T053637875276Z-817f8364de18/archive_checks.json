@@ -1,0 +1,6 @@
+{
+  "metadata_diff_check": "passed excluding byte-exact kernel.asc and raw unified candidate.patch",
+  "archive_whitespace": "Original source blank-line trailing spaces and raw deleted diff lines preserved to keep tested source SHA; no post-test source formatting.",
+  "formal_source_and_latest_unchanged": true,
+  "all_precision_reference_files_unchanged": true
+}
