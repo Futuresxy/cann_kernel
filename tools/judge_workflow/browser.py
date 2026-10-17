@@ -56,6 +56,13 @@ async def snapshot(page, directory, name):
 
 async def inspect(context, config, output):
     page = await page_for(context, config['submit_url'])
+    await page.wait_for_function(
+        """() => {
+            const text = document.body?.innerText.trim();
+            return !!text && !/^(加载中[.…]*|Loading[.…]*)$/i.test(text);
+        }""", timeout=60000)
+    await page.wait_for_function(
+        "() => !document.body.innerText.includes('正在加载代码编辑器')", timeout=60000)
     await snapshot(page, output, 'inspect')
     models = await page.evaluate(MODELS)
     links = await page.locator('a[href]').evaluate_all(

@@ -88,7 +88,7 @@ def stage(args):
 
 
 async def browser_command(args):
-    from judge_workflow.browser import (browser_context, inspect, models_ready, page_for, poll_result,
+    from judge_workflow.browser import (browser_context, inspect, page_for, poll_result,
                                   replace_kernel, snapshot, validate_config, click_once, MODELS, kernel_model)
     config = read_json(args.config)
     if args.command == 'submit':
@@ -112,8 +112,9 @@ async def browser_command(args):
             page = await page_for(context, config['submit_url'])
             print('请在打开的独立浏览器中手动登录，完成后按 Enter。密码和 Cookie 不会写入仓库。', flush=True)
             await asyncio.to_thread(input)
-            await models_ready(page)
-            print('登录后的编辑器可访问；请先运行 inspect 校准结果页。', flush=True)
+            page = await page_for(context, config['submit_url'])
+            await page.get_by_role('link', name='退出', exact=True).wait_for(timeout=60000)
+            print('已确认平台登录状态；请运行 inspect 检查编辑器并校准结果页。', flush=True)
         elif args.command == 'submit':
             page = await page_for(context, config['submit_url'])
             readback = await replace_kernel(page, config, data)

@@ -33,6 +33,8 @@ CANNJUDGE_PYTHON=python3.11 bash tools/mac_cannjudge.sh setup
 
 `login` 打开专用 Chrome 数据目录。手动登录平台后在终端按 Enter，登录状态留在 Mac 的 `.local/cannjudge/browser/`，不会提交到 GitHub。日常 Chrome 可以继续使用。
 
+`login` 通过页面的“退出”链接确认登录，不要求编辑器暴露全局 Monaco API。`inspect` 等待页面和代码编辑器结束加载后保存检查结果；如果 `models` 为 `null`，表示尚未发现可用的全局 Monaco 接口，自动提交前仍须适配，不能据此认定登录失败。
+
 当前会话的执行位置仍是服务器，不能直接操作 Mac 桌面。因此首次启动需在 Mac 执行，或在 Mac 本地建立对应任务。这个部署方式不依赖服务器回连 Mac。
 
 ## 首次页面校准
