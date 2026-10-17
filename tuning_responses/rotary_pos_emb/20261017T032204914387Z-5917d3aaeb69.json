@@ -17,7 +17,17 @@
     "benchmarks/results/agentic_r1_fixed_balanced.json",
     "benchmarks/results/agentic_r1_full_log.json",
     "benchmarks/results/agentic_r1_full_log_audit.json",
-    "benchmarks/profiles/agentic_r1_full_log_launches/launch_count.json"
+    "benchmarks/profiles/agentic_r1_full_log_launches/launch_count.json",
+    "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69/score_analysis.json"
   ],
-  "completed_at": "2026-10-17T04:09:27.669793+00:00"
+  "completed_at": "2026-10-17T04:09:27.669793+00:00",
+  "supplement": {
+    "recorded_at": "2026-10-17T04:14:06.061306+00:00",
+    "same_request": true,
+    "new_round_started": false,
+    "analysis_path": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69/score_analysis.json",
+    "estimated_baseline_score": 48.43238693725659,
+    "official_score": 48.45,
+    "decision_unchanged": true
+  }
 }

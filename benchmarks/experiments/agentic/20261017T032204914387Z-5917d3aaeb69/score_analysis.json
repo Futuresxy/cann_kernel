@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "request_id": "20261017T032204914387Z-5917d3aaeb69",
+  "supplement_only": true,
+  "created_at": "2026-10-17T04:14:06.061306+00:00",
+  "source_result": "platform_results/rotary_pos_emb/20261017T032204914387Z-5917d3aaeb69.json",
+  "source_result_sha256": "9f5ae348a730db379497dc1a6423a632d5adb0c4ff56713c7c3ad12565711e23",
+  "parent_kernel_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "official_score": 48.45,
+  "official_score_changed": false,
+  "method": {
+    "per_case": "100 / (1 + log_1.5(max(1, t / captured_TBest)))",
+    "overall": "arithmetic mean of 15 case scores",
+    "latency_unit": "us",
+    "refreshed_tbest_model": "If proposed t < captured TBest, model the refreshed TBest as t and cap that case at 100.",
+    "caveats": [
+      "Uses rounded page timings and captured best times; estimates are not official scores or measured kernel improvements.",
+      "Assumes all correctness checks continue to pass and competing best times do not change.",
+      "Case IDs are score priorities only; hidden shapes and dtype are unknown. No mapping to local PMU cases is inferred."
+    ]
+  },
+  "worst_five_case_ids": [
+    9,
+    5,
+    6,
+    4,
+    7
+  ],
+  "scenarios": {
+    "baseline_rounded_display": {
+      "estimated_score": 48.43238693725659,
+      "latencies_us": [
+        4.07,
+        5.76,
+        6.92,
+        11.08,
+        19.82,
+        18.0,
+        20.55,
+        12.74,
+        54.1,
+        3370.0,
+        40.01,
+        49.21,
+        339.58,
+        858.95,
+        271.06
+      ],
+      "case_scores": [
+        38.85104106670194,
+        39.93276111358743,
+        41.20388902435853,
+        36.42475805125491,
+        27.157040325407387,
+        34.868084364390995,
+        37.68267064334825,
+        44.7337018724664,
+        24.894661636243814,
+        80.77590567318407,
+        78.18397436057627,
+        70.11557538720204,
+        52.766691081530915,
+        72.08226067227527,
+        46.81278878632053
+      ]
+    },
+    "worst_five_latency_halved": {
+      "estimated_score": 62.823126849776635,
+      "latencies_us": [
+        4.07,
+        5.76,
+        6.92,
+        5.54,
+        9.91,
+        9.0,
+        10.275,
+        12.74,
+        27.05,
+        3370.0,
+        40.01,
+        49.21,
+        339.58,
+        858.95,
+        271.06
+      ],
+      "case_scores": [
+        38.85104106670194,
+        39.93276111358743,
+        41.20388902435853,
+        96.53682468628256,
+        50.69001531732684,
+        86.32291679959857,
+        100.0,
+        44.7337018724664,
+        43.338556905238114,
+        80.77590567318407,
+        78.18397436057627,
+        70.11557538720204,
+        52.766691081530915,
+        72.08226067227527,
+        46.81278878632053
+      ]
+    },
+    "worst_five_reach_captured_tbest": {
+      "estimated_score": 71.0305726025469,
+      "latencies_us": [
+        4.07,
+        5.76,
+        6.92,
+        5.46,
+        6.68,
+        8.44,
+        10.51,
+        12.74,
+        15.92,
+        3370.0,
+        40.01,
+        49.21,
+        339.58,
+        858.95,
+        271.06
+      ],
+      "case_scores": [
+        38.85104106670194,
+        39.93276111358743,
+        41.20388902435853,
+        100.0,
+        100.0,
+        100.0,
+        100.0,
+        44.7337018724664,
+        100.0,
+        80.77590567318407,
+        78.18397436057627,
+        70.11557538720204,
+        52.766691081530915,
+        72.08226067227527,
+        46.81278878632053
+      ]
+    },
+    "all_latency_reduced_twenty_percent": {
+      "estimated_score": 63.17802546897044,
+      "latencies_us": [
+        3.2560000000000002,
+        4.608,
+        5.5360000000000005,
+        8.864,
+        15.856000000000002,
+        14.4,
+        16.44,
+        10.192,
+        43.28,
+        2696.0,
+        32.008,
+        39.368,
+        271.664,
+        687.1600000000001,
+        216.848
+      ],
+      "case_scores": [
+        49.4170300911596,
+        51.18048313425481,
+        53.28741625514411,
+        45.55713773602178,
+        31.929023798873764,
+        43.14785135896064,
+        47.54207448793168,
+        59.34326053497863,
+        28.846827245043027,
+        100.0,
+        100.0,
+        100.0,
+        74.36076357131839,
+        100.0,
+        63.058513820870175
+      ]
+    }
+  },
+  "single_case_score_70": {
+    "ratio_t_to_captured_tbest": 1.1897827894843862,
+    "formula": "1.5 ** (100 / 70 - 1)",
+    "meaning": "A per-case target, not a necessary condition for each point to average 70."
+  },
+  "uniform_latency_reduction_for_mean_70": {
+    "latency_multiplier": 0.7099287587055356,
+    "latency_reduction_percent": 29.00712412944644,
+    "speedup": 1.408592042141485,
+    "estimated_score": 69.99999999999999
+  },
+  "per_case": [
+    {
+      "id": 1,
+      "current_us": 4.07,
+      "captured_tbest_us": 2.15,
+      "ratio_to_best": 1.8930232558139537,
+      "estimated_score": 38.85104106670194,
+      "latency_us_for_case_score_70": 2.55803299739143,
+      "speedup_needed_for_case_score_70": 1.5910662623001375
+    },
+    {
+      "id": 2,
+      "current_us": 5.76,
+      "captured_tbest_us": 3.13,
+      "ratio_to_best": 1.840255591054313,
+      "estimated_score": 39.93276111358743,
+      "latency_us_for_case_score_70": 3.7240201310861285,
+      "speedup_needed_for_case_score_70": 1.5467155915508082
+    },
+    {
+      "id": 3,
+      "current_us": 6.92,
+      "captured_tbest_us": 3.88,
+      "ratio_to_best": 1.7835051546391754,
+      "estimated_score": 41.20388902435853,
+      "latency_us_for_case_score_70": 4.616357223199419,
+      "speedup_needed_for_case_score_70": 1.4990174428494543
+    },
+    {
+      "id": 4,
+      "current_us": 11.08,
+      "captured_tbest_us": 5.46,
+      "ratio_to_best": 2.029304029304029,
+      "estimated_score": 36.42475805125491,
+      "latency_us_for_case_score_70": 6.496214030584748,
+      "speedup_needed_for_case_score_70": 1.7056088281319526
+    },
+    {
+      "id": 5,
+      "current_us": 19.82,
+      "captured_tbest_us": 6.68,
+      "ratio_to_best": 2.9670658682634734,
+      "estimated_score": 27.157040325407387,
+      "latency_us_for_case_score_70": 7.9477490337556995,
+      "speedup_needed_for_case_score_70": 2.493787853116706
+    },
+    {
+      "id": 6,
+      "current_us": 18.0,
+      "captured_tbest_us": 8.44,
+      "ratio_to_best": 2.132701421800948,
+      "estimated_score": 34.868084364390995,
+      "latency_us_for_case_score_70": 10.04176674324822,
+      "speedup_needed_for_case_score_70": 1.7925132559071497
+    },
+    {
+      "id": 7,
+      "current_us": 20.55,
+      "captured_tbest_us": 10.51,
+      "ratio_to_best": 1.955280685061846,
+      "estimated_score": 37.68267064334825,
+      "latency_us_for_case_score_70": 12.5046171174809,
+      "speedup_needed_for_case_score_70": 1.6433929809231835
+    },
+    {
+      "id": 8,
+      "current_us": 12.74,
+      "captured_tbest_us": 7.72,
+      "ratio_to_best": 1.650259067357513,
+      "estimated_score": 44.7337018724664,
+      "latency_us_for_case_score_70": 9.185123134819461,
+      "speedup_needed_for_case_score_70": 1.387025499059944
+    },
+    {
+      "id": 9,
+      "current_us": 54.1,
+      "captured_tbest_us": 15.92,
+      "ratio_to_best": 3.398241206030151,
+      "estimated_score": 24.894661636243814,
+      "latency_us_for_case_score_70": 18.941342008591427,
+      "speedup_needed_for_case_score_70": 2.8561862182447944
+    },
+    {
+      "id": 10,
+      "current_us": 3370.0,
+      "captured_tbest_us": 3060.0,
+      "ratio_to_best": 1.1013071895424837,
+      "estimated_score": 80.77590567318407,
+      "latency_us_for_case_score_70": 3640.7353358222217,
+      "speedup_needed_for_case_score_70": 0.9256371829178627
+    },
+    {
+      "id": 11,
+      "current_us": 40.01,
+      "captured_tbest_us": 35.73,
+      "ratio_to_best": 1.1197872935908202,
+      "estimated_score": 78.18397436057627,
+      "latency_us_for_case_score_70": 42.51093906827712,
+      "speedup_needed_for_case_score_70": 0.9411695172327211
+    },
+    {
+      "id": 12,
+      "current_us": 49.21,
+      "captured_tbest_us": 41.4,
+      "ratio_to_best": 1.1886473429951692,
+      "estimated_score": 70.11557538720204,
+      "latency_us_for_case_score_70": 49.257007484653585,
+      "speedup_needed_for_case_score_70": 0.9990456690924996
+    },
+    {
+      "id": 13,
+      "current_us": 339.58,
+      "captured_tbest_us": 236.22,
+      "ratio_to_best": 1.4375582084497502,
+      "estimated_score": 52.766691081530915,
+      "latency_us_for_case_score_70": 281.05049053200173,
+      "speedup_needed_for_case_score_70": 1.2082526501099766
+    },
+    {
+      "id": 14,
+      "current_us": 858.95,
+      "captured_tbest_us": 734.12,
+      "ratio_to_best": 1.1700403203835885,
+      "estimated_score": 72.08226067227527,
+      "latency_us_for_case_score_70": 873.4433414162776,
+      "speedup_needed_for_case_score_70": 0.9834066610516754
+    },
+    {
+      "id": 15,
+      "current_us": 271.06,
+      "captured_tbest_us": 171.0,
+      "ratio_to_best": 1.5851461988304094,
+      "estimated_score": 46.81278878632053,
+      "latency_us_for_case_score_70": 203.45285700183004,
+      "speedup_needed_for_case_score_70": 1.3322988135652567
+    }
+  ],
+  "profiling_interpretation": [
+    {
+      "local_case": "tiny",
+      "evidence": "benchmarks/profiles/agentic_r1_v9_tiny/summary.json",
+      "observed_scalar_ratio": 0.7645755000000001,
+      "observed_vec_ratio": 0.1902135,
+      "implication": "Small-workload scalar initialization and dispatch are worth attribution. Scalar pipeline occupancy does not isolate log initialization; do not equate the entire scalar percentage with removable initialization."
+    },
+    {
+      "local_case": "deepseek",
+      "evidence": "benchmarks/profiles/agentic_r1_v9_deepseek/summary.json",
+      "observed_vec_ratio": 0.709791875,
+      "observed_mte2_ratio": 0.610685125,
+      "implication": "VEC and input DMA overlap materially. Review vector instruction count, UB access and reuse together; adding their active times is not a critical-path model."
+    },
+    {
+      "local_case": "wide",
+      "evidence": "benchmarks/profiles/agentic_r1_v9_wide/summary.json",
+      "observed_vec_ratio": 0.863221125,
+      "observed_mte2_ratio": 0.2507430625,
+      "implication": "High VEC occupancy supports investigating wide-dimension instruction/UB costs independently of small-shape initialization. The prior two-read rotation failed and must not be repeated without new evidence."
+    },
+    {
+      "local_case": "large_stream_half",
+      "evidence": "benchmarks/results/agentic_r1_fixed_balanced.json",
+      "minimum_io_bytes": 1073741824,
+      "baseline_native_us": 841.226,
+      "effective_minimum_io_GB_per_second": 1276.4011383385678,
+      "implication": "Approximately 1.276 TB/s minimum read+write traffic limits the upside of initialization-only work for this local shape. This is effective bandwidth, not a measured hardware roofline or a hidden-case identification."
+    }
+  ],
+  "failed_hypothesis_retained": {
+    "candidate_sha256": "587ebd035ffd2b21c51ae0e1a322eea1ca979d98d46fc5c3484ea5d6071be632",
+    "name": "Exact zero-term Q53 logarithm pruning",
+    "native_geometric_speedup": 0.9954930385856202,
+    "slower_cases": 26,
+    "faster_cases": 7,
+    "decision": "rejected",
+    "rejection_evidence": "benchmarks/results/agentic_r1_fixed_balanced.json",
+    "reason": "Exact arithmetic and fewer multiplications did not improve end-to-end native timing. Added control flow/code generation is a possible cause, not an established attribution.",
+    "repeat_gate": "Do not retry without new instruction-level or matched-input PMU evidence."
+  },
+  "prior_failures_index": "benchmarks/experiments/agentic/history.json",
+  "measurement_caveats": [
+    "Replay PMU counters are diagnostic; selection uses fixed-input balanced native Task Duration.",
+    "Earlier changed-input directional runs remain invalidated; they cannot be rehabilitated by this score calculation.",
+    "Candidate/base PMU preparations had different input seeds; not a paired causal performance comparison."
+  ],
+  "followup_priority_when_a_new_request_is_authorized": [
+    "Pursue benefits across distinct local paths rather than assuming that halving only the five worst displayed points reaches 70.",
+    "Attribute small-shape full Device frequency initialization before another scalar rewrite; preserve current power-rounding safeguards and long-position accuracy.",
+    "Investigate wide VEC/UB instruction and data-reuse costs using new source-bound PMU evidence; avoid previously rejected cosine approximation, two-read substitution and unconditional bank padding.",
+    "Use structural shape/dtype/occupancy dispatch only, with one kernel and all math in that invocation; no hidden-case matching or persistent caches.",
+    "Require fixed-input source-swapped paired native measurements and source-matched precision/launch checks before publishing."
+  ],
+  "execution_effect": {
+    "new_optimization_rounds": 0,
+    "new_candidates": 0,
+    "platform_submissions": 0,
+    "npu_tasks": 0,
+    "kernel_changed": false,
+    "response_state": "no_improvement",
+    "note": "The original request was already completed. This same-ID supplement records score sensitivity and existing profiling evidence without reopening the optimization loop."
+  }
+}
