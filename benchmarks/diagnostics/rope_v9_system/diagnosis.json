@@ -1,0 +1,251 @@
+{
+  "schema_version": 1,
+  "diagnostic_id": "rope_v9_system_inherited_fp16",
+  "state": "diagnosis_complete_no_ready",
+  "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "latest_direction": "Algorithm/dataflow/profiling diagnosis first; no candidate development or publication.",
+  "official_baseline": {
+    "submission_id": 879119,
+    "score": 48.45,
+    "status": "Pass",
+    "target_score": 70,
+    "target_achieved": false
+  },
+  "competition_kernel_changed": false,
+  "judge_reference_or_thresholds_changed": false,
+  "ready_published": false,
+  "new_platform_submissions": 0,
+  "environment_changed": false,
+  "new_performance_measurements": 0,
+  "new_npu_diagnostic_tasks": 1,
+  "npu_task": {
+    "task_id": "task_20261016_215527_143976828251",
+    "auto_assigned_one_card": true,
+    "max_time_seconds": 60,
+    "serial": true,
+    "exit_code": 0,
+    "lock_released": true,
+    "duration_note": "Reservation ended normally. Diagnostic runtime is not used as operator performance evidence."
+  },
+  "diagnostic_binary_sha256": "577904ebcf84cfa15247d290aeb368c38ad3b5b1972710b48cc25c81d747c013",
+  "diagnostic_runtime_metadata": {
+    "device": 0,
+    "soc": "Ascend910_9392",
+    "cores": 48,
+    "tokens": 137,
+    "heads": 17,
+    "dim": 1024,
+    "tile_heads": 9,
+    "trig_batch": 9,
+    "float_count": 7529984,
+    "device_kernel_launches": 1,
+    "diagnostic_only": true
+  },
+  "library_versions": {
+    "numpy": "2.2.6",
+    "mpmath": "1.3.0",
+    "mp_decimal_digits": 80
+  },
+  "calibration": {
+    "frozen_input": true,
+    "regenerated_input_sha_verified": true,
+    "math_helpers": "Unmodified V9 math prefix extracted by source SHA; diagnostic-only instrumentation exports intermediates.",
+    "final_half_elements": 2384896,
+    "final_half_bit_mismatches_to_saved_v9": 0,
+    "position_zero_bit_mismatches": 0,
+    "reference_reconstruction_verified_against_unchanged_suite": true
+  },
+  "conclusions_zh": [
+    "第一处分歧在 SinCosFp32：这份固定输入中，48核 inv_freq 全部一致，512列与当前FP32参考逐位一致；70144个angle也逐位一致。不能再把该失败归因于频率初始化。",
+    "设备cos最大绝对误差5.364418e-7，sin为4.395843e-7（相对当前FP32参考）。使用设备sin/cos条件重算后，两个乘积、累加均逐位一致；有限值及Inf符号的最终转换一致。",
+    "FP32旋转中间值最大差0.046875；817个有限FP16输出误差超过0.1，其中156个参考中间值恰在半精度中点。matched_ratio=0.9999874208仍不能抵消max_abs_error=32超限。",
+    "例：参考FP32=-54960.00390625，设备=-54959.99609375，中点=-54960。仅0.0078125差异使FP16输出分别为-54976和-54944，差32。",
+    "80位十进制数学参考表明，直接theta^(-i/W)与当前FP32 pow后倒数有141/512列相差1ULP。不可把数学更精确直接等同于更接近当前浮点参考。",
+    "CPU诊断将sin/cos替换为同FP32角度的高精度正确舍入值后，仍有115个输出超过0.1；当前NumPy sin/cos自身与高精度结果最多差1ULP。此反事实只用于归因，未改golden或验收。官方参考的库舍入语义仍未知。",
+    "V9与CPU按原SinCos源码顺序重放仍有3896个cos、4064个sin不同；范围缩减重放完全一致。差异在后续多项式、sqrt或倍角阶段内，当前尚未单独导出sqrt，不能断言全由sqrt引起。",
+    "性能没有统一瓶颈：tiny标量/控制占比高；DeepSeek为VEC与MTE2混合；宽维FP16 VEC约86%；大流式MTE2约94%。标量占比不是已隔离的频率初始化耗时。",
+    "保留宽维约1.092x的源绑定收益和全部负结果；其等价数据流改动没有修复也没有引入这份继承误差。当前不发布ready。"
+  ],
+  "precision_metrics": {
+    "inv_freq_device_vs_current_fp32": {
+      "elements": 512,
+      "finite": 512,
+      "bit_differences": 0,
+      "nonfinite_class_mismatches": 0,
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "max_ulp": 0,
+      "p99_ulp": 0.0,
+      "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    },
+    "angle_device_vs_current_fp32": {
+      "elements": 70144,
+      "finite": 70144,
+      "bit_differences": 0,
+      "nonfinite_class_mismatches": 0,
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "max_ulp": 0,
+      "p99_ulp": 0.0,
+      "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    },
+    "cosine_device_vs_current_fp32": {
+      "elements": 59392,
+      "finite": 59392,
+      "bit_differences": 39356,
+      "nonfinite_class_mismatches": 0,
+      "max_abs_error": 5.364418029785156e-07,
+      "mean_abs_error": 6.998217447685733e-08,
+      "max_ulp": 9243,
+      "p99_ulp": 55.0,
+      "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    },
+    "sine_device_vs_current_fp32": {
+      "elements": 59392,
+      "finite": 59392,
+      "bit_differences": 37622,
+      "nonfinite_class_mismatches": 0,
+      "max_abs_error": 4.3958425521850586e-07,
+      "mean_abs_error": 5.1107027789841734e-08,
+      "max_ulp": 56789,
+      "p99_ulp": 45.0,
+      "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    },
+    "fp32_rotation_conditional_on_device_trig": {
+      "elements": 2019328,
+      "finite": 2019328,
+      "bit_differences": 0,
+      "nonfinite_class_mismatches": 0,
+      "max_abs_error": 0.0,
+      "mean_abs_error": 0.0,
+      "max_ulp": 0,
+      "p99_ulp": 0.0,
+      "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    },
+    "fp32_rotation_vs_current_fp32": {
+      "elements": 2384896,
+      "finite": 2384893,
+      "bit_differences": 1202717,
+      "nonfinite_class_mismatches": 0,
+      "max_abs_error": 0.046875,
+      "mean_abs_error": 0.0024545447160032154,
+      "max_ulp": 2097152,
+      "p99_ulp": 48.0,
+      "caveat": "ULP uses ordered FP32 bit distance; near-zero cancellation magnifies ULP counts."
+    },
+    "final_vs_current_reference": {
+      "matched_ratio": 0.9999874208351224,
+      "max_abs_error": 32.0,
+      "finite_elements_above_max_abs_limit": 817,
+      "element_tolerance_failures": 30,
+      "pass_current_rules": false
+    },
+    "half_boundary_summary": {
+      "elements_above_point_one": 817,
+      "exactly_at_reference_fp32_midpoint": 156,
+      "max_fp32_difference_on_bad": 0.02734375,
+      "max_reference_margin_to_midpoint": 0.021484375,
+      "hp_same_angle_prefers_actual": 120,
+      "hp_same_angle_prefers_reference": 697,
+      "hp_same_angle_neither": 0,
+      "hp_oracle": "80 decimal digits; exact input half values and exact exported FP32 angle, then real products/addition; comparison is diagnostic, not acceptance."
+    }
+  },
+  "bad_half_step_histogram": {
+    "32.0": 77,
+    "8.0": 93,
+    "0.5": 96,
+    "0.25": 81,
+    "0.125": 83,
+    "1.0": 91,
+    "2.0": 106,
+    "16.0": 96,
+    "4.0": 94
+  },
+  "algorithm_and_branch_model": "benchmarks/diagnostics/rope_v9_system/system_model.json",
+  "strategy_owner_document": "docs/rope_optimization_strategy.md",
+  "strategy_document_modified_by_this_diagnostic": false,
+  "previous_attempts": [
+    {
+      "idea": "Q53 log exact tail pruning",
+      "decision": "rejected",
+      "why": "Fixed-input native geomean 0.995493x, 26/33 slower; exact mathematics did not reduce end-to-end time.",
+      "evidence": "benchmarks/experiments/agentic/20261017T032204914387Z-5917d3aaeb69.json"
+    },
+    {
+      "idea": "True-FMA residual for TwoProd",
+      "decision": "disproved on tested APIs/device",
+      "why": "vmadd/vmla use separately rounded products for required probe operands; fma(a,b,-round(a*b)) cannot recover the product residual.",
+      "evidence": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/fma_semantics_v2.json"
+    },
+    {
+      "idea": "Frequency compensated accumulation folding",
+      "decision": "rejected",
+      "why": "Pooled 1.00223x, interval crosses 1, small controls regress. Repaired liveness candidate independently tested; no safe performance result.",
+      "evidence": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/vector_accum_review.json"
+    },
+    {
+      "idea": "Wide two-work-array operand placement",
+      "decision": "preserve positive performance evidence, precision blocked",
+      "why": "31.981 -> 29.2805us: speedup 1.09223x, latency reduction 8.44%. V9 and candidate fail identical inherited amplitude case with bit-identical output.",
+      "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+      "evidence": "benchmarks/experiments/agentic/20261017T041419176110Z-vector-fma/wide/experiment.json"
+    },
+    {
+      "idea": "Earlier cosine-polynomial substitution / low-precision rotation",
+      "decision": "do not retry",
+      "why": "Precision failures already recorded. Current work only diagnoses the existing trig error; it does not repeat either substitution.",
+      "evidence": "docs/rollback_v4_round4.md; benchmarks/experiments/round6/manifest.json"
+    },
+    {
+      "idea": "Other mask, Gather, bank padding, cache sizing, split-column and frequency prototypes",
+      "decision": "preserved unchanged",
+      "why": "All prior entries and original artifacts remain in the index; none are rerun in this diagnostic.",
+      "evidence": "benchmarks/experiments/agentic/history.json"
+    }
+  ],
+  "selected_next_experiment": {
+    "name": "Quarter-angle sqrt and double-angle rounding attribution, diagnostic only",
+    "state": "selected_not_started",
+    "evidence": "Frequency/angle/reducer match; cosine/sine first diverge; CPU source replay differs from Device downstream of reduction. Direct high-precision trig still fails the strict FP16 output cap against current reference.",
+    "change": "Only extend a development probe to export quarter-angle polynomial value, sqrt input/output, and each double-angle reconstruction intermediate. Keep production V9 and reference unchanged.",
+    "input_family": "Frozen [1,137,17,1024] FP16 failing input and its existing hashes; use all active angle columns and recorded midpoint failures, without inferring hidden platform shapes.",
+    "compare": "Stage-by-stage 80-digit oracle and separately-rounded FP32 source replay; correlate trig error with sqrt rounding and FP16 midpoint distances. Test conditional output rounding, not just mean trig error.",
+    "expected_information": "Separate hardware sqrt rounding from polynomial evaluation and error amplification in reconstruction; determine whether a legal numerical change can satisfy the existing output contract before performance work.",
+    "difference_from_failed_trials": "No cosine-polynomial replacement, frequency residual FMA, two-read rotation or threshold change. This measures the existing algorithm rather than retrying those ideas.",
+    "pass_or_stop": "If no isolated stage explanation, retain inconclusive status. No ready until the original strict correctness suites pass; one-ULP trig improvement alone is not acceptance.",
+    "device_limit": "If executed after review: existing serial task-submit, one auto-assigned card, max-time60, one diagnostic kernel. No performance claims from instrumentation."
+  },
+  "missing_evidence": [
+    "Installed tools do not decode HiIPU machine instructions, so precise dynamic instruction/port/bank cause is unavailable.",
+    "No separate timing isolates V9 frequency vs trigonometry; whole-kernel PMU cannot supply that decomposition.",
+    "FP32, H1 and unaligned paths have source/capacity models but lack equally complete source-bound representative PMU coverage.",
+    "Official hidden golden implementation and dtype/shape mapping remain unknown; no hidden-case inference is used.",
+    "Subnormal/extreme theta and angles beyond the stated position bound need a separate numerical-domain audit before any global trig replacement."
+  ],
+  "reproduction": {
+    "prerequisites": "Existing server CANN9.0/toolchain, NumPy/mpmath and preserved build artifacts; no installation.",
+    "prepare": "python3 benchmarks/diagnostics/rope_v9_system/prepare.py",
+    "configure": "source /usr/local/Ascend/ascend-toolkit/latest/set_env.sh && cmake -S benchmarks/diagnostics/rope_v9_system -B build/rope_v9_system/probe_build -DROPE_DIAG_MATH_DIR=\"$PWD/build/rope_v9_system\"",
+    "compile": "cmake --build build/rope_v9_system/probe_build -j4",
+    "diagnostic": "task-submit --device auto --timeout 0 --max-time 60 --run 'cd /data/pyptouser/songxiaoyou/cann_kernel/project && source /usr/local/Ascend/ascend-toolkit/latest/set_env.sh && build/rope_v9_system/probe_build/stage_probe build/rope_v9_system/input build/rope_v9_system/stages.bin build/rope_v9_system/probe_half.bin'",
+    "analyze": "python3 benchmarks/diagnostics/rope_v9_system/analyze_stages.py",
+    "model": "python3 benchmarks/diagnostics/rope_v9_system/cost_model.py",
+    "archive": "python3 benchmarks/diagnostics/rope_v9_system/finalize_report.py",
+    "large_files": "Frozen input, raw stage exports, saved baseline and binaries stay under ignored build/rope_v9_system. Hashes and seed are versioned; original artifacts remain preserved."
+  },
+  "evidence_hashes": {
+    "benchmarks/diagnostics/rope_v9_system/stage_probe.asc": "4b804568a9e7db24558698100ba51369a7077ce2bd568d1e1a68f4f5eb37cbc5",
+    "benchmarks/diagnostics/rope_v9_system/prepare.py": "4d03c2ef56996dca3cf688cbef3e6b4b55419e4553762de44cbda3817d17158d",
+    "benchmarks/diagnostics/rope_v9_system/analyze_stages.py": "5bb7d67ec6d92072239033496523f2a14ecef4909cc6c31805e60dc9c7dc79a4",
+    "benchmarks/diagnostics/rope_v9_system/cost_model.py": "9ace7e367232832de34d7d2fc197bc4ff7d50ad912d8c0deb43c3c266f3df751",
+    "benchmarks/diagnostics/rope_v9_system/finalize_report.py": "9cf1230669ab00ced732aaab19e94ca5df42f099a9423c4a146bad932c7cb589",
+    "benchmarks/diagnostics/rope_v9_system/CMakeLists.txt": "85246ffa5fa1e0018eacab78f4866607c2b7783b1f5aa826b33bf6c66b054de6",
+    "benchmarks/diagnostics/rope_v9_system/input_manifest.json": "1c3b1f4cf36da5bb6c8dc63a2fd3c2360140a1a1f3ea2e599fa23e5b850a781a",
+    "benchmarks/diagnostics/rope_v9_system/probe_identity.json": "629c4eff8fd8d42a1182248d26572470d02906be6fd80a7e48d3cfc4e149d028",
+    "benchmarks/diagnostics/rope_v9_system/stage_report.json": "35a7ac3d2e74f9bf26637881680329dbe302e03831b5812451af7bba0085ee63",
+    "benchmarks/diagnostics/rope_v9_system/system_model.json": "ccdf715c2b8085609418f88581e9d9d5d102d5b39e7559de87280b07ce5b5d4c",
+    "benchmarks/diagnostics/rope_v9_system/fp16_boundary_failures.csv": "225a5f39d7c888a7b914b3e612384a8ffe2c8d1229edf024ca8f7aaa88021d61",
+    "benchmarks/diagnostics/rope_v9_system/task.log": "c7ba58817d31db941331ba0cde1e3aea7d660894a8d990ac34a3470efc40da6d"
+  }
+}

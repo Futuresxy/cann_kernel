@@ -1,0 +1,31 @@
+{
+  "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+  "math_snapshot_sha256": "5c0bd144342d9ab7b9ffca7c7737d70373a370dbcde4d245eff53e515a0cfd18",
+  "input_sha256": {
+    "x.bin": "1f7f48c43ce98bbafc1ea3cd72a4454170ba22aafc0168313bbe9b19adbb337a",
+    "positions.bin": "6440650f7929ae325dea035aa3603e4ab3f2aff805932f02b77e9726ffa579cc"
+  },
+  "baseline_output_sha256": "248cf74c43ad2df74183f34549bce956ec72a37082a4c91e7eb2a0d357a80663",
+  "shape": [
+    1,
+    137,
+    17,
+    1024
+  ],
+  "dtype": "float16",
+  "theta": 10000,
+  "seed": 175322,
+  "scale": 60000,
+  "zero_every": 7,
+  "extreme": true,
+  "special": true,
+  "paths": {
+    "input": "build/rope_v9_system/input",
+    "baseline_half": "build/rope_v9_system/v9_baseline_half.bin"
+  },
+  "policy_sha256": {
+    "AGENTIC.md": "862d0edaaa828090de007b5c35abe80be2a19d79c00de6b16e23f2e199b6a157",
+    "kernel_requirement.md": "8af6ec98cd04b0d0105a5f35d24a3fa1b8b128c348f97c644f7458b5deaf5e4f",
+    "forbidden.md": "b6adc24318ecd1b7a4915b8dfd9fb560abb26d9da3e11239a5683b56aa197219"
+  }
+}

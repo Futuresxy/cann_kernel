@@ -774,5 +774,18 @@
       "new_npu_tasks": 0,
       "reason": "Reused source-matched wide-rotation evidence supports a targeted FP16 performance gain, but the unchanged strict max-absolute-error gate fails on high-amplitude FP16 input: max_abs_error=32.0 exceeds 0.1. V9 fails the same case with byte-identical outputs. Independent diagnosis of the inherited math/reference/rounding issue is required; this request authorizes only the specified wide rotation dataflow and cannot yield a fully validated ready candidate while that failure remains."
     }
+  ],
+  "diagnostics": [
+    {
+      "diagnostic_id": "rope_v9_system_inherited_fp16",
+      "state": "diagnosis_complete_no_ready",
+      "source_sha256": "5917d3aaeb6969619852ba56cc7934f5bae66540295cf381fc0340bc50529ecc",
+      "report": "benchmarks/diagnostics/rope_v9_system/diagnosis.json",
+      "first_divergent_stage": "SinCosFp32",
+      "new_npu_diagnostic_tasks": 1,
+      "new_performance_measurements": 0,
+      "ready_published": false,
+      "decision": "Preserve wide performance evidence and all negatives; fixed large-amplitude failure localized to trig plus FP16 midpoint crossings. No production kernel or precision rules changed."
+    }
   ]
 }

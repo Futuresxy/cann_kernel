@@ -1,0 +1,7 @@
+任务已提交: task_20261016_215527_143976828251 (断开后可用 task-submit --wait task_20261016_215527_143976828251 重连)
+等待任务执行: task_20261016_215527_143976828251 (Ctrl+C 终止任务)
+[npu-lock] 获取设备 0 的锁 (无超时)...
+[npu-lock] 已获取设备 0 的锁 (pid=1439851)
+{"device":0,"soc":"Ascend910_9392","cores":48,"tokens":137,"heads":17,"dim":1024,"tile_heads":9,"trig_batch":9,"float_count":7529984,"device_kernel_launches":1,"diagnostic_only":true}
+[npu-lock] 已释放设备 0 的锁
+=== 任务完成 (exit=0) ===
