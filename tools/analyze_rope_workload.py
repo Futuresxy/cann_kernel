@@ -70,6 +70,43 @@ def wide_fp16_layout():
     }
 
 
+def unaligned_layout(dtype, d):
+    """Worked Rotary-only model; excludes zero-position identity bypasses."""
+    n, h, blocks = 1024, 64, 48
+    k, e = d // 2, {'float16': 2, 'float32': 4}[dtype]
+    pitch = math.ceil(k / 16) * 16
+    tile = min(4096 // pitch, 32, h)
+    groups = math.ceil(h / tile)
+    jobs, capacity = n * groups, tile * pitch
+    visits = sum(((jobs * (i+1) // blocks - 1) // groups -
+                  (jobs * i // blocks) // groups + 1) for i in range(blocks))
+    coefficient_copies = 2 * (tile - 1) * visits
+    old_ub = (4 * e + 20) * capacity + 4 * pitch
+    new_ub = (4 * e + 20) * capacity + 16 * pitch
+    return {
+        'shape': [2, 512, h, d], 'dtype': dtype, 'pitch': pitch,
+        'tile_heads': tile, 'groups': groups, 'jobs': jobs,
+        'all_nonzero_token_visits_across_cores': visits,
+        'existing_ub_bytes': old_ub, 'proposed_ub_bytes': new_ub,
+        'proposed_additional_ub_bytes': new_ub - old_ub,
+        'coefficient_copy_calls_removed': coefficient_copies,
+        'coefficient_copy_operand_bytes_removed': coefficient_copies * pitch * 8,
+        'repeated_half_load_calls_removed': jobs,
+        'repeated_half_load_operand_bytes_removed': n * h * pitch * (e + 4),
+        'existing_arithmetic_api_calls_per_job': 6,
+        'proposed_arithmetic_api_calls_per_job': 6 * math.ceil(k / 64),
+        'minimum_x_y_gm_bytes_unchanged': 2 * n * h * d * e,
+        'assumptions': 'Keep both input halves, two result vectors and a temporary '
+                       'within the existing five capacity-sized FP32 work vectors. '
+                       'Add separate pitch-sized frequency/angle/cos/sin storage. '
+                       'Preserve four Mul plus Sub/Add, queue depths and DMA policy. '
+                       'This is a source-operand/count model, not physical traffic or timing.',
+        'scope': 'Public representative of the existing generic unaligned Rotary '
+                 'dispatch only; not a hidden-case mapping. Same Rotary source '
+                 'in V9 and the platform-accepted 817f8364 wide-only patch.',
+    }
+
+
 def report():
     source = ROOT / 'operators/rotary_pos_emb/kernel.asc'
     actual = hashlib.sha256(source.read_bytes()).hexdigest()
@@ -114,6 +151,8 @@ def report():
                         'traffic': 'Logical compulsory X read + Y write; positions listed separately; '
                                    'not a measured DRAM bandwidth or a hardware peak'},
         'workloads': cases, 'wide_fp16_worked_layout': wide_fp16_layout(),
+        'generic_unaligned_worked_layouts': [unaligned_layout('float16', 126),
+                                             unaligned_layout('float32', 254)],
         'sincos_static_source_api_calls': trig_calls,
         'sincos_static_source_api_calls_note': 'Source calls only, not dynamic instructions or cycles; '
                                               'each API may emit multiple instructions/repeats.',
