@@ -1,0 +1,19 @@
+{
+  "template_files": [
+    "CMakeLists.txt",
+    "data_utils.h",
+    "kernel.asc",
+    "main.asc",
+    "run.sh",
+    "scripts/RotaryPosEmb.py",
+    "scripts/gen_data.py",
+    "scripts/verify_result.py"
+  ],
+  "changed": [
+    "kernel.asc"
+  ],
+  "unchanged_files": 7,
+  "kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "source_template_read_by_frozen_manifest": true,
+  "note": "Only the eight original files were copied; incidental source-tree Python bytecode is not part of the payload."
+}
