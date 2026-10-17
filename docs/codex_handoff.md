@@ -81,3 +81,9 @@ python3 tools/cannjudge.py publish --candidate build/platform_candidates/实际�
 > 请与 Mac CANNJudge worker 通过此仓库 GitHub 协作，先阅读 docs/codex_handoff.md 和 docs/mac_cannjudge.md。不要安装或修改服务器环境。保留现有工作区改动，取得最新工具后运行 python3 tools/cannjudge.py inbox --wait，读取最新 ready_for_tuning 任务。以任务的父源码哈希和官方性能反馈为基线，结合本地 profiling 选择一个优化假设；平台工程只改 kernel.asc，不能按隐藏测试点编号写专属路径。使用现有 task-submit 串行单卡、每阶段不超过 60 秒，完成精度、启动检查和合规证据。通过后 stage --request --hypothesis 并 publish、提交和正常推送新 ready 候选，保留 tuning_request_id。Mac 会自动提交并回传成绩，再通过 inbox --after 等待后续反馈。先最多做两轮新候选；没有收益或缺少证据时记录原因并停止，不重复发布旧源码。
 
 这条协议自动化的是候选、提交和反馈的交接。算法优化由远端 Codex 在现有会话中基于真实测量执行；未收到新候选前，不能宣称获得调优收益。
+
+## 本地实验无收益后的继续调优
+
+`no_improvement` 只结束当前实验，不代表 70 分目标完成。主控可创建新的 request_id，保留 `baseline_run_id` 和真实 `result_path` 指向上一条已验证的平台结果，用 `previous_request_id`、历史证据和 `requested_focus` 指定独立的新假设。原任务、失败补丁和结果都保持不变，不为本地失败实验制造平台提交记录。
+
+新任务发布后单独通知固定会话；每个任务的通知分别去重。恢复监听时传入 `watch --initial-request-id 新任务ID`，新候选必须响应该任务且父源码匹配当前基线。收到并处理新候选后，后续任务重新由该次真实平台反馈派生。

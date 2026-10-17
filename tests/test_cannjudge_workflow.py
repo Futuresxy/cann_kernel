@@ -63,6 +63,27 @@ def fixture_candidate(directory):
 
 
 class CoreTests(unittest.TestCase):
+    def test_continuation_controller_keeps_the_new_task_until_its_candidate_arrives(self):
+        import cannjudge
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            args = Namespace(command='watch', interval=60, idle_timeout=1800, max_candidates=11,
+                             target_score=70, notify_config=root/'notify.json',
+                             initial_request_id='second-experiment', runs=root/'runs')
+            records = [{'run_id': 'baseline-result', 'state': 'accepted', 'kernel_sha256': 'a'*64, 'platform_score_raw': '48.45'},
+                       {'run_id': 'new-result', 'state': 'accepted', 'kernel_sha256': 'b'*64, 'platform_score_raw': '70.01', 'tuning_request_id': 'second-experiment'}]
+            expected = []
+            async def command(current):
+                expected.append(current.expected_request_id)
+                return records.pop(0)
+            with patch.object(cannjudge, 'ROOT', root), patch.object(cannjudge, 'parser') as parser, \
+                 patch.object(cannjudge, 'browser_command', command), patch('judge_workflow.handoff.tuning_response', return_value=None), \
+                 patch.object(cannjudge.time, 'sleep'):
+                parser.return_value.parse_args.return_value = args
+                self.assertEqual(cannjudge.main(), 0)
+            self.assertEqual(expected, ['second-experiment', 'second-experiment'])
+            self.assertEqual(read_json(root/'.local/cannjudge/controller.json')['state'], 'target_reached')
+
     def test_reaching_score_target_does_not_notify_an_extra_tuning_round(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -413,6 +434,24 @@ class BrowserTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(ValueError):
             await run_once(self.context, args, self.config, root)
         self.assertEqual(Handler.posts, 0)
+
+    async def test_continuation_candidate_is_bound_to_the_original_platform_baseline(self):
+        root = Path(self.temporary.name)
+        baseline = {'run_id':'baseline-result', 'state':'accepted', 'kernel_sha256':'a'*64,
+                    'git_commit':'fixture', 'created_at':'2026-10-17', 'submission_id':'old-job',
+                    'cases':[{'id':i,'latency_us':i*2} for i in range(1,16)]}
+        self.journal.save(baseline)
+        write_json(root/'tuning_requests/rotary_pos_emb/second-experiment.json',
+                   {'request_id':'second-experiment', 'baseline_run_id':'baseline-result', 'parent_kernel_sha256':'a'*64})
+        candidate = root/'candidate'; candidate.mkdir(); fixture_candidate(candidate)
+        manifest = read_json(candidate/'candidate.json')
+        manifest.update(tuning_request_id='second-experiment',parent_kernel_sha256='a'*64)
+        write_json(candidate/'candidate.json',manifest)
+        args = Namespace(runs=self.journal.root,candidate=candidate,expected_request_id='second-experiment')
+        result = await run_once(self.context,args,self.config,root)
+        self.assertEqual(result['state'],'accepted')
+        self.assertEqual(result['tuning_request_id'],'second-experiment')
+        self.assertEqual(Handler.posts,1)
 
     async def test_uncertain_click_never_triggers_another_submission(self):
         self.journal.create({'kernel_sha256': digest(SOURCE), 'git_commit': 'fixture'}, self.config)

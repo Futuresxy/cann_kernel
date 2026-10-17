@@ -143,6 +143,20 @@ class RepositoryTests(unittest.TestCase):
         self.assertEqual(read_json(received)['request_id'], record['run_id'])
         self.assertIsNone(inbox(self.repository, after=record['run_id']))
         self.assertEqual(publish_feedback(request, self.repository), revision)
+        # A rejected local experiment can start another task without inventing
+        # a new competition submission or overwriting the original task.
+        next_task = read_json(request)
+        next_task.update(request_id=record['run_id'] + '-experiment2', baseline_run_id=record['run_id'])
+        next_task['required_output']['tuning_request_id'] = next_task['request_id']
+        next_path = self.repository / 'tuning_requests/rotary_pos_emb' / (next_task['request_id'] + '.json')
+        write_json(next_path, next_task)
+        next_revision = publish_feedback(next_path, self.repository)
+        self.assertNotEqual(next_revision, revision)
+        self.assertEqual(read_json(inbox(self.repository))['request_id'], next_task['request_id'])
+        next_task['parent_kernel_sha256'] = '0' * 64
+        write_json(next_path, next_task)
+        with self.assertRaisesRegex(ValueError, 'baseline result'):
+            publish_feedback(next_path, self.repository)
 
     def test_tuning_request_identity_survives_publish_and_sync(self):
         path = self.candidate / 'candidate.json'

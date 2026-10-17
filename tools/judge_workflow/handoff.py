@@ -32,6 +32,7 @@ def create_request(record, report, repository):
     if not re.fullmatch(r'[A-Za-z0-9_-]+', run_id):
         raise ValueError('Invalid handoff ID')
     request = {'schema_version': 1, 'request_id': run_id, 'state': 'ready_for_tuning',
+               'baseline_run_id': run_id,
                'parent_kernel_sha256': record['kernel_sha256'], 'source_git_commit': record['git_commit'],
                'result_path': f'platform_results/rotary_pos_emb/{run_id}.json',
                'result_state': record['state'], 'platform_status': record.get('platform_status'),
@@ -87,9 +88,13 @@ def publish_feedback(request_path, repository):
     request = read_json(request_path)
     request_relative = f'{REQUESTS}/{request["request_id"]}.json'
     result_relative = request['result_path']
-    if not re.fullmatch(r'[A-Za-z0-9_-]+', request['request_id']) or result_relative != f'platform_results/rotary_pos_emb/{request["request_id"]}.json':
+    baseline = request.get('baseline_run_id', request['request_id'])
+    if not re.fullmatch(r'[A-Za-z0-9_-]+', request['request_id']) or not re.fullmatch(r'[A-Za-z0-9_-]+', baseline) or result_relative != f'platform_results/rotary_pos_emb/{baseline}.json':
         raise ValueError('Unexpected feedback publication path')
     contents = {name: (repository / name).read_bytes() for name in (request_relative, result_relative)}
+    result = json.loads(contents[result_relative])
+    if result.get('run_id') != baseline or result.get('kernel_sha256') != request['parent_kernel_sha256']:
+        raise ValueError('Tuning task does not match its completed baseline result')
     remote = git(repository, 'remote', 'get-url', 'origin').decode().strip()
     transport = ['-c', 'core.sshCommand=ssh -p 443 -o Hostname=ssh.github.com -o BatchMode=yes'] if remote.startswith('git@github.com:') else []
     with tempfile.TemporaryDirectory(prefix='cannjudge-feedback-') as temporary:
@@ -127,7 +132,7 @@ def inbox(repository, after=None, wait=False, interval=60, timeout=1800):
         git(repository, 'fetch', '--no-tags', 'origin', 'main')
         tip = git(repository, 'rev-parse', 'FETCH_HEAD').decode().strip()
         names = git(repository, 'ls-tree', '-r', '--name-only', tip, '--', REQUESTS).decode().splitlines()
-        for name in sorted(names, reverse=True):
+        for name in sorted(names, key=lambda value: Path(value).stem, reverse=True):
             request_id = Path(name).stem
             if not name.endswith('.json') or (after and request_id <= after):
                 continue

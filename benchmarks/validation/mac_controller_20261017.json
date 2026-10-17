@@ -2,7 +2,7 @@
   "date": "2026-10-17",
   "tests": {
     "command": "CANNJUDGE_TEST_CHANNEL=chrome python -m unittest discover -s tests -p 'test_cannjudge*.py'",
-    "count": 62,
+    "count": 65,
     "result": "passed",
     "includes_remote_adapter_and_exchange_tests": true
   },

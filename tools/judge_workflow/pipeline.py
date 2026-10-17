@@ -2,6 +2,7 @@
 import csv
 import copy
 import json
+import re
 from pathlib import Path
 
 from .browser import (browser_context, click_once, existing_result, page_for, platform_source_digest,
@@ -102,7 +103,18 @@ async def run_once(context, args, config, repository):
         return record
     expected = getattr(args, 'expected_request_id', None)
     if expected:
+        if not re.fullmatch(r'[A-Za-z0-9_-]+', expected):
+            raise ValueError('Invalid coordinator request ID')
         parents = [r for r in journal.records() if r['run_id'] == expected]
+        if not parents:
+            try:
+                task = read_json(Path(repository) / 'tuning_requests/rotary_pos_emb' / (expected + '.json'))
+            except (OSError, ValueError) as error:
+                raise ValueError('Missing coordinator continuation request') from error
+            if task.get('request_id') != expected:
+                raise ValueError('Continuation request identity differs')
+            parents = [r for r in journal.records() if r['run_id'] == task.get('baseline_run_id') and
+                       r['kernel_sha256'] == task.get('parent_kernel_sha256')]
         if len(parents) != 1 or manifest.get('tuning_request_id') != expected or manifest.get('parent_kernel_sha256') != parents[0]['kernel_sha256']:
             raise ValueError('New candidate does not respond to the coordinator current request and parent source')
     if context is None:

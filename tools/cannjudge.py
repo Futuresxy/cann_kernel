@@ -266,6 +266,7 @@ def parser():
                 sub.add_argument('--idle-timeout', type=int, default=1800)
                 sub.add_argument('--max-candidates', type=int, default=3)
                 sub.add_argument('--target-score', type=float, help='Stop when this official platform score is reached')
+                sub.add_argument('--initial-request-id', help='Resume a distinct experiment task using an unchanged platform baseline')
         elif command == 'preflight':
             sub.add_argument('--candidate', type=Path, required=True)
             sub.add_argument('--output', type=Path, default=ROOT / '.local/cannjudge/preflight')
@@ -326,7 +327,8 @@ def main():
         seen = set()
         idle_since = time.monotonic()
         notify_config = args.notify_config
-        args.expected_request_id = None
+        active_request_id = args.initial_request_id
+        args.expected_request_id = active_request_id
         controller = ROOT / '.local/cannjudge/controller.json'
         write_json(controller, {'pid': os.getpid(), 'state': 'running', 'started_at': utcnow(),
                                 'max_candidates': args.max_candidates})
@@ -335,7 +337,9 @@ def main():
             args.notify_config = notify_config if len(seen) < args.max_candidates - 1 else None
             with exclusive_lock(args.runs / '.workflow.lock'):
                 record = asyncio.run(browser_command(args))
-            args.expected_request_id = record['run_id'] if notify_config else None
+            if not active_request_id or record.get('tuning_request_id') == active_request_id:
+                active_request_id = record['run_id'] if notify_config else None
+            args.expected_request_id = active_request_id
             if args.target_score is not None and record['state'] == 'accepted' and float(record.get('platform_score_raw', -1)) >= args.target_score:
                 write_json(controller, {'pid': os.getpid(), 'state': 'target_reached', 'run_id': record['run_id'],
                                         'official_score_raw': record['platform_score_raw'], 'target_score': args.target_score, 'updated_at': utcnow()})
@@ -347,9 +351,10 @@ def main():
                 if len(seen) >= args.max_candidates:
                     break
             from judge_workflow.handoff import tuning_response
-            response = tuning_response(ROOT, record['run_id'])
+            response = tuning_response(ROOT, active_request_id or record['run_id'])
             write_json(controller, {'pid': os.getpid(), 'state': 'waiting_for_candidate',
                                     'last_run_id': record['run_id'], 'processed_shas': sorted(seen),
+                                    'current_request_id': active_request_id,
                                     'updated_at': utcnow(), 'max_candidates': args.max_candidates})
             if response:
                 write_json(controller, {'pid': os.getpid(), 'state': 'remote_stopped', 'response': response, 'updated_at': utcnow()})

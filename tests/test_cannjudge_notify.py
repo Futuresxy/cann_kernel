@@ -46,6 +46,22 @@ class NotifyTests(unittest.TestCase):
             self.assertEqual(run.call_count, 1)
             self.assertEqual(read_json(directory / 'notification.json')['state'], 'uncertain')
 
+    def test_continuation_task_has_its_own_notification_and_reuses_the_real_baseline(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary); config = directory / 'config.json'
+            write_json(config, {'ssh_host': 'Ascend910', 'thread_id': '00000000-0000-4000-8000-000000000001'})
+            record = {'run_id': 'baseline-run', 'kernel_sha256': 'a' * 64}
+            request = {'request_id': 'new-experiment', 'result_path': 'platform_results/rotary_pos_emb/baseline-run.json',
+                       'requested_focus': 'Test a new vector hypothesis, retaining the rejected experiment record'}
+            with patch('judge_workflow.notify.subprocess.run', return_value=subprocess.CompletedProcess([], 0, 'Queued', '')) as run:
+                result = notify_remote(record, request, {'git_commit': 'b' * 40}, config, directory)
+                notify_remote(record, request, {'git_commit': 'b' * 40}, config, directory)
+            self.assertEqual(result['request_id'], 'new-experiment')
+            self.assertEqual(run.call_count, 1)
+            self.assertIn('request_id=new-experiment', run.call_args.args[0][-1])
+            self.assertIn('baseline-run.json', run.call_args.args[0][-1])
+            self.assertTrue((directory / 'notification-new-experiment.json').exists())
+
 
 if __name__ == '__main__':
     unittest.main()
