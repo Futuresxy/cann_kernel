@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "task_id": "20261017-shared-math-diagnosis",
+  "cpu_model_only": true,
+  "timing_source": "benchmarks/results/agentic_r6_fixed33.json",
+  "timing_source_sha256": "84b2c80a795cc190063a02e0284cfd97b0c74212b38f44f64d737e547b212c57",
+  "source_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "rows": [
+    {
+      "name": "tiny",
+      "shape": [
+        1,
+        8,
+        1,
+        16
+      ],
+      "dtype": "float32",
+      "nominal_token_frequency_pairs": 64,
+      "rotation_pairs": 64,
+      "rotation_flops": 384,
+      "x_read_y_write_bytes": 1024,
+      "head_trig_reuse": 1,
+      "native_baseline_us": 2.6900000000000004,
+      "input_sha256": {
+        "x.bin": "8e5ba49c41b097e33881d8dfff2c5bbee8c923a084ba2390738919d74cac6695",
+        "positions.bin": "f848dcf5d8e8d774bd9e257cc472ddf1e4e976d37a804ca616181d7f06a9b743"
+      }
+    },
+    {
+      "name": "deepseek_half",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float16",
+      "nominal_token_frequency_pairs": 32768,
+      "rotation_pairs": 4194304,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes": 33554432,
+      "head_trig_reuse": 128,
+      "native_baseline_us": 17.259999999999998,
+      "input_sha256": {
+        "x.bin": "c421dbf38804d5337e098dfa1850ab62ab744842534dec00bbf2b3b50cf20c57",
+        "positions.bin": "b3e28c5baf9df5feb3dcb76ee70a486a3c2736bd12261634374dc7726e3daf5c"
+      }
+    },
+    {
+      "name": "deepseek_float",
+      "shape": [
+        2,
+        512,
+        128,
+        64
+      ],
+      "dtype": "float32",
+      "nominal_token_frequency_pairs": 32768,
+      "rotation_pairs": 4194304,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes": 67108864,
+      "head_trig_reuse": 128,
+      "native_baseline_us": 18.311,
+      "input_sha256": {
+        "x.bin": "b168bd649469b8bcaa943649e0045e72d8fa2e6fdde3e6b2f581e4305ca1da3b",
+        "positions.bin": "2c730ddf55e8aa5eee5ac8d30bad294792f10b57f456971ba67692a853b3d0e2"
+      }
+    },
+    {
+      "name": "sequence8192",
+      "shape": [
+        1,
+        8192,
+        1,
+        64
+      ],
+      "dtype": "float32",
+      "nominal_token_frequency_pairs": 262144,
+      "rotation_pairs": 262144,
+      "rotation_flops": 1572864,
+      "x_read_y_write_bytes": 4194304,
+      "head_trig_reuse": 1,
+      "native_baseline_us": 11.52,
+      "input_sha256": {
+        "x.bin": "e1fff8f820d5cb66633c659d67913f9fc167a17f7a4db497a7d4e5bbc28543dd",
+        "positions.bin": "d18da3d340ff4a46ea7f9f47ef7e0a03cfe4dd30039650e7540fea671764f988"
+      }
+    },
+    {
+      "name": "prefill_h32_d1024_half",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float16",
+      "nominal_token_frequency_pairs": 131072,
+      "rotation_pairs": 4194304,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes": 33554432,
+      "head_trig_reuse": 32,
+      "native_baseline_us": 29.1305,
+      "input_sha256": {
+        "x.bin": "18d35046421d8cda3701af58dacaacf6da8effd765290cd6cbfa52a3d794e324",
+        "positions.bin": "0a655fb2b854784cd77089c9b1a0e9246a30f8c1d3b900a5c75c478a2933ea5f"
+      }
+    },
+    {
+      "name": "prefill_h32_d1024_float",
+      "shape": [
+        1,
+        256,
+        32,
+        1024
+      ],
+      "dtype": "float32",
+      "nominal_token_frequency_pairs": 131072,
+      "rotation_pairs": 4194304,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes": 67108864,
+      "head_trig_reuse": 32,
+      "native_baseline_us": 32.921,
+      "input_sha256": {
+        "x.bin": "91367b251bbdaa96f6cbc6c1cfc81ead1a6edbba9a272c929e5dead764fa8af4",
+        "positions.bin": "866eeb1702eb89448c1de882f38414848ee7d13349a22089e39a90c905d9ef37"
+      }
+    },
+    {
+      "name": "sequence_d1024_half",
+      "shape": [
+        1,
+        8192,
+        1,
+        1024
+      ],
+      "dtype": "float16",
+      "nominal_token_frequency_pairs": 4194304,
+      "rotation_pairs": 4194304,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes": 33554432,
+      "head_trig_reuse": 1,
+      "native_baseline_us": 87.281,
+      "input_sha256": {
+        "x.bin": "609135e30693bc21b3c086843e79565a69dc92258ff5bb38b875847d9a138d90",
+        "positions.bin": "ccb114d7c753fa1b4e4a313fb280060ad8c20b1f17b5531f88419d06146bc77b"
+      }
+    },
+    {
+      "name": "sequence_d1024_float",
+      "shape": [
+        1,
+        8192,
+        1,
+        1024
+      ],
+      "dtype": "float32",
+      "nominal_token_frequency_pairs": 4194304,
+      "rotation_pairs": 4194304,
+      "rotation_flops": 25165824,
+      "x_read_y_write_bytes": 67108864,
+      "head_trig_reuse": 1,
+      "native_baseline_us": 94.452,
+      "input_sha256": {
+        "x.bin": "2a959a7db8a71c20fbca2b0e00715a5eadde3584016abb01b96ceca7104489d2",
+        "positions.bin": "baf900077a8770b9f5472722917b945698c1959724876c49b9ea2e867c2dfc27"
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "dtype": "float16",
+      "many_head": "prefill_h32_d1024_half",
+      "single_head": "sequence_d1024_half",
+      "nominal_trig_work_ratio_h1_over_h32": 32.0,
+      "native_time_ratio_h1_over_h32": 2.9962067249103175,
+      "same_logical_io_and_rotation_work": true
+    },
+    {
+      "dtype": "float32",
+      "many_head": "prefill_h32_d1024_float",
+      "single_head": "sequence_d1024_float",
+      "nominal_trig_work_ratio_h1_over_h32": 32.0,
+      "native_time_ratio_h1_over_h32": 2.8690501503599526,
+      "same_logical_io_and_rotation_work": true
+    }
+  ],
+  "limitations": [
+    "Counts model one trig evaluation per token/frequency and do not deduct position0 or repeated positions; they are nominal algorithm work, not a universal lower bound.",
+    "Actual tiling may duplicate work at core boundaries. Counts exclude frequency initialization, UB copies, casts, padding and synchronization.",
+    "Cross-shape native timing associations are not isolated causal stage fractions or hardware peak evidence.",
+    "No hidden platform case shape mapping and no score prediction.",
+    "No implementation, input/golden/threshold or environment changes."
+  ]
+}
