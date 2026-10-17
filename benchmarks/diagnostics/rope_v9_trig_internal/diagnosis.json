@@ -352,6 +352,28 @@
       "zero_position_nonfinite_class_differences": 3,
       "note": "Original template has no explicit p=0 identity override, so nonfinite values can propagate through multiplication by zero. The user specification requires bit-preserving identity; the existing suite override and production behavior are unchanged. The analyzed 817 failures are all nonzero-position values."
     },
+    "golden_precision_sensitivity": {
+      "evidence_reused_without_new_measurement": true,
+      "original_stage_export_sha256": "482320ccb9ee3a0abe349c08bd875be812bff551c94e2b9ec48472e7b5e26c3a",
+      "prior_stage_report": "benchmarks/diagnostics/rope_v9_system/stage_report.json",
+      "prior_stage_report_sha256": "d46137ed70e5e6ddcc4fdf782c65cee304844bd7d80c72b1acd2195e850cc22f",
+      "coordinator_crosscheck": "benchmarks/analysis/v9_stage_crosscheck.json",
+      "coordinator_reproducer": "tools/analyze_rope_stages.py",
+      "same_fp32_angle": true,
+      "separate_fp32_rotation_preserved": true,
+      "high_precision_rounded_trig_vs_current_reference": {
+        "cosine_bit_differences": 9088,
+        "sine_bit_differences": 9338,
+        "fp16_output": {
+          "matched_ratio": 0.9999991613890081,
+          "max_abs_error": 32.0,
+          "finite_elements_above_max_abs_limit": 115,
+          "element_tolerance_failures": 2,
+          "pass_current_rules": false
+        }
+      },
+      "interpretation": "Prior 80-digit diagnostics and the coordinator FP64-to-FP32 crosscheck agree: 9088 cosine and 9338 sine differences, 115 finite half outputs above0.1, maximum32. Greater real-function accuracy is not acceptance against a particular FP32 library chain. The official backend library/version/CPU path remains unknown; no golden or threshold is changed."
+    },
     "acceptance_note": "The original template, current local golden/thresholds and official judge are unchanged. High-precision and software libm models are diagnostic, never substitute golden."
   },
   "repair_proposal": {
@@ -478,7 +500,7 @@
     "benchmarks/diagnostics/rope_v9_trig_internal/analyze.py": "3f2f9a3e5730abf159a570409d196a3cd056c3435f6baaf88d5000d7be4f7ec1",
     "benchmarks/diagnostics/rope_v9_trig_internal/arithmetic_report.json": "0b80e2ce56fd5c811090c4492b035ce3e05fc11f6d377ee0c3d5e3306ad7a32a",
     "benchmarks/diagnostics/rope_v9_trig_internal/boundary_attribution.csv": "daee06ce0462e354d5931aa170bb30603c283bc8d4a1eb916b8dd0789354df1e",
-    "benchmarks/diagnostics/rope_v9_trig_internal/finalize_report.py": "0bb28e42992165c547a8080adef84bca2eb5722945da6e20f3ca5eca2d6005f6",
+    "benchmarks/diagnostics/rope_v9_trig_internal/finalize_report.py": "5ce76984a2c5555bdf0b09a4666fc85beeb020a608a53e3536f03c8e748053c4",
     "benchmarks/diagnostics/rope_v9_trig_internal/high_precision.py": "ffee5c4b948664996fe826562a8ef708eaa6030f494cb959192c21d6ea2d5f8d",
     "benchmarks/diagnostics/rope_v9_trig_internal/high_precision_report.json": "64159b1252334aac93ae956fe477371c4ff512909e7b542efbb0cc357ce50a61",
     "benchmarks/diagnostics/rope_v9_trig_internal/models.py": "dcdf2d281fc35db614676d49adca233c34072e7f1848d723e03874b3f8e193ef",

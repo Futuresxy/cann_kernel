@@ -10,6 +10,8 @@ schema=json.loads((HERE/'trace_schema.json').read_text())
 ar=json.loads((HERE/'arithmetic_report.json').read_text())
 hp=json.loads((HERE/'high_precision_report.json').read_text())
 runtime=json.loads((HERE/'reference_runtime.json').read_text())
+prior_stage_path=HERE.parent/'rope_v9_system/stage_report.json'
+prior_stage=json.loads(prior_stage_path.read_text())
 assert sha(ROOT/'operators/rotary_pos_emb/kernel.asc')==schema['source_sha256']
 assert sha(BUILD/'probe_half.bin')==schema['baseline_output_sha256']
 assert schema['math_statement_identity']
@@ -59,6 +61,19 @@ report=dict(schema_version=1,update_id=schema['update_id'],state='diagnosis_comp
     decoded_local_host_assembly=runtime['decoded_host_evidence'],
     cpu_model_result=ar['numpy_226_cpu_model'],
     original_template_comparison=ar['original_template_comparison'],
+    golden_precision_sensitivity=dict(
+        evidence_reused_without_new_measurement=True,
+        original_stage_export_sha256=prior_stage['dump_sha256'],
+        prior_stage_report='benchmarks/diagnostics/rope_v9_system/stage_report.json',
+        prior_stage_report_sha256=sha(prior_stage_path),
+        coordinator_crosscheck='benchmarks/analysis/v9_stage_crosscheck.json',
+        coordinator_reproducer='tools/analyze_rope_stages.py',
+        same_fp32_angle=True,separate_fp32_rotation_preserved=True,
+        high_precision_rounded_trig_vs_current_reference=dict(
+            cosine_bit_differences=prior_stage['current_numpy_cosine_vs_high_precision_same_angle']['bit_differences'],
+            sine_bit_differences=prior_stage['current_numpy_sine_vs_high_precision_same_angle']['bit_differences'],
+            fp16_output=prior_stage['cpu_stage_attribution']['hp_same_angle_float32_trig']),
+        interpretation='Prior 80-digit diagnostics and the coordinator FP64-to-FP32 crosscheck agree: 9088 cosine and 9338 sine differences, 115 finite half outputs above0.1, maximum32. Greater real-function accuracy is not acceptance against a particular FP32 library chain. The official backend library/version/CPU path remains unknown; no golden or threshold is changed.'),
     acceptance_note='The original template, current local golden/thresholds and official judge are unchanged. High-precision and software libm models are diagnostic, never substitute golden.'),
  repair_proposal=dict(name='Reference-compatible quadrant reduction and direct sin/cos, using a proven software RN-FMA primitive',
     state='proposal_only_not_implemented_not_ready',
