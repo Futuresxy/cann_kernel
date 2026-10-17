@@ -1,0 +1,21 @@
+{
+  "kernel_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+  "reviewer": "Mac coordinator / reviewed experimental platform trial",
+  "reviewed_at": "2026-10-17T06:42:31.086782+00:00",
+  "assertions": {
+    "host_only_validation_shape_tiling_launch": true,
+    "no_host_tensor_read_or_reorder": true,
+    "all_frequency_angle_trig_rotation_on_device": true,
+    "no_precomputed_results_or_host_vectors": true,
+    "no_testcase_or_data_pattern_shortcuts": true,
+    "no_markers_stale_output_or_uninitialized_memory": true,
+    "no_judge_precision_or_timing_changes": true,
+    "no_empty_kernel_or_warmup_detection": true,
+    "no_cross_invocation_cache": true,
+    "exactly_one_device_kernel_per_invocation": true,
+    "kernel_asc_is_only_template_change": true
+  },
+  "device_math_notes": "Only the existing generic Rotary class/dataflow changes, with FP32 queue-direct specialization and input/output double buffering/prefetch. Frequency/trig and original four products plus separate Sub/Add remain on Device. Every valid output is computed, position0 preserves input bits, one unchanged host kernel branch per invocation. TQue ownership protects MTE2/VEC/MTE3 reuse; final drain retained. No extra package, generated header, Host tensor calculation, result table or cross-invocation cache. Original-template C++14/dav-2201 build and source-bound launch evidence pass. Explicit user-authorized trial retains the inherited amplitude max32 failure and does not claim universal correctness.",
+  "trial_only": true,
+  "known_precision_failure": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline.json"
+}

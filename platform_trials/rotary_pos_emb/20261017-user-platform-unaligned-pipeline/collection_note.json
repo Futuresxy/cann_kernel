@@ -1,0 +1,12 @@
+{
+  "raw_log_preserved": true,
+  "normal_run_exit_code": 0,
+  "runtime_path_loaded_from_existing_set_env": true,
+  "strict_runner_diagnostic_fragments_removed_from_combined_log": 52,
+  "json_timing_records_restored": 52,
+  "new_npu_run_for_log_recovery": false,
+  "normal_outputs_bit_identical_to_platform_parent": 52,
+  "first_task_failed_before_kernel_launch_due_missing_runtime_path": true,
+  "failed_task": "task_20261016_233507_224664029214",
+  "successful_task": "task_20261016_233611_22630602348"
+}

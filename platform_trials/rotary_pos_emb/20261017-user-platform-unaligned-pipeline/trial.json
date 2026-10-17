@@ -1,0 +1,51 @@
+{
+  "trial_id": "20261017-user-platform-unaligned-pipeline",
+  "mode": "user_authorized_platform_trial",
+  "production_ready": false,
+  "user_authorization": "针对有较大加速效果的实现方案，可以进行一次平台的提交查看性能分数；当前实现可传输平台一次测试15项。",
+  "kernel_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0",
+  "parent_kernel_sha256": "817f8364de18a96c242e3c19705fac3453077a69b7432839096671c0564c2556",
+  "source_path": "platform_trials/rotary_pos_emb/20261017-user-platform-unaligned-pipeline/kernel.asc",
+  "source_experiment": "benchmarks/experiments/agentic/20261017T060621-unaligned-pipeline.json",
+  "template_diff": {
+    "changed": [
+      "kernel.asc"
+    ],
+    "added": [],
+    "removed": [],
+    "unchanged": [
+      "CMakeLists.txt",
+      "data_utils.h",
+      "main.asc",
+      "run.sh",
+      "scripts/RotaryPosEmb.py",
+      "scripts/gen_data.py",
+      "scripts/verify_result.py"
+    ],
+    "kernel_sha256": "f32e9651514d312bdbe5bd9f238e8b29587ef0ae51555176b62b3df301ff1dc0"
+  },
+  "original_template_compile_passed": true,
+  "new_payload_dependencies": false,
+  "known_local_validation": {
+    "normal_passed": 52,
+    "standard_audit_passed": 52,
+    "full_audit_cases": 1723,
+    "full_audit_bit_identical_to_parent": 1723,
+    "full_reference_passed": 1722,
+    "inherited_reference_failures": 1,
+    "inherited_fp16_max_abs_error": 32.0,
+    "inherited_fp16_limit": 0.1,
+    "profile_calls": 75,
+    "profile_device_tasks": 75
+  },
+  "local_native_performance": {
+    "fp16_D126_speedup": 1.7252959882001222,
+    "fp32_D254_speedup": 1.6800835867924113,
+    "fixed33_geomean": 1.0332356367839077,
+    "extra10_geomean": 1.5077343429938894,
+    "note": "Local source-bound native data, not a platform score forecast"
+  },
+  "platform_submissions_authorized_for_this_source": 1,
+  "poll_seconds": 60,
+  "created_at": "2026-10-17T06:42:31.086782+00:00"
+}
