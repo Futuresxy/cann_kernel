@@ -58,6 +58,8 @@ def create_request(record, report, repository):
                                      'changes', 'validation', 'local_performance', 'decision', 'next_steps'],
                'execution_constraints': ['Use the existing user environment; no installation or system configuration',
                                         'Only kernel.asc changes in the competition project',
+                                        'Judge payload uses only original-template C++ and supported dav-2201 CANN APIs; no extra packages, libraries, generated helper files or build changes',
+                                        'Existing offline diagnostic libraries are not submission dependencies',
                                         'NPU tasks serial, one card, task-submit, at most 60 seconds per task',
                                         'Do not infer hidden shapes from case IDs or bypass correctness',
                                         'Distinguish FP16/FP32 data from int32 positions; preserve original precision gates',

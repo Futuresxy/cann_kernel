@@ -34,6 +34,7 @@ class NotifyTests(unittest.TestCase):
             self.assertIn('docs/rope_optimization_strategy.md', command[-1])
             self.assertIn('numerical error chain', command[-1])
             self.assertIn('GM/UB traffic', command[-1])
+            self.assertIn('do not require extra packages', command[-1])
             self.assertNotIn('dangerously-bypass', command[-1])
 
     def test_timeout_is_durable_and_is_not_automatically_resent(self):
